@@ -58,7 +58,11 @@ function Game({ difficulty, endGame }) {
   };
   
   const calculateAccuracy = (guess, verseToCheck) => {
-    const [correctBook, correctChapterVerse] = verseToCheck.split(' ');
+    // Find the index of the last space to correctly split book and chapter:verse
+    const lastSpaceIndex = verseToCheck.lastIndexOf(' ');
+    const correctBook = verseToCheck.substring(0, lastSpaceIndex);
+    const correctChapterVerse = verseToCheck.substring(lastSpaceIndex + 1);
+  
     const [correctChapterStr, correctVerseNumStr] = correctChapterVerse.split(':');
     const correctChapter = parseInt(correctChapterStr, 10);
     const correctVerseNum = parseInt(correctVerseNumStr, 10);

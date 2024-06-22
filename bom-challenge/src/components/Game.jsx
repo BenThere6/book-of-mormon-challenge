@@ -32,11 +32,15 @@ function Game({ difficulty, endGame }) {
   }
 
   const handleSubmit = () => {
+    console.log('Submitting guess with:', selectedBook, selectedChapter, selectedVerse);
+  
     const guessAccuracy = calculateAccuracy(
       { book: selectedBook, chapter: selectedChapter, verse: selectedVerse },
       currentVerse
     );
-
+  
+    console.log('Guess accuracy:', guessAccuracy);
+  
     if (guessAccuracy > 0) {
       setScore(score + guessAccuracy);
       setCurrentVerse(getRandomVerse());
@@ -47,18 +51,24 @@ function Game({ difficulty, endGame }) {
       setLives(lives - 1);
       setSelectedVerse('');
     }
-
-    if (lives === 1) { // Check lives before decrementing
+  
+    if (lives === 1) {
       endGame(score);
     }
   };
-
+  
   const calculateAccuracy = (guess, verseToCheck) => {
     const [correctBook, correctChapterVerse] = verseToCheck.split(' ');
-    const [correctChapter, correctVerseNum] = correctChapterVerse.split(':');
+    const [correctChapterStr, correctVerseNumStr] = correctChapterVerse.split(':');
+    const correctChapter = parseInt(correctChapterStr, 10);
+    const correctVerseNum = parseInt(correctVerseNumStr, 10);
   
-    const chapterDifference = Math.abs(parseInt(guess.chapter, 10) - parseInt(correctChapter, 10));
-    const verseDifference = Math.abs(parseInt(guess.verse, 10) - parseInt(correctVerseNum, 10));
+    console.log('Correct Book:', correctBook);
+    console.log('Correct Chapter:', correctChapter);
+    console.log('Correct Verse:', correctVerseNum);
+  
+    const chapterDifference = Math.abs(parseInt(guess.chapter, 10) - correctChapter);
+    const verseDifference = Math.abs(parseInt(guess.verse, 10) - correctVerseNum);
   
     if (guess.book === correctBook) {
       switch (difficulty) {

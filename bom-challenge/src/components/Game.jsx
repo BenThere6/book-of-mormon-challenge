@@ -38,16 +38,56 @@ function Game({ difficulty, endGame }) {
     if (guess.book === correct.book) {
       switch (difficulty) {
         case 'easy':
-          return chapterDifference <= 3 && verseDifference <= 10 ? 100 : 0;
+          // Max 100
+          if (Math.abs(guess.chapter - correct.chapter) <= 5 && Math.abs(guess.verse - correct.verse) <= 10) {
+            if (guess.chapter === correct.chapter && guess.verse === correct.verse) {
+              return 100;
+            } else if (guess.chapter === correct.chapter && Math.abs(guess.verse - correct.verse) <=10) {
+              return 50;
+            } else if (Math.abs(guess.chapter - correct.chapter) <=5 && Math.abs(guess.verse - correct.verse) <=10) {
+              return 25;
+            } else {
+              return 0;
+            }
+          } else {
+            return 0;
+          }
         case 'medium':
-          return chapterDifference <= 2 && verseDifference <= 5 ? 200 : 0;
+          // Max 200
+          if (Math.abs(guess.chapter - correct.chapter) <= 3 && Math.abs(guess.verse - correct.verse) <= 6) {
+            if (guess.chapter === correct.chapter && guess.verse === correct.verse) {
+              return 100;
+            } else if (guess.chapter === correct.chapter && Math.abs(guess.verse - correct.verse) <=6) {
+              return 50;
+            } else if (Math.abs(guess.chapter - correct.chapter) <=3 && Math.abs(guess.verse - correct.verse) <=6) {
+              return 25;
+            } else {
+              return 0;
+            }
+          } else {
+            return 0;
+          }
         case 'hard':
-          return chapterDifference <= 1 && verseDifference <= 2 ? 300 : 0;
+          // Max 300
+          if (Math.abs(guess.chapter - correct.chapter) <= 1 && Math.abs(guess.verse - correct.verse) <= 2) {
+            if (guess.chapter === correct.chapter && guess.verse === correct.verse) {
+              return 100;
+            } else if (guess.chapter === correct.chapter && Math.abs(guess.verse - correct.verse) <=2) {
+              return 50;
+            } else if (Math.abs(guess.chapter - correct.chapter) <=1 && Math.abs(guess.verse - correct.verse) <=2) {
+              return 25;
+            } else {
+              return 0;
+            }
+          } else {
+            return 0;
+          }
         default:
           return 0;
       }
-    }
-    return 0;
+    } else {
+      return 0;
+    }    
   };
 
   return (

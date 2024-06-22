@@ -19,14 +19,16 @@ function Game({ difficulty, endGame }) {
 
     const guessAccuracy = calculateAccuracy(userGuess, { book: correctBook, chapter: correctChapter, verse: correctVerse });
 
-    if (guessAccuracy) {
+    if (guessAccuracy > 0) {
       setScore(score + guessAccuracy);
       setCurrentVerse(getRandomVerse());
+      setUserGuess({ book: '', chapter: '', verse: '' }); // Reset guess inputs
     } else {
       setLives(lives - 1);
+      setUserGuess({ ...userGuess, verse: '' }); // Only reset the verse input on incorrect guess
     }
 
-    if (lives === 0) {
+    if (lives === 1) { // Check lives before decrementing
       endGame(score);
     }
   };
@@ -38,13 +40,12 @@ function Game({ difficulty, endGame }) {
     if (guess.book === correct.book) {
       switch (difficulty) {
         case 'easy':
-          // Max 100
-          if (Math.abs(guess.chapter - correct.chapter) <= 5 && Math.abs(guess.verse - correct.verse) <= 10) {
-            if (guess.chapter === correct.chapter && guess.verse === correct.verse) {
+          if (chapterDifference <= 5 && verseDifference <= 10) {
+            if (chapterDifference === 0 && verseDifference === 0) {
               return 100;
-            } else if (guess.chapter === correct.chapter && Math.abs(guess.verse - correct.verse) <=10) {
+            } else if (chapterDifference === 0 && verseDifference <= 10) {
               return 50;
-            } else if (Math.abs(guess.chapter - correct.chapter) <=5 && Math.abs(guess.verse - correct.verse) <=10) {
+            } else if (chapterDifference <= 5 && verseDifference <= 10) {
               return 25;
             } else {
               return 0;
@@ -53,14 +54,13 @@ function Game({ difficulty, endGame }) {
             return 0;
           }
         case 'medium':
-          // Max 200
-          if (Math.abs(guess.chapter - correct.chapter) <= 3 && Math.abs(guess.verse - correct.verse) <= 6) {
-            if (guess.chapter === correct.chapter && guess.verse === correct.verse) {
+          if (chapterDifference <= 3 && verseDifference <= 6) {
+            if (chapterDifference === 0 && verseDifference === 0) {
+              return 200;
+            } else if (chapterDifference === 0 && verseDifference <= 6) {
               return 100;
-            } else if (guess.chapter === correct.chapter && Math.abs(guess.verse - correct.verse) <=6) {
+            } else if (chapterDifference <= 3 && verseDifference <= 6) {
               return 50;
-            } else if (Math.abs(guess.chapter - correct.chapter) <=3 && Math.abs(guess.verse - correct.verse) <=6) {
-              return 25;
             } else {
               return 0;
             }
@@ -68,14 +68,13 @@ function Game({ difficulty, endGame }) {
             return 0;
           }
         case 'hard':
-          // Max 300
-          if (Math.abs(guess.chapter - correct.chapter) <= 1 && Math.abs(guess.verse - correct.verse) <= 2) {
-            if (guess.chapter === correct.chapter && guess.verse === correct.verse) {
-              return 100;
-            } else if (guess.chapter === correct.chapter && Math.abs(guess.verse - correct.verse) <=2) {
-              return 50;
-            } else if (Math.abs(guess.chapter - correct.chapter) <=1 && Math.abs(guess.verse - correct.verse) <=2) {
-              return 25;
+          if (chapterDifference <= 1 && verseDifference <= 2) {
+            if (chapterDifference === 0 && verseDifference === 0) {
+              return 300;
+            } else if (chapterDifference === 0 && verseDifference <= 2) {
+              return 150;
+            } else if (chapterDifference <= 1 && verseDifference <= 2) {
+              return 75;
             } else {
               return 0;
             }
@@ -87,7 +86,7 @@ function Game({ difficulty, endGame }) {
       }
     } else {
       return 0;
-    }    
+    }
   };
 
   return (

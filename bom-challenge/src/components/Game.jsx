@@ -49,10 +49,13 @@ function Game({ difficulty, endGame }) {
       setSelectedVerse('');
     } else {
       setLives(lives - 1);
+      setCurrentVerse(getRandomVerse());
+      setSelectedBook('');
+      setSelectedChapter('');
       setSelectedVerse('');
     }
   
-    if (lives === 1) {
+    if (lives === 0) {
       endGame(score);
     }
   };

@@ -136,7 +136,8 @@ function Game({ difficulty, endGame }) {
   const renderChapters = () => {
     if (!selectedBook) return null;
 
-    const chapters = Array.from({ length: verseCounts[selectedBook].length }, (_, index) => index + 1);
+    const chapterCount = verseCounts[selectedBook].length;
+    const chapters = Array.from({ length: chapterCount }, (_, index) => index + 1);
 
     return (
       <div>

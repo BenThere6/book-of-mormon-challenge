@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
-import verseCount from '../verseCounts'; // Import your verse counts database
+import verses from '../verses'; // Import your verse texts
+import verseCounts from '../verseCounts'; // Import your verse counts database
 
 function Game({ difficulty, endGame }) {
   const [score, setScore] = useState(0);
@@ -10,15 +11,9 @@ function Game({ difficulty, endGame }) {
   const [selectedVerse, setSelectedVerse] = useState('');
 
   function getRandomVerse() {
-    const books = Object.keys(verseCount);
-    const randomBook = books[Math.floor(Math.random() * books.length)];
-    const chapters = verseCount[randomBook];
-    const randomChapterIndex = Math.floor(Math.random() * chapters.length);
-    const randomChapter = randomChapterIndex + 1;
-    const verses = chapters[randomChapterIndex];
-    const randomVerse = Math.floor(Math.random() * verses.length);
-
-    return `${randomBook} ${randomChapter}:${randomVerse + 1}`;
+    const keys = Object.keys(verses);
+    const randomKey = keys[Math.floor(Math.random() * keys.length)];
+    return randomKey;
   }
 
   function handleBookSelection(book) {
@@ -37,13 +32,9 @@ function Game({ difficulty, endGame }) {
   }
 
   const handleSubmit = () => {
-    const correctReference = currentVerse.split(' ');
-    const [correctBook, correctChapterVerse] = [correctReference[0], correctReference[1]];
-    const [correctChapter, correctVerse] = correctChapterVerse.split(':');
-
     const guessAccuracy = calculateAccuracy(
       { book: selectedBook, chapter: selectedChapter, verse: selectedVerse },
-      { book: correctBook, chapter: correctChapter, verse: correctVerse }
+      currentVerse
     );
 
     if (guessAccuracy > 0) {
@@ -62,22 +53,25 @@ function Game({ difficulty, endGame }) {
     }
   };
 
-  const calculateAccuracy = (guess, correct) => {
-    const chapterDifference = Math.abs(guess.chapter - correct.chapter);
-    const verseDifference = Math.abs(guess.verse - correct.verse);
-
-    if (guess.book === correct.book) {
+  const calculateAccuracy = (guess, verseToCheck) => {
+    const [correctBook, correctChapterVerse] = verseToCheck.split(' ');
+    const [correctChapter, correctVerseNum] = correctChapterVerse.split(':');
+  
+    const chapterDifference = Math.abs(parseInt(guess.chapter, 10) - parseInt(correctChapter, 10));
+    const verseDifference = Math.abs(parseInt(guess.verse, 10) - parseInt(correctVerseNum, 10));
+  
+    if (guess.book === correctBook) {
       switch (difficulty) {
         case 'easy':
           if (chapterDifference <= 5 && verseDifference <= 10) {
             if (chapterDifference === 0 && verseDifference === 0) {
               return 100;
             } else if (chapterDifference === 0 && verseDifference <= 10) {
-              return 50;
+              return 75;
             } else if (chapterDifference <= 5 && verseDifference <= 10) {
-              return 25;
+              return 50;
             } else {
-              return 0;
+              return 25;
             }
           } else {
             return 0;
@@ -87,11 +81,11 @@ function Game({ difficulty, endGame }) {
             if (chapterDifference === 0 && verseDifference === 0) {
               return 200;
             } else if (chapterDifference === 0 && verseDifference <= 6) {
-              return 100;
+              return 150;
             } else if (chapterDifference <= 3 && verseDifference <= 6) {
-              return 50;
+              return 100;
             } else {
-              return 0;
+              return 50;
             }
           } else {
             return 0;
@@ -101,11 +95,11 @@ function Game({ difficulty, endGame }) {
             if (chapterDifference === 0 && verseDifference === 0) {
               return 300;
             } else if (chapterDifference === 0 && verseDifference <= 2) {
-              return 150;
+              return 225;
             } else if (chapterDifference <= 1 && verseDifference <= 2) {
-              return 75;
+              return 150;
             } else {
-              return 0;
+              return 75;
             }
           } else {
             return 0;
@@ -117,11 +111,11 @@ function Game({ difficulty, endGame }) {
       return 0;
     }
   };
-
+  
   const renderBooks = () => (
     <div>
       <h3>Select Book:</h3>
-      {Object.keys(verseCount).map((book) => (
+      {Object.keys(verseCounts).map((book) => (
         <button key={book} onClick={() => handleBookSelection(book)} disabled={selectedBook === book}>
           {book}
         </button>
@@ -132,14 +126,14 @@ function Game({ difficulty, endGame }) {
   const renderChapters = () => {
     if (!selectedBook) return null;
 
-    const chapters = verseCount[selectedBook];
+    const chapters = Array.from({ length: verseCounts[selectedBook].length }, (_, index) => index + 1);
 
     return (
       <div>
         <h3>Select Chapter:</h3>
-        {chapters.map((_, index) => (
-          <button key={index + 1} onClick={() => handleChapterSelection(index + 1)} disabled={selectedChapter === (index + 1).toString()}>
-            {index + 1}
+        {chapters.map((chapter) => (
+          <button key={chapter} onClick={() => handleChapterSelection(chapter)} disabled={selectedChapter === chapter}>
+            {chapter}
           </button>
         ))}
       </div>
@@ -148,35 +142,36 @@ function Game({ difficulty, endGame }) {
 
   const renderVerses = () => {
     if (!selectedBook || !selectedChapter) return null;
-  
-    const verses = verseCount[selectedBook][selectedChapter - 1];
-  
+
+    const verseCount = verseCounts[selectedBook][selectedChapter - 1];
+    const verses = Array.from({ length: verseCount }, (_, index) => index + 1);
+
     return (
       <div>
         <h3>Select Verse:</h3>
-        {verses.map((_, index) => (
-          <button key={index + 1} onClick={() => handleVerseSelection(index + 1)} disabled={selectedVerse === (index + 1).toString()}>
-            {index + 1}
+        {verses.map((verse) => (
+          <button
+            key={verse}
+            onClick={() => handleVerseSelection(verse)}
+            disabled={selectedVerse === verse}
+          >
+            {verse}
           </button>
         ))}
       </div>
     );
   };
-  
-  // Retrieve current verse text based on currentVerse state
-  const getCurrentVerseText = () => {
-    const [book, chapterVerse] = currentVerse.split(' ');
-    const [chapter, verse] = chapterVerse.split(':');
-    const verseIndex = parseInt(verse, 10) - 1; // Convert to zero-based index
 
-    return verseCount[book][parseInt(chapter, 10) - 1][verseIndex];
+  const getCurrentVerseText = () => {
+    const verseText = verses[currentVerse];
+    return verseText || 'Verse Not Found';
   };
 
   return (
     <div>
       <h2>Score: {score}</h2>
       <h2>Lives: {lives}</h2>
-      <p>{getCurrentVerseText()}</p> {/* Display current verse text */}
+      <p>{getCurrentVerseText()}</p>
       {renderBooks()}
       {renderChapters()}
       {renderVerses()}

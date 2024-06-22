@@ -175,9 +175,11 @@ function Game({ difficulty, endGame }) {
       {renderBooks()}
       {renderChapters()}
       {renderVerses()}
-      <button onClick={handleSubmit} disabled={!selectedBook || !selectedChapter || !selectedVerse}>
-        Submit Guess
-      </button>
+      {selectedVerse !== '' && (
+        <button onClick={handleSubmit}>
+          Submit Guess
+        </button>
+      )}
     </div>
   );
 }

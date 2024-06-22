@@ -23,10 +23,7 @@ async function getVerses(book, chapter) {
 
     verseElements.each((i, element) => {
       const verseNumber = $(element).find('span.verse-number').text().trim();
-      // Combine all text nodes within the 'p.verse' element
-      const verseText = $(element).find('p.verse').contents().filter(function() {
-        return this.type === 'text';
-      }).text().trim();
+      const verseText = $(element).text().replace(verseNumber, '').trim(); // Remove verse number from text
       const reference = `${book} ${chapter}:${verseNumber}`;
       verses[reference] = verseText;
     });

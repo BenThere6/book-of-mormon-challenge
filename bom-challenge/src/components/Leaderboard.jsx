@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 
-function Leaderboard({ score }) {
+function Leaderboard({ score, onStartScreen }) {
   const [leaderboard, setLeaderboard] = useState([]);
   const [username, setUsername] = useState('');
   const [isSubmitted, setIsSubmitted] = useState(false);
@@ -41,6 +41,12 @@ function Leaderboard({ score }) {
       .catch((error) => console.error('Error saving score:', error));
   };
 
+  const handlePlayAgain = () => {
+    setUsername('');
+    setIsSubmitted(false);
+    onStartScreen(); // Callback to switch to the start screen component
+  };
+
   return (
     <div>
       <h2>Leaderboard</h2>
@@ -49,7 +55,11 @@ function Leaderboard({ score }) {
           <li key={index}>{entry.username}: {entry.score}</li>
         ))}
       </ol>
-      {!isSubmitted && (
+      {isSubmitted ? (
+        <div>
+          <button onClick={handlePlayAgain}>Play Again</button>
+        </div>
+      ) : (
         <div>
           <input
             type="text"

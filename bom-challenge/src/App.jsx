@@ -19,11 +19,15 @@ function App() {
     setGameState('leaderboard');
   };
 
+  const handleStartScreen = () => {
+    setGameState('start');
+  };
+
   return (
     <div className="App">
       {gameState === 'start' && <StartScreen startGame={startGame} />}
       {gameState === 'game' && <Game difficulty={difficulty} endGame={endGame} />}
-      {gameState === 'leaderboard' && <Leaderboard score={score} />}
+      {gameState === 'leaderboard' && <Leaderboard score={score} onStartScreen={handleStartScreen} />}
     </div>
   );
 }

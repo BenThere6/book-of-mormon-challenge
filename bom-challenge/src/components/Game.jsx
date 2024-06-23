@@ -95,8 +95,8 @@ function Game({ difficulty, endGame }) {
     if (guess.book === correctBook) {
       const { multiplier, chapterRange, verseRange } = getDifficultySettings(difficulty);
 
-      let accuracy = 5 * multiplier;
-      console.log("Correct book", 5 * multiplier);
+      let accuracy = 15 * multiplier;
+      console.log("Correct book", 15 * multiplier);
       if (chapterDifference === 0) {
         accuracy += 50 * multiplier;
         console.log("Correct chapter", 50 * multiplier);

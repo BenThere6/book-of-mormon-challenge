@@ -1,6 +1,7 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import verses from '../verses';
 import verseCounts from '../verseCounts';
+import scriptureMasteryVerses from '../scriptureMasteryVerses'; // Assuming scriptureMasteryVerses.js is in the correct directory
 
 function Game({ difficulty, endGame }) {
   const [score, setScore] = useState(0);
@@ -10,10 +11,22 @@ function Game({ difficulty, endGame }) {
   const [selectedChapter, setSelectedChapter] = useState('');
   const [selectedVerse, setSelectedVerse] = useState('');
 
+  useEffect(() => {
+    setCurrentVerse(getRandomVerse());
+  }, [difficulty]); // Reset current verse when difficulty changes
+
   function getRandomVerse() {
-    const keys = Object.keys(verses);
+    const keys = getVerseKeys();
     const randomKey = keys[Math.floor(Math.random() * keys.length)];
     return randomKey;
+  }
+
+  function getVerseKeys() {
+    if (difficulty === 'easy') {
+      return Object.keys(scriptureMasteryVerses);
+    } else {
+      return Object.keys(verses);
+    }
   }
 
   function handleBookSelection(book) {
@@ -33,30 +46,30 @@ function Game({ difficulty, endGame }) {
 
   const handleSubmit = () => {
     console.log('Submitting guess with:', selectedBook, selectedChapter, selectedVerse);
-  
+
     const guess = { book: selectedBook, chapter: selectedChapter, verse: selectedVerse };
     const guessAccuracy = calculateAccuracy(guess, currentVerse);
-  
+
     console.log('Guess accuracy:', guessAccuracy);
-  
+
     const lastSpaceIndex = currentVerse.lastIndexOf(' ');
     const correctBook = currentVerse.substring(0, lastSpaceIndex);
     const correctChapterVerse = currentVerse.substring(lastSpaceIndex + 1);
-  
+
     const [correctChapterStr] = correctChapterVerse.split(':');
     const correctChapter = parseInt(correctChapterStr, 10);
-  
+
     const chapterDifference = Math.abs(parseInt(guess.chapter, 10) - correctChapter);
-  
+
     const { chapterRange } = getDifficultySettings(difficulty);
-  
+
     // Update score before checking lives
     let newScore = score;
     if (guessAccuracy > 0) {
       newScore += guessAccuracy;
       setScore(newScore); // Update score here
     }
-  
+
     // Check lives after updating score
     if (chapterDifference > chapterRange || guess.book !== correctBook) {
       setLives((prevLives) => prevLives - 1); // Decrement lives
@@ -65,14 +78,14 @@ function Game({ difficulty, endGame }) {
         return;
       }
     }
-  
+
     // Reset state for next round
     setCurrentVerse(getRandomVerse());
     setSelectedBook('');
     setSelectedChapter('');
     setSelectedVerse('');
   };
-  
+
   const calculateAccuracy = (guess, verseToCheck) => {
     const lastSpaceIndex = verseToCheck.lastIndexOf(' ');
     const correctBook = verseToCheck.substring(0, lastSpaceIndex);
@@ -112,7 +125,7 @@ function Game({ difficulty, endGame }) {
           accuracy += 100 * multiplier / 4;
           console.log("Correct verse", 100 * multiplier / 4);
         }
-        
+
       } else if (verseDifference <= verseRange) {
         if (chapterDifference <= chapterRange) {
           accuracy += 50 * multiplier;
@@ -196,7 +209,7 @@ function Game({ difficulty, endGame }) {
   };
 
   const getCurrentVerseText = () => {
-    const verseText = verses[currentVerse];
+    const verseText = verses[currentVerse] || scriptureMasteryVerses[currentVerse];
     return verseText || 'Verse Not Found';
   };
 

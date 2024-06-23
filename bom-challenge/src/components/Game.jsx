@@ -105,8 +105,14 @@ function Game({ difficulty, endGame }) {
         console.log("Chapter within range", 30 * multiplier);
       }
       if (verseDifference === 0) {
-        accuracy += 100 * multiplier;
-        console.log("Correct verse", 100 * multiplier);
+        if (chapterDifference <= chapterRange) {
+          accuracy += 100 * multiplier;
+          console.log("Correct verse", 100 * multiplier);
+        } else {
+          accuracy += 100 * multiplier / 4;
+          console.log("Correct verse", 100 * multiplier / 4);
+        }
+        
       } else if (verseDifference <= verseRange) {
         accuracy += 50 * multiplier;
         console.log("Verse within range", 50 * multiplier);
@@ -122,11 +128,11 @@ function Game({ difficulty, endGame }) {
   const getDifficultySettings = (difficulty) => {
     switch (difficulty) {
       case 'easy':
-        return { multiplier: 1, chapterRange: 5, verseRange: 10 };
+        return { multiplier: 1, chapterRange: 8, verseRange: 12 };
       case 'medium':
-        return { multiplier: 2, chapterRange: 3, verseRange: 6 };
+        return { multiplier: 2, chapterRange: 5, verseRange: 8 };
       case 'hard':
-        return { multiplier: 3, chapterRange: 1, verseRange: 2 };
+        return { multiplier: 3, chapterRange: 2, verseRange: 3 };
       default:
         console.log("Invalid difficulty level");
         return { multiplier: 1, chapterRange: 5, verseRange: 10 };

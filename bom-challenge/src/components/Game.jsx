@@ -77,42 +77,55 @@ function Game({ difficulty, endGame }) {
     const chapterDifference = Math.abs(parseInt(guess.chapter, 10) - correctChapter);
     const verseDifference = Math.abs(parseInt(guess.verse, 10) - correctVerseNum);
 
-    console.log("chapterDiff = ", chapterDifference)
-    console.log("verseDiff = ", verseDifference)
+    console.log("chapterDiff = ", chapterDifference);
+    console.log("verseDiff = ", verseDifference);
 
-    if (guess.book == correctBook) {
+    if (guess.book === correctBook) {
       let multiplier = 1;
       let chapterRange = 5;
       let verseRange = 10;
 
       switch (difficulty) {
         case 'easy':
-          
+          multiplier = 1;
+          chapterRange = 5;
+          verseRange = 10;
+          break;
         case 'medium':
           multiplier = 2;
           chapterRange = 3;
           verseRange = 6;
+          break;
         case 'hard':
           multiplier = 3;
           chapterRange = 1;
           verseRange = 2;
-
-          var accuracy = 25 * multiplier;
-          if (chapterDifference == 0) {
-            accuracy += 35 * multiplier;
-          } else if (chapterDifference <= chapterRange){
-            accuracy += 20 * multiplier;
-          }
-          if (verseDifference == 0) {
-            accuracy += 45 * multiplier;
-          } else if (verseDifference <= verseRange) {
-            accuracy += 30 * multiplier;
-          }
+          break;
+        default:
+          console.log("Invalid difficulty level");
+          return 0;
       }
+
+      let accuracy = 25 * multiplier;
+      console.log("Correct book", 25 * multiplier);
+      if (chapterDifference === 0) {
+        accuracy += 50 * multiplier;
+        console.log("Correct chapter", 50 * multiplier);
+      } else if (chapterDifference <= chapterRange) {
+        accuracy += 30 * multiplier;
+        console.log("Chapter within range", 30 * multiplier);
+      }
+      if (verseDifference === 0) {
+        accuracy += 100 * multiplier;
+        console.log("Correct verse", 100 * multiplier);
+      } else if (verseDifference <= verseRange) {
+        accuracy += 50 * multiplier;
+        console.log("Verse within range", 50 * multiplier);
+      }
+
       return accuracy;
-      
     } else {
-      console.log("Unfortunately.... you got no points...")
+      console.log("Unfortunately.... you got no points...");
       return 0;
     }
   };

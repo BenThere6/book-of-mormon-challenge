@@ -114,8 +114,13 @@ function Game({ difficulty, endGame }) {
         }
         
       } else if (verseDifference <= verseRange) {
-        accuracy += 50 * multiplier;
-        console.log("Verse within range", 50 * multiplier);
+        if (chapterDifference <= chapterRange) {
+          accuracy += 50 * multiplier;
+          console.log("Verse within range", 50 * multiplier);
+        } else {
+          accuracy += 50 * multiplier / 4;
+          console.log("Verse within range", 50 * multiplier / 4);
+        }
       }
 
       return accuracy;

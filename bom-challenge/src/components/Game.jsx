@@ -133,14 +133,14 @@ function Game({ difficulty, endGame }) {
   const getDifficultySettings = (difficulty) => {
     switch (difficulty) {
       case 'easy':
-        return { multiplier: 1, chapterRange: 8, verseRange: 12 };
+        return { multiplier: 1, chapterRange: 2, verseRange: 5 };
       case 'medium':
-        return { multiplier: 2, chapterRange: 5, verseRange: 8 };
+        return { multiplier: 8, chapterRange: 7, verseRange: 10 };
       case 'hard':
-        return { multiplier: 3, chapterRange: 2, verseRange: 3 };
+        return { multiplier: 12, chapterRange: 2, verseRange: 3 };
       default:
         console.log("Invalid difficulty level");
-        return { multiplier: 1, chapterRange: 5, verseRange: 10 };
+        return { multiplier: 1, chapterRange: 2, verseRange: 5 };
     }
   };
 

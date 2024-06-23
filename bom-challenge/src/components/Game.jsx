@@ -33,41 +33,46 @@ function Game({ difficulty, endGame }) {
 
   const handleSubmit = () => {
     console.log('Submitting guess with:', selectedBook, selectedChapter, selectedVerse);
-
+  
     const guess = { book: selectedBook, chapter: selectedChapter, verse: selectedVerse };
     const guessAccuracy = calculateAccuracy(guess, currentVerse);
-
+  
     console.log('Guess accuracy:', guessAccuracy);
-
+  
     const lastSpaceIndex = currentVerse.lastIndexOf(' ');
     const correctBook = currentVerse.substring(0, lastSpaceIndex);
     const correctChapterVerse = currentVerse.substring(lastSpaceIndex + 1);
-
+  
     const [correctChapterStr] = correctChapterVerse.split(':');
     const correctChapter = parseInt(correctChapterStr, 10);
-
+  
     const chapterDifference = Math.abs(parseInt(guess.chapter, 10) - correctChapter);
-
+  
     const { chapterRange } = getDifficultySettings(difficulty);
-
+  
+    // Update score before checking lives
+    let newScore = score;
+    if (guessAccuracy > 0) {
+      newScore += guessAccuracy;
+      setScore(newScore); // Update score here
+    }
+  
+    // Check lives after updating score
     if (chapterDifference > chapterRange || guess.book !== correctBook) {
-      setLives(lives - 1);
+      setLives((prevLives) => prevLives - 1); // Decrement lives
       if (lives === 1) {
-        endGame(score);
+        endGame(newScore); // End game with updated score
         return;
       }
     }
-
-    if (guessAccuracy > 0) {
-      setScore(score + guessAccuracy);
-    }
-
+  
+    // Reset state for next round
     setCurrentVerse(getRandomVerse());
     setSelectedBook('');
     setSelectedChapter('');
     setSelectedVerse('');
   };
-
+  
   const calculateAccuracy = (guess, verseToCheck) => {
     const lastSpaceIndex = verseToCheck.lastIndexOf(' ');
     const correctBook = verseToCheck.substring(0, lastSpaceIndex);

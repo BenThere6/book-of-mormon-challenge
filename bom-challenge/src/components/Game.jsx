@@ -75,23 +75,36 @@ function Game({ difficulty, endGame }) {
   };
 
   const calculateAccuracy = (guess, verseToCheck) => {
-    console.log('Calculating accuracy for guess:', guess.book+' '+guess.chapter+':'+guess.verse, 'to verse:', verseToCheck);
+    console.log('Calculating accuracy for guess:', guess.book + ' ' + guess.chapter + ':' + guess.verse, 'to verse:', verseToCheck);
   
-    const lastSpaceIndex = verseToCheck.lastIndexOf(' ');
-    const correctBook = verseToCheck.substring(0, lastSpaceIndex);
-    const correctChapterVerse = verseToCheck.substring(lastSpaceIndex + 1);
+    let verseList;
+    if (verseToCheck.includes(', ')) {
+      verseList = verseToCheck.split(', ').map(entry => entry.trim());
+    } else {
+      verseList = [verseToCheck]; // If only one verse, put it into an array
+    }
   
-    const verseList = correctChapterVerse.split(',').map(entry => entry.trim());
+    // Get details from the first verse in the list
+    const firstVerseEntry = verseList[0];
+    const lastSpaceIndex = firstVerseEntry.lastIndexOf(' ');
+    const correctBook = firstVerseEntry.substring(0, lastSpaceIndex);
+    const correctChapterVerse = firstVerseEntry.substring(lastSpaceIndex + 1);
   
+    const [correctChapterStr] = correctChapterVerse.split(':');
+    const correctChapter = parseInt(correctChapterStr, 10);
+  
+    // Initialize variables to track the best accuracy
     let bestAccuracy = 0;
+    let chapterDifference;
+    let verseDifference;
   
     verseList.forEach(verseEntry => {
       const [correctChapterStr, correctVerseNumStr] = verseEntry.split(':');
       const correctChapter = parseInt(correctChapterStr, 10);
       const correctVerseNum = parseInt(correctVerseNumStr, 10);
   
-      const chapterDifference = Math.abs(parseInt(guess.chapter, 10) - correctChapter);
-      const verseDifference = Math.abs(parseInt(guess.verse, 10) - correctVerseNum);
+      chapterDifference = Math.abs(parseInt(guess.chapter, 10) - correctChapter);
+      verseDifference = Math.abs(parseInt(guess.verse, 10) - correctVerseNum);
   
       if (guess.book === correctBook) {
         const { multiplier, chapterRange, verseRange } = getDifficultySettings(difficulty);

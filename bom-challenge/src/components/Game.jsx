@@ -83,7 +83,7 @@ function Game({ difficulty, endGame }) {
     } else {
       verseList = [verseToCheck]; // If only one verse, put it into an array
     }
-  
+
     // Get details from the first verse in the list
     const firstVerseEntry = verseList[0];
     const lastSpaceIndex = firstVerseEntry.lastIndexOf(' ');
@@ -100,10 +100,17 @@ function Game({ difficulty, endGame }) {
   
     verseList.forEach(verseEntry => {
       const [correctChapterStr, correctVerseNumStr] = verseEntry.split(':');
-      const correctChapter = parseInt(correctChapterStr, 10);
+      const refList = correctChapterStr.split(' ');
+      const correctChapter = refList[refList.length - 1]
+      // console.log(correctChapter, correctChapterStr)
+      // var string_split = correctChapterStr.split(' ')
+      // console.log(string_split)
+      // console.log(string_split[string_split.length - 1])
       const correctVerseNum = parseInt(correctVerseNumStr, 10);
   
       chapterDifference = Math.abs(parseInt(guess.chapter, 10) - correctChapter);
+      console.log('chapter guess: '+guess.chapter)
+      console.log('correct chapter: '+correctChapter)
       verseDifference = Math.abs(parseInt(guess.verse, 10) - correctVerseNum);
   
       if (guess.book === correctBook) {

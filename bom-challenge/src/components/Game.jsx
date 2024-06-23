@@ -48,14 +48,16 @@ function Game({ difficulty, endGame }) {
       setSelectedChapter('');
       setSelectedVerse('');
     } else {
-      setLives(lives - 1);
       setCurrentVerse(getRandomVerse());
       setSelectedBook('');
       setSelectedChapter('');
       setSelectedVerse('');
     }
+    if (guessAccuracy < 36) {
+      setLives(lives - 1);
+    }
 
-    if (lives === 0) {
+    if (lives === 1) {
       endGame(score);
     }
   };
@@ -106,8 +108,8 @@ function Game({ difficulty, endGame }) {
           return 0;
       }
 
-      let accuracy = 25 * multiplier;
-      console.log("Correct book", 25 * multiplier);
+      let accuracy = 5 * multiplier;
+      console.log("Correct book", 5 * multiplier);
       if (chapterDifference === 0) {
         accuracy += 50 * multiplier;
         console.log("Correct chapter", 50 * multiplier);

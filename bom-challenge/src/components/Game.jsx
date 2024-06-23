@@ -48,23 +48,9 @@ function Game({ difficulty, endGame }) {
 
     const chapterDifference = Math.abs(parseInt(guess.chapter, 10) - correctChapter);
 
-    let chapterRange;
-    switch (difficulty) {
-      case 'easy':
-        chapterRange = 5;
-        break;
-      case 'medium':
-        chapterRange = 3;
-        break;
-      case 'hard':
-        chapterRange = 1;
-        break;
-      default:
-        console.log("Invalid difficulty level");
-        return;
-    }
+    const { chapterRange } = getDifficultySettings(difficulty);
 
-    if (chapterDifference > chapterRange || guess.book != correctBook) {
+    if (chapterDifference > chapterRange || guess.book !== correctBook) {
       setLives(lives - 1);
       if (lives === 1) {
         endGame(score);
@@ -102,30 +88,7 @@ function Game({ difficulty, endGame }) {
     console.log("verseDiff = ", verseDifference);
 
     if (guess.book === correctBook) {
-      let multiplier = 1;
-      let chapterRange = 5;
-      let verseRange = 10;
-
-      switch (difficulty) {
-        case 'easy':
-          multiplier = 1;
-          chapterRange = 5;
-          verseRange = 10;
-          break;
-        case 'medium':
-          multiplier = 2;
-          chapterRange = 3;
-          verseRange = 6;
-          break;
-        case 'hard':
-          multiplier = 3;
-          chapterRange = 1;
-          verseRange = 2;
-          break;
-        default:
-          console.log("Invalid difficulty level");
-          return 0;
-      }
+      const { multiplier, chapterRange, verseRange } = getDifficultySettings(difficulty);
 
       let accuracy = 5 * multiplier;
       console.log("Correct book", 5 * multiplier);
@@ -148,6 +111,20 @@ function Game({ difficulty, endGame }) {
     } else {
       console.log("Unfortunately.... you got no points...");
       return 0;
+    }
+  };
+
+  const getDifficultySettings = (difficulty) => {
+    switch (difficulty) {
+      case 'easy':
+        return { multiplier: 1, chapterRange: 5, verseRange: 10 };
+      case 'medium':
+        return { multiplier: 2, chapterRange: 3, verseRange: 6 };
+      case 'hard':
+        return { multiplier: 3, chapterRange: 1, verseRange: 2 };
+      default:
+        console.log("Invalid difficulty level");
+        return { multiplier: 1, chapterRange: 5, verseRange: 10 };
     }
   };
 

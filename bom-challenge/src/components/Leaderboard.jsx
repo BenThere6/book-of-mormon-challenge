@@ -2,6 +2,8 @@ import React, { useState, useEffect } from 'react';
 
 function Leaderboard({ score }) {
   const [leaderboard, setLeaderboard] = useState([]);
+  const [username, setUsername] = useState('');
+  const [isSubmitted, setIsSubmitted] = useState(false);
 
   useEffect(() => {
     fetch('http://localhost:5005/leaderboard')
@@ -15,7 +17,7 @@ function Leaderboard({ score }) {
       .catch((error) => console.error('Error fetching leaderboard:', error));
   }, []);
 
-  const handleSaveScore = (username) => {
+  const handleSaveScore = () => {
     if (!username) {
       console.error('Username is required');
       return;
@@ -32,23 +34,32 @@ function Leaderboard({ score }) {
         }
         return response.json();
       })
-      .then((data) => setLeaderboard(data))
+      .then((data) => {
+        setLeaderboard(data);
+        setIsSubmitted(true); // Set isSubmitted to true after successful submission
+      })
       .catch((error) => console.error('Error saving score:', error));
   };
 
   return (
     <div>
       <h2>Leaderboard</h2>
-      <ul>
+      <ol>
         {leaderboard.map((entry, index) => (
           <li key={index}>{entry.username}: {entry.score}</li>
         ))}
-      </ul>
-      <input
-        type="text"
-        placeholder="Username"
-        onBlur={(e) => handleSaveScore(e.target.value)}
-      />
+      </ol>
+      {!isSubmitted && (
+        <div>
+          <input
+            type="text"
+            placeholder="Username"
+            value={username}
+            onChange={(e) => setUsername(e.target.value)}
+          />
+          <button onClick={handleSaveScore}>Submit Score</button>
+        </div>
+      )}
     </div>
   );
 }

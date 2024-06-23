@@ -64,7 +64,7 @@ function Game({ difficulty, endGame }) {
         return;
     }
 
-    if (chapterDifference > chapterRange) {
+    if (chapterDifference > chapterRange || guess.book != correctBook) {
       setLives(lives - 1);
       if (lives === 1) {
         endGame(score);

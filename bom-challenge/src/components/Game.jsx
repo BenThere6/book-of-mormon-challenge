@@ -34,36 +34,55 @@ function Game({ difficulty, endGame }) {
   const handleSubmit = () => {
     console.log('Submitting guess with:', selectedBook, selectedChapter, selectedVerse);
 
-    const guessAccuracy = calculateAccuracy(
-      { book: selectedBook, chapter: selectedChapter, verse: selectedVerse },
-      currentVerse
-    );
+    const guess = { book: selectedBook, chapter: selectedChapter, verse: selectedVerse };
+    const guessAccuracy = calculateAccuracy(guess, currentVerse);
 
     console.log('Guess accuracy:', guessAccuracy);
 
-    if (guessAccuracy > 0) {
-      setScore(score + guessAccuracy);
-      setCurrentVerse(getRandomVerse());
-      setSelectedBook('');
-      setSelectedChapter('');
-      setSelectedVerse('');
-    } else {
-      setCurrentVerse(getRandomVerse());
-      setSelectedBook('');
-      setSelectedChapter('');
-      setSelectedVerse('');
-    }
-    if (guessAccuracy < 36) {
-      setLives(lives - 1);
+    const lastSpaceIndex = currentVerse.lastIndexOf(' ');
+    const correctBook = currentVerse.substring(0, lastSpaceIndex);
+    const correctChapterVerse = currentVerse.substring(lastSpaceIndex + 1);
+
+    const [correctChapterStr] = correctChapterVerse.split(':');
+    const correctChapter = parseInt(correctChapterStr, 10);
+
+    const chapterDifference = Math.abs(parseInt(guess.chapter, 10) - correctChapter);
+
+    let chapterRange;
+    switch (difficulty) {
+      case 'easy':
+        chapterRange = 5;
+        break;
+      case 'medium':
+        chapterRange = 3;
+        break;
+      case 'hard':
+        chapterRange = 1;
+        break;
+      default:
+        console.log("Invalid difficulty level");
+        return;
     }
 
-    if (lives === 1) {
-      endGame(score);
+    if (chapterDifference > chapterRange) {
+      setLives(lives - 1);
+      if (lives === 1) {
+        endGame(score);
+        return;
+      }
     }
+
+    if (guessAccuracy > 0) {
+      setScore(score + guessAccuracy);
+    }
+
+    setCurrentVerse(getRandomVerse());
+    setSelectedBook('');
+    setSelectedChapter('');
+    setSelectedVerse('');
   };
 
   const calculateAccuracy = (guess, verseToCheck) => {
-    // Find the index of the last space to correctly split book and chapter:verse
     const lastSpaceIndex = verseToCheck.lastIndexOf(' ');
     const correctBook = verseToCheck.substring(0, lastSpaceIndex);
     const correctChapterVerse = verseToCheck.substring(lastSpaceIndex + 1);

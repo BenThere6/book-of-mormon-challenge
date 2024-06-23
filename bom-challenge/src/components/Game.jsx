@@ -33,14 +33,14 @@ function Game({ difficulty, endGame }) {
 
   const handleSubmit = () => {
     console.log('Submitting guess with:', selectedBook, selectedChapter, selectedVerse);
-  
+
     const guessAccuracy = calculateAccuracy(
       { book: selectedBook, chapter: selectedChapter, verse: selectedVerse },
       currentVerse
     );
-  
+
     console.log('Guess accuracy:', guessAccuracy);
-  
+
     if (guessAccuracy > 0) {
       setScore(score + guessAccuracy);
       setCurrentVerse(getRandomVerse());
@@ -54,81 +54,69 @@ function Game({ difficulty, endGame }) {
       setSelectedChapter('');
       setSelectedVerse('');
     }
-  
+
     if (lives === 0) {
       endGame(score);
     }
   };
-  
+
   const calculateAccuracy = (guess, verseToCheck) => {
     // Find the index of the last space to correctly split book and chapter:verse
     const lastSpaceIndex = verseToCheck.lastIndexOf(' ');
     const correctBook = verseToCheck.substring(0, lastSpaceIndex);
     const correctChapterVerse = verseToCheck.substring(lastSpaceIndex + 1);
-  
+
     const [correctChapterStr, correctVerseNumStr] = correctChapterVerse.split(':');
     const correctChapter = parseInt(correctChapterStr, 10);
     const correctVerseNum = parseInt(correctVerseNumStr, 10);
-  
+
     console.log('Correct Book:', correctBook);
     console.log('Correct Chapter:', correctChapter);
     console.log('Correct Verse:', correctVerseNum);
-  
+
     const chapterDifference = Math.abs(parseInt(guess.chapter, 10) - correctChapter);
     const verseDifference = Math.abs(parseInt(guess.verse, 10) - correctVerseNum);
-  
-    if (guess.book === correctBook) {
+
+    console.log("chapterDiff = ", chapterDifference)
+    console.log("verseDiff = ", verseDifference)
+
+    if (guess.book == correctBook) {
+      let multiplier = 1;
+      let chapterRange = 5;
+      let verseRange = 10;
+
       switch (difficulty) {
         case 'easy':
-          if (chapterDifference <= 5 && verseDifference <= 10) {
-            if (chapterDifference === 0 && verseDifference === 0) {
-              return 100;
-            } else if (chapterDifference === 0 && verseDifference <= 10) {
-              return 75;
-            } else if (chapterDifference <= 5 && verseDifference <= 10) {
-              return 50;
-            } else {
-              return 25;
-            }
-          } else {
-            return 0;
-          }
+          
         case 'medium':
-          if (chapterDifference <= 3 && verseDifference <= 6) {
-            if (chapterDifference === 0 && verseDifference === 0) {
-              return 200;
-            } else if (chapterDifference === 0 && verseDifference <= 6) {
-              return 150;
-            } else if (chapterDifference <= 3 && verseDifference <= 6) {
-              return 100;
-            } else {
-              return 50;
-            }
-          } else {
-            return 0;
-          }
+          multiplier = 2;
+          chapterRange = 3;
+          verseRange = 6;
         case 'hard':
-          if (chapterDifference <= 1 && verseDifference <= 2) {
-            if (chapterDifference === 0 && verseDifference === 0) {
-              return 300;
-            } else if (chapterDifference === 0 && verseDifference <= 2) {
-              return 225;
-            } else if (chapterDifference <= 1 && verseDifference <= 2) {
-              return 150;
-            } else {
-              return 75;
-            }
-          } else {
-            return 0;
+          multiplier = 3;
+          chapterRange = 1;
+          verseRange = 2;
+
+          var accuracy = 25 * multiplier;
+          if (chapterDifference == 0) {
+            accuracy += 35 * multiplier;
+          } else if (chapterDifference <= chapterRange){
+            accuracy += 20 * multiplier;
           }
-        default:
-          return 0;
+          if (verseDifference == 0) {
+            accuracy += 45 * multiplier;
+          } else if (verseDifference <= verseRange) {
+            accuracy += 30 * multiplier;
+          }
       }
+      return accuracy;
+      
     } else {
+      console.log("Unfortunately.... you got no points...")
       return 0;
     }
   };
-  
+
   const renderBooks = () => (
     <div>
       <h3>Select Book:</h3>

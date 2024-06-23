@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
-import verses from '../verses'; // Import your verse texts
-import verseCounts from '../verseCounts'; // Import your verse counts database
+import verses from '../verses';
+import verseCounts from '../verseCounts';
 
 function Game({ difficulty, endGame }) {
   const [score, setScore] = useState(0);

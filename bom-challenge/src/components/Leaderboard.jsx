@@ -4,13 +4,13 @@ function Leaderboard({ score }) {
   const [leaderboard, setLeaderboard] = useState([]);
 
   useEffect(() => {
-    fetch('https://your-backend-api/leaderboard')
+    fetch('http://localhost:5000/leaderboard')
       .then((response) => response.json())
       .then((data) => setLeaderboard(data));
   }, []);
 
   const handleSaveScore = (username) => {
-    fetch('https://your-backend-api/leaderboard', {
+    fetch('http://localhost:5000/leaderboard', {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify({ username, score }),

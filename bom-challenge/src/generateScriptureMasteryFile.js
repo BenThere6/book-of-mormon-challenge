@@ -1,5 +1,5 @@
 import fs from 'fs';
-import verses from './verses.js';
+import verses from './verses.js'; // Assuming verses.js is in the same directory
 
 function generateScriptureMasteryVersesFile() {
   const scriptureMasteryReferences = [
@@ -36,32 +36,32 @@ function generateScriptureMasteryVersesFile() {
     if (verses[reference]) {
       // If the reference exists in verses, add it to scriptureMasteryVerses
       scriptureMasteryVerses[reference] = verses[reference];
-    } else {
-      // Handle cases where the reference includes multiple verses
-      // Extract the start and end references
-      const [startVerseRef, endVerseRef] = reference.split('–');
+    } else if (reference.includes('–')) {
+      // Handle references with ranges
+      const parts = reference.split(/[:–]/); // Split by ":" or "–"
+      const book = parts[0];
+      const startChapter = parseInt(parts[1], 10);
+      const startVerse = parseInt(parts[2], 10);
+      const endVerse = parseInt(parts[parts.length - 1], 10);
 
-      // Extract book and chapter
-      const startRefParts = startVerseRef.split(' ');
-      const book = startRefParts[0];
-      const chapter = parseInt(startRefParts[1]);
+      // Initialize array to store verses for this reference range
+      const versesArray = [];
 
-      const endRefParts = endVerseRef.split(' ');
-      const endChapter = parseInt(endRefParts[1]);
-
-      // Loop through verses and add them to scriptureMasteryVerses
-      for (let i = chapter; i <= endChapter; i++) {
-        const fullReference = `${book} ${i}`;
+      // Loop through all verses in the specified range
+      for (let verse = startVerse; verse <= endVerse; verse++) {
+        const fullReference = `${book} ${startChapter}:${verse}`;
         if (verses[fullReference]) {
-          scriptureMasteryVerses[reference] = scriptureMasteryVerses[reference] || [];
-          scriptureMasteryVerses[reference].push(verses[fullReference]);
+          versesArray.push(verses[fullReference]);
         }
       }
+
+      // Join verses with a couple of new lines and assign to the reference
+      scriptureMasteryVerses[reference] = versesArray.join('\n\n');
     }
   });
 
   // Convert scriptureMasteryVerses object to string format for writing to file
-  const script = `const scriptureMasteryVerses = ${JSON.stringify(scriptureMasteryVerses, null, 2)};\n\nmodule.exports = scriptureMasteryVerses;`;
+  const script = `const scriptureMasteryVerses = ${JSON.stringify(scriptureMasteryVerses, null, 2)};\n\nexport default scriptureMasteryVerses;`;
 
   // Write to scriptureMasteryVerses.js file
   fs.writeFileSync('scriptureMasteryVerses.js', script, 'utf8');

@@ -49,10 +49,13 @@ function Leaderboard({ score, onStartScreen }) {
 
   return (
     <div>
+      <h2>Your Current Score: {score}</h2>
       <h2>Leaderboard</h2>
       <ol>
         {leaderboard.map((entry, index) => (
-          <li key={index}>{entry.username}: {entry.score}</li>
+          <li key={index} style={{ fontWeight: entry.username === username && isSubmitted ? 'bold' : 'normal' }}>
+            {entry.username}: {entry.score}
+          </li>
         ))}
       </ol>
       {isSubmitted ? (

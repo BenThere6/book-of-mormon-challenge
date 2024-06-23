@@ -33,7 +33,7 @@ function Game({ difficulty, endGame }) {
   }
 
   const handleSubmit = () => {
-    console.log('Submitting guess with:', selectedBook, selectedChapter, selectedVerse);
+    // console.log('Submitting guess with:', selectedBook, selectedChapter, selectedVerse);
 
     const guess = { book: selectedBook, chapter: selectedChapter, verse: selectedVerse };
     const guessAccuracy = calculateAccuracy(guess, currentVerse);
@@ -75,53 +75,65 @@ function Game({ difficulty, endGame }) {
   };
 
   const calculateAccuracy = (guess, verseToCheck) => {
-    console.log('Calculating accuracy for guess:', guess, 'and verse:', verseToCheck);
+    console.log('Calculating accuracy for guess:', guess.book+' '+guess.chapter+':'+guess.verse, 'to verse:', verseToCheck);
   
     const lastSpaceIndex = verseToCheck.lastIndexOf(' ');
     const correctBook = verseToCheck.substring(0, lastSpaceIndex);
     const correctChapterVerse = verseToCheck.substring(lastSpaceIndex + 1);
   
-    const [correctChapterStr, correctVerseNumStr] = correctChapterVerse.split(':');
-    const correctChapter = parseInt(correctChapterStr, 10);
-    const correctVerseNum = parseInt(correctVerseNumStr, 10);
+    const verseList = correctChapterVerse.split(',').map(entry => entry.trim());
   
-    const chapterDifference = Math.abs(parseInt(guess.chapter, 10) - correctChapter);
-    const verseDifference = Math.abs(parseInt(guess.verse, 10) - correctVerseNum);
+    let bestAccuracy = 0;
   
-    if (guess.book === correctBook) {
-      const { multiplier, chapterRange, verseRange } = getDifficultySettings(difficulty);
+    verseList.forEach(verseEntry => {
+      const [correctChapterStr, correctVerseNumStr] = verseEntry.split(':');
+      const correctChapter = parseInt(correctChapterStr, 10);
+      const correctVerseNum = parseInt(correctVerseNumStr, 10);
   
-      let accuracy = 15 * multiplier;
-      console.log('Guessed the correct book. +', 15 * multiplier, 'points.');
+      const chapterDifference = Math.abs(parseInt(guess.chapter, 10) - correctChapter);
+      const verseDifference = Math.abs(parseInt(guess.verse, 10) - correctVerseNum);
   
-      if (chapterDifference === 0) {
-        accuracy += 50 * multiplier;
-        console.log('Guessed the correct chapter exactly. +', 50 * multiplier, 'points.');
-      } else if (chapterDifference <= chapterRange) {
-        accuracy += 30 * multiplier;
-        console.log('Guessed the chapter within range. +', 30 * multiplier, 'points.');
-      }
+      if (guess.book === correctBook) {
+        const { multiplier, chapterRange, verseRange } = getDifficultySettings(difficulty);
   
-      if (verseDifference === 0) {
-        if (chapterDifference <= chapterRange) {
-          accuracy += 100 * multiplier;
-          console.log('Guessed the correct verse exactly. +', 100 * multiplier, 'points.');
-        } else {
-          accuracy += 100 * multiplier / 4;
-          console.log('Guessed the correct verse exactly, but chapter was off. +', 100 * multiplier / 4, 'points.');
-        }
-      } else if (verseDifference <= verseRange) {
-        if (chapterDifference <= chapterRange) {
+        let accuracy = 15 * multiplier;
+        console.log('Guessed the correct book. +', 15 * multiplier, 'points.');
+  
+        if (chapterDifference === 0) {
           accuracy += 50 * multiplier;
-          console.log('Guessed the verse within range. +', 50 * multiplier, 'points.');
-        } else {
-          accuracy += 50 * multiplier / 4;
-          console.log('Guessed the verse within range, but chapter was off. +', 50 * multiplier / 4, 'points.');
+          console.log('Guessed the correct chapter exactly. +', 50 * multiplier, 'points.');
+        } else if (chapterDifference <= chapterRange) {
+          accuracy += 30 * multiplier;
+          console.log('Guessed the chapter within range. +', 30 * multiplier, 'points.');
+        }
+  
+        if (verseDifference === 0) {
+          if (chapterDifference <= chapterRange) {
+            accuracy += 100 * multiplier;
+            console.log('Guessed the correct verse exactly. +', 100 * multiplier, 'points.');
+          } else {
+            accuracy += 100 * multiplier / 4;
+            console.log('Guessed the correct verse exactly, but chapter was off. +', 100 * multiplier / 4, 'points.');
+          }
+        } else if (verseDifference <= verseRange) {
+          if (chapterDifference <= chapterRange) {
+            accuracy += 50 * multiplier;
+            console.log('Guessed the verse within range. +', 50 * multiplier, 'points.');
+          } else {
+            accuracy += 50 * multiplier / 4;
+            console.log('Guessed the verse within range, but chapter was off. +', 50 * multiplier / 4, 'points.');
+          }
+        }
+  
+        if (accuracy > bestAccuracy) {
+          bestAccuracy = accuracy;
         }
       }
+    });
   
-      console.log('Total accuracy calculated:', accuracy);
-      return accuracy;
+    if (bestAccuracy > 0) {
+      console.log('Total accuracy calculated:', bestAccuracy);
+      return bestAccuracy;
     } else {
       console.log('Guessed the wrong book. Accuracy calculated: 0');
       return 0;

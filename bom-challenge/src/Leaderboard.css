@@ -1,0 +1,45 @@
+/* Leaderboard.css */
+
+/* Style for the leaderboard */
+.leaderboard {
+    margin-top: 20px;
+    font-size: 16px;
+}
+
+/* Style for the list items in the leaderboard */
+.leaderboard ol {
+    list-style-type: none;
+    counter-reset: leaderboard-counter; /* Reset the counter */
+    padding-left: 0;
+}
+
+.leaderboard li {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 5px;
+}
+
+.leaderboard li::before {
+    content: counter(leaderboard-counter) ". "; /* Use the counter with dot and space */
+    counter-increment: leaderboard-counter; /* Increment the counter */
+    margin-right: 5px; /* Space between number and username */
+}
+
+.leaderboard li .username {
+    flex: 1;
+    margin-right: 10px;
+    text-align: left;
+}
+
+.leaderboard li .score {
+    min-width: 60px;
+    text-align: right;
+}
+
+/* Additional styles as per your design needs */
+
+.leaderboard .play-again {
+    text-align: center;
+    margin-top: 20px;
+}

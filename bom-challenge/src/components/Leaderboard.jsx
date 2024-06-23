@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from 'react';
+import '../Leaderboard.css'; // Ensure your CSS file is imported correctly
 
 function Leaderboard({ score, onStartScreen }) {
   const [leaderboard, setLeaderboard] = useState([]);
@@ -48,18 +49,19 @@ function Leaderboard({ score, onStartScreen }) {
   };
 
   return (
-    <div>
+    <div className="leaderboard">
       <h2>Your Current Score: {score}</h2>
       <h2>Leaderboard</h2>
       <ol>
         {leaderboard.map((entry, index) => (
-          <li key={index} style={{ fontWeight: entry.username === username && isSubmitted ? 'bold' : 'normal' }}>
-            {entry.username}: {entry.score}
+          <li key={index}>
+            <span className="username">{entry.username}</span>
+            <span className="score">{entry.score}</span>
           </li>
         ))}
       </ol>
       {isSubmitted ? (
-        <div>
+        <div className="play-again">
           <button onClick={handlePlayAgain}>Play Again</button>
         </div>
       ) : (

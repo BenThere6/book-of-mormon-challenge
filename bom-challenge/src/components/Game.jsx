@@ -1,7 +1,7 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState } from 'react';
 import verses from '../verses';
 import verseCounts from '../verseCounts';
-import scriptureMasteryVerses from '../scriptureMasteryVerses'; // Assuming scriptureMasteryVerses.js is in the correct directory
+import scriptureMasteryVerses from '../scriptureMasteryVerses'; // Importing the updated verses
 
 function Game({ difficulty, endGame }) {
   const [score, setScore] = useState(0);
@@ -11,22 +11,10 @@ function Game({ difficulty, endGame }) {
   const [selectedChapter, setSelectedChapter] = useState('');
   const [selectedVerse, setSelectedVerse] = useState('');
 
-  useEffect(() => {
-    setCurrentVerse(getRandomVerse());
-  }, [difficulty]); // Reset current verse when difficulty changes
-
   function getRandomVerse() {
-    const keys = getVerseKeys();
+    const keys = Object.keys(scriptureMasteryVerses);
     const randomKey = keys[Math.floor(Math.random() * keys.length)];
     return randomKey;
-  }
-
-  function getVerseKeys() {
-    if (difficulty === 'easy') {
-      return Object.keys(scriptureMasteryVerses);
-    } else {
-      return Object.keys(verses);
-    }
   }
 
   function handleBookSelection(book) {
@@ -50,8 +38,6 @@ function Game({ difficulty, endGame }) {
     const guess = { book: selectedBook, chapter: selectedChapter, verse: selectedVerse };
     const guessAccuracy = calculateAccuracy(guess, currentVerse);
 
-    console.log('Guess accuracy:', guessAccuracy);
-
     const lastSpaceIndex = currentVerse.lastIndexOf(' ');
     const correctBook = currentVerse.substring(0, lastSpaceIndex);
     const correctChapterVerse = currentVerse.substring(lastSpaceIndex + 1);
@@ -67,12 +53,14 @@ function Game({ difficulty, endGame }) {
     let newScore = score;
     if (guessAccuracy > 0) {
       newScore += guessAccuracy;
+      console.log('Score updated. New score:', newScore);
       setScore(newScore); // Update score here
     }
 
     // Check lives after updating score
     if (chapterDifference > chapterRange || guess.book !== correctBook) {
       setLives((prevLives) => prevLives - 1); // Decrement lives
+      console.log('Life lost. Remaining lives:', lives - 1);
       if (lives === 1) {
         endGame(newScore); // End game with updated score
         return;
@@ -87,62 +75,59 @@ function Game({ difficulty, endGame }) {
   };
 
   const calculateAccuracy = (guess, verseToCheck) => {
+    console.log('Calculating accuracy for guess:', guess, 'and verse:', verseToCheck);
+  
     const lastSpaceIndex = verseToCheck.lastIndexOf(' ');
     const correctBook = verseToCheck.substring(0, lastSpaceIndex);
     const correctChapterVerse = verseToCheck.substring(lastSpaceIndex + 1);
-
+  
     const [correctChapterStr, correctVerseNumStr] = correctChapterVerse.split(':');
     const correctChapter = parseInt(correctChapterStr, 10);
     const correctVerseNum = parseInt(correctVerseNumStr, 10);
-
-    console.log('Correct Book:', correctBook);
-    console.log('Correct Chapter:', correctChapter);
-    console.log('Correct Verse:', correctVerseNum);
-
+  
     const chapterDifference = Math.abs(parseInt(guess.chapter, 10) - correctChapter);
     const verseDifference = Math.abs(parseInt(guess.verse, 10) - correctVerseNum);
-
-    console.log("chapterDiff = ", chapterDifference);
-    console.log("verseDiff = ", verseDifference);
-
+  
     if (guess.book === correctBook) {
       const { multiplier, chapterRange, verseRange } = getDifficultySettings(difficulty);
-
+  
       let accuracy = 15 * multiplier;
-      console.log("Correct book", 15 * multiplier);
+      console.log('Guessed the correct book. +', 15 * multiplier, 'points.');
+  
       if (chapterDifference === 0) {
         accuracy += 50 * multiplier;
-        console.log("Correct chapter", 50 * multiplier);
+        console.log('Guessed the correct chapter exactly. +', 50 * multiplier, 'points.');
       } else if (chapterDifference <= chapterRange) {
         accuracy += 30 * multiplier;
-        console.log("Chapter within range", 30 * multiplier);
+        console.log('Guessed the chapter within range. +', 30 * multiplier, 'points.');
       }
+  
       if (verseDifference === 0) {
         if (chapterDifference <= chapterRange) {
           accuracy += 100 * multiplier;
-          console.log("Correct verse", 100 * multiplier);
+          console.log('Guessed the correct verse exactly. +', 100 * multiplier, 'points.');
         } else {
           accuracy += 100 * multiplier / 4;
-          console.log("Correct verse", 100 * multiplier / 4);
+          console.log('Guessed the correct verse exactly, but chapter was off. +', 100 * multiplier / 4, 'points.');
         }
-
       } else if (verseDifference <= verseRange) {
         if (chapterDifference <= chapterRange) {
           accuracy += 50 * multiplier;
-          console.log("Verse within range", 50 * multiplier);
+          console.log('Guessed the verse within range. +', 50 * multiplier, 'points.');
         } else {
           accuracy += 50 * multiplier / 4;
-          console.log("Verse within range", 50 * multiplier / 4);
+          console.log('Guessed the verse within range, but chapter was off. +', 50 * multiplier / 4, 'points.');
         }
       }
-
+  
+      console.log('Total accuracy calculated:', accuracy);
       return accuracy;
     } else {
-      console.log("Unfortunately.... you got no points...");
+      console.log('Guessed the wrong book. Accuracy calculated: 0');
       return 0;
     }
   };
-
+  
   const getDifficultySettings = (difficulty) => {
     switch (difficulty) {
       case 'easy':
@@ -209,15 +194,29 @@ function Game({ difficulty, endGame }) {
   };
 
   const getCurrentVerseText = () => {
-    const verseText = verses[currentVerse] || scriptureMasteryVerses[currentVerse];
-    return verseText || 'Verse Not Found';
+    const verseText = scriptureMasteryVerses[currentVerse];
+    if (!verseText) {
+      console.log(`Verse Not Found for key: ${currentVerse}`);
+      return 'Verse Not Found';
+    }
+
+    // Split verses by double newline to handle multiple verses
+    const versesArray = verseText.split('\n\n');
+
+    return (
+      <div>
+        {versesArray.map((verse, index) => (
+          <p key={index}>{verse}</p>
+        ))}
+      </div>
+    );
   };
 
   return (
     <div>
       <h2>Score: {score}</h2>
       <h2>Lives: {lives}</h2>
-      <p>{getCurrentVerseText()}</p>
+      <div>{getCurrentVerseText()}</div>
       {renderBooks()}
       {renderChapters()}
       {renderVerses()}

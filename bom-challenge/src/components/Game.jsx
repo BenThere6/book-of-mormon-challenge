@@ -39,7 +39,13 @@ function Game({ difficulty, endGame }) {
     const guessAccuracy = calculateAccuracy(guess, currentVerse);
 
     const lastSpaceIndex = currentVerse.lastIndexOf(' ');
-    const correctBook = currentVerse.substring(0, lastSpaceIndex);
+    const refSplit = currentVerse.split(' ');
+    let correctBook;
+    if (refSplit[0][0] == 1 || refSplit[0][0] == 2 || refSplit[0][0] == 3 || refSplit[0][0] == 4) {
+      correctBook = refSplit[0] + ' ' + refSplit[1];
+    } else {
+      correctBook = refSplit[0];
+    }
     const correctChapterVerse = currentVerse.substring(lastSpaceIndex + 1);
 
     const [correctChapterStr] = correctChapterVerse.split(':');
@@ -59,6 +65,11 @@ function Game({ difficulty, endGame }) {
 
     // Check lives after updating score
     if (chapterDifference > chapterRange || guess.book !== correctBook) {
+      // console.log("chapterDifference, chapterRange, guess.book, correctBook:")
+      // console.log(chapterDifference)
+      // console.log(chapterRange)
+      // console.log(guess.book)
+      // console.log(correctBook)
       setLives((prevLives) => prevLives - 1); // Decrement lives
       console.log('Life lost. Remaining lives:', lives - 1);
       if (lives === 1) {

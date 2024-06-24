@@ -12,7 +12,13 @@ function Game({ difficulty, endGame }) {
   const [selectedVerse, setSelectedVerse] = useState('');
 
   function getRandomVerse() {
-    const keys = Object.keys(scriptureMasteryVerses);
+    let keys;
+    if (difficulty == 'easy') {
+      keys = Object.keys(scriptureMasteryVerses)
+    } else {
+      keys = Object.keys(verses)
+    }
+    
     const randomKey = keys[Math.floor(Math.random() * keys.length)];
     return randomKey;
   }
@@ -237,7 +243,13 @@ function Game({ difficulty, endGame }) {
   };
 
   const getCurrentVerseText = () => {
-    const verseText = scriptureMasteryVerses[currentVerse];
+    let verseText;
+    if (difficulty == 'easy') {
+      verseText = scriptureMasteryVerses[currentVerse];
+    } else {
+      verseText = verses[currentVerse];
+    }
+    
     if (!verseText) {
       console.log(`Verse Not Found for key: ${currentVerse}`);
       return 'Verse Not Found';

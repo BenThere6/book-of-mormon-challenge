@@ -4,6 +4,7 @@ import verseCounts from '../verseCounts';
 import scriptureMasteryVerses from '../scriptureMasteryVerses';
 import Button from '@mui/material/Button';
 import ButtonGroup from '@mui/material/ButtonGroup';
+import '../Game.css';
 
 function Game({ difficulty, endGame }) {
   const [score, setScore] = useState(0);
@@ -15,10 +16,10 @@ function Game({ difficulty, endGame }) {
 
   function getRandomVerse() {
     let keys;
-    if (difficulty == 'easy') {
-      keys = Object.keys(scriptureMasteryVerses)
+    if (difficulty === 'easy') {
+      keys = Object.keys(scriptureMasteryVerses);
     } else {
-      keys = Object.keys(verses)
+      keys = Object.keys(verses);
     }
 
     const randomKey = keys[Math.floor(Math.random() * keys.length)];
@@ -41,8 +42,6 @@ function Game({ difficulty, endGame }) {
   }
 
   const handleSubmit = () => {
-    // console.log('Submitting guess with:', selectedBook, selectedChapter, selectedVerse);
-
     const guess = { book: selectedBook, chapter: selectedChapter, verse: selectedVerse };
     const guessAccuracy = calculateAccuracy(guess, currentVerse);
 
@@ -63,30 +62,20 @@ function Game({ difficulty, endGame }) {
 
     const { chapterRange } = getDifficultySettings(difficulty);
 
-    // Update score before checking lives
     let newScore = score;
     if (guessAccuracy > 0) {
       newScore += guessAccuracy;
-      console.log('Score updated. New score:', newScore);
-      setScore(newScore); // Update score here
+      setScore(newScore);
     }
 
-    // Check lives after updating score
     if (chapterDifference > chapterRange || guess.book !== correctBook) {
-      // console.log("chapterDifference, chapterRange, guess.book, correctBook:")
-      // console.log(chapterDifference)
-      // console.log(chapterRange)
-      // console.log(guess.book)
-      // console.log(correctBook)
-      setLives((prevLives) => prevLives - 1); // Decrement lives
-      console.log('Life lost. Remaining lives:', lives - 1);
+      setLives((prevLives) => prevLives - 1);
       if (lives === 1) {
-        endGame(newScore); // End game with updated score
+        endGame(newScore);
         return;
       }
     }
 
-    // Reset state for next round
     setCurrentVerse(getRandomVerse());
     setSelectedBook('');
     setSelectedChapter('');
@@ -94,16 +83,13 @@ function Game({ difficulty, endGame }) {
   };
 
   const calculateAccuracy = (guess, verseToCheck) => {
-    console.log('Calculating accuracy for guess:', guess.book + ' ' + guess.chapter + ':' + guess.verse, 'to verse:', verseToCheck);
-
     let verseList;
     if (verseToCheck.includes(', ')) {
       verseList = verseToCheck.split(', ').map(entry => entry.trim());
     } else {
-      verseList = [verseToCheck]; // If only one verse, put it into an array
+      verseList = [verseToCheck];
     }
 
-    // Get details from the first verse in the list
     const firstVerseEntry = verseList[0];
     const lastSpaceIndex = firstVerseEntry.lastIndexOf(' ');
     const correctBook = firstVerseEntry.substring(0, lastSpaceIndex);
@@ -112,7 +98,6 @@ function Game({ difficulty, endGame }) {
     const [correctChapterStr] = correctChapterVerse.split(':');
     const correctChapter = parseInt(correctChapterStr, 10);
 
-    // Initialize variables to track the best accuracy
     let bestAccuracy = 0;
     let chapterDifference;
     let verseDifference;
@@ -121,46 +106,31 @@ function Game({ difficulty, endGame }) {
       const [correctChapterStr, correctVerseNumStr] = verseEntry.split(':');
       const refList = correctChapterStr.split(' ');
       const correctChapter = refList[refList.length - 1]
-      // console.log(correctChapter, correctChapterStr)
-      // var string_split = correctChapterStr.split(' ')
-      // console.log(string_split)
-      // console.log(string_split[string_split.length - 1])
-      const correctVerseNum = parseInt(correctVerseNumStr, 10);
-
+      verseDifference = Math.abs(parseInt(guess.verse, 10) - parseInt(correctVerseNumStr, 10));
       chapterDifference = Math.abs(parseInt(guess.chapter, 10) - correctChapter);
-      console.log('chapter guess: ' + guess.chapter)
-      console.log('correct chapter: ' + correctChapter)
-      verseDifference = Math.abs(parseInt(guess.verse, 10) - correctVerseNum);
 
       if (guess.book === correctBook) {
         const { multiplier, chapterRange, verseRange } = getDifficultySettings(difficulty);
 
         let accuracy = 15 * multiplier;
-        console.log('Guessed the correct book. +', 15 * multiplier, 'points.');
 
         if (chapterDifference === 0) {
           accuracy += 50 * multiplier;
-          console.log('Guessed the correct chapter exactly. +', 50 * multiplier, 'points.');
         } else if (chapterDifference <= chapterRange) {
           accuracy += 30 * multiplier;
-          console.log('Guessed the chapter within range. +', 30 * multiplier, 'points.');
         }
 
         if (verseDifference === 0) {
           if (chapterDifference <= chapterRange) {
             accuracy += 100 * multiplier;
-            console.log('Guessed the correct verse exactly. +', 100 * multiplier, 'points.');
           } else {
             accuracy += 100 * multiplier / 4;
-            console.log('Guessed the correct verse exactly, but chapter was off. +', 100 * multiplier / 4, 'points.');
           }
         } else if (verseDifference <= verseRange) {
           if (chapterDifference <= chapterRange) {
             accuracy += 50 * multiplier;
-            console.log('Guessed the verse within range. +', 50 * multiplier, 'points.');
           } else {
             accuracy += 50 * multiplier / 4;
-            console.log('Guessed the verse within range, but chapter was off. +', 50 * multiplier / 4, 'points.');
           }
         }
 
@@ -170,13 +140,7 @@ function Game({ difficulty, endGame }) {
       }
     });
 
-    if (bestAccuracy > 0) {
-      console.log('Total accuracy calculated:', bestAccuracy);
-      return bestAccuracy;
-    } else {
-      console.log('Guessed the wrong book. Accuracy calculated: 0');
-      return 0;
-    }
+    return bestAccuracy;
   };
 
   const getDifficultySettings = (difficulty) => {
@@ -194,9 +158,9 @@ function Game({ difficulty, endGame }) {
   };
 
   const renderBooks = () => (
-    <div>
+    <div className="selection-section">
       <h3>Select Book:</h3>
-      <ButtonGroup variant="outlined">
+      <ButtonGroup variant="outlined" className="button-group">
         {Object.keys(verseCounts).map((book) => (
           <Button key={book} onClick={() => handleBookSelection(book)} disabled={selectedBook === book}>
             {book}
@@ -213,9 +177,9 @@ function Game({ difficulty, endGame }) {
     const chapters = Array.from({ length: chapterCount }, (_, index) => index + 1);
 
     return (
-      <div>
+      <div className="selection-section">
         <h3>Select Chapter:</h3>
-        <ButtonGroup variant="outlined">
+        <ButtonGroup variant="outlined" className="button-group">
           {chapters.map((chapter) => (
             <Button key={chapter} onClick={() => handleChapterSelection(chapter)} disabled={selectedChapter === chapter}>
               {chapter}
@@ -233,9 +197,9 @@ function Game({ difficulty, endGame }) {
     const verses = Array.from({ length: verseCount }, (_, index) => index + 1);
 
     return (
-      <div>
+      <div className="selection-section">
         <h3>Select Verse:</h3>
-        <ButtonGroup variant="outlined">
+        <ButtonGroup variant="outlined" className="button-group">
           {verses.map((verse) => (
             <Button
               key={verse}
@@ -252,7 +216,7 @@ function Game({ difficulty, endGame }) {
 
   const getCurrentVerseText = () => {
     let verseText;
-    if (difficulty == 'easy') {
+    if (difficulty === 'easy') {
       verseText = scriptureMasteryVerses[currentVerse];
     } else {
       verseText = verses[currentVerse];
@@ -263,11 +227,10 @@ function Game({ difficulty, endGame }) {
       return 'Verse Not Found';
     }
 
-    // Split verses by double newline to handle multiple verses
     const versesArray = verseText.split('\n\n');
 
     return (
-      <div>
+      <div className="verse-text">
         {versesArray.map((verse, index) => (
           <p key={index}>{verse}</p>
         ))}
@@ -276,19 +239,19 @@ function Game({ difficulty, endGame }) {
   };
 
   return (
-    <div>
+    <div className="game-container">
       <h2>Score: {score}</h2>
       <h2>Lives: {lives}</h2>
-      <div>{getCurrentVerseText()}</div>
+      {getCurrentVerseText()}
       {renderBooks()}
       {renderChapters()}
       {renderVerses()}
       {selectedVerse !== '' && (
-        <ButtonGroup variant="contained">
-          <Button onClick={handleSubmit}>
+        <div className="submit-button">
+          <Button variant="contained" onClick={handleSubmit}>
             Submit Guess
           </Button>
-        </ButtonGroup>
+        </div>
       )}
     </div>
   );

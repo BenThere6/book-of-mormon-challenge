@@ -1,6 +1,13 @@
+.leaderboard-container {
+    display: flex;
+    justify-content: center; /* Center horizontally */
+    align-items: center; /* Center vertically */
+    height: 100vh; /* Ensure full viewport height */
+    background-color: #f0f0f0;
+}
+
 .leaderboard {
     max-width: 600px;
-    margin: 0 auto;
     padding: 20px;
     background-color: #f0f0f0;
     border: 1px solid #ccc;
@@ -13,10 +20,10 @@
     margin-top: 0;
     font-size: 24px;
     color: #333;
+    text-align: center;
 }
 
 .leaderboard ol {
-    list-style-type: none; /* Remove default list styles */
     padding: 0;
 }
 
@@ -29,11 +36,13 @@
 }
 
 .leaderboard ol li:nth-child(odd) {
-    background-color: #f9f9f9; /* Alternate row background color */
+    background-color: #f9f9f9;
 }
 
 .username {
+    flex: 1; /* Take up remaining space in the flex container */
     padding-left: 15px;
+    padding-right: 100px;
 }
 
 .score {
@@ -55,6 +64,7 @@
 
 .TextField-root {
     margin-bottom: 10px;
+    width: 100%; /* Ensure text fields take full width */
 }
 
 .button-container {
@@ -66,5 +76,5 @@
 }
 
 .highlighted {
-    background-color: yellow !important;
+    background-color: yellow;
 }

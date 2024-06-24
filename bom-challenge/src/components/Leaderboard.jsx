@@ -68,37 +68,39 @@ function Leaderboard({ score, onStartScreen }) {
   };
 
   return (
-    <div className="leaderboard">
-      <h2>Your Current Score: {score}</h2>
-      <h2>Leaderboard</h2>
-      <ol>
-        {leaderboard.map((entry, index) => (
-          <li key={index} className={isUserInTopTen(index) ? 'highlighted' : ''}>
-            <span className="username">{entry.username}</span>
-            <span className="score">{entry.score}</span>
-          </li>
-        ))}
-      </ol>
-      {isSubmitted ? (
-        <div className="play-again">
-          <Button variant="contained" onClick={handlePlayAgain}>Play Again</Button>
-        </div>
-      ) : (
-        <form onSubmit={handleSaveScore}>
-          <TextField
-            label="Username"
-            variant="outlined"
-            type="text"
-            value={username}
-            onChange={(e) => setUsername(e.target.value)}
-            autoComplete="username"
-            fullWidth
-          />
-          <div className="button-container">
-            <Button variant="contained" type="submit">Submit Score</Button>
+    <div className="leaderboard-container">
+      <div className="leaderboard">
+        <h2>Your Current Score: {score}</h2>
+        <h2>Leaderboard</h2>
+        <ol>
+          {leaderboard.map((entry, index) => (
+            <li key={index} className={isUserInTopTen(index) ? 'highlighted' : ''}>
+              <span className="username">{entry.username}</span>
+              <span className="score">{entry.score}</span>
+            </li>
+          ))}
+        </ol>
+        {isSubmitted ? (
+          <div className="play-again">
+            <Button variant="contained" onClick={handlePlayAgain}>Play Again</Button>
           </div>
-        </form>
-      )}
+        ) : (
+          <form onSubmit={handleSaveScore}>
+            <TextField
+              label="Username"
+              variant="outlined"
+              type="text"
+              value={username}
+              onChange={(e) => setUsername(e.target.value)}
+              autoComplete="username"
+              fullWidth
+            />
+            <div className="button-container">
+              <Button variant="contained" type="submit">Submit Score</Button>
+            </div>
+          </form>
+        )}
+      </div>
     </div>
   );
 }

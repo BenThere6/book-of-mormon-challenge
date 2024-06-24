@@ -1,10 +1,13 @@
 import React, { useState, useEffect } from 'react';
-import '../Leaderboard.css'; // Ensure your CSS file is imported correctly
+import '../Leaderboard.css';
+import Button from '@mui/material/Button';
+import TextField from '@mui/material/TextField';
 
 function Leaderboard({ score, onStartScreen }) {
   const [leaderboard, setLeaderboard] = useState([]);
   const [username, setUsername] = useState('');
   const [isSubmitted, setIsSubmitted] = useState(false);
+  const [userRank, setUserRank] = useState(null);
 
   useEffect(() => {
     fetch('http://localhost:5005/leaderboard')
@@ -14,11 +17,22 @@ function Leaderboard({ score, onStartScreen }) {
         }
         return response.json();
       })
-      .then((data) => setLeaderboard(data))
+      .then((data) => {
+        setLeaderboard(data);
+        findUserRank(data);
+      })
       .catch((error) => console.error('Error fetching leaderboard:', error));
   }, []);
 
-  const handleSaveScore = () => {
+  const findUserRank = (data) => {
+    const sortedLeaderboard = [...data].sort((a, b) => b.score - a.score);
+    const userIndex = sortedLeaderboard.findIndex((entry) => entry.username === username && entry.score === score);
+    setUserRank(userIndex !== -1 ? userIndex + 1 : null);
+  };
+
+  const handleSaveScore = (event) => {
+    event.preventDefault(); // Prevent form submission
+
     if (!username) {
       console.error('Username is required');
       return;
@@ -38,6 +52,7 @@ function Leaderboard({ score, onStartScreen }) {
       .then((data) => {
         setLeaderboard(data);
         setIsSubmitted(true); // Set isSubmitted to true after successful submission
+        findUserRank(data); // Update user's rank after leaderboard update
       })
       .catch((error) => console.error('Error saving score:', error));
   };
@@ -48,13 +63,17 @@ function Leaderboard({ score, onStartScreen }) {
     onStartScreen(); // Callback to switch to the start screen component
   };
 
+  const isUserInTopTen = (index) => {
+    return userRank !== null && index === userRank - 1;
+  };
+
   return (
     <div className="leaderboard">
       <h2>Your Current Score: {score}</h2>
       <h2>Leaderboard</h2>
       <ol>
         {leaderboard.map((entry, index) => (
-          <li key={index}>
+          <li key={index} className={isUserInTopTen(index) ? 'highlighted' : ''}>
             <span className="username">{entry.username}</span>
             <span className="score">{entry.score}</span>
           </li>
@@ -62,18 +81,23 @@ function Leaderboard({ score, onStartScreen }) {
       </ol>
       {isSubmitted ? (
         <div className="play-again">
-          <button onClick={handlePlayAgain}>Play Again</button>
+          <Button variant="contained" onClick={handlePlayAgain}>Play Again</Button>
         </div>
       ) : (
-        <div>
-          <input
+        <form onSubmit={handleSaveScore}>
+          <TextField
+            label="Username"
+            variant="outlined"
             type="text"
-            placeholder="Username"
             value={username}
             onChange={(e) => setUsername(e.target.value)}
+            autoComplete="username"
+            fullWidth
           />
-          <button onClick={handleSaveScore}>Submit Score</button>
-        </div>
+          <div className="button-container">
+            <Button variant="contained" type="submit">Submit Score</Button>
+          </div>
+        </form>
       )}
     </div>
   );

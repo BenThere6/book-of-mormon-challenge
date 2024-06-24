@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import Button from '@mui/material/Button';
 import ButtonGroup from '@mui/material/ButtonGroup';
+import '../StartScreen.css';
 
 function StartScreen({ startGame }) {
   const [difficulty, setDifficulty] = useState('easy');
@@ -10,29 +11,31 @@ function StartScreen({ startGame }) {
   };
 
   return (
-    <div style={{ textAlign: 'center' }}>
+    <div className="start-screen">
       <h1>Mormon's Mastery</h1>
-      <ButtonGroup variant="contained">
-        <Button
-          onClick={() => setDifficulty('easy')}
-          color={difficulty === 'easy' ? 'primary' : 'inherit'}
-        >
-          Easy
-        </Button>
-        <Button
-          onClick={() => setDifficulty('medium')}
-          color={difficulty === 'medium' ? 'primary' : 'inherit'}
-        >
-          Medium
-        </Button>
-        <Button
-          onClick={() => setDifficulty('hard')}
-          color={difficulty === 'hard' ? 'primary' : 'inherit'}
-        >
-          Hard
-        </Button>
-      </ButtonGroup>
-      <div style={{ marginTop: '20px' }}>
+      <div className="button-group">
+        <ButtonGroup variant="contained">
+          <Button
+            onClick={() => setDifficulty('easy')}
+            color={difficulty === 'easy' ? 'primary' : 'inherit'}
+          >
+            Easy
+          </Button>
+          <Button
+            onClick={() => setDifficulty('medium')}
+            color={difficulty === 'medium' ? 'primary' : 'inherit'}
+          >
+            Medium
+          </Button>
+          <Button
+            onClick={() => setDifficulty('hard')}
+            color={difficulty === 'hard' ? 'primary' : 'inherit'}
+          >
+            Hard
+          </Button>
+        </ButtonGroup>
+      </div>
+      <div className="button-container">
         <Button variant="contained" onClick={handleStart}>Start Game</Button>
       </div>
     </div>

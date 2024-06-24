@@ -13,6 +13,7 @@ function Game({ difficulty, endGame }) {
   const [selectedBook, setSelectedBook] = useState('');
   const [selectedChapter, setSelectedChapter] = useState('');
   const [selectedVerse, setSelectedVerse] = useState('');
+  const [currentStep, setCurrentStep] = useState('book');
 
   function getRandomVerse() {
     let keys;
@@ -30,15 +31,21 @@ function Game({ difficulty, endGame }) {
     setSelectedBook(book);
     setSelectedChapter('');
     setSelectedVerse('');
+    setCurrentStep('chapter');
   }
 
   function handleChapterSelection(chapter) {
     setSelectedChapter(chapter);
     setSelectedVerse('');
+    setCurrentStep('verse');
   }
 
   function handleVerseSelection(verse) {
     setSelectedVerse(verse);
+  }
+
+  function handleBack(step) {
+    setCurrentStep(step);
   }
 
   const handleSubmit = () => {
@@ -80,6 +87,7 @@ function Game({ difficulty, endGame }) {
     setSelectedBook('');
     setSelectedChapter('');
     setSelectedVerse('');
+    setCurrentStep('book');
   };
 
   const calculateAccuracy = (guess, verseToCheck) => {
@@ -178,6 +186,7 @@ function Game({ difficulty, endGame }) {
 
     return (
       <div className="selection-section">
+        <h3>Selected Book: {selectedBook}</h3>
         <h3>Select Chapter:</h3>
         <ButtonGroup variant="outlined" className="button-group">
           {chapters.map((chapter) => (
@@ -186,6 +195,9 @@ function Game({ difficulty, endGame }) {
             </Button>
           ))}
         </ButtonGroup>
+        <Button variant="contained" onClick={() => handleBack('book')}>
+          Back
+        </Button>
       </div>
     );
   };
@@ -198,6 +210,8 @@ function Game({ difficulty, endGame }) {
 
     return (
       <div className="selection-section">
+        <h3>Selected Book: {selectedBook}</h3>
+        <h3>Selected Chapter: {selectedChapter}</h3>
         <h3>Select Verse:</h3>
         <ButtonGroup variant="outlined" className="button-group">
           {verses.map((verse) => (
@@ -210,6 +224,9 @@ function Game({ difficulty, endGame }) {
             </Button>
           ))}
         </ButtonGroup>
+        <Button variant="contained" onClick={() => handleBack('chapter')}>
+          Back
+        </Button>
       </div>
     );
   };
@@ -243,9 +260,9 @@ function Game({ difficulty, endGame }) {
       <h2>Score: {score}</h2>
       <h2>Lives: {lives}</h2>
       {getCurrentVerseText()}
-      {renderBooks()}
-      {renderChapters()}
-      {renderVerses()}
+      {currentStep === 'book' && renderBooks()}
+      {currentStep === 'chapter' && renderChapters()}
+      {currentStep === 'verse' && renderVerses()}
       {selectedVerse !== '' && (
         <div className="submit-button">
           <Button variant="contained" onClick={handleSubmit}>

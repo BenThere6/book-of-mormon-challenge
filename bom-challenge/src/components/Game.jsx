@@ -1,7 +1,9 @@
 import React, { useState } from 'react';
 import verses from '../verses';
 import verseCounts from '../verseCounts';
-import scriptureMasteryVerses from '../scriptureMasteryVerses'; // Importing the updated verses
+import scriptureMasteryVerses from '../scriptureMasteryVerses';
+import Button from '@mui/material/Button';
+import ButtonGroup from '@mui/material/ButtonGroup';
 
 function Game({ difficulty, endGame }) {
   const [score, setScore] = useState(0);
@@ -18,7 +20,7 @@ function Game({ difficulty, endGame }) {
     } else {
       keys = Object.keys(verses)
     }
-    
+
     const randomKey = keys[Math.floor(Math.random() * keys.length)];
     return randomKey;
   }
@@ -93,7 +95,7 @@ function Game({ difficulty, endGame }) {
 
   const calculateAccuracy = (guess, verseToCheck) => {
     console.log('Calculating accuracy for guess:', guess.book + ' ' + guess.chapter + ':' + guess.verse, 'to verse:', verseToCheck);
-  
+
     let verseList;
     if (verseToCheck.includes(', ')) {
       verseList = verseToCheck.split(', ').map(entry => entry.trim());
@@ -106,15 +108,15 @@ function Game({ difficulty, endGame }) {
     const lastSpaceIndex = firstVerseEntry.lastIndexOf(' ');
     const correctBook = firstVerseEntry.substring(0, lastSpaceIndex);
     const correctChapterVerse = firstVerseEntry.substring(lastSpaceIndex + 1);
-  
+
     const [correctChapterStr] = correctChapterVerse.split(':');
     const correctChapter = parseInt(correctChapterStr, 10);
-  
+
     // Initialize variables to track the best accuracy
     let bestAccuracy = 0;
     let chapterDifference;
     let verseDifference;
-  
+
     verseList.forEach(verseEntry => {
       const [correctChapterStr, correctVerseNumStr] = verseEntry.split(':');
       const refList = correctChapterStr.split(' ');
@@ -124,18 +126,18 @@ function Game({ difficulty, endGame }) {
       // console.log(string_split)
       // console.log(string_split[string_split.length - 1])
       const correctVerseNum = parseInt(correctVerseNumStr, 10);
-  
+
       chapterDifference = Math.abs(parseInt(guess.chapter, 10) - correctChapter);
-      console.log('chapter guess: '+guess.chapter)
-      console.log('correct chapter: '+correctChapter)
+      console.log('chapter guess: ' + guess.chapter)
+      console.log('correct chapter: ' + correctChapter)
       verseDifference = Math.abs(parseInt(guess.verse, 10) - correctVerseNum);
-  
+
       if (guess.book === correctBook) {
         const { multiplier, chapterRange, verseRange } = getDifficultySettings(difficulty);
-  
+
         let accuracy = 15 * multiplier;
         console.log('Guessed the correct book. +', 15 * multiplier, 'points.');
-  
+
         if (chapterDifference === 0) {
           accuracy += 50 * multiplier;
           console.log('Guessed the correct chapter exactly. +', 50 * multiplier, 'points.');
@@ -143,7 +145,7 @@ function Game({ difficulty, endGame }) {
           accuracy += 30 * multiplier;
           console.log('Guessed the chapter within range. +', 30 * multiplier, 'points.');
         }
-  
+
         if (verseDifference === 0) {
           if (chapterDifference <= chapterRange) {
             accuracy += 100 * multiplier;
@@ -161,13 +163,13 @@ function Game({ difficulty, endGame }) {
             console.log('Guessed the verse within range, but chapter was off. +', 50 * multiplier / 4, 'points.');
           }
         }
-  
+
         if (accuracy > bestAccuracy) {
           bestAccuracy = accuracy;
         }
       }
     });
-  
+
     if (bestAccuracy > 0) {
       console.log('Total accuracy calculated:', bestAccuracy);
       return bestAccuracy;
@@ -176,7 +178,7 @@ function Game({ difficulty, endGame }) {
       return 0;
     }
   };
-  
+
   const getDifficultySettings = (difficulty) => {
     switch (difficulty) {
       case 'easy':
@@ -194,11 +196,13 @@ function Game({ difficulty, endGame }) {
   const renderBooks = () => (
     <div>
       <h3>Select Book:</h3>
-      {Object.keys(verseCounts).map((book) => (
-        <button key={book} onClick={() => handleBookSelection(book)} disabled={selectedBook === book}>
-          {book}
-        </button>
-      ))}
+      <ButtonGroup variant="outlined">
+        {Object.keys(verseCounts).map((book) => (
+          <Button key={book} onClick={() => handleBookSelection(book)} disabled={selectedBook === book}>
+            {book}
+          </Button>
+        ))}
+      </ButtonGroup>
     </div>
   );
 
@@ -211,11 +215,13 @@ function Game({ difficulty, endGame }) {
     return (
       <div>
         <h3>Select Chapter:</h3>
-        {chapters.map((chapter) => (
-          <button key={chapter} onClick={() => handleChapterSelection(chapter)} disabled={selectedChapter === chapter}>
-            {chapter}
-          </button>
-        ))}
+        <ButtonGroup variant="outlined">
+          {chapters.map((chapter) => (
+            <Button key={chapter} onClick={() => handleChapterSelection(chapter)} disabled={selectedChapter === chapter}>
+              {chapter}
+            </Button>
+          ))}
+        </ButtonGroup>
       </div>
     );
   };
@@ -229,15 +235,17 @@ function Game({ difficulty, endGame }) {
     return (
       <div>
         <h3>Select Verse:</h3>
-        {verses.map((verse) => (
-          <button
-            key={verse}
-            onClick={() => handleVerseSelection(verse)}
-            disabled={selectedVerse === verse}
-          >
-            {verse}
-          </button>
-        ))}
+        <ButtonGroup variant="outlined">
+          {verses.map((verse) => (
+            <Button
+              key={verse}
+              onClick={() => handleVerseSelection(verse)}
+              disabled={selectedVerse === verse}
+            >
+              {verse}
+            </Button>
+          ))}
+        </ButtonGroup>
       </div>
     );
   };
@@ -249,7 +257,7 @@ function Game({ difficulty, endGame }) {
     } else {
       verseText = verses[currentVerse];
     }
-    
+
     if (!verseText) {
       console.log(`Verse Not Found for key: ${currentVerse}`);
       return 'Verse Not Found';
@@ -276,9 +284,11 @@ function Game({ difficulty, endGame }) {
       {renderChapters()}
       {renderVerses()}
       {selectedVerse !== '' && (
-        <button onClick={handleSubmit}>
-          Submit Guess
-        </button>
+        <ButtonGroup variant="contained">
+          <Button onClick={handleSubmit}>
+            Submit Guess
+          </Button>
+        </ButtonGroup>
       )}
     </div>
   );

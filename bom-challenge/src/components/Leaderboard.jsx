@@ -97,6 +97,7 @@ function Leaderboard({ score, onStartScreen }) {
             />
             <div className="button-container">
               <Button variant="contained" type="submit">Submit Score</Button>
+              <Button variant="contained" onClick={handlePlayAgain}>Play Again</Button>
             </div>
           </form>
         )}

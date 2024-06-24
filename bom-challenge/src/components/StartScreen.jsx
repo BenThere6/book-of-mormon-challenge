@@ -35,7 +35,7 @@ function StartScreen({ startGame }) {
           </Button>
         </ButtonGroup>
       </div>
-      <div className="button-container">
+      <div className="start-button-container">
         <Button variant="contained" onClick={handleStart}>Start Game</Button>
       </div>
     </div>

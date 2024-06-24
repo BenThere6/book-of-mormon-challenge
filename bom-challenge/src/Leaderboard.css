@@ -1,8 +1,11 @@
 .leaderboard-container {
     display: flex;
-    justify-content: center; /* Center horizontally */
-    align-items: center; /* Center vertically */
-    height: 100vh; /* Ensure full viewport height */
+    justify-content: center;
+    /* Center horizontally */
+    align-items: center;
+    /* Center vertically */
+    height: 100vh;
+    /* Ensure full viewport height */
     background-color: #f0f0f0;
 }
 
@@ -40,7 +43,8 @@
 }
 
 .username {
-    flex: 1; /* Take up remaining space in the flex container */
+    flex: 1;
+    /* Take up remaining space in the flex container */
     padding-left: 15px;
     padding-right: 100px;
 }
@@ -64,11 +68,21 @@
 
 .TextField-root {
     margin-bottom: 10px;
-    width: 100%; /* Ensure text fields take full width */
+    width: 100%;
+    /* Ensure text fields take full width */
 }
 
+/* Example CSS for button container */
 .button-container {
+    display: flex;
+    justify-content: space-between;
+    /* Adjust as needed */
     margin-top: 10px;
+}
+
+.button-container button {
+    width: 48%;
+    /* Adjust width as needed */
 }
 
 .Button-root {

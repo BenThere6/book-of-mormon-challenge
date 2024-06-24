@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import StartScreen from './components/StartScreen';
 import Game from './components/Game';
 import Leaderboard from './components/Leaderboard';
-import './App.css'; // Import your CSS styles here
+// import './App.css';
 
 function App() {
   const [difficulty, setDifficulty] = useState(null);

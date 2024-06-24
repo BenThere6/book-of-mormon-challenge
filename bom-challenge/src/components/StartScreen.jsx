@@ -1,4 +1,6 @@
 import React, { useState } from 'react';
+import Button from '@mui/material/Button';
+import ButtonGroup from '@mui/material/ButtonGroup';
 
 function StartScreen({ startGame }) {
   const [difficulty, setDifficulty] = useState('easy');
@@ -7,30 +9,32 @@ function StartScreen({ startGame }) {
     startGame(difficulty);
   };
 
-  const difficultyDetails = {
-    easy: { multiplier: 1, chapterRange: 8, verseRange: 12 },
-    medium: { multiplier: 8, chapterRange: 7, verseRange: 10 },
-    hard: { multiplier: 12, chapterRange: 3, verseRange: 8 },
-  };
-
-  const selectedDifficultyDetails = difficultyDetails[difficulty];
-
   return (
-    <div>
-      <h1>Book of Mormon Challenge</h1>
-      <div>
-        <button onClick={() => setDifficulty('easy')}>Easy</button>
-        <button onClick={() => setDifficulty('medium')}>Medium</button>
-        <button onClick={() => setDifficulty('hard')}>Hard</button>
+    <div style={{ textAlign: 'center' }}>
+      <h1>Mormon's Mastery</h1>
+      <ButtonGroup variant="contained">
+        <Button
+          onClick={() => setDifficulty('easy')}
+          color={difficulty === 'easy' ? 'primary' : 'inherit'}
+        >
+          Easy
+        </Button>
+        <Button
+          onClick={() => setDifficulty('medium')}
+          color={difficulty === 'medium' ? 'primary' : 'inherit'}
+        >
+          Medium
+        </Button>
+        <Button
+          onClick={() => setDifficulty('hard')}
+          color={difficulty === 'hard' ? 'primary' : 'inherit'}
+        >
+          Hard
+        </Button>
+      </ButtonGroup>
+      <div style={{ marginTop: '20px' }}>
+        <Button variant="contained" onClick={handleStart}>Start Game</Button>
       </div>
-      <div>
-        <p><strong>Difficulty: {difficulty.charAt(0).toUpperCase() + difficulty.slice(1)}</strong></p>
-        {difficulty === 'easy' && <p>This difficulty uses exclusively scripture mastery verses.</p>}
-        <p>Points Multiplier: {selectedDifficultyDetails.multiplier}</p>
-        <p>Chapter Range: {selectedDifficultyDetails.chapterRange}</p>
-        <p>Verse Range: {selectedDifficultyDetails.verseRange}</p>
-      </div>
-      <button onClick={handleStart}>Start Game</button>
     </div>
   );
 }

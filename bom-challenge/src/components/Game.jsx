@@ -187,7 +187,7 @@ function Game({ difficulty, endGame }) {
         return { multiplier: 12, chapterRange: 3, verseRange: 8 };
       default:
         console.log("Invalid difficulty level");
-        return { multiplier: 1, chapterRange: 2, verseRange: 5 };
+        return { multiplier: 1, chapterRange: 8, verseRange: 12 };
     }
   };
 

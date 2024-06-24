@@ -10,7 +10,7 @@ function StartScreen({ startGame }) {
   const difficultyDetails = {
     easy: { multiplier: 1, chapterRange: 8, verseRange: 12 },
     medium: { multiplier: 8, chapterRange: 7, verseRange: 10 },
-    hard: { multiplier: 12, chapterRange: 3, verseRange: 4 },
+    hard: { multiplier: 12, chapterRange: 3, verseRange: 8 },
   };
 
   const selectedDifficultyDetails = difficultyDetails[difficulty];

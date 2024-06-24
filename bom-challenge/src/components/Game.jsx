@@ -184,7 +184,7 @@ function Game({ difficulty, endGame }) {
       case 'medium':
         return { multiplier: 8, chapterRange: 7, verseRange: 10 };
       case 'hard':
-        return { multiplier: 12, chapterRange: 3, verseRange: 4 };
+        return { multiplier: 12, chapterRange: 3, verseRange: 8 };
       default:
         console.log("Invalid difficulty level");
         return { multiplier: 1, chapterRange: 2, verseRange: 5 };

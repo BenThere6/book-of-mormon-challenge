@@ -180,7 +180,7 @@ function Game({ difficulty, endGame }) {
   const getDifficultySettings = (difficulty) => {
     switch (difficulty) {
       case 'easy':
-        return { multiplier: 1, chapterRange: 2, verseRange: 5 };
+        return { multiplier: 1, chapterRange: 8, verseRange: 12 };
       case 'medium':
         return { multiplier: 8, chapterRange: 7, verseRange: 10 };
       case 'hard':

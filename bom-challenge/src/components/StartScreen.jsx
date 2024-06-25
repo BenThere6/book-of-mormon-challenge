@@ -12,7 +12,7 @@ function StartScreen({ startGame }) {
 
   return (
     <div className="start-screen">
-      <h1>Mormon's Mastery</h1>
+      <h1>Lehi's Legacy</h1>
       <div className="button-group">
         <ButtonGroup variant="contained">
           <Button

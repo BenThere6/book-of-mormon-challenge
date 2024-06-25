@@ -168,13 +168,13 @@ function Game({ difficulty, endGame }) {
   const renderBooks = () => (
     <div className="selection-section">
       <h3>Select Book:</h3>
-      <ButtonGroup variant="outlined" className="button-group">
+      {/* <ButtonGroup variant="outlined" className="button-group"> */}
         {Object.keys(verseCounts).map((book) => (
-          <Button key={book} onClick={() => handleBookSelection(book)} disabled={selectedBook === book}>
+          <Button variant="outlined"key={book} onClick={() => handleBookSelection(book)} disabled={selectedBook === book}>
             {book}
           </Button>
         ))}
-      </ButtonGroup>
+      {/* </ButtonGroup> */}
     </div>
   );
 
@@ -188,13 +188,13 @@ function Game({ difficulty, endGame }) {
       <div className="selection-section">
         <h3>Selected Book: {selectedBook}</h3>
         <h3>Select Chapter:</h3>
-        <ButtonGroup variant="outlined" className="button-group">
+        {/* <ButtonGroup variant="outlined" className="button-group"> */}
           {chapters.map((chapter) => (
-            <Button key={chapter} onClick={() => handleChapterSelection(chapter)} disabled={selectedChapter === chapter}>
+            <Button variant="outlined"key={chapter} onClick={() => handleChapterSelection(chapter)} disabled={selectedChapter === chapter}>
               {chapter}
             </Button>
           ))}
-        </ButtonGroup>
+        {/* </ButtonGroup> */}
         <Button variant="contained" onClick={() => handleBack('book')}>
           Back
         </Button>
@@ -213,9 +213,10 @@ function Game({ difficulty, endGame }) {
         <h3>Selected Book: {selectedBook}</h3>
         <h3>Selected Chapter: {selectedChapter}</h3>
         <h3>Select Verse:</h3>
-        <ButtonGroup variant="outlined" className="button-group">
+        {/* <ButtonGroup variant="outlined" className="button-group"> */}
           {verses.map((verse) => (
             <Button
+              variant="outlined"
               key={verse}
               onClick={() => handleVerseSelection(verse)}
               disabled={selectedVerse === verse}
@@ -223,7 +224,7 @@ function Game({ difficulty, endGame }) {
               {verse}
             </Button>
           ))}
-        </ButtonGroup>
+        {/* </ButtonGroup> */}
         <Button variant="contained" onClick={() => handleBack('chapter')}>
           Back
         </Button>

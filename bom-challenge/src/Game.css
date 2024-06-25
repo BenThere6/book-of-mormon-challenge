@@ -1,6 +1,7 @@
 .game-container {
     max-width: 800px;
-    margin: auto; /* Center horizontally */
+    margin: auto;
+    /* Center horizontally */
     padding: 20px;
     background-color: #f0f0f0;
     border: 1px solid #ccc;
@@ -35,11 +36,27 @@
 
 .button-group {
     display: flex;
-    flex-wrap: wrap; /* Ensure buttons wrap to the next line */
-    justify-content: center; /* Center align buttons */
+    flex-wrap: wrap;
+    /* Ensure buttons wrap to the next line */
+    justify-content: center;
+    /* Center align buttons */
     margin-top: 10px;
 }
 
 .submit-button {
     margin-top: 20px;
+}
+
+.header {
+    display: flex;
+    justify-content: space-between;
+    padding: 10px;
+}
+
+.score {
+    margin: 0;
+}
+
+.lives {
+    margin: 0;
 }

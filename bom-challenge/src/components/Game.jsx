@@ -3,7 +3,6 @@ import verses from '../verses';
 import verseCounts from '../verseCounts';
 import scriptureMasteryVerses from '../scriptureMasteryVerses';
 import Button from '@mui/material/Button';
-import ButtonGroup from '@mui/material/ButtonGroup';
 import Dialog from '@mui/material/Dialog';
 import DialogActions from '@mui/material/DialogActions';
 import DialogContent from '@mui/material/DialogContent';
@@ -269,8 +268,10 @@ function Game({ difficulty, endGame }) {
 
   return (
     <div className="game-container">
-      <h2>Score: {score}</h2>
-      <h2>Lives: {lives}</h2>
+      <div className="header">
+        <h2 className="score">Score: {score}</h2>
+        <h2 className="lives">Lives: {lives}</h2>
+      </div>
       {getCurrentVerseText()}
       {currentStep === 'book' && renderBooks()}
       {currentStep === 'chapter' && renderChapters()}

@@ -10,7 +10,7 @@ function Leaderboard({ score, onStartScreen }) {
   const [userRank, setUserRank] = useState(null);
 
   useEffect(() => {
-    fetch('http://localhost:5005/leaderboard')
+    fetch('https://leaderboard-api-1.netlify.app/leaderboard')
       .then((response) => {
         if (!response.ok) {
           throw new Error('Network response was not ok');
@@ -38,7 +38,7 @@ function Leaderboard({ score, onStartScreen }) {
       return;
     }
 
-    fetch('http://localhost:5005/leaderboard', {
+    fetch('https://leaderboard-api-1.netlify.app/leaderboard', {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify({ username, score }),

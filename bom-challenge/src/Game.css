@@ -1,7 +1,6 @@
 .game-container {
     max-width: 800px;
     margin: auto;
-    /* Center horizontally */
     padding: 20px;
     background-color: #f0f0f0;
     border: 1px solid #ccc;
@@ -27,6 +26,8 @@
 
 .selection-section {
     margin-bottom: 20px;
+    position: relative;
+    /* Make this relative to position back button absolutely */
 }
 
 .selection-section h3 {
@@ -37,30 +38,13 @@
 .button-group {
     display: flex;
     flex-wrap: wrap;
-    /* Ensure buttons wrap to the next line */
     justify-content: center;
-    /* Center align buttons */
     margin-top: 10px;
 }
 
 .submit-button {
     margin-top: 20px;
 }
-
-.header {
-    display: flex;
-    justify-content: space-between;
-    padding: 10px;
-}
-
-.score {
-    margin: 0;
-}
-
-.lives {
-    margin: 0;
-}
-
 
 .header {
     display: flex;
@@ -87,9 +71,20 @@
 .guess-text {
     font-size: larger;
     font-family: 'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande', 'Lucida Sans', Arial, sans-serif;
-    color:brown;
+    color: brown;
 }
 
 .submit-button {
     margin-top: 20px;
+}
+
+.back-button {
+    position: absolute;
+    left: 0px;
+    top: 32px;
+}
+
+.back-container {
+    width: 100%;
+    display: flex;
 }

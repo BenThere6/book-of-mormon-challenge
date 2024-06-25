@@ -8,6 +8,8 @@ import DialogActions from '@mui/material/DialogActions';
 import DialogContent from '@mui/material/DialogContent';
 import DialogContentText from '@mui/material/DialogContentText';
 import DialogTitle from '@mui/material/DialogTitle';
+import IconButton from '@mui/material/IconButton';
+import ArrowBack from '@mui/icons-material/ArrowBack';
 import '../Game.css';
 
 function Game({ difficulty, endGame }) {
@@ -183,6 +185,11 @@ function Game({ difficulty, endGame }) {
 
   const renderBooks = () => (
     <div className="selection-section">
+      <div className='back-container'>
+          <IconButton className="back-button" disabled='true'>
+            <ArrowBack />
+          </IconButton>
+        </div>
       <h3>Book</h3>
       {Object.keys(verseCounts).map((book) => (
         <Button variant="outlined" key={book} onClick={() => handleBookSelection(book)}>
@@ -200,16 +207,17 @@ function Game({ difficulty, endGame }) {
 
     return (
       <div className="selection-section">
-        {/* <h3>{selectedBook}</h3> */}
+        <div className='back-container'>
+          <IconButton className="back-button" onClick={() => handleBack('book')}>
+            <ArrowBack />
+          </IconButton>
+        </div>
         <h3>Chapter</h3>
         {chapters.map((chapter) => (
           <Button variant="outlined" key={chapter} onClick={() => handleChapterSelection(chapter)}>
             {chapter}
           </Button>
         ))}
-        <Button variant="contained" onClick={() => handleBack('book')}>
-          Back
-        </Button>
       </div>
     );
   };
@@ -222,9 +230,11 @@ function Game({ difficulty, endGame }) {
 
     return (
       <div className="selection-section">
-        {/* <h3>
-          {selectedBook} {selectedChapter}:{selectedVerse}
-        </h3> */}
+        <div className='back-container'>
+          <IconButton className="back-button" onClick={() => handleBack('chapter')}>
+            <ArrowBack />
+          </IconButton>
+        </div>
         <h3>Verse</h3>
         {verses.map((verse) => (
           <Button
@@ -235,9 +245,6 @@ function Game({ difficulty, endGame }) {
             {verse}
           </Button>
         ))}
-        <Button variant="contained" onClick={() => handleBack('chapter')}>
-          Back
-        </Button>
       </div>
     );
   };

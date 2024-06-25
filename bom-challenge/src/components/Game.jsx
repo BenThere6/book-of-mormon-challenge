@@ -186,16 +186,25 @@ function Game({ difficulty, endGame }) {
   const renderBooks = () => (
     <div className="selection-section">
       <div className='back-container'>
-          <IconButton className="back-button" disabled='true'>
-            <ArrowBack />
-          </IconButton>
-        </div>
+        <IconButton className="back-button" disabled={true}>
+          <ArrowBack />
+        </IconButton>
+      </div>
       <h3>Book</h3>
       {Object.keys(verseCounts).map((book) => (
         <Button variant="outlined" key={book} onClick={() => handleBookSelection(book)}>
           {book}
         </Button>
       ))}
+      <div className="submit-button">
+        <Button
+          variant="contained"
+          disabled={currentStep !== 'verse'} // Disable the button if currentStep is not 'verse'
+          onClick={handleSubmit}
+        >
+          Submit Guess
+        </Button>
+      </div>
     </div>
   );
 
@@ -218,6 +227,15 @@ function Game({ difficulty, endGame }) {
             {chapter}
           </Button>
         ))}
+        <div className="submit-button">
+          <Button
+            variant="contained"
+            disabled={currentStep !== 'verse'} // Disable the button if currentStep is not 'verse'
+            onClick={handleSubmit}
+          >
+            Submit Guess
+          </Button>
+        </div>
       </div>
     );
   };
@@ -245,6 +263,15 @@ function Game({ difficulty, endGame }) {
             {verse}
           </Button>
         ))}
+        <div className="submit-button">
+          <Button
+            variant="contained"
+            disabled={currentStep !== 'verse'} // Disable the button if currentStep is not 'verse'
+            onClick={handleSubmit}
+          >
+            Submit Guess
+          </Button>
+        </div>
       </div>
     );
   };
@@ -286,13 +313,13 @@ function Game({ difficulty, endGame }) {
       {currentStep === 'book' && renderBooks()}
       {currentStep === 'chapter' && renderChapters()}
       {currentStep === 'verse' && renderVerses()}
-      {selectedVerse !== '' && (
+      {/* {selectedVerse !== '' && (
         <div className="submit-button">
           <Button variant="contained" onClick={handleSubmit}>
             Submit Guess
           </Button>
         </div>
-      )}
+      )} */}
       <Dialog open={showModal} onClose={handleCloseModal}>
         <DialogTitle>Guess Results</DialogTitle>
         <DialogContent>

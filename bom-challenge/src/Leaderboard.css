@@ -1,15 +1,12 @@
 .leaderboard-container {
     display: flex;
     justify-content: center;
-    /* Center horizontally */
     align-items: center;
-    /* Center vertically */
     height: 100vh;
-    /* Ensure full viewport height */
     background-color: #f0f0f0;
-}
-
-.leaderboard {
+  }
+  
+  .leaderboard {
     max-width: 600px;
     padding: 20px;
     background-color: #f0f0f0;
@@ -17,78 +14,79 @@
     border-radius: 8px;
     box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
     font-family: 'Roboto', sans-serif;
-}
-
-.leaderboard h2 {
+  }
+  
+  .leaderboard h2 {
     margin-top: 0;
     font-size: 24px;
     color: #333;
     text-align: center;
-}
-
-.leaderboard ol {
+  }
+  
+  .leaderboard ol {
     padding: 0;
-}
-
-.leaderboard ol li {
+  }
+  
+  .leaderboard ol li {
     display: flex;
     justify-content: space-between;
     align-items: center;
     padding: 8px 0;
     border-bottom: 1px solid #ccc;
-}
-
-.leaderboard ol li:nth-child(odd) {
+  }
+  
+  .leaderboard ol li:nth-child(odd) {
     background-color: #f9f9f9;
-}
-
-.username {
+  }
+  
+  .rank {
+    width: 30px;
+    text-align: center;
+    font-weight: bold;
+  }
+  
+  .username {
     flex: 1;
-    /* Take up remaining space in the flex container */
     padding-left: 15px;
     padding-right: 100px;
-}
-
-.score {
+  }
+  
+  .score {
     font-weight: bold;
     color: #007bff;
     padding-right: 15px;
-}
-
-.play-again {
+  }
+  
+  .play-again {
     margin-top: 20px;
     text-align: center;
-}
-
-.form-container {
+  }
+  
+  .form-container {
     display: flex;
     flex-direction: column;
     align-items: center;
-}
-
-.TextField-root {
+  }
+  
+  .TextField-root {
     margin-bottom: 10px;
     width: 100%;
-    /* Ensure text fields take full width */
-}
-
-/* Example CSS for button container */
-.button-container {
+  }
+  
+  .button-container {
     display: flex;
     justify-content: space-between;
-    /* Adjust as needed */
     margin-top: 10px;
-}
-
-.button-container button {
+  }
+  
+  .button-container button {
     width: 48%;
-    /* Adjust width as needed */
-}
-
-.Button-root {
+  }
+  
+  .Button-root {
     width: 100%;
-}
-
-.highlighted {
-    background-color: yellow;
-}
+  }
+  
+  .highlighted {
+    background-color: yellow !important;
+  }  

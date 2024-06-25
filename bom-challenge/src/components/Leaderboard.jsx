@@ -75,6 +75,7 @@ function Leaderboard({ score, onStartScreen }) {
         <ol>
           {leaderboard.map((entry, index) => (
             <li key={index} className={isUserInTopTen(index) ? 'highlighted' : ''}>
+              <span className="rank">{index + 1}.</span>
               <span className="username">{entry.username}</span>
               <span className="score">{entry.score}</span>
             </li>

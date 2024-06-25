@@ -104,7 +104,7 @@ function Game({ difficulty, endGame }) {
     const correctChapterVerse = firstVerseEntry.substring(lastSpaceIndex + 1);
 
     const [correctChapterStr] = correctChapterVerse.split(':');
-    const correctChapter = parseInt(correctChapterStr, 10);
+    // const correctChapter = parseInt(correctChapterStr, 10);
 
     let bestAccuracy = 0;
     let chapterDifference;
@@ -170,7 +170,9 @@ function Game({ difficulty, endGame }) {
       <h3>Select Book:</h3>
       {/* <ButtonGroup variant="outlined" className="button-group"> */}
         {Object.keys(verseCounts).map((book) => (
-          <Button variant="outlined"key={book} onClick={() => handleBookSelection(book)} disabled={selectedBook === book}>
+          <Button variant="outlined"key={book} onClick={() => handleBookSelection(book)} 
+          // disabled={selectedBook === book}
+          >
             {book}
           </Button>
         ))}
@@ -186,11 +188,13 @@ function Game({ difficulty, endGame }) {
 
     return (
       <div className="selection-section">
-        <h3>Selected Book: {selectedBook}</h3>
+        <h3>{selectedBook}</h3>
         <h3>Select Chapter:</h3>
         {/* <ButtonGroup variant="outlined" className="button-group"> */}
           {chapters.map((chapter) => (
-            <Button variant="outlined"key={chapter} onClick={() => handleChapterSelection(chapter)} disabled={selectedChapter === chapter}>
+            <Button variant="outlined"key={chapter} onClick={() => handleChapterSelection(chapter)} 
+            // disabled={selectedChapter === chapter}
+            >
               {chapter}
             </Button>
           ))}
@@ -210,8 +214,7 @@ function Game({ difficulty, endGame }) {
 
     return (
       <div className="selection-section">
-        <h3>Selected Book: {selectedBook}</h3>
-        <h3>Selected Chapter: {selectedChapter}</h3>
+        <h3>{selectedBook} {selectedChapter}:{selectedVerse}</h3>
         <h3>Select Verse:</h3>
         {/* <ButtonGroup variant="outlined" className="button-group"> */}
           {verses.map((verse) => (
@@ -219,7 +222,7 @@ function Game({ difficulty, endGame }) {
               variant="outlined"
               key={verse}
               onClick={() => handleVerseSelection(verse)}
-              disabled={selectedVerse === verse}
+              // disabled={selectedVerse === verse}
             >
               {verse}
             </Button>

@@ -183,7 +183,7 @@ function Game({ difficulty, endGame }) {
 
   const renderBooks = () => (
     <div className="selection-section">
-      <h3>Select Book:</h3>
+      <h3>Book</h3>
       {Object.keys(verseCounts).map((book) => (
         <Button variant="outlined" key={book} onClick={() => handleBookSelection(book)}>
           {book}
@@ -200,8 +200,8 @@ function Game({ difficulty, endGame }) {
 
     return (
       <div className="selection-section">
-        <h3>{selectedBook}</h3>
-        <h3>Select Chapter:</h3>
+        {/* <h3>{selectedBook}</h3> */}
+        <h3>Chapter</h3>
         {chapters.map((chapter) => (
           <Button variant="outlined" key={chapter} onClick={() => handleChapterSelection(chapter)}>
             {chapter}
@@ -222,10 +222,10 @@ function Game({ difficulty, endGame }) {
 
     return (
       <div className="selection-section">
-        <h3>
+        {/* <h3>
           {selectedBook} {selectedChapter}:{selectedVerse}
-        </h3>
-        <h3>Select Verse:</h3>
+        </h3> */}
+        <h3>Verse</h3>
         {verses.map((verse) => (
           <Button
             variant="outlined"
@@ -271,6 +271,9 @@ function Game({ difficulty, endGame }) {
       <div className="header">
         <h2 className="score">Score: {score}</h2>
         <h2 className="lives">Lives: {lives}</h2>
+      </div>
+      <div className="guess-box">
+        <p className='guess-text'>{selectedBook} {selectedChapter && `${selectedChapter}:${selectedVerse}`}</p>
       </div>
       {getCurrentVerseText()}
       {currentStep === 'book' && renderBooks()}

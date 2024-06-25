@@ -60,3 +60,36 @@
 .lives {
     margin: 0;
 }
+
+
+.header {
+    display: flex;
+    justify-content: space-between;
+    padding: 10px;
+}
+
+.score {
+    margin: 0;
+}
+
+.lives {
+    margin: 0;
+}
+
+.guess-box {
+    border: 1px solid #ccc;
+    padding: 10px;
+    margin: 10px 0;
+    min-height: 50px;
+    border-radius: 15px;
+}
+
+.guess-text {
+    font-size: larger;
+    font-family: 'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande', 'Lucida Sans', Arial, sans-serif;
+    color:brown;
+}
+
+.submit-button {
+    margin-top: 20px;
+}

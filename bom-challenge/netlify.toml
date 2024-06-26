@@ -1,3 +1,7 @@
+[build]
+  command = "npm run build"  # or "yarn build"
+  publish = "dist"
+
 [[headers]]
   for = "/*"
   [headers.values]
@@ -7,3 +11,8 @@
   for = "/assets/*.js"
   [headers.values]
     Content-Type = "application/javascript"
+
+[[redirects]]
+  from = "/*"
+  to = "/index.html"
+  status = 200

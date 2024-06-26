@@ -8,12 +8,12 @@
     Content-Type = "text/html; charset=UTF-8"
 
 [[headers]]
-  for = "/assets/*.js"
+  for = "/assets/js/*.js"
   [headers.values]
     Content-Type = "application/javascript"
 
 [[headers]]
-  for = "/assets/*.css"
+  for = "/assets/css/*.css"
   [headers.values]
     Content-Type = "text/css"
 

@@ -59,16 +59,20 @@ function Leaderboard({ score, onStartScreen }) {
       })
       .then(data => {
         console.log('Score saved, updated leaderboard:', data);
-        setLeaderboard(data);
+        if (Array.isArray(data)) {
+          setLeaderboard([...data]); // Ensure data is iterable before spreading
+        } else {
+          console.error('Unexpected leaderboard data format:', data);
+        }
         setIsSubmitted(true); // Set isSubmitted to true after successful submission
         findUserRank(data); // Update user's rank after leaderboard update
       })
       .catch(error => {
         console.error('Error saving score:', error);
-        // Add additional error handling or logging as needed
+        // Additional error handling or logging as needed
       });
   };
-    
+  
   const handlePlayAgain = () => {
     setUsername('');
     setIsSubmitted(false);

@@ -10,29 +10,33 @@ function Leaderboard({ score, onStartScreen }) {
   const [userRank, setUserRank] = useState(null);
 
   useEffect(() => {
+    fetchLeaderboard();
+  }, []);
+
+  const fetchLeaderboard = () => {
     fetch('https://bens-api-dd63362f50db.herokuapp.com/leaderboard')
-      .then((response) => {
+      .then(response => {
         if (!response.ok) {
           console.log("API response was not 'ok'");
           throw new Error('Network response was not ok');
         }
         return response.json();
       })
-      .then((data) => {
+      .then(data => {
         console.log('Leaderboard data fetched:', data);
         setLeaderboard(data);
         findUserRank(data);
       })
-      .catch((error) => console.error('Error fetching leaderboard:', error));
-  }, []);
+      .catch(error => console.error('Error fetching leaderboard:', error));
+  };
 
   const findUserRank = (data) => {
     const sortedLeaderboard = [...data].sort((a, b) => b.score - a.score);
-    const userIndex = sortedLeaderboard.findIndex((entry) => entry.username === username && entry.score === score);
+    const userIndex = sortedLeaderboard.findIndex(entry => entry.username === username && entry.score === score);
     setUserRank(userIndex !== -1 ? userIndex + 1 : null);
   };
 
-  const handleSaveScore = (event) => {
+  const handleSaveScore = event => {
     event.preventDefault(); // Prevent form submission
 
     if (!username) {
@@ -47,19 +51,19 @@ function Leaderboard({ score, onStartScreen }) {
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify({ username, score }),
     })
-      .then((response) => {
+      .then(response => {
         if (!response.ok) {
           throw new Error('Network response was not ok');
         }
         return response.json();
       })
-      .then((data) => {
+      .then(data => {
         console.log('Score saved, updated leaderboard:', data);
         setLeaderboard(data);
         setIsSubmitted(true); // Set isSubmitted to true after successful submission
         findUserRank(data); // Update user's rank after leaderboard update
       })
-      .catch((error) => console.error('Error saving score:', error));
+      .catch(error => console.error('Error saving score:', error));
   };
 
   const handlePlayAgain = () => {
@@ -68,7 +72,7 @@ function Leaderboard({ score, onStartScreen }) {
     onStartScreen(); // Callback to switch to the start screen component
   };
 
-  const isUserInTopTen = (index) => {
+  const isUserInTopTen = index => {
     return userRank !== null && index === userRank - 1;
   };
 

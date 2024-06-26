@@ -14,6 +14,7 @@ function Leaderboard({ score, onStartScreen }) {
       .then((response) => {
         if (!response.ok) {
           console.log("API response was not 'ok'")
+          console.log('so sorry, mate')
           throw new Error('Network response was not ok');
         }
         console.log(response.json)

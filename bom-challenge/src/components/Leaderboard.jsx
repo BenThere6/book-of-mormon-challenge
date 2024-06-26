@@ -10,7 +10,7 @@ function Leaderboard({ score, onStartScreen }) {
   const [userRank, setUserRank] = useState(null);
 
   useEffect(() => {
-    fetch('https://leaderboard-api-1.netlify.app/.netlify/functions/leaderboard')
+    fetch('https://bens-api-dd63362f50db.herokuapp.com/leaderboard')
       .then((response) => {
         if (!response.ok) {
           console.log("API response was not 'ok'");
@@ -42,7 +42,7 @@ function Leaderboard({ score, onStartScreen }) {
 
     console.log('Saving score:', { username, score });
 
-    fetch('https://leaderboard-api-1.netlify.app/.netlify/functions/leaderboard', {
+    fetch('https://bens-api-dd63362f50db.herokuapp.com/leaderboard', {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify({ username, score }),

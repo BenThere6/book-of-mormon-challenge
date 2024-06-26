@@ -61,7 +61,7 @@ function Leaderboard({ score, onStartScreen }) {
         console.log('Score saved, updated leaderboard:', data);
   
         if (Array.isArray(data)) {
-          setLeaderboard([...data]); // Ensure data is iterable before spreading
+          setLeaderboard(data); // Update leaderboard state with the returned data
         } else {
           console.error('Unexpected leaderboard data format:', data);
         }

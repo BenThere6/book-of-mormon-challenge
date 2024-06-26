@@ -16,9 +16,10 @@ function Leaderboard({ score, onStartScreen }) {
           console.log("API response was not 'ok'");
           throw new Error('Network response was not ok');
         }
-        return response.json(); // Call response.json() here
+        return response.json();
       })
       .then((data) => {
+        console.log('Leaderboard data fetched:', data);
         setLeaderboard(data);
         findUserRank(data);
       })
@@ -39,6 +40,8 @@ function Leaderboard({ score, onStartScreen }) {
       return;
     }
 
+    console.log('Saving score:', { username, score });
+
     fetch('https://leaderboard-api-1.netlify.app/.netlify/functions/leaderboard', {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
@@ -48,9 +51,10 @@ function Leaderboard({ score, onStartScreen }) {
         if (!response.ok) {
           throw new Error('Network response was not ok');
         }
-        return response.json(); // Call response.json() here
+        return response.json();
       })
       .then((data) => {
+        console.log('Score saved, updated leaderboard:', data);
         setLeaderboard(data);
         setIsSubmitted(true); // Set isSubmitted to true after successful submission
         findUserRank(data); // Update user's rank after leaderboard update

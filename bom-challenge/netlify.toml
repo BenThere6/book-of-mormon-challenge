@@ -7,11 +7,6 @@
   [headers.values]
     Content-Type = "text/html; charset=UTF-8"
 
-[[headers]]
-  for = "/assets/*.js"
-  [headers.values]
-    Content-Type = "application/javascript"
-
 [[redirects]]
   from = "/*"
   to = "/index.html"

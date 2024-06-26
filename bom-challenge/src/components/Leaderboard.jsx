@@ -10,7 +10,7 @@ function Leaderboard({ score, onStartScreen }) {
   const [userRank, setUserRank] = useState(null);
 
   useEffect(() => {
-    fetch('https://leaderboard-api-1.app/.netlify/functions/leaderboard')
+    fetch('https://leaderboard-api-1.netlify.app/.netlify/functions/leaderboard')
       .then((response) => {
         if (!response.ok) {
           console.log("API response was not 'ok'")

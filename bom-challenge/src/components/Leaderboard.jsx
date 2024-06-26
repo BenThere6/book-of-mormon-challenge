@@ -13,12 +13,10 @@ function Leaderboard({ score, onStartScreen }) {
     fetch('https://leaderboard-api-1.netlify.app/.netlify/functions/leaderboard')
       .then((response) => {
         if (!response.ok) {
-          console.log("API response was not 'ok'")
-          console.log('so sorry, mate')
+          console.log("API response was not 'ok'");
           throw new Error('Network response was not ok');
         }
-        console.log(response.json)
-        return response.json();
+        return response.json(); // Call response.json() here
       })
       .then((data) => {
         setLeaderboard(data);
@@ -50,7 +48,7 @@ function Leaderboard({ score, onStartScreen }) {
         if (!response.ok) {
           throw new Error('Network response was not ok');
         }
-        return response.json();
+        return response.json(); // Call response.json() here
       })
       .then((data) => {
         setLeaderboard(data);

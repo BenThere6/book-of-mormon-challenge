@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import '../Leaderboard.css';
+import '../assets/css/Leaderboard.css';
 import Button from '@mui/material/Button';
 import TextField from '@mui/material/TextField';
 

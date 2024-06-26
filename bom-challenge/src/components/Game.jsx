@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
-import verses from '../verses';
-import verseCounts from '../verseCounts';
-import scriptureMasteryVerses from '../scriptureMasteryVerses';
+import verses from '../assets/js/verses';
+import verseCounts from '../assets/js/verseCounts';
+import scriptureMasteryVerses from '../assets/js/scriptureMasteryVerses';
 import Button from '@mui/material/Button';
 import Dialog from '@mui/material/Dialog';
 import DialogActions from '@mui/material/DialogActions';
@@ -10,7 +10,7 @@ import DialogContentText from '@mui/material/DialogContentText';
 import DialogTitle from '@mui/material/DialogTitle';
 import IconButton from '@mui/material/IconButton';
 import ArrowBack from '@mui/icons-material/ArrowBack';
-import '../Game.css';
+import '../assets/css/Game.css';
 
 function Game({ difficulty, endGame }) {
   const [score, setScore] = useState(0);

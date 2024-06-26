@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import Button from '@mui/material/Button';
 import ButtonGroup from '@mui/material/ButtonGroup';
-import '../StartScreen.css';
+import '../assets/css/StartScreen.css';
 
 function StartScreen({ startGame }) {
   const [difficulty, setDifficulty] = useState('easy');

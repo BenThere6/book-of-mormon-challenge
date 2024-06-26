@@ -13,8 +13,10 @@ function Leaderboard({ score, onStartScreen }) {
     fetch('https://leaderboard-api-1.app/.netlify/functions/leaderboard')
       .then((response) => {
         if (!response.ok) {
+          console.log("API response was not 'ok'")
           throw new Error('Network response was not ok');
         }
+        console.log(response.json)
         return response.json();
       })
       .then((data) => {

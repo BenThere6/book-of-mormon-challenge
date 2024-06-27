@@ -16,7 +16,6 @@ import '../assets/css/Game.css';
 let countNewVerses = 0;
 
 function Game({ difficulty, endGame, usedVerses }) {
-  // console.log('here 1')
   const [score, setScore] = useState(0);
   const [lives, setLives] = useState(3);
   const [currentVerse, setCurrentVerse] = useState(getRandomVerse());
@@ -26,54 +25,43 @@ function Game({ difficulty, endGame, usedVerses }) {
   const [currentStep, setCurrentStep] = useState('book');
   const [showModal, setShowModal] = useState(false);
   const [modalContent, setModalContent] = useState({});
-  
+
 
   function getRandomVerse(needNewVerse) {
     countNewVerses += 1;
-    console.log(countNewVerses)
-    // console.log('2')
-    // console.log('a')
-    
+
     let verseKeys;
 
-      // console.log('b')
-      if (difficulty === 'easy' || difficulty === null) {
-        verseKeys = Object.keys(scriptureMasteryVerses);
-      } else {
-        verseKeys = Object.keys(verses);
-      }
-      // console.log('c')
+    if (difficulty === 'easy' || difficulty === null) {
+      verseKeys = Object.keys(scriptureMasteryVerses);
+    } else {
+      verseKeys = Object.keys(verses);
+    }
 
-      // Check if the game should end due to verse count limit
-      if (usedVerses.length >= 25 && (difficulty === 'easy' || difficulty === null)) {
-        endGame(score);
-        return null;
-      }
-      // console.log('d')
+    // Check if the game should end due to verse count limit
+    if (usedVerses.length >= 25 && (difficulty === 'easy' || difficulty === null)) {
+      endGame(score);
+      return null;
+    }
 
-      let randomKey = verseKeys[Math.floor(Math.random() * verseKeys.length)];
+    let randomKey = verseKeys[Math.floor(Math.random() * verseKeys.length)];
 
-      // console.log('e')
-      // Ensure the selected verse hasn't been used before
-      while (usedVerses.includes(randomKey)) {
-        randomKey = verseKeys[Math.floor(Math.random() * verseKeys.length)];
-      }
+    // Ensure the selected verse hasn't been used before
+    while (usedVerses.includes(randomKey)) {
+      randomKey = verseKeys[Math.floor(Math.random() * verseKeys.length)];
+    }
 
-      // console.log('f')
-      // Add the selected verse to usedVerses
-      if (needNewVerse || countNewVerses === 2) {
-        usedVerses.push(randomKey);
-      } 
+    // Add the selected verse to usedVerses
+    if (needNewVerse || countNewVerses === 2) {
+      usedVerses.push(randomKey);
+    }
 
-      console.log('usedVerses: ' + usedVerses)
-      // console.log('random key: ' + randomKey)
+    console.log('usedVerses: ' + usedVerses)
 
-      // console.log('g')
-      return randomKey;
+    return randomKey;
   }
 
   function handleBookSelection(book) {
-    // console.log('here 3')
     setSelectedBook(book);
     setSelectedChapter('');
     setSelectedVerse('');
@@ -81,19 +69,16 @@ function Game({ difficulty, endGame, usedVerses }) {
   }
 
   function handleChapterSelection(chapter) {
-    // console.log('here 4')
     setSelectedChapter(chapter);
     setSelectedVerse('');
     setCurrentStep('verse');
   }
 
   function handleVerseSelection(verse) {
-    // console.log('here 5')
     setSelectedVerse(verse);
   }
 
   function handleBack(step) {
-    // console.log('here 6')
     setSelectedVerse('');
     if (step == 'book') {
       setSelectedChapter('');
@@ -103,7 +88,6 @@ function Game({ difficulty, endGame, usedVerses }) {
   }
 
   const handleSubmit = () => {
-    // console.log('here 7')
     const guess = { book: selectedBook, chapter: selectedChapter, verse: selectedVerse };
     const guessAccuracy = calculateAccuracy(guess, currentVerse);
 
@@ -149,7 +133,6 @@ function Game({ difficulty, endGame, usedVerses }) {
   };
 
   const handleCloseModal = () => {
-    // console.log('here 8')
     if (lives === 0) {
       endGame(score);
     } else {
@@ -163,7 +146,6 @@ function Game({ difficulty, endGame, usedVerses }) {
   };
 
   const calculateAccuracy = (guess, verseToCheck) => {
-    // console.log('here 9')
     let verseList;
     if (verseToCheck.includes(', ')) {
       verseList = verseToCheck.split(', ').map((entry) => entry.trim());
@@ -224,7 +206,6 @@ function Game({ difficulty, endGame, usedVerses }) {
   };
 
   const getDifficultySettings = (difficulty) => {
-    // console.log('here 10')
     switch (difficulty) {
       case 'easy':
         if (!scriptureMasteryVerses) {
@@ -269,7 +250,6 @@ function Game({ difficulty, endGame, usedVerses }) {
   );
 
   const renderChapters = () => {
-    // console.log('here 11')
     if (!selectedBook) return null;
 
     const chapterCount = verseCounts[selectedBook].length;
@@ -302,7 +282,6 @@ function Game({ difficulty, endGame, usedVerses }) {
   };
 
   const renderVerses = () => {
-    // console.log('here 12')
     if (!selectedBook || !selectedChapter) return null;
 
     const verseCount = verseCounts[selectedBook][selectedChapter - 1];
@@ -342,7 +321,6 @@ function Game({ difficulty, endGame, usedVerses }) {
   };
 
   const getCurrentVerseText = () => {
-    // console.log('here 13')
     let verseText;
     if (difficulty === 'easy' || difficulty === null) {
       verseText = scriptureMasteryVerses[currentVerse];

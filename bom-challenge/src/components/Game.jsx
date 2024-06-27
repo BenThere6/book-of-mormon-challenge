@@ -24,16 +24,17 @@ function Game({ difficulty, endGame }) {
   const [modalContent, setModalContent] = useState({});
 
   function getRandomVerse() {
-    let keys;
+    let verseKeys;
+  
     if (difficulty === 'easy') {
-      keys = Object.keys(scriptureMasteryVerses);
+      verseKeys = Object.keys(scriptureMasteryVerses);
     } else {
-      keys = Object.keys(verses);
+      verseKeys = Object.keys(verses);
     }
-
-    const randomKey = keys[Math.floor(Math.random() * keys.length)];
+  
+    const randomKey = verseKeys[Math.floor(Math.random() * verseKeys.length)];
     return randomKey;
-  }
+  }  
 
   function handleBookSelection(book) {
     setSelectedBook(book);
@@ -172,6 +173,10 @@ function Game({ difficulty, endGame }) {
   const getDifficultySettings = (difficulty) => {
     switch (difficulty) {
       case 'easy':
+        if (!scriptureMasteryVerses) {
+          console.log('Scripture Mastery Verses not loaded.');
+          return { multiplier: 1, chapterRange: 8, verseRange: 12 };
+        }
         return { multiplier: 1, chapterRange: 8, verseRange: 12 };
       case 'medium':
         return { multiplier: 8, chapterRange: 7, verseRange: 10 };
@@ -283,14 +288,14 @@ function Game({ difficulty, endGame }) {
     } else {
       verseText = verses[currentVerse];
     }
-
+  
     if (!verseText) {
       console.log(`Verse Not Found for key: ${currentVerse}`);
       return 'Verse Not Found';
     }
-
+  
     const versesArray = verseText.split('\n\n');
-
+  
     return (
       <div className="verse-text">
         {versesArray.map((verse, index) => (
@@ -299,7 +304,7 @@ function Game({ difficulty, endGame }) {
       </div>
     );
   };
-
+  
   return (
     <div className="game-container">
       <div className="header">

@@ -252,10 +252,13 @@ function Game({ difficulty, endGame }) {
 
   const renderVerses = () => {
     if (!selectedBook || !selectedChapter) return null;
-
+  
     const verseCount = verseCounts[selectedBook][selectedChapter - 1];
     const verses = Array.from({ length: verseCount }, (_, index) => index + 1);
-
+  
+    // Check if selectedVerse is not empty
+    const isSubmitEnabled = currentStep === 'verse' && selectedVerse !== '';
+  
     return (
       <div className="selection-section">
         <div className='back-container'>
@@ -276,7 +279,7 @@ function Game({ difficulty, endGame }) {
         <div className="submit-button">
           <Button
             variant="contained"
-            disabled={currentStep !== 'verse'} // Disable the button if currentStep is not 'verse'
+            disabled={!isSubmitEnabled} // Disable the button if isSubmitEnabled is false
             onClick={handleSubmit}
           >
             Submit Guess
@@ -285,7 +288,7 @@ function Game({ difficulty, endGame }) {
       </div>
     );
   };
-
+  
   const getCurrentVerseText = () => {
     let verseText;
     if (difficulty === 'easy' || difficulty === null) {

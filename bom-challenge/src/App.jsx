@@ -16,7 +16,7 @@ function App() {
 
   const endGame = (finalScore) => {
     setScore(finalScore);
-    navigate('/leaderboard');
+    navigate('/leaderboard', { state: { score: finalScore } });
   };
 
   const handleStartScreen = () => {

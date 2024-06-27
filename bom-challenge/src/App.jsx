@@ -3,7 +3,6 @@ import { BrowserRouter as Router, Routes, Route, useNavigate } from 'react-route
 import StartScreen from './components/StartScreen';
 import Game from './components/Game';
 import Leaderboard from './components/Leaderboard';
-// import './App.css';
 
 function App() {
   const [difficulty, setDifficulty] = useState(null);
@@ -31,18 +30,9 @@ function App() {
   return (
     <div className="App">
       <Routes>
-        <Route
-          path="/"
-          element={<StartScreen startGame={startGame} />}
-        />
-        <Route
-          path="/game"
-          element={<Game difficulty={difficulty} endGame={endGame} />}
-        />
-        <Route
-          path="/leaderboard"
-          element={<Leaderboard score={score} onStartScreen={handleStartScreen} />}
-        />
+        <Route path="/" element={<StartScreen startGame={startGame} />} />
+        <Route path="/game" element={<Game difficulty={difficulty} endGame={endGame} />} />
+        <Route path="/leaderboard" element={<Leaderboard score={score} onStartScreen={handleStartScreen} />} />
       </Routes>
     </div>
   );

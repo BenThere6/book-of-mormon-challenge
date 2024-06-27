@@ -5,11 +5,11 @@ import ButtonGroup from '@mui/material/ButtonGroup';
 import '../assets/css/StartScreen.css';
 
 function StartScreen() {
-  const [difficulty, setDifficulty] = useState('easy');
+  const [difficulty, setDifficulty] = useState('easy'); // Default to 'easy'
   const navigate = useNavigate();
 
   const handleStart = () => {
-    navigate('/game', { state: { difficulty } });
+    navigate('/game', { state: { difficulty } }); // Pass difficulty as part of state
   };
 
   const handleViewLeaderboard = () => {

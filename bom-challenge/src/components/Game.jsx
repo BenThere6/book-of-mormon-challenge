@@ -13,6 +13,7 @@ import ArrowBack from '@mui/icons-material/ArrowBack';
 import '../assets/css/Game.css';
 
 function Game({ difficulty, endGame }) {
+  console.log('this is the difficulty!!!' + difficulty)
   const [score, setScore] = useState(0);
   const [lives, setLives] = useState(3);
   const [currentVerse, setCurrentVerse] = useState(getRandomVerse());
@@ -74,6 +75,7 @@ function Game({ difficulty, endGame }) {
     const correctChapter = parseInt(correctChapterStr, 10);
     const chapterDifference = Math.abs(parseInt(guess.chapter, 10) - correctChapter);
 
+    console.log(difficulty)
     const { chapterRange } = getDifficultySettings(difficulty);
 
     let newScore = score;
@@ -137,6 +139,7 @@ function Game({ difficulty, endGame }) {
       chapterDifference = Math.abs(parseInt(guess.chapter, 10) - correctChapter);
 
       if (guess.book === correctBook) {
+        console.log(difficulty)
         const { multiplier, chapterRange, verseRange } = getDifficultySettings(difficulty);
 
         let accuracy = 15 * multiplier;

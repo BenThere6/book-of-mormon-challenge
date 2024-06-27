@@ -1,13 +1,15 @@
 import React, { useState } from 'react';
+import { useNavigate } from 'react-router-dom';
 import Button from '@mui/material/Button';
 import ButtonGroup from '@mui/material/ButtonGroup';
 import '../assets/css/StartScreen.css';
 
-function StartScreen({ startGame }) {
+function StartScreen() {
   const [difficulty, setDifficulty] = useState('easy');
+  const navigate = useNavigate();
 
   const handleStart = () => {
-    startGame(difficulty);
+    navigate('/game', { state: { difficulty } });
   };
 
   return (
@@ -37,6 +39,7 @@ function StartScreen({ startGame }) {
       </div>
       <div className="start-button-container">
         <Button variant="contained" onClick={handleStart}>Start Game</Button>
+        <Button variant="contained" onClick={() => navigate('/leaderboard')}>View Leaderboard</Button>
       </div>
     </div>
   );

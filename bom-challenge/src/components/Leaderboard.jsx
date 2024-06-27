@@ -1,9 +1,13 @@
 import React, { useState, useEffect } from 'react';
+import { useLocation, useNavigate } from 'react-router-dom';
 import '../assets/css/Leaderboard.css';
 import Button from '@mui/material/Button';
 import TextField from '@mui/material/TextField';
 
-function Leaderboard({ score, onStartScreen }) {
+function Leaderboard() {
+  const location = useLocation();
+  const navigate = useNavigate(); // Add the useNavigate hook
+  const score = location.state?.score || 0;
   const [leaderboard, setLeaderboard] = useState([]);
   const [username, setUsername] = useState('');
   const [isSubmitted, setIsSubmitted] = useState(false);
@@ -71,7 +75,7 @@ function Leaderboard({ score, onStartScreen }) {
   const handlePlayAgain = () => {
     setUsername('');
     setIsSubmitted(false);
-    onStartScreen(); // Callback to switch to the start screen component
+    navigate('/'); // Navigate to the start screen
   };
 
   const isUserInTopTen = index => {

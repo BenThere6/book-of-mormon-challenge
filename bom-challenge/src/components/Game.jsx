@@ -13,6 +13,8 @@ import ArrowBack from '@mui/icons-material/ArrowBack';
 import { useNavigate } from 'react-router-dom';
 import '../assets/css/Game.css';
 
+let countNewVerses = 0;
+
 function Game({ difficulty, endGame, usedVerses }) {
   // console.log('here 1')
   const [score, setScore] = useState(0);
@@ -24,8 +26,11 @@ function Game({ difficulty, endGame, usedVerses }) {
   const [currentStep, setCurrentStep] = useState('book');
   const [showModal, setShowModal] = useState(false);
   const [modalContent, setModalContent] = useState({});
+  
 
   function getRandomVerse(needNewVerse) {
+    countNewVerses += 1;
+    console.log(countNewVerses)
     // console.log('2')
     // console.log('a')
     
@@ -41,7 +46,7 @@ function Game({ difficulty, endGame, usedVerses }) {
 
       // Check if the game should end due to verse count limit
       if (usedVerses.length >= 25 && (difficulty === 'easy' || difficulty === null)) {
-        
+        endGame(score);
         return null;
       }
       // console.log('d')
@@ -56,9 +61,10 @@ function Game({ difficulty, endGame, usedVerses }) {
 
       // console.log('f')
       // Add the selected verse to usedVerses
-      if (needNewVerse) {
+      if (needNewVerse || countNewVerses === 2) {
         usedVerses.push(randomKey);
-      }
+      } 
+
       console.log('usedVerses: ' + usedVerses)
       // console.log('random key: ' + randomKey)
 

@@ -56,6 +56,11 @@ function Game({ difficulty, endGame }) {
   }
 
   function handleBack(step) {
+    setSelectedVerse('');
+    if(step=='book') {
+      setSelectedChapter('');
+      console.log(step)
+    }
     setCurrentStep(step);
   }
 
@@ -220,10 +225,10 @@ function Game({ difficulty, endGame }) {
 
   const renderChapters = () => {
     if (!selectedBook) return null;
-
+  
     const chapterCount = verseCounts[selectedBook].length;
     const chapters = Array.from({ length: chapterCount }, (_, index) => index + 1);
-
+  
     return (
       <div className="selection-section">
         <div className='back-container'>

@@ -10,6 +10,7 @@ import DialogContentText from '@mui/material/DialogContentText';
 import DialogTitle from '@mui/material/DialogTitle';
 import IconButton from '@mui/material/IconButton';
 import ArrowBack from '@mui/icons-material/ArrowBack';
+import { useNavigate } from 'react-router-dom';
 import '../assets/css/Game.css';
 
 function Game({ difficulty, endGame }) {
@@ -191,10 +192,11 @@ function Game({ difficulty, endGame }) {
     }
   };
 
+  const navigate = useNavigate();
   const renderBooks = () => (
     <div className="selection-section">
       <div className='back-container'>
-        <IconButton className="back-button" disabled={true}>
+        <IconButton className="back-button" onClick={() => navigate('/')}>
           <ArrowBack />
         </IconButton>
       </div>

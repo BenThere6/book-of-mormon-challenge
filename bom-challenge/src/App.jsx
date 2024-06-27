@@ -8,6 +8,7 @@ function App() {
   const [difficulty, setDifficulty] = useState(null);
   const [score, setScore] = useState(0);
   const navigate = useNavigate();
+  let usedVerses = [];
 
   const startGame = (selectedDifficulty) => {
     setDifficulty(selectedDifficulty);
@@ -27,7 +28,7 @@ function App() {
     <div className="App">
       <Routes>
         <Route path="/" element={<StartScreen startGame={startGame} />} />
-        <Route path="/game" element={<Game difficulty={difficulty} endGame={endGame} />} />
+        <Route path="/game" element={<Game difficulty={difficulty} endGame={endGame} usedVerses={usedVerses}/>} />
         <Route path="/leaderboard" element={<Leaderboard score={score} onStartScreen={handleStartScreen} />} />
       </Routes>
     </div>

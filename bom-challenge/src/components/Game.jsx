@@ -13,8 +13,8 @@ import ArrowBack from '@mui/icons-material/ArrowBack';
 import { useNavigate } from 'react-router-dom';
 import '../assets/css/Game.css';
 
-function Game({ difficulty, endGame }) {
-  console.log('this is the difficulty!!!' + difficulty)
+function Game({ difficulty, endGame, usedVerses }) {
+  // console.log('here 1')
   const [score, setScore] = useState(0);
   const [lives, setLives] = useState(3);
   const [currentVerse, setCurrentVerse] = useState(getRandomVerse());
@@ -25,26 +25,49 @@ function Game({ difficulty, endGame }) {
   const [showModal, setShowModal] = useState(false);
   const [modalContent, setModalContent] = useState({});
 
-  useEffect(() => {
-    if (lives === 0) {
-      endGame(score);
-    }
-  }, [lives, score, endGame]);
-
-  function getRandomVerse() {
+  function getRandomVerse(needNewVerse) {
+    // console.log('2')
+    // console.log('a')
+    
     let verseKeys;
-  
-    if (difficulty === 'easy' || difficulty === null) {
-      verseKeys = Object.keys(scriptureMasteryVerses);
-    } else {
-      verseKeys = Object.keys(verses);
-    }
-  
-    const randomKey = verseKeys[Math.floor(Math.random() * verseKeys.length)];
-    return randomKey;
-  }  
+
+      // console.log('b')
+      if (difficulty === 'easy' || difficulty === null) {
+        verseKeys = Object.keys(scriptureMasteryVerses);
+      } else {
+        verseKeys = Object.keys(verses);
+      }
+      // console.log('c')
+
+      // Check if the game should end due to verse count limit
+      if (usedVerses.length >= 25 && (difficulty === 'easy' || difficulty === null)) {
+        
+        return null;
+      }
+      // console.log('d')
+
+      let randomKey = verseKeys[Math.floor(Math.random() * verseKeys.length)];
+
+      // console.log('e')
+      // Ensure the selected verse hasn't been used before
+      while (usedVerses.includes(randomKey)) {
+        randomKey = verseKeys[Math.floor(Math.random() * verseKeys.length)];
+      }
+
+      // console.log('f')
+      // Add the selected verse to usedVerses
+      if (needNewVerse) {
+        usedVerses.push(randomKey);
+      }
+      console.log('usedVerses: ' + usedVerses)
+      // console.log('random key: ' + randomKey)
+
+      // console.log('g')
+      return randomKey;
+  }
 
   function handleBookSelection(book) {
+    // console.log('here 3')
     setSelectedBook(book);
     setSelectedChapter('');
     setSelectedVerse('');
@@ -52,18 +75,21 @@ function Game({ difficulty, endGame }) {
   }
 
   function handleChapterSelection(chapter) {
+    // console.log('here 4')
     setSelectedChapter(chapter);
     setSelectedVerse('');
     setCurrentStep('verse');
   }
 
   function handleVerseSelection(verse) {
+    // console.log('here 5')
     setSelectedVerse(verse);
   }
 
   function handleBack(step) {
+    // console.log('here 6')
     setSelectedVerse('');
-    if(step=='book') {
+    if (step == 'book') {
       setSelectedChapter('');
       console.log(step)
     }
@@ -71,9 +97,10 @@ function Game({ difficulty, endGame }) {
   }
 
   const handleSubmit = () => {
+    // console.log('here 7')
     const guess = { book: selectedBook, chapter: selectedChapter, verse: selectedVerse };
     const guessAccuracy = calculateAccuracy(guess, currentVerse);
-  
+
     const lastSpaceIndex = currentVerse.lastIndexOf(' ');
     const refSplit = currentVerse.split(' ');
     let correctBook;
@@ -86,49 +113,51 @@ function Game({ difficulty, endGame }) {
     const [correctChapterStr] = correctChapterVerse.split(':');
     const correctChapter = parseInt(correctChapterStr, 10);
     const chapterDifference = Math.abs(parseInt(guess.chapter, 10) - correctChapter);
-  
+
     const { chapterRange } = getDifficultySettings(difficulty);
-  
+
     let newScore = score;
     let lifeLost = false;
-  
+
     if (guessAccuracy > 0) {
       newScore += guessAccuracy;
       setScore(newScore);
     }
-  
+
     if (chapterDifference > chapterRange || guess.book !== correctBook) {
       lifeLost = true;
     }
-  
+
     setModalContent({
       guess,
       correctVerse: currentVerse,
       pointsEarned: guessAccuracy,
       lifeLost,
     });
-  
+
     setShowModal(true);
-  
+
     if (lifeLost) {
       setLives((prevLives) => prevLives - 1);
     }
   };
-  
+
   const handleCloseModal = () => {
-    if (lives === 1) {
+    // console.log('here 8')
+    if (lives === 0) {
       endGame(score);
     } else {
       setShowModal(false);
-      setCurrentVerse(getRandomVerse());
+      setCurrentVerse(getRandomVerse(true));
       setSelectedBook('');
       setSelectedChapter('');
       setSelectedVerse('');
       setCurrentStep('book');
     }
   };
-  
+
   const calculateAccuracy = (guess, verseToCheck) => {
+    // console.log('here 9')
     let verseList;
     if (verseToCheck.includes(', ')) {
       verseList = verseToCheck.split(', ').map((entry) => entry.trim());
@@ -189,6 +218,7 @@ function Game({ difficulty, endGame }) {
   };
 
   const getDifficultySettings = (difficulty) => {
+    // console.log('here 10')
     switch (difficulty) {
       case 'easy':
         if (!scriptureMasteryVerses) {
@@ -233,11 +263,12 @@ function Game({ difficulty, endGame }) {
   );
 
   const renderChapters = () => {
+    // console.log('here 11')
     if (!selectedBook) return null;
-  
+
     const chapterCount = verseCounts[selectedBook].length;
     const chapters = Array.from({ length: chapterCount }, (_, index) => index + 1);
-  
+
     return (
       <div className="selection-section">
         <div className='back-container'>
@@ -265,14 +296,15 @@ function Game({ difficulty, endGame }) {
   };
 
   const renderVerses = () => {
+    // console.log('here 12')
     if (!selectedBook || !selectedChapter) return null;
-  
+
     const verseCount = verseCounts[selectedBook][selectedChapter - 1];
     const verses = Array.from({ length: verseCount }, (_, index) => index + 1);
-  
+
     // Check if selectedVerse is not empty
     const isSubmitEnabled = currentStep === 'verse' && selectedVerse !== '';
-  
+
     return (
       <div className="selection-section">
         <div className='back-container'>
@@ -302,22 +334,23 @@ function Game({ difficulty, endGame }) {
       </div>
     );
   };
-  
+
   const getCurrentVerseText = () => {
+    // console.log('here 13')
     let verseText;
     if (difficulty === 'easy' || difficulty === null) {
       verseText = scriptureMasteryVerses[currentVerse];
     } else {
       verseText = verses[currentVerse];
     }
-  
+
     if (!verseText) {
       console.log(`Verse Not Found for key: ${currentVerse}`);
       return 'Verse Not Found';
     }
-  
+
     const versesArray = verseText.split('\n\n');
-  
+
     return (
       <div className="verse-text">
         {versesArray.map((verse, index) => (
@@ -326,7 +359,7 @@ function Game({ difficulty, endGame }) {
       </div>
     );
   };
-  
+
   return (
     <div className="game-container">
       <div className="header">

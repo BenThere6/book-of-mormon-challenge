@@ -9,7 +9,7 @@ function StartScreen() {
   const navigate = useNavigate();
 
   const handleStart = () => {
-    navigate('/game', { state: { difficulty } }); // Pass difficulty as part of state
+    navigate('/game', { state: { difficulty } });
   };
 
   const handleViewLeaderboard = () => {

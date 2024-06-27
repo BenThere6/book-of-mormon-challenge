@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import verses from '../assets/js/verses';
 import verseCounts from '../assets/js/verseCounts';
 import scriptureMasteryVerses from '../assets/js/scriptureMasteryVerses';
@@ -24,6 +24,12 @@ function Game({ difficulty, endGame }) {
   const [currentStep, setCurrentStep] = useState('book');
   const [showModal, setShowModal] = useState(false);
   const [modalContent, setModalContent] = useState({});
+
+  useEffect(() => {
+    if (lives === 0) {
+      endGame(score);
+    }
+  }, [lives, score, endGame]);
 
   function getRandomVerse() {
     let verseKeys;
@@ -101,29 +107,27 @@ function Game({ difficulty, endGame }) {
       pointsEarned: guessAccuracy,
       lifeLost,
     });
-    setShowModal(true);
-  };  
-
-  const handleCloseModal = () => {
-    setShowModal(false);
-    setCurrentVerse(getRandomVerse());
-    setSelectedBook('');
-    setSelectedChapter('');
-    setSelectedVerse('');
-    setCurrentStep('book');
   
-    // Decrement lives after closing the modal
-    if (modalContent.lifeLost) {
-      setLives((prevLives) => {
-        if (prevLives === 1) {
-          endGame(score);
-          return prevLives;
-        }
-        return prevLives - 1;
-      });
+    setShowModal(true);
+  
+    if (lifeLost) {
+      setLives((prevLives) => prevLives - 1);
     }
-  };  
-
+  };
+  
+  const handleCloseModal = () => {
+    if (lives === 1) {
+      endGame(score);
+    } else {
+      setShowModal(false);
+      setCurrentVerse(getRandomVerse());
+      setSelectedBook('');
+      setSelectedChapter('');
+      setSelectedVerse('');
+      setCurrentStep('book');
+    }
+  };
+  
   const calculateAccuracy = (guess, verseToCheck) => {
     let verseList;
     if (verseToCheck.includes(', ')) {

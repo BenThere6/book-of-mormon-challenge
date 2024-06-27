@@ -7,23 +7,19 @@ import Leaderboard from './components/Leaderboard';
 function App() {
   const [difficulty, setDifficulty] = useState(null);
   const [score, setScore] = useState(0);
-  const [gameState, setGameState] = useState('start');
   const navigate = useNavigate();
 
   const startGame = (selectedDifficulty) => {
     setDifficulty(selectedDifficulty);
-    setGameState('game');
     navigate('/game');
   };
 
   const endGame = (finalScore) => {
     setScore(finalScore);
-    setGameState('leaderboard');
     navigate('/leaderboard');
   };
 
   const handleStartScreen = () => {
-    setGameState('start');
     navigate('/');
   };
 

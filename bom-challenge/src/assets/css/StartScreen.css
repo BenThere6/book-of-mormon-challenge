@@ -27,3 +27,8 @@
 .start-button-container {
     margin-top: 20px;
 }
+
+#viewLeaderboardBtn {
+    margin-bottom: 20px;
+    padding:0;
+}

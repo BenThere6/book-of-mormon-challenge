@@ -1,100 +1,102 @@
 .leaderboard-container {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    height: 100vh;
-    background-color: #f0f0f0;
-  }
-  
-  .leaderboard {
-    max-width: 600px;
-    padding: 20px;
-    background-color: #f0f0f0;
-    border: 1px solid #ccc;
-    border-radius: 8px;
-    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
-    font-family: 'Roboto', sans-serif;
-  }
-  
-  .leaderboard h2 {
-    margin-top: 0;
-    font-size: 24px;
-    color: #333;
-    text-align: center;
-  }
-  
-  .leaderboard ol {
-    padding: 0;
-  }
-  
-  .leaderboard ol li {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    padding: 8px 0;
-    border-bottom: 1px solid #ccc;
-  }
-  
-  .leaderboard ol li:nth-child(odd) {
-    background-color: #f9f9f9;
-  }
-  
-  .rank {
-    width: 30px;
-    text-align: center;
-    font-weight: bold;
-  }
-  
-  .username {
-    flex: 1;
-    padding-left: 15px;
-    padding-right: 15px;
-    max-width: 50vw;
-  }
-  
-  .score {
-    font-weight: bold;
-    color: #007bff;
-    padding-right: 15px;
-    overflow-x: hidden;
-  }
-  
-  .play-again {
-    margin-top: 20px;
-    text-align: center;
-  }
-  
-  .form-container {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-  }
-  
-  .TextField-root {
-    margin-bottom: 10px;
-    width: 100%;
-  }
-  
-  .button-container {
-    display: flex;
-    justify-content: space-between;
-    margin-top: 10px;
-  }
-  
-  .button-container button {
-    width: 48%;
-  }
-  
-  .Button-root {
-    width: 100%;
-  }
-  
-  .highlighted {
-    background-color: yellow !important;
-  }  
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
+  width: 100%;
+  background-color: #f0f0f0;
+}
 
-  @media (min-width: 768px) {
-    .username {
-      padding-right: 100px;
-    }
+.leaderboard {
+  max-width: 600px;
+  min-width: 280px;
+  padding: 20px;
+  background-color: #f0f0f0;
+  border: 1px solid #ccc;
+  border-radius: 8px;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+  font-family: 'Roboto', sans-serif;
+}
+
+.leaderboard h2 {
+  margin-top: 0;
+  font-size: 24px;
+  color: #333;
+  text-align: center;
+}
+
+.leaderboard ol {
+  padding: 0;
+}
+
+.leaderboard ol li {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 8px 0;
+  border-bottom: 1px solid #ccc;
+}
+
+.leaderboard ol li:nth-child(odd) {
+  background-color: #f9f9f9;
+}
+
+.rank {
+  width: 30px;
+  text-align: center;
+  font-weight: bold;
+}
+
+.username {
+  flex: 1;
+  padding-left: 15px;
+  padding-right: 15px;
+  max-width: 50vw;
+}
+
+.score {
+  font-weight: bold;
+  color: #007bff;
+  padding-right: 15px;
+  overflow-x: hidden;
+}
+
+.play-again {
+  margin-top: 20px;
+  text-align: center;
+}
+
+.form-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.TextField-root {
+  margin-bottom: 10px;
+  width: 100%;
+}
+
+.button-container {
+  display: flex;
+  justify-content: space-between;
+  margin-top: 10px;
+}
+
+.button-container button {
+  width: 48%;
+}
+
+.Button-root {
+  width: 100%;
+}
+
+.highlighted {
+  background-color: yellow !important;
+}
+
+@media (min-width: 768px) {
+  .username {
+    padding-right: 100px;
+  }
 }

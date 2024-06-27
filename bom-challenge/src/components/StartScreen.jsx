@@ -12,9 +12,14 @@ function StartScreen() {
     navigate('/game', { state: { difficulty } });
   };
 
+  const handleViewLeaderboard = () => {
+    navigate('/leaderboard', { state: { fromStartScreen: true } });
+  };
+
   return (
     <div className="start-screen">
       <h1>Lehi's Legacy</h1>
+      <Button variant="text" id='viewLeaderboardBtn' onClick={handleViewLeaderboard}>View Leaderboard</Button>
       <div className="button-group">
         <ButtonGroup variant="contained">
           <Button
@@ -39,7 +44,7 @@ function StartScreen() {
       </div>
       <div className="start-button-container">
         <Button variant="contained" onClick={handleStart}>Start Game</Button>
-        <Button variant="contained" onClick={() => navigate('/leaderboard')}>View Leaderboard</Button>
+        {/* <Button variant="text" id='viewLeaderboardBtn' onClick={handleViewLeaderboard}>View Leaderboard</Button> */}
       </div>
     </div>
   );

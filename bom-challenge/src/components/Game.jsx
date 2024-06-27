@@ -67,7 +67,7 @@ function Game({ difficulty, endGame }) {
   const handleSubmit = () => {
     const guess = { book: selectedBook, chapter: selectedChapter, verse: selectedVerse };
     const guessAccuracy = calculateAccuracy(guess, currentVerse);
-
+  
     const lastSpaceIndex = currentVerse.lastIndexOf(' ');
     const refSplit = currentVerse.split(' ');
     let correctBook;
@@ -80,27 +80,21 @@ function Game({ difficulty, endGame }) {
     const [correctChapterStr] = correctChapterVerse.split(':');
     const correctChapter = parseInt(correctChapterStr, 10);
     const chapterDifference = Math.abs(parseInt(guess.chapter, 10) - correctChapter);
-
-    console.log(difficulty)
+  
     const { chapterRange } = getDifficultySettings(difficulty);
-
+  
     let newScore = score;
     let lifeLost = false;
-
+  
     if (guessAccuracy > 0) {
       newScore += guessAccuracy;
       setScore(newScore);
     }
-
+  
     if (chapterDifference > chapterRange || guess.book !== correctBook) {
       lifeLost = true;
-      setLives((prevLives) => prevLives - 1);
-      if (lives === 1) {
-        endGame(newScore);
-        return;
-      }
     }
-
+  
     setModalContent({
       guess,
       correctVerse: currentVerse,
@@ -108,7 +102,7 @@ function Game({ difficulty, endGame }) {
       lifeLost,
     });
     setShowModal(true);
-  };
+  };  
 
   const handleCloseModal = () => {
     setShowModal(false);
@@ -117,7 +111,18 @@ function Game({ difficulty, endGame }) {
     setSelectedChapter('');
     setSelectedVerse('');
     setCurrentStep('book');
-  };
+  
+    // Decrement lives after closing the modal
+    if (modalContent.lifeLost) {
+      setLives((prevLives) => {
+        if (prevLives === 1) {
+          endGame(score);
+          return prevLives;
+        }
+        return prevLives - 1;
+      });
+    }
+  };  
 
   const calculateAccuracy = (guess, verseToCheck) => {
     let verseList;

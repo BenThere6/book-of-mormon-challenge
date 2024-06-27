@@ -106,6 +106,7 @@ function Leaderboard({ score, onStartScreen }) {
               onChange={(e) => setUsername(e.target.value)}
               autoComplete="username"
               fullWidth
+              inputProps={{ maxLength: 15 }} // Limit the maximum number of characters to 15
             />
             <div className="button-container">
               <Button variant="contained" type="submit">Submit Score</Button>

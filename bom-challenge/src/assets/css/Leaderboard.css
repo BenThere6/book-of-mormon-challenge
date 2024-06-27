@@ -48,13 +48,15 @@
   .username {
     flex: 1;
     padding-left: 15px;
-    padding-right: 100px;
+    padding-right: 15px;
+    max-width: 50vw;
   }
   
   .score {
     font-weight: bold;
     color: #007bff;
     padding-right: 15px;
+    overflow-x: hidden;
   }
   
   .play-again {
@@ -90,3 +92,9 @@
   .highlighted {
     background-color: yellow !important;
   }  
+
+  @media (min-width: 768px) {
+    .username {
+      padding-right: 100px;
+    }
+}

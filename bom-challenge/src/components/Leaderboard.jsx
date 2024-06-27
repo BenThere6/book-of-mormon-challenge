@@ -38,14 +38,14 @@ function Leaderboard({ score, onStartScreen }) {
 
   const handleSaveScore = (event) => {
     event.preventDefault(); // Prevent form submission
-  
+
     if (!username) {
       console.error('Username is required');
       return;
     }
-  
+
     console.log('Saving score:', { username, score });
-  
+
     fetch('https://bens-api-dd63362f50db.herokuapp.com/leaderboard', {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
@@ -58,20 +58,16 @@ function Leaderboard({ score, onStartScreen }) {
         return response.json();
       })
       .then((data) => {
-        console.log('Score saved, updated leaderboard:', data);
-  
-        if (Array.isArray(data)) {
-          setLeaderboard(data); // Update leaderboard state with the returned data
-        } else {
-          console.error('Unexpected leaderboard data format:', data);
-        }
-  
+        console.log('Score saved, response:', data);
+
+        // Fetch the leaderboard again to get the updated data
+        fetchLeaderboard();
+
         setIsSubmitted(true); // Set isSubmitted to true after successful submission
-        findUserRank(data); // Update user's rank after leaderboard update
       })
       .catch((error) => console.error('Error saving score:', error));
   };
-  
+
   const handlePlayAgain = () => {
     setUsername('');
     setIsSubmitted(false);

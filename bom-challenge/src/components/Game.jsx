@@ -26,7 +26,7 @@ function Game({ difficulty, endGame }) {
   function getRandomVerse() {
     let verseKeys;
   
-    if (difficulty === 'easy') {
+    if (difficulty === 'easy' || difficulty === null) {
       verseKeys = Object.keys(scriptureMasteryVerses);
     } else {
       verseKeys = Object.keys(verses);
@@ -175,7 +175,6 @@ function Game({ difficulty, endGame }) {
       case 'easy':
         if (!scriptureMasteryVerses) {
           console.log('Scripture Mastery Verses not loaded.');
-          return { multiplier: 1, chapterRange: 8, verseRange: 12 };
         }
         return { multiplier: 1, chapterRange: 8, verseRange: 12 };
       case 'medium':
@@ -184,6 +183,7 @@ function Game({ difficulty, endGame }) {
         return { multiplier: 12, chapterRange: 3, verseRange: 8 };
       default:
         console.log('Invalid difficulty level');
+        console.log(difficulty)
         return { multiplier: 1, chapterRange: 8, verseRange: 12 };
     }
   };
@@ -283,7 +283,7 @@ function Game({ difficulty, endGame }) {
 
   const getCurrentVerseText = () => {
     let verseText;
-    if (difficulty === 'easy') {
+    if (difficulty === 'easy' || difficulty === null) {
       verseText = scriptureMasteryVerses[currentVerse];
     } else {
       verseText = verses[currentVerse];

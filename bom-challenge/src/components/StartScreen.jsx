@@ -3,9 +3,6 @@ import { useNavigate } from 'react-router-dom';
 import Button from '@mui/material/Button';
 import ButtonGroup from '@mui/material/ButtonGroup';
 import '../assets/css/StartScreen.css';
-import verses from '../assets/js/verses';
-import verseCounts from '../assets/js/verseCounts';
-import scriptureMasteryVerses from '../assets/js/scriptureMasteryVerses';
 
 function StartScreen() {
   const [difficulty, setDifficulty] = useState('easy');

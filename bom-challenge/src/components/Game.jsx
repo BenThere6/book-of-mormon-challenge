@@ -351,7 +351,9 @@ function Game({ difficulty, endGame, usedVerses }) {
         <h2 className="lives">Lives: {lives}</h2>
       </div>
       <div className="guess-box">
-        <p className='guess-text'>{selectedBook} {selectedChapter && `${selectedChapter}:${selectedVerse}`}</p>
+        <p 
+          className='guess-text'>{selectedBook} {selectedChapter && (selectedVerse ? ` ${selectedChapter}:${selectedVerse}` : selectedChapter)}
+        </p>
       </div>
       {getCurrentVerseText()}
       {currentStep === 'book' && renderBooks()}

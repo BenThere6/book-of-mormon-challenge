@@ -16,7 +16,6 @@ import '../assets/css/Game.css';
 let countNewVerses = 0;
 
 function Game({ difficulty, endGame, usedVerses }) {
-  console.log('Starting game with difficulty:', difficulty);
   const [score, setScore] = useState(0);
   const [lives, setLives] = useState(3);
   const [currentVerse, setCurrentVerse] = useState(getRandomVerse());
@@ -81,9 +80,9 @@ function Game({ difficulty, endGame, usedVerses }) {
 
   function handleBack(step) {
     setSelectedVerse('');
+    setSelectedChapter('');
     if (step == 'book') {
-      setSelectedChapter('');
-      console.log(step)
+      setSelectedBook('');
     }
     setCurrentStep(step);
   }

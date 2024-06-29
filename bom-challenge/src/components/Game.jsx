@@ -56,7 +56,7 @@ function Game({ difficulty, endGame, usedVerses }) {
       usedVerses.push(randomKey);
     }
 
-    console.log('usedVerses: ' + usedVerses)
+    // console.log('usedVerses: ' + usedVerses)
 
     return randomKey;
   }

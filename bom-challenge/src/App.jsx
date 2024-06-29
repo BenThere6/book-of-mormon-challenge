@@ -9,7 +9,6 @@ function App() {
   const [score, setScore] = useState(0);
   const navigate = useNavigate();
   let usedVerses = [];
-  let countNewVerses = 0;
 
   const startGame = (selectedDifficulty) => {
     setDifficulty(selectedDifficulty);

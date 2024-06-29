@@ -359,13 +359,6 @@ function Game({ difficulty, endGame, usedVerses }) {
       {currentStep === 'book' && renderBooks()}
       {currentStep === 'chapter' && renderChapters()}
       {currentStep === 'verse' && renderVerses()}
-      {/* {selectedVerse !== '' && (
-        <div className="submit-button">
-          <Button variant="contained" onClick={handleSubmit}>
-            Submit Guess
-          </Button>
-        </div>
-      )} */}
       <Dialog open={showModal} onClose={handleCloseModal}>
         <DialogTitle>Guess Results</DialogTitle>
         <DialogContent>

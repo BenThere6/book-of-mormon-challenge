@@ -120,7 +120,13 @@ function Leaderboard() {
               />
               <div className="button-container">
                 <Button variant="contained" type="submit">Submit Score</Button>
-                <Button variant="contained" onClick={handlePlayAgain}>Play Again</Button>
+                <Button 
+                  variant="contained" 
+                  onClick={handlePlayAgain} 
+                  disabled={username.trim().length > 0}
+                >
+                  Play Again
+                </Button>
               </div>
             </form>
           )

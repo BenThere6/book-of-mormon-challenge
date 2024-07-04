@@ -19,13 +19,41 @@ function StartScreen({ startGame }) {
   const getDifficultyDescription = () => {
     switch (difficulty) {
       case 'easy':
-        return 'Practice scripture mastery verses!';
+        return [
+          'Practice scripture mastery verses!',
+          'Get within 8 chapters: 30 points',
+          'Get within 12 verses: 15 points',
+          'Extra points for exact chapter or verse!',
+          '(If not within chapter range you',
+          'lose a life and get no points!)'
+        ];
       case 'medium':
-        return 'A balanced challenge.';
+        return [
+          'A balanced challenge.',
+          'Get within 7 chapters: 240 points',
+          'Get within 10 verses: 120 points',
+          'Extra points for exact chapter or verse!',
+          '(If not within chapter range you',
+          'lose a life and get no points!)'
+        ];
       case 'hard':
-        return 'Test your knowledge!';
+        return [
+          'Test your knowledge!',
+          'Get within 3 chapters: 360 points',
+          'Get within 8 verses: 180 points',
+          'Extra points for exact chapter or verse!',
+          '(If not within chapter range you',
+          'lose a life and get no points!)'
+        ];
       default:
-        return '';
+        return [
+          'Practice scripture mastery verses!',
+          'Get within 8 chapters: 30 points',
+          'Get within 12 verses: 15 points',
+          'Extra points for exact chapter or verse!',
+          '(If not within chapter range you',
+          'lose a life and get no points!)'
+        ];
     }
   };
 
@@ -55,7 +83,12 @@ function StartScreen({ startGame }) {
           </Button>
         </ButtonGroup>
       </div>
-      <p>{getDifficultyDescription()}</p>
+      <h3>{getDifficultyDescription()[0]}</h3>
+      <p>{getDifficultyDescription()[1]}</p>
+      <p>{getDifficultyDescription()[2]}</p>
+      <h4>{getDifficultyDescription()[3]}</h4>
+      <h5 className='fine-print'>{getDifficultyDescription()[4]}</h5>
+      <h5 className='fine-print'>{getDifficultyDescription()[5]}</h5>
       <div className="start-button-container">
         <Button variant="contained" onClick={handleStart}>Start Game</Button>
       </div>

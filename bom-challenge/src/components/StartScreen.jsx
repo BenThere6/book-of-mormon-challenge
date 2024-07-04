@@ -9,7 +9,12 @@ function StartScreen({ startGame }) {
   const navigate = useNavigate();
 
   const handleStart = () => {
-    startGame(difficulty);
+    const storedUsername = localStorage.getItem('username');
+    if (storedUsername) {
+      startGame(difficulty);
+    } else {
+      navigate('/username', { state: { difficulty } }); // Pass difficulty to UsernameEntry
+    }
   };
 
   const handleViewLeaderboard = () => {

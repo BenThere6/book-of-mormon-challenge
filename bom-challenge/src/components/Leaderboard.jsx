@@ -86,7 +86,7 @@ function Leaderboard() {
   return (
     <div className="leaderboard-container">
       <div className="leaderboard">
-        {!fromStartScreen && <h2>Your Current Score: {score}</h2>}
+        {!fromStartScreen && <h2>Your Score: {score}</h2>}
         <h2>Leaderboard</h2>
         <ol>
           {leaderboard.map((entry, index) => (

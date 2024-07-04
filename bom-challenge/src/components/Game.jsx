@@ -174,25 +174,26 @@ function Game({ difficulty, endGame, usedVerses }) {
         console.log(difficulty)
         const { multiplier, chapterRange, verseRange } = getDifficultySettings(difficulty);
 
-        let accuracy = 15 * multiplier;
+        let accuracy = 0;
+        // let accuracy = 15 * multiplier;
+
+        if (verseDifference === 0) {
+          accuracy += 100 * multiplier;
+        }
 
         if (chapterDifference === 0) {
           accuracy += 50 * multiplier;
+          if (verseDifference === 0) {
+            accuracy += 100 * multiplier;
+          } else if (verseDifference <= verseDifference) {
+            accuracy += 20;
+          }
         } else if (chapterDifference <= chapterRange) {
           accuracy += 30 * multiplier;
-        }
-
-        if (verseDifference === 0) {
-          if (chapterDifference <= chapterRange) {
-            accuracy += 100 * multiplier;
-          } else {
-            accuracy += 100 * multiplier / 4;
-          }
-        } else if (verseDifference <= verseRange) {
-          if (chapterDifference <= chapterRange) {
-            accuracy += 50 * multiplier;
-          } else {
-            accuracy += 50 * multiplier / 4;
+          if (verseDifference === 0) {
+            accuracy += 20 * multiplier;
+          } else if (verseDifference <= verseDifference) {
+            accuracy += 15;
           }
         }
 
@@ -351,7 +352,7 @@ function Game({ difficulty, endGame, usedVerses }) {
         <h2 className="lives">Lives: {lives}</h2>
       </div>
       <div className="guess-box">
-        <p 
+        <p
           className='guess-text'>{selectedBook} {selectedChapter && (selectedVerse ? ` ${selectedChapter}:${selectedVerse}` : selectedChapter)}
         </p>
       </div>

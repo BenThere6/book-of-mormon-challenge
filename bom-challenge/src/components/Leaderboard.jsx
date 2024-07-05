@@ -2,6 +2,8 @@ import React, { useState, useEffect } from 'react';
 import { useLocation, useNavigate } from 'react-router-dom';
 import '../assets/css/Leaderboard.css';
 import Button from '@mui/material/Button';
+const apiurl = 'http://localhost:5173/leaderboard';
+// const apiurl = 'https://bens-api-dd63362f50db.herokuapp.com/leaderboard';
 
 let count = 0;
 function Leaderboard() {
@@ -29,7 +31,7 @@ function Leaderboard() {
   }, [score, isScoreSubmitted, isScoreSubmitting]);
 
   const fetchLeaderboard = () => {
-    fetch('https://bens-api-dd63362f50db.herokuapp.com/leaderboard')
+    fetch(apiurl)
       .then(response => {
         if (!response.ok) {
           console.log("API response was not 'ok'");
@@ -69,7 +71,7 @@ function Leaderboard() {
     // Proceed to submit score
     console.log('Submitting score:', { username, score });
   
-    fetch('https://bens-api-dd63362f50db.herokuapp.com/leaderboard', {
+    fetch(apiurl, {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify({ username, score }),

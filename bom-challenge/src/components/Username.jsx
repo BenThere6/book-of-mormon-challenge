@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import { useLocation } from 'react-router-dom';
 import Button from '@mui/material/Button';
 import TextField from '@mui/material/TextField';
+import '../assets/css/Username.css';
 
 function UsernameEntry({ setUsername, startGame }) {
     const [usernameInput, setUsernameInput] = useState('');
@@ -31,9 +32,9 @@ function UsernameEntry({ setUsername, startGame }) {
     };
 
     return (
-        <div className='start-screen'>
+        <div className='start-screen username-screen'>
             <div className="username-entry">
-                <h1>Enter Your Username</h1>
+                <h1 id='enter-username'>Enter Your Username</h1>
                 <TextField
                     id="username-input"
                     label="Username"

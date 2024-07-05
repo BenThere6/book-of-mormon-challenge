@@ -36,3 +36,9 @@
 .fine-print {
     margin: 0;
 }
+
+@media (max-width: 768px) {
+    .start-screen {
+        width: 80vw;
+    }
+}

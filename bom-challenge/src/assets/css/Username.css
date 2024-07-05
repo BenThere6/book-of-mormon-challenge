@@ -1,0 +1,12 @@
+.username-screen {
+    width: 95vw;
+}
+
+@media (max-width: 768px) {
+    .username-screen {
+        width: 80vw;
+    }
+    #enter-username {
+        font-size: 20px;
+    }
+}

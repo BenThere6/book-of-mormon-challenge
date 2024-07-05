@@ -12,7 +12,7 @@ function App() {
   const navigate = useNavigate();
   let usedVerses = [];
 
-  const startGame = (selectedDifficulty) => {
+  const startGame = (gameID, selectedDifficulty) => {
     setDifficulty(selectedDifficulty);
     navigate('/game');
   };

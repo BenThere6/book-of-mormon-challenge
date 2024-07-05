@@ -2,8 +2,8 @@ import React, { useState, useEffect } from 'react';
 import { useLocation, useNavigate } from 'react-router-dom';
 import '../assets/css/Leaderboard.css';
 import Button from '@mui/material/Button';
-import TextField from '@mui/material/TextField';
 
+let count = 0;
 function Leaderboard() {
   const location = useLocation();
   const navigate = useNavigate();
@@ -11,12 +11,22 @@ function Leaderboard() {
   const fromStartScreen = location.state?.fromStartScreen || false;
   const [leaderboard, setLeaderboard] = useState([]);
   const [username, setUsername] = useState('');
-  const [isSubmitted, setIsSubmitted] = useState(false);
   const [userRank, setUserRank] = useState(null);
+  const [isScoreSubmitted, setIsScoreSubmitted] = useState(false);
+  const [isScoreSubmitting, setIsScoreSubmitting] = useState(false); // New state to track score submission
 
   useEffect(() => {
+    // Retrieve username from local storage
+    const storedUsername = localStorage.getItem('username');
+    if (storedUsername && !isScoreSubmitted && !isScoreSubmitting) {
+      setUsername(storedUsername);
+      setIsScoreSubmitting(true); // Set flag to indicate score submission is in progress
+      // Automatically submit score if username is retrieved and not already submitted
+      submitScore(storedUsername, score);
+    }
+
     fetchLeaderboard();
-  }, []);
+  }, [score, isScoreSubmitted, isScoreSubmitting]);
 
   const fetchLeaderboard = () => {
     fetch('https://bens-api-dd63362f50db.herokuapp.com/leaderboard')
@@ -35,21 +45,12 @@ function Leaderboard() {
       .catch(error => console.error('Error fetching leaderboard:', error));
   };
 
-  const findUserRank = (data) => {
-    const sortedLeaderboard = [...data].sort((a, b) => b.score - a.score);
-    const userIndex = sortedLeaderboard.findIndex(entry => entry.username === username && entry.score === score);
-    setUserRank(userIndex !== -1 ? userIndex + 1 : null);
-  };
-
-  const handleSaveScore = (event) => {
-    event.preventDefault(); // Prevent form submission
-
-    if (!username) {
-      console.error('Username is required');
-      return;
+  const submitScore = (username, score) => {
+    count++;
+    if (count !== 1) {
+      return
     }
-
-    console.log('Saving score:', { username, score });
+      console.log('Submitting score:', { username, score });
 
     fetch('https://bens-api-dd63362f50db.herokuapp.com/leaderboard', {
       method: 'POST',
@@ -65,18 +66,27 @@ function Leaderboard() {
       .then((data) => {
         console.log('Score saved, response:', data);
 
-        // Fetch the leaderboard again to get the updated data
-        fetchLeaderboard();
-
-        setIsSubmitted(true); // Set isSubmitted to true after successful submission
+        setIsScoreSubmitted(true); // Set score submission flag to true
+        setIsScoreSubmitting(false); // Reset score submission in progress flag
+        fetchLeaderboard(); // Fetch leaderboard again to update data
       })
-      .catch((error) => console.error('Error saving score:', error));
+      .catch((error) => {
+        setIsScoreSubmitting(false); // Reset score submission in progress flag on error
+        console.error('Error saving score:', error);
+      });
   };
 
   const handlePlayAgain = () => {
     setUsername('');
-    setIsSubmitted(false);
+    setIsScoreSubmitted(false);
+    setIsScoreSubmitting(false); // Reset score submission in progress flag
     navigate('/'); // Navigate to the start screen
+  };
+
+  const findUserRank = (data) => {
+    const sortedLeaderboard = [...data].sort((a, b) => b.score - a.score);
+    const userIndex = sortedLeaderboard.findIndex(entry => entry.username === username && entry.score === score);
+    setUserRank(userIndex !== -1 ? userIndex + 1 : null);
   };
 
   const isUserInTopTen = index => {
@@ -86,8 +96,8 @@ function Leaderboard() {
   return (
     <div className="leaderboard-container">
       <div className="leaderboard">
-        {!fromStartScreen && <h2>Your Score: {score}</h2>}
-        <h2>Leaderboard</h2>
+        {!fromStartScreen && <div className='center'><div className='user-score'>{score}</div></div>}
+        <h2 className='leaderboard-title'>Leaderboard</h2>
         <ol>
           {leaderboard.map((entry, index) => (
             <li key={index} className={isUserInTopTen(index) ? 'highlighted' : ''}>
@@ -97,39 +107,10 @@ function Leaderboard() {
             </li>
           ))}
         </ol>
-        {fromStartScreen ? (
+        {isScoreSubmitted && (
           <div className="play-again">
-            <Button variant="contained" onClick={handlePlayAgain}>Play Game</Button>
+            <Button variant="contained" onClick={handlePlayAgain}>Play Again</Button>
           </div>
-        ) : (
-          isSubmitted ? (
-            <div className="play-again">
-              <Button variant="contained" onClick={handlePlayAgain}>Play Again</Button>
-            </div>
-          ) : (
-            <form onSubmit={handleSaveScore}>
-              <TextField
-                label="Username"
-                variant="outlined"
-                type="text"
-                value={username}
-                onChange={(e) => setUsername(e.target.value)}
-                autoComplete="username"
-                fullWidth
-                inputProps={{ maxLength: 15 }} // Limit the maximum number of characters to 15
-              />
-              <div className="button-container">
-                <Button variant="contained" type="submit">Submit Score</Button>
-                <Button 
-                  variant="contained" 
-                  onClick={handlePlayAgain} 
-                  disabled={username.trim().length > 0}
-                >
-                  Play Again
-                </Button>
-              </div>
-            </form>
-          )
         )}
       </div>
     </div>

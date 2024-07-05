@@ -1,3 +1,5 @@
+@import url('https://fonts.googleapis.com/css2?family=Orbitron&display=swap');
+
 .leaderboard-container {
   display: flex;
   justify-content: center;
@@ -93,6 +95,32 @@
 
 .highlighted {
   background-color: yellow !important;
+}
+
+.user-score {
+  text-align: center;
+  width: 100%;
+  border-radius: 10px;
+  font-size: 50px;
+  padding-left: 50px;
+  padding-right: 50px;
+  margin-bottom: 15px;
+  font-family: 'Orbitron';
+  /* border: rgba(0, 0, 0, 0.1) 1px solid; */
+  background-color: #ccc;
+}
+
+.center {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.leaderboard-title {
+  padding-top: 10px;
+  border-radius: 10px 10px 0 0;
+  border: 1px solid rgba(0, 0, 0, 0.1);
+  border-width: 1px 1px 0 1px; /* top right bottom left */
 }
 
 @media (min-width: 768px) {

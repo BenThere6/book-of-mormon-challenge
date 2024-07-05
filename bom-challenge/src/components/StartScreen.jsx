@@ -33,8 +33,8 @@ function StartScreen({ startGame }) {
       case 'easy':
         return [
           'Practice scripture mastery verses!',
-          'Get within 8 chapters: 30 points',
-          'Get within 12 verses: 15 points',
+          'Get within 8 chapters',
+          '1x multiplier',
           'Extra points for exact chapter or verse!',
           '(If not within chapter range you',
           'lose a life and get no points!)'
@@ -42,8 +42,8 @@ function StartScreen({ startGame }) {
       case 'medium':
         return [
           'A balanced challenge.',
-          'Get within 7 chapters: 240 points',
-          'Get within 10 verses: 120 points',
+          'Get within 7 chapters',
+          '8x multiplier',
           'Extra points for exact chapter or verse!',
           '(If not within chapter range you',
           'lose a life and get no points!)'
@@ -51,8 +51,8 @@ function StartScreen({ startGame }) {
       case 'hard':
         return [
           'Test your knowledge!',
-          'Get within 3 chapters: 360 points',
-          'Get within 8 verses: 180 points',
+          'Get within 3 chapters',
+          '12x multiplier',
           'Extra points for exact chapter or verse!',
           '(If not within chapter range you',
           'lose a life and get no points!)'
@@ -60,8 +60,8 @@ function StartScreen({ startGame }) {
       default:
         return [
           'Practice scripture mastery verses!',
-          'Get within 8 chapters: 30 points',
-          'Get within 12 verses: 15 points',
+          'Get within 8 chapters',
+          '1x multiplier',
           'Extra points for exact chapter or verse!',
           '(If not within chapter range you',
           'lose a life and get no points!)'

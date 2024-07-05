@@ -175,6 +175,7 @@ function Game({ difficulty, endGame, usedVerses }) {
         const { multiplier, chapterRange, verseRange } = getDifficultySettings(difficulty);
 
         let accuracy = 0;
+        let extraMultiplier = 20;
         // let accuracy = 15 * multiplier;
 
         if (verseDifference === 0) {
@@ -182,18 +183,18 @@ function Game({ difficulty, endGame, usedVerses }) {
         }
 
         if (chapterDifference === 0) {
-          accuracy += 50 * multiplier;
+          accuracy += 50 * multiplier * (extraMultiplier + 5);
           if (verseDifference === 0) {
-            accuracy += 100 * multiplier;
-          } else if (verseDifference <= verseDifference) {
-            accuracy += 20;
+            accuracy += 100 * multiplier * (extraMultiplier + 5);
+          } else if (verseDifference <= verseRange) {
+            accuracy += 20 * multiplier * (extraMultiplier - verseRange)
           }
         } else if (chapterDifference <= chapterRange) {
-          accuracy += 30 * multiplier;
+          accuracy += 30 * multiplier * (extraMultiplier - chapterRange);
           if (verseDifference === 0) {
-            accuracy += 20 * multiplier;
-          } else if (verseDifference <= verseDifference) {
-            accuracy += 15;
+            accuracy += 20 * multiplier * (extraMultiplier + 5);
+          } else if (verseDifference <= verseRange) {
+            accuracy += 15 * multiplier * (extraMultiplier - verseDifference);
           }
         }
 

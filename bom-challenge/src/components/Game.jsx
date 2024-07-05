@@ -218,7 +218,7 @@ function Game({ difficulty, endGame, usedVerses }) {
       case 'hard':
         return { multiplier: 12, chapterRange: 3, verseRange: 8 };
       default:
-        console.log('Invalid difficulty level');
+        console.log('Invalid difficulty level: ' + difficulty);
         return { multiplier: 1, chapterRange: 8, verseRange: 12 };
     }
   };

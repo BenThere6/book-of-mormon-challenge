@@ -2,8 +2,8 @@ import React, { useState, useEffect } from 'react';
 import { useLocation, useNavigate } from 'react-router-dom';
 import '../assets/css/Leaderboard.css';
 import Button from '@mui/material/Button';
-const apiurl = 'http://localhost:5173/leaderboard';
-// const apiurl = 'https://bens-api-dd63362f50db.herokuapp.com/leaderboard';
+// const apiurl = 'http://localhost:3000/leaderboard';
+const apiurl = 'https://bens-api-dd63362f50db.herokuapp.com/leaderboard';
 
 let count = 0;
 function Leaderboard() {

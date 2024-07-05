@@ -46,6 +46,10 @@ function Leaderboard() {
   };
 
   const submitScore = (username, score) => {
+    count ++;
+    if (count !==1) {
+      return;
+    }
     // Retrieve game IDs from localStorage
     const storedGameIDs = localStorage.getItem('gameIDs');
     let gameIDs = storedGameIDs ? JSON.parse(storedGameIDs) : {};

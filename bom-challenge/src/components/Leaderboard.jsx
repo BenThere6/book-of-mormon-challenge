@@ -107,7 +107,7 @@ function Leaderboard() {
             </li>
           ))}
         </ol>
-        {isScoreSubmitted && (
+        {(
           <div className="play-again">
             <Button variant="contained" onClick={handlePlayAgain}>Play Again</Button>
           </div>

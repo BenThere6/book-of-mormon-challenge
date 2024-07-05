@@ -44,7 +44,7 @@ function UsernameEntry({ setUsername, startGame }) {
                     onKeyDown={handleKeyPress}
                     required
                 />
-                <div className="submit-button-container">
+                <div className="submit-button-container" style={{ marginTop: '10px' }}>
                     <Button variant="contained" onClick={handleSubmit}>
                         Submit
                     </Button>

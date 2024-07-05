@@ -9,11 +9,18 @@ function StartScreen({ startGame }) {
   const navigate = useNavigate();
 
   const handleStart = () => {
+    // Generate game ID object if it doesn't exist in localStorage
+    let gameIDs = JSON.parse(localStorage.getItem('gameIDs')) || {};
+    const newGameID = Object.keys(gameIDs).length > 0 ? Math.max(...Object.keys(gameIDs)) + 1 : 1;
+    gameIDs[newGameID] = false; // Initialize new game ID with false
+
+    localStorage.setItem('gameIDs', JSON.stringify(gameIDs));
+
     const storedUsername = localStorage.getItem('username');
     if (storedUsername) {
-      startGame(difficulty);
+      startGame(newGameID, difficulty); // Pass gameID and difficulty to startGame function
     } else {
-      navigate('/username', { state: { difficulty } }); // Pass difficulty to UsernameEntry
+      navigate('/username', { state: { gameID: newGameID, difficulty } }); // Pass gameID and difficulty to UsernameEntry
     }
   };
 

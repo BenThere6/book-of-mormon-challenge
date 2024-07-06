@@ -3,14 +3,7 @@ import { useLocation, useNavigate } from 'react-router-dom';
 import '../assets/css/Leaderboard.css';
 import Button from '@mui/material/Button';
 
-// let apiurl;
-// if (process.env.NODE_ENV === 'development') {
-//   apiurl = 'http://localhost:3000/leaderboard';
-// } else {
-//   apiurl = 'https://bens-api-dd63362f50db.herokuapp.com/leaderboard';
-// }
-
-const apiurl = 'https://bens-api-dd63362f50db.herokuapp.com/leaderboard';
+let apiUrl = process.env.NODE_ENV === 'development' ? 'http://localhost:3000/leaderboard' : 'https://bens-api-dd63362f50db.herokuapp.com/leaderboard';
 
 function Leaderboard() {
   const location = useLocation();

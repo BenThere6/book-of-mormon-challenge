@@ -176,34 +176,57 @@ function Game({ difficulty, endGame, usedVerses }) {
 
         let accuracy = 0;
         let extraMultiplier = 20;
-        // let accuracy = 15 * multiplier;
 
         if (verseDifference === 0) {
-          accuracy += 100 * multiplier;
+          accuracy += (100 * multiplier);
         }
 
         if (chapterDifference === 0) {
-          accuracy += 50 * multiplier * (extraMultiplier + 5);
+          accuracy += (50 * multiplier * (extraMultiplier + 5));
+          console.log('Exact chapter!')
+          console.log('50 * multiplier * (extraMultiplier + 5))')
+          console.log('50 * ' + multiplier + ' * (' + extraMultiplier + ' + 5))')
+          console.log(50 * multiplier * (extraMultiplier + 5))
+          console.log('new accuracy: ' + accuracy)
           if (verseDifference === 0) {
-            accuracy += 100 * multiplier * (extraMultiplier + 5);
+            accuracy += (100 * multiplier * (extraMultiplier + 5));
+            console.log('Exact chapter and verse! ENJOY MORE POINTS')
+            console.log('100 * multiplier * (extraMultiplier + 5)')
+            console.log('100 * ' + multiplier + ' * (' + extraMultiplier + ' + 5)')
+            console.log(100 * multiplier * (extraMultiplier + 5))
+            console.log('new accuracy: ' + accuracy)
           } else if (verseDifference <= verseRange) {
-            accuracy += 20 * multiplier * (extraMultiplier - verseRange)
+            accuracy += (20 * multiplier * (extraMultiplier - verseDifference))
+            console.log('You had the exact chapter... but not the exact verse')
+            console.log('20 * multiplier * (extraMultiplier - verseDifference)')
+            console.log('20 * ' + multiplier + ' * (' + extraMultiplier + ' - ' + verseDifference + ')')
+            console.log(20 * multiplier * (extraMultiplier - verseDifference))
+            console.log('new accuracy: ' + accuracy)
           }
         } else if (chapterDifference <= chapterRange) {
-          accuracy += 30 * multiplier * (extraMultiplier - chapterRange);
-          if (verseDifference === 0) {
-            accuracy += 20 * multiplier * (extraMultiplier + 5);
-          } else if (verseDifference <= verseRange) {
-            accuracy += 15 * multiplier * (extraMultiplier - verseDifference);
+          accuracy += (30 * multiplier * (extraMultiplier - chapterDifference));
+          console.log('Within chapter range!')
+          console.log('30 * multiplier * (extraMultiplier - chapterDifference)')
+          console.log('30 * ' + multiplier + ' * (' + extraMultiplier + ' - ' + chapterDifference + ')')
+          console.log(30 * multiplier * (extraMultiplier - chapterDifference))
+          console.log('new accuracy: ' + accuracy)
+          if (verseDifference <= verseRange) {
+            accuracy += (15 * multiplier * (extraMultiplier - verseDifference));
+            console.log('Which chapter range and verse range!')
+            console.log('15 * multiplier * (extraMultiplier - verseDifference)')
+            console.log('15 * ' + multiplier + ' * (' + extraMultiplier + ' - ' + verseDifference + ')')
+            console.log(15 * multiplier * (extraMultiplier - verseDifference))
+            console.log('new accuracy: ' + accuracy)
           }
         }
 
         if (accuracy > bestAccuracy) {
           bestAccuracy = accuracy;
         }
+        bestAccuracy /= 10
       }
     });
-
+    console.log('\n')
     return bestAccuracy;
   };
 

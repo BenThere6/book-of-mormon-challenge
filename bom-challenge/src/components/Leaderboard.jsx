@@ -9,7 +9,6 @@ if (process.env.NODE_ENV == 'development') {
   apiurl = 'https://bens-api-dd63362f50db.herokuapp.com/leaderboard';
 }
 
-let count = 0;
 function Leaderboard() {
   const location = useLocation();
   const navigate = useNavigate();
@@ -52,10 +51,6 @@ function Leaderboard() {
   };
 
   const submitScore = (username, score) => {
-    count++;
-    if (count !== 1) {
-      return;
-    }
     // Retrieve game IDs from localStorage
     const storedGameIDs = localStorage.getItem('gameIDs');
     let gameIDs = storedGameIDs ? JSON.parse(storedGameIDs) : {};

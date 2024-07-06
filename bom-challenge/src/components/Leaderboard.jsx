@@ -2,8 +2,12 @@ import React, { useState, useEffect } from 'react';
 import { useLocation, useNavigate } from 'react-router-dom';
 import '../assets/css/Leaderboard.css';
 import Button from '@mui/material/Button';
-// const apiurl = 'http://localhost:3000/leaderboard';
-const apiurl = 'https://bens-api-dd63362f50db.herokuapp.com/leaderboard';
+let apiurl;
+if (process.env.NODE_ENV == 'development') {
+  apiurl = 'http://localhost:3000/leaderboard';
+} else {
+  apiurl = 'https://bens-api-dd63362f50db.herokuapp.com/leaderboard';
+}
 
 let count = 0;
 function Leaderboard() {
@@ -48,14 +52,14 @@ function Leaderboard() {
   };
 
   const submitScore = (username, score) => {
-    count ++;
-    if (count !==1) {
+    count++;
+    if (count !== 1) {
       return;
     }
     // Retrieve game IDs from localStorage
     const storedGameIDs = localStorage.getItem('gameIDs');
     let gameIDs = storedGameIDs ? JSON.parse(storedGameIDs) : {};
-  
+
     // Find the latest game ID
     const latestGameID = Object.keys(gameIDs).length > 0 ? Math.max(...Object.keys(gameIDs)) : null;
     console.log('latest game id: ' + latestGameID)
@@ -67,10 +71,10 @@ function Leaderboard() {
         return;
       }
     }
-  
+
     // Proceed to submit score
     console.log('Submitting score:', { username, score });
-  
+
     fetch(apiurl, {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
@@ -84,11 +88,11 @@ function Leaderboard() {
       })
       .then((data) => {
         console.log('Score saved, response:', data);
-  
+
         setIsScoreSubmitted(true); // Set score submission flag to true
         setIsScoreSubmitting(false); // Reset score submission in progress flag
         fetchLeaderboard(); // Fetch leaderboard again to update data
-  
+
         // Update game ID status in localStorage to true
         if (latestGameID !== null) {
           gameIDs[latestGameID] = true;
@@ -100,7 +104,7 @@ function Leaderboard() {
         console.error('Error saving score:', error);
       });
   };
-  
+
   const handlePlayAgain = () => {
     setUsername('');
     setIsScoreSubmitted(false);

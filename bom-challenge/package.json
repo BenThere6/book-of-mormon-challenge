@@ -5,6 +5,7 @@
   "type": "module",
   "scripts": {
     "preinstall": "rm -rf node_modules",
+    "postinstall": "npm install",
     "dev": "vite",
     "start": "vite",
     "build": "vite build",

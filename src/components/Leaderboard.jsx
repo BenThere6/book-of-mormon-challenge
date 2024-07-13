@@ -5,7 +5,7 @@ import Button from '@mui/material/Button';
 
 const apiurl = 'https://bens-api-dd63362f50db.herokuapp.com/leaderboard';
 
-function Leaderboard() {
+const Leaderboard = () => {
   const location = useLocation();
   const navigate = useNavigate();
   const score = location.state?.score || 0;
@@ -126,3 +126,5 @@ function Leaderboard() {
     </div>
   );
 }
+
+export default Leaderboard;

@@ -1,6 +1,13 @@
 [build]
-  command = "npm install -g vite && vite build"
+  command = "npm run build"
   publish = "dist"
+  environment = { 
+    NETLIFY_USE_YARN_CACHE = "false",
+    NETLIFY_BUILD_IMAGE = "latest"
+  }
+
+[[plugins]]
+  package = "@netlify/plugin-cache-clear"
 
 [[headers]]
   for = "/*"

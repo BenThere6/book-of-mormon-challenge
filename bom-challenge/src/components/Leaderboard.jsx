@@ -8,7 +8,7 @@ if (process.env.NODE_ENV === 'development') {
   apiurl = 'http://localhost:3000/leaderboard';
 } else {
   apiurl = 'https://bens-api-dd63362f50db.herokuapp.com/leaderboard';
-}
+} 
 
 function Leaderboard() {
   const location = useLocation();

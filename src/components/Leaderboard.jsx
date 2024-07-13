@@ -3,7 +3,7 @@ import { useLocation, useNavigate } from 'react-router-dom';
 import '../assets/css/Leaderboard.css';
 import Button from '@mui/material/Button';
 
-const apiurl = 'https://bens-api-dd63362f50db.herokuapp.com/leaderboard';
+const apiurl = 'https://bens-api-dd63362f50db.herokuapp.com/leaderboard/';
 
 const Leaderboard = () => {
   const location = useLocation();

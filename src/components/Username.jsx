@@ -4,7 +4,7 @@ import Button from '@mui/material/Button';
 import TextField from '@mui/material/TextField';
 import '../assets/css/Username.css';
 
-function UsernameEntry({ setUsername, startGame }) {
+function UsernameEntry({ setUsername, startGame, onClose }) {
     const navigate = useNavigate();
     const [usernameInput, setUsernameInput] = useState('');
     const location = useLocation();
@@ -23,8 +23,11 @@ function UsernameEntry({ setUsername, startGame }) {
         }
         setUsername(usernameInput.trim());
         localStorage.setItem('username', usernameInput.trim()); // Save username to local storage
-        navigate('/')
-        // startGame(difficulty);
+        onClose(); // Close modal after username is set
+    };
+
+    const handleCancel = () => {
+        onClose(); // Close modal on cancel
     };
 
     const handleKeyPress = (event) => {
@@ -48,6 +51,9 @@ function UsernameEntry({ setUsername, startGame }) {
                     required
                 />
                 <div className="submit-button-container" style={{ marginTop: '10px' }}>
+                    <Button id="username-cancel-btn" variant="outlined" onClick={handleCancel}>
+                        Cancel
+                    </Button>
                     <Button variant="contained" onClick={handleSubmit}>
                         Submit
                     </Button>

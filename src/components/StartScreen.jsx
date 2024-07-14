@@ -19,8 +19,8 @@ function StartScreen({ startGame }) {
   const handleUsernameChange = (newUsername) => {
     if (newUsername) {
       localStorage.setItem('username', newUsername);
+      setShowUsernameModal(false); // Hide Username modal after username is set
     }
-    setShowUsernameModal(false); // Hide Username modal after username is set
   };
 
   const handleStart = () => {
@@ -89,7 +89,7 @@ function StartScreen({ startGame }) {
             {storedUsername ? `${storedUsername}` : 'Set Username'}
           </Button>
           {showUsernameModal && (
-            <UsernameEntry setUsername={handleUsernameChange} startGame={startGame} />
+            <UsernameEntry setUsername={handleUsernameChange} startGame={startGame} onClose={() => setShowUsernameModal(false)} />
           )}
         </div>
         <Button variant="text" onClick={handleViewLeaderboard}>View Leaderboard</Button>

@@ -3,6 +3,10 @@
     z-index: 10000;
 }
 
+#username-cancel-btn {
+    margin-right: 5px;
+}
+
 @media (max-width: 768px) {
     .username-screen {
         width: 80vw;

@@ -37,6 +37,11 @@
     margin: 0;
 }
 
+.top-row {
+    display: flex;
+    justify-content: space-between;
+}
+
 @media (max-width: 768px) {
     .start-screen {
         width: 80vw;

@@ -83,16 +83,18 @@ function StartScreen({ startGame }) {
 
   return (
     <div className="start-screen">
-      <h1>Lehi's Legacy</h1>
-      <Button variant="text" onClick={handleViewLeaderboard}>View Leaderboard</Button>
-      <div className="username-button">
-        <Button variant="outlined" onClick={handleUsernameClick}>
-          {storedUsername ? `${storedUsername}` : 'Set Username'}
-        </Button>
-        {showUsernameModal && (
-          <UsernameEntry setUsername={handleUsernameChange} startGame={startGame} />
-        )}
+      <div className='top-row'>
+        <div className="username-button">
+          <Button variant="text" onClick={handleUsernameClick}>
+            {storedUsername ? `${storedUsername}` : 'Set Username'}
+          </Button>
+          {showUsernameModal && (
+            <UsernameEntry setUsername={handleUsernameChange} startGame={startGame} />
+          )}
+        </div>
+        <Button variant="text" onClick={handleViewLeaderboard}>View Leaderboard</Button>
       </div>
+      <h1>Lehi's Legacy</h1>
       <div className="button-group">
         <ButtonGroup variant="contained">
           <Button

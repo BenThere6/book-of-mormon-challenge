@@ -1,3 +1,5 @@
+@import url('https://fonts.googleapis.com/css2?family=Playfair+Display&display=swap');
+
 .start-screen {
     width: 80vw;
     max-width: 400px;
@@ -26,7 +28,9 @@
 }
 
 #start-title {
+    font-family: 'Playfair Display';
     margin-top: 15px;
+    font-size: 47px;
 }
 
 .start-screen h1 {

@@ -20,6 +20,7 @@ function StartScreen({ startGame }) {
   const handleStart = () => {
     localStorage.setItem('gameScore', 0);
     localStorage.setItem('gameLives', 3);
+    localStorage.setItem('gameCurrentVerse', '');
 
     // Generate game ID object if it doesn't exist in localStorage
     let gameIDs = JSON.parse(localStorage.getItem('gameIDs')) || {};

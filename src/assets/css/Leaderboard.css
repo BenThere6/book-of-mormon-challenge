@@ -20,6 +20,11 @@
   font-family: 'Roboto', sans-serif;
 }
 
+.leaderboard-items-container {
+  max-height: 60vh;
+  overflow-y: scroll;
+}
+
 .leaderboard h2 {
   margin-top: 0;
   font-size: 24px;

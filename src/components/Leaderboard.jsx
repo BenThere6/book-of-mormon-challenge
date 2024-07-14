@@ -109,7 +109,7 @@ const Leaderboard = () => {
       <div className="leaderboard">
         {!fromStartScreen && <div className='center'><div className='user-score'>{score}</div></div>}
         <h2 className='leaderboard-title'>Leaderboard</h2>
-        <ol>
+        <ol className='leaderboard-items-container'>
           {leaderboard.map((entry, index) => (
             <li key={index} className={isUserInTopTen(index) ? 'highlighted' : ''}>
               <span className="rank">{index + 1}.</span>

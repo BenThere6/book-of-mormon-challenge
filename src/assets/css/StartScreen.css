@@ -1,4 +1,5 @@
 .start-screen {
+    width: 80vw;
     max-width: 400px;
     margin: auto; /* Center horizontally */
     padding: 20px;

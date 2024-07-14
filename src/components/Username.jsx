@@ -1,10 +1,11 @@
 import React, { useState } from 'react';
-import { useLocation } from 'react-router-dom';
+import { useLocation, useNavigate } from 'react-router-dom';
 import Button from '@mui/material/Button';
 import TextField from '@mui/material/TextField';
 import '../assets/css/Username.css';
 
 function UsernameEntry({ setUsername, startGame }) {
+    const navigate = useNavigate();
     const [usernameInput, setUsernameInput] = useState('');
     const location = useLocation();
 
@@ -22,7 +23,8 @@ function UsernameEntry({ setUsername, startGame }) {
         }
         setUsername(usernameInput.trim());
         localStorage.setItem('username', usernameInput.trim()); // Save username to local storage
-        startGame(difficulty); // Start game with the correct difficulty
+        navigate('/')
+        // startGame(difficulty);
     };
 
     const handleKeyPress = (event) => {

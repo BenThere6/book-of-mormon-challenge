@@ -2,25 +2,30 @@ import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import Button from '@mui/material/Button';
 import ButtonGroup from '@mui/material/ButtonGroup';
+import UsernameEntry from './Username'; // Import Username component
 import '../assets/css/StartScreen.css';
 
 function StartScreen({ startGame }) {
   const [difficulty, setDifficulty] = useState(''); // Default to empty string
+  const [showUsernameModal, setShowUsernameModal] = useState(false); // State for showing Username modal
   const navigate = useNavigate();
 
   const storedUsername = localStorage.getItem('username');
 
   const handleUsernameClick = () => {
-    const newUsername = prompt('Enter your new username:', storedUsername);
-    if (newUsername !== null) {
+    setShowUsernameModal(true); // Show Username modal
+  };
+
+  const handleUsernameChange = (newUsername) => {
+    if (newUsername) {
       localStorage.setItem('username', newUsername);
     }
+    setShowUsernameModal(false); // Hide Username modal after username is set
   };
 
   const handleStart = () => {
     localStorage.setItem('gameScore', 0);
     localStorage.setItem('gameLives', 3);
-    localStorage.setItem('gameCurrentVerse', '');
 
     // Generate game ID object if it doesn't exist in localStorage
     let gameIDs = JSON.parse(localStorage.getItem('gameIDs')) || {};
@@ -32,7 +37,7 @@ function StartScreen({ startGame }) {
     if (storedUsername) {
       startGame(newGameID, difficulty); // Pass gameID and difficulty to startGame function
     } else {
-      navigate('/username', { state: { gameID: newGameID, difficulty } }); // Pass gameID and difficulty to UsernameEntry
+      setShowUsernameModal(true); // Show Username modal if username is not set
     }
   };
 
@@ -84,6 +89,9 @@ function StartScreen({ startGame }) {
         <Button variant="outlined" onClick={handleUsernameClick}>
           {storedUsername ? `${storedUsername}` : 'Set Username'}
         </Button>
+        {showUsernameModal && (
+          <UsernameEntry setUsername={handleUsernameChange} startGame={startGame} />
+        )}
       </div>
       <div className="button-group">
         <ButtonGroup variant="contained">

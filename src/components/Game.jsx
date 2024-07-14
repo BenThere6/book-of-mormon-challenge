@@ -25,7 +25,27 @@ function Game({ difficulty, endGame, usedVerses }) {
   const [currentStep, setCurrentStep] = useState('book');
   const [showModal, setShowModal] = useState(false);
   const [modalContent, setModalContent] = useState({});
+  const navigate = useNavigate();
 
+  useEffect(() => {
+    const handlePopState = (event) => {
+      if (window.confirm('Are you sure you want to leave? Your game progress will be lost.')) {
+        // Allow the navigation
+        navigate('/')
+      } else {
+        // Prevent the navigation
+        history.pushState(null, document.title, location.href);
+      }
+    };
+
+    // Initial push state to prevent immediate navigation
+    history.pushState(null, document.title, location.href);
+    window.addEventListener('popstate', handlePopState);
+
+    return () => {
+      window.removeEventListener('popstate', handlePopState);
+    };
+  }, [navigate]);
 
   function getRandomVerse(needNewVerse) {
     countNewVerses += 1;
@@ -247,11 +267,10 @@ function Game({ difficulty, endGame, usedVerses }) {
     }
   };
 
-  const navigate = useNavigate();
   const renderBooks = () => (
     <div className="selection-section">
       <div className='back-container'>
-        <IconButton className="back-button" onClick={() => navigate('/')}>
+        <IconButton className="back-button" onClick={() => navigate(-1)}>
           <ArrowBack />
         </IconButton>
       </div>

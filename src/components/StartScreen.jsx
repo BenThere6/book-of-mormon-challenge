@@ -85,7 +85,7 @@ function StartScreen({ startGame }) {
         </div>
         <Button variant="text" onClick={handleViewLeaderboard}>Leaderboard</Button>
       </div>
-      <h1>Lehi's Legacy</h1>
+      <h1 id='start-title'>Lehi's Legacy</h1>
       <div className="button-group">
         <ButtonGroup variant="contained">
           <Button
@@ -111,11 +111,11 @@ function StartScreen({ startGame }) {
       <h3>{getDifficultyDescription()[0]}</h3>
       <div className='difficulty-details-container'>
         <div>
-          <p className='detail-title'>{difficulty && 'Chapter Margin'}</p>
+          {difficulty && <p className='detail-title'>Chapter Margin</p>}
           <p>{getDifficultyDescription()[1]}</p>
         </div>
         <div>
-          <p className='detail-title'>{difficulty && 'Multiplier'}</p>
+          {difficulty && <p className='detail-title'>Multiplier</p>}
           <p>{getDifficultyDescription()[2]}</p>
         </div>
       </div>

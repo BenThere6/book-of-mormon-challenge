@@ -9,6 +9,9 @@ function StartScreen({ startGame }) {
   const navigate = useNavigate();
 
   const handleStart = () => {
+    localStorage.setItem('gameScore', 0);
+    localStorage.setItem('gameLives', 3);
+
     // Generate game ID object if it doesn't exist in localStorage
     let gameIDs = JSON.parse(localStorage.getItem('gameIDs')) || {};
     const newGameID = Object.keys(gameIDs).length > 0 ? Math.max(...Object.keys(gameIDs)) + 1 : 1;

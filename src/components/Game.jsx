@@ -16,9 +16,9 @@ import '../assets/css/Game.css';
 let countNewVerses = 0;
 
 function Game({ difficulty, endGame, usedVerses }) {
-  const [score, setScore] = useState(0);
-  const [lives, setLives] = useState(3);
-  const [currentVerse, setCurrentVerse] = useState(getRandomVerse());
+  const [score, setScore] = useState(localStorage.getItem('gameScore') ? parseInt(localStorage.getItem('gameScore')) : 0);
+  const [lives, setLives] = useState(localStorage.getItem('gameLives') ? parseInt(localStorage.getItem('gameLives')) : 3);
+  const [currentVerse, setCurrentVerse] = useState(localStorage.getItem('gameCurrentVerse') || getRandomVerse());
   const [selectedBook, setSelectedBook] = useState('');
   const [selectedChapter, setSelectedChapter] = useState('');
   const [selectedVerse, setSelectedVerse] = useState('');
@@ -28,6 +28,10 @@ function Game({ difficulty, endGame, usedVerses }) {
   const navigate = useNavigate();
 
   useEffect(() => {
+    localStorage.setItem('gameScore', score);
+    localStorage.setItem('gameLives', lives);
+    localStorage.setItem('gameCurrentVerse', currentVerse);
+
     const handlePopState = (event) => {
       if (window.confirm('Are you sure you want to leave? Your game progress will be lost.')) {
         // Allow the navigation
@@ -45,7 +49,7 @@ function Game({ difficulty, endGame, usedVerses }) {
     return () => {
       window.removeEventListener('popstate', handlePopState);
     };
-  }, [navigate]);
+  }, [navigate, score, lives, currentVerse]);
 
   function getRandomVerse(needNewVerse) {
     countNewVerses += 1;

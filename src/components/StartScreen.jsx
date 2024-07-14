@@ -50,29 +50,20 @@ function StartScreen({ startGame }) {
       case 'easy':
         return [
           'Only scripture mastery verses',
-          'Get within 8 chapters',
-          '1x multiplier',
-          'Extra points for exact chapter or verse!',
-          '(If not within chapter range you',
-          'lose a life and get no points!)'
+          '8',
+          '1x'
         ];
       case 'medium':
         return [
           'Any Book of Mormon verse',
-          'Get within 7 chapters',
-          '8x multiplier',
-          'Extra points for exact chapter or verse!',
-          '(If not within chapter range you',
-          'lose a life and get no points!)'
+          '7',
+          '8x'
         ];
       case 'hard':
         return [
           'Any Book of Mormon verse',
-          'Get within 3 chapters',
-          '12x multiplier',
-          'Extra points for exact chapter or verse!',
-          '(If not within chapter range you',
-          'lose a life and get no points!)'
+          '3',
+          '12x'
         ];
       default:
         return [
@@ -118,11 +109,16 @@ function StartScreen({ startGame }) {
         </ButtonGroup>
       </div>
       <h3>{getDifficultyDescription()[0]}</h3>
-      <p>{getDifficultyDescription()[1]}</p>
-      <p>{getDifficultyDescription()[2]}</p>
-      <h4>{getDifficultyDescription()[3]}</h4>
-      <h5 className='fine-print'>{getDifficultyDescription()[4]}</h5>
-      <h5 className='fine-print'>{getDifficultyDescription()[5]}</h5>
+      <div className='difficulty-details-container'>
+        <div>
+          <p className='detail-title'>{difficulty && 'Chapter Margin'}</p>
+          <p>{getDifficultyDescription()[1]}</p>
+        </div>
+        <div>
+          <p className='detail-title'>{difficulty && 'Multiplier'}</p>
+          <p>{getDifficultyDescription()[2]}</p>
+        </div>
+      </div>
       <div className="start-button-container">
         <Button variant="contained" onClick={handleStart} disabled={!difficulty}>Start Game</Button>
       </div>

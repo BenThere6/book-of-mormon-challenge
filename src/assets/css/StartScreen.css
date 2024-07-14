@@ -15,6 +15,16 @@
     transform: translate(-50%, -50%);
 }
 
+.difficulty-details-container {
+    display: flex;
+    justify-content: space-around;
+}
+
+.detail-title {
+    padding-bottom: 10px;
+    border-bottom: 1px rgb(31, 136, 185) solid;
+}
+
 .start-screen h1 {
     margin-top: 0;
     font-size: 32px;

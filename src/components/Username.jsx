@@ -48,6 +48,7 @@ function UsernameEntry({ setUsername, startGame, onClose }) {
                     value={usernameInput}
                     onChange={handleUsernameChange}
                     onKeyDown={handleKeyPress}
+                    inputProps={{ maxLength: 15 }}
                     required
                 />
                 <div className="submit-button-container" style={{ marginTop: '10px' }}>

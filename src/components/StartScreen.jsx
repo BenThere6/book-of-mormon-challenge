@@ -8,6 +8,15 @@ function StartScreen({ startGame }) {
   const [difficulty, setDifficulty] = useState(''); // Default to empty string
   const navigate = useNavigate();
 
+  const storedUsername = localStorage.getItem('username');
+
+  const handleUsernameClick = () => {
+    const newUsername = prompt('Enter your new username:', storedUsername);
+    if (newUsername !== null) {
+      localStorage.setItem('username', newUsername);
+    }
+  };
+
   const handleStart = () => {
     localStorage.setItem('gameScore', 0);
     localStorage.setItem('gameLives', 3);
@@ -19,7 +28,6 @@ function StartScreen({ startGame }) {
 
     localStorage.setItem('gameIDs', JSON.stringify(gameIDs));
 
-    const storedUsername = localStorage.getItem('username');
     if (storedUsername) {
       startGame(newGameID, difficulty); // Pass gameID and difficulty to startGame function
     } else {
@@ -71,6 +79,11 @@ function StartScreen({ startGame }) {
     <div className="start-screen">
       <h1>Lehi's Legacy</h1>
       <Button variant="text" onClick={handleViewLeaderboard}>View Leaderboard</Button>
+      <div className="username-button">
+        <Button variant="outlined" onClick={handleUsernameClick}>
+          {storedUsername ? `${storedUsername}` : 'Set Username'}
+        </Button>
+      </div>
       <div className="button-group">
         <ButtonGroup variant="contained">
           <Button
@@ -93,12 +106,12 @@ function StartScreen({ startGame }) {
           </Button>
         </ButtonGroup>
       </div>
-          <h3>{getDifficultyDescription()[0]}</h3>
-          <p>{getDifficultyDescription()[1]}</p>
-          <p>{getDifficultyDescription()[2]}</p>
-          <h4>{getDifficultyDescription()[3]}</h4>
-          <h5 className='fine-print'>{getDifficultyDescription()[4]}</h5>
-          <h5 className='fine-print'>{getDifficultyDescription()[5]}</h5>
+      <h3>{getDifficultyDescription()[0]}</h3>
+      <p>{getDifficultyDescription()[1]}</p>
+      <p>{getDifficultyDescription()[2]}</p>
+      <h4>{getDifficultyDescription()[3]}</h4>
+      <h5 className='fine-print'>{getDifficultyDescription()[4]}</h5>
+      <h5 className='fine-print'>{getDifficultyDescription()[5]}</h5>
       <div className="start-button-container">
         <Button variant="contained" onClick={handleStart} disabled={!difficulty}>Start Game</Button>
       </div>

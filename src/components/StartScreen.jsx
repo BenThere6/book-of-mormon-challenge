@@ -5,7 +5,7 @@ import ButtonGroup from '@mui/material/ButtonGroup';
 import '../assets/css/StartScreen.css';
 
 function StartScreen({ startGame }) {
-  const [difficulty, setDifficulty] = useState('easy'); // Default to 'easy'
+  const [difficulty, setDifficulty] = useState(''); // Default to empty string
   const navigate = useNavigate();
 
   const handleStart = () => {
@@ -59,12 +59,7 @@ function StartScreen({ startGame }) {
         ];
       default:
         return [
-          'Practice scripture mastery verses!',
-          'Get within 8 chapters',
-          '1x multiplier',
-          'Extra points for exact chapter or verse!',
-          '(If not within chapter range you',
-          'lose a life and get no points!)'
+          'Please select a difficulty to see the description.'
         ];
     }
   };
@@ -95,14 +90,14 @@ function StartScreen({ startGame }) {
           </Button>
         </ButtonGroup>
       </div>
-      <h3>{getDifficultyDescription()[0]}</h3>
-      <p>{getDifficultyDescription()[1]}</p>
-      <p>{getDifficultyDescription()[2]}</p>
-      <h4>{getDifficultyDescription()[3]}</h4>
-      <h5 className='fine-print'>{getDifficultyDescription()[4]}</h5>
-      <h5 className='fine-print'>{getDifficultyDescription()[5]}</h5>
+          <h3>{getDifficultyDescription()[0]}</h3>
+          <p>{getDifficultyDescription()[1]}</p>
+          <p>{getDifficultyDescription()[2]}</p>
+          <h4>{getDifficultyDescription()[3]}</h4>
+          <h5 className='fine-print'>{getDifficultyDescription()[4]}</h5>
+          <h5 className='fine-print'>{getDifficultyDescription()[5]}</h5>
       <div className="start-button-container">
-        <Button variant="contained" onClick={handleStart}>Start Game</Button>
+        <Button variant="contained" onClick={handleStart} disabled={!difficulty}>Start Game</Button>
       </div>
     </div>
   );

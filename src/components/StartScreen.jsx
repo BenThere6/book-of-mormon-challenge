@@ -115,7 +115,7 @@ function StartScreen({ startGame }) {
           <p>{getDifficultyDescription()[1]}</p>
         </div>
         <div>
-          {difficulty && <p className='detail-title'>Multiplier</p>}
+          {difficulty && <p className='detail-title'>Points Multiplier</p>}
           <p>{getDifficultyDescription()[2]}</p>
         </div>
       </div>

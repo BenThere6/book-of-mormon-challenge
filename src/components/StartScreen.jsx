@@ -49,7 +49,7 @@ function StartScreen({ startGame }) {
     switch (difficulty) {
       case 'easy':
         return [
-          'Practice scripture mastery verses!',
+          'Only scripture mastery verses',
           'Get within 8 chapters',
           '1x multiplier',
           'Extra points for exact chapter or verse!',
@@ -58,7 +58,7 @@ function StartScreen({ startGame }) {
         ];
       case 'medium':
         return [
-          'A balanced challenge.',
+          'Any Book of Mormon verse',
           'Get within 7 chapters',
           '8x multiplier',
           'Extra points for exact chapter or verse!',
@@ -67,7 +67,7 @@ function StartScreen({ startGame }) {
         ];
       case 'hard':
         return [
-          'Test your knowledge!',
+          'Any Book of Mormon verse',
           'Get within 3 chapters',
           '12x multiplier',
           'Extra points for exact chapter or verse!',
@@ -76,7 +76,7 @@ function StartScreen({ startGame }) {
         ];
       default:
         return [
-          'Please select a difficulty to see the description.'
+          'Select a difficulty to see the description.'
         ];
     }
   };

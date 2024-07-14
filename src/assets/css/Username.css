@@ -1,5 +1,6 @@
 .username-screen {
     width: 95vw;
+    z-index: 10000;
 }
 
 @media (max-width: 768px) {

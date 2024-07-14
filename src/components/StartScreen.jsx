@@ -92,7 +92,7 @@ function StartScreen({ startGame }) {
             <UsernameEntry setUsername={handleUsernameChange} startGame={startGame} onClose={() => setShowUsernameModal(false)} />
           )}
         </div>
-        <Button variant="text" onClick={handleViewLeaderboard}>View Leaderboard</Button>
+        <Button variant="text" onClick={handleViewLeaderboard}>Leaderboard</Button>
       </div>
       <h1>Lehi's Legacy</h1>
       <div className="button-group">

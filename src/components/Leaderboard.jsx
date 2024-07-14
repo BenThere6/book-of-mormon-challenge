@@ -113,7 +113,7 @@ const Leaderboard = () => {
           {leaderboard.map((entry, index) => (
             <li key={index} className={isUserInTopTen(index) ? 'highlighted' : ''}>
               <span className="rank">{index + 1}.</span>
-              <span className="username">{entry.username}</span>
+              <span className="username">{entry.username.charAt(0).toUpperCase() + entry.username.slice(1).toLowerCase()}</span>
               <span className="score">{entry.score}</span>
             </li>
           ))}

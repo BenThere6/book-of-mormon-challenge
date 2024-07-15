@@ -90,7 +90,7 @@ function StartScreen({ startGame }) {
         <div className="image-container">
           <img id="title" src="/title.png" alt="Lehi's Legacy" />
         </div>
-        {/* <h1 id='start-title'><span id='lehis'>Lehi's</span> <span id='legacy'>Legacy</span></h1> */}
+        <h1 id='start-title'><span id='lehis'>Lehi's</span> <span id='legacy'>Legacy</span></h1>
         <div className="button-group">
           <ButtonGroup variant="contained">
             <Button

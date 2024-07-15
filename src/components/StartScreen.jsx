@@ -113,7 +113,7 @@ function StartScreen({ startGame }) {
             </Button>
           </ButtonGroup>
         </div>
-        <h3>{getDifficultyDescription()[0]}</h3>
+        <h3 className='this'> {getDifficultyDescription()[0]}</h3>
         <div className='difficulty-details-container'>
           <div>
             {difficulty && <p className='detail-title'>Chapter Margin</p>}

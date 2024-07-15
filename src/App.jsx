@@ -3,7 +3,8 @@ import { BrowserRouter as Router, Routes, Route, useNavigate } from 'react-route
 import StartScreen from './components/StartScreen';
 import Game from './components/Game';
 import Leaderboard from './components/Leaderboard';
-import UsernameEntry from './components/Username'; // Import UsernameEntry component
+import UsernameEntry from './components/Username';
+import './assets/css/style.css';
 
 function App() {
   const [difficulty, setDifficulty] = useState(null);
@@ -27,7 +28,7 @@ function App() {
   };
 
   return (
-    <div className="App">
+    <div className="app">
       <Routes>
         <Route path="/" element={<StartScreen startGame={startGame} />} />
         <Route path="/game" element={<Game difficulty={difficulty} endGame={endGame} usedVerses={usedVerses} username={username} />} />

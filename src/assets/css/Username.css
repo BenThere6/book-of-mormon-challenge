@@ -1,6 +1,8 @@
 .username-screen {
-    width: 95vw;
     z-index: 10000;
+    position: fixed;
+    top: 30vh;
+    left: 0;
 }
 
 #username-cancel-btn {

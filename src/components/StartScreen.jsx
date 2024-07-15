@@ -73,54 +73,59 @@ function StartScreen({ startGame }) {
   };
 
   return (
-    <div className="start-screen">
-      <div className='top-row'>
-        <div className="username-button">
-          <Button variant="text" onClick={handleUsernameClick}>
-            {storedUsername ? `${storedUsername}` : 'Set Username'}
-          </Button>
-          {showUsernameModal && (
-            <UsernameEntry setUsername={handleUsernameChange} startGame={startGame} onClose={() => setShowUsernameModal(false)} />
-          )}
+    <div className='centered-element'>
+      <div className="start-screen">
+        <div className='top-row'>
+          <div className="username-button">
+            <Button variant="text" onClick={handleUsernameClick}>
+              {storedUsername ? `${storedUsername}` : 'Set Username'}
+            </Button>
+            {showUsernameModal && (
+              <UsernameEntry setUsername={handleUsernameChange} startGame={startGame} onClose={() => setShowUsernameModal(false)} />
+            )}
+          </div>
+          <Button variant="text" onClick={handleViewLeaderboard}>Leaderboard</Button>
         </div>
-        <Button variant="text" onClick={handleViewLeaderboard}>Leaderboard</Button>
-      </div>
-      <h1 id='start-title'>Lehi's Legacy</h1>
-      <div className="button-group">
-        <ButtonGroup variant="contained">
-          <Button
-            onClick={() => setDifficulty('easy')}
-            color={difficulty === 'easy' ? 'primary' : 'inherit'}
-          >
-            Easy
-          </Button>
-          <Button
-            onClick={() => setDifficulty('medium')}
-            color={difficulty === 'medium' ? 'primary' : 'inherit'}
-          >
-            Medium
-          </Button>
-          <Button
-            onClick={() => setDifficulty('hard')}
-            color={difficulty === 'hard' ? 'primary' : 'inherit'}
-          >
-            Hard
-          </Button>
-        </ButtonGroup>
-      </div>
-      <h3>{getDifficultyDescription()[0]}</h3>
-      <div className='difficulty-details-container'>
-        <div>
-          {difficulty && <p className='detail-title'>Chapter Margin</p>}
-          <p>{getDifficultyDescription()[1]}</p>
+        <h1 id='start-title'>Lehi's Legacy</h1>
+        {/* <div className="image-container">
+          <img id="logo" className='faded-image' src="/images/logo.png" alt="Game Logo" />
+        </div> */}
+        <div className="button-group">
+          <ButtonGroup variant="contained">
+            <Button
+              onClick={() => setDifficulty('easy')}
+              color={difficulty === 'easy' ? 'primary' : 'inherit'}
+            >
+              Easy
+            </Button>
+            <Button
+              onClick={() => setDifficulty('medium')}
+              color={difficulty === 'medium' ? 'primary' : 'inherit'}
+            >
+              Medium
+            </Button>
+            <Button
+              onClick={() => setDifficulty('hard')}
+              color={difficulty === 'hard' ? 'primary' : 'inherit'}
+            >
+              Hard
+            </Button>
+          </ButtonGroup>
         </div>
-        <div>
-          {difficulty && <p className='detail-title'>Points Multiplier</p>}
-          <p>{getDifficultyDescription()[2]}</p>
+        <h3>{getDifficultyDescription()[0]}</h3>
+        <div className='difficulty-details-container'>
+          <div>
+            {difficulty && <p className='detail-title'>Chapter Margin</p>}
+            <p>{getDifficultyDescription()[1]}</p>
+          </div>
+          <div>
+            {difficulty && <p className='detail-title'>Points Multiplier</p>}
+            <p>{getDifficultyDescription()[2]}</p>
+          </div>
         </div>
-      </div>
-      <div className="start-button-container">
-        <Button variant="contained" onClick={handleStart} disabled={!difficulty}>Start Game</Button>
+        <div className="start-button-container">
+          <Button variant="contained" onClick={handleStart} disabled={!difficulty}>Start Game</Button>
+        </div>
       </div>
     </div>
   );

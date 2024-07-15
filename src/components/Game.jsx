@@ -392,44 +392,46 @@ function Game({ difficulty, endGame, usedVerses }) {
   };
 
   return (
-    <div className="game-container">
-      <div className="header">
-        <h2 className="score">Score: {score}</h2>
-        <h2 className="lives">Lives: {lives}</h2>
-      </div>
-      <div className="guess-box">
-        <p
-          className='guess-text'>{selectedBook} {selectedChapter && (selectedVerse ? ` ${selectedChapter}:${selectedVerse}` : selectedChapter)}
-        </p>
-      </div>
-      {getCurrentVerseText()}
-      {currentStep === 'book' && renderBooks()}
-      {currentStep === 'chapter' && renderChapters()}
-      {currentStep === 'verse' && renderVerses()}
-      <Dialog open={showModal} onClose={handleCloseModal}>
-        <DialogTitle>Guess Results</DialogTitle>
-        <DialogContent>
-          <DialogContentText>
-            Your Guess: {modalContent.guess && `${modalContent.guess.book} ${modalContent.guess.chapter}:${modalContent.guess.verse}`}
-          </DialogContentText>
-          <DialogContentText>
-            Correct Verse: {modalContent.correctVerse}
-          </DialogContentText>
-          <DialogContentText>
-            Points Earned: {modalContent.pointsEarned}
-          </DialogContentText>
-          {modalContent.lifeLost && (
+    <div className='centered-element'>
+      <div className="game-container">
+        <div className="header">
+          <h2 className="score">Score: {score}</h2>
+          <h2 className="lives">Lives: {lives}</h2>
+        </div>
+        <div className="guess-box">
+          <p
+            className='guess-text'>{selectedBook} {selectedChapter && (selectedVerse ? ` ${selectedChapter}:${selectedVerse}` : selectedChapter)}
+          </p>
+        </div>
+        {getCurrentVerseText()}
+        {currentStep === 'book' && renderBooks()}
+        {currentStep === 'chapter' && renderChapters()}
+        {currentStep === 'verse' && renderVerses()}
+        <Dialog open={showModal} onClose={handleCloseModal}>
+          <DialogTitle>Guess Results</DialogTitle>
+          <DialogContent>
             <DialogContentText>
-              You lost a life!
+              Your Guess: {modalContent.guess && `${modalContent.guess.book} ${modalContent.guess.chapter}:${modalContent.guess.verse}`}
             </DialogContentText>
-          )}
-        </DialogContent>
-        <DialogActions>
-          <Button onClick={handleCloseModal} color="primary">
-            Okay
-          </Button>
-        </DialogActions>
-      </Dialog>
+            <DialogContentText>
+              Correct Verse: {modalContent.correctVerse}
+            </DialogContentText>
+            <DialogContentText>
+              Points Earned: {modalContent.pointsEarned}
+            </DialogContentText>
+            {modalContent.lifeLost && (
+              <DialogContentText>
+                You lost a life!
+              </DialogContentText>
+            )}
+          </DialogContent>
+          <DialogActions>
+            <Button onClick={handleCloseModal} color="primary">
+              Okay
+            </Button>
+          </DialogActions>
+        </Dialog>
+      </div>
     </div>
   );
 }

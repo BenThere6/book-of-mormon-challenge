@@ -105,7 +105,7 @@ const Leaderboard = () => {
   };
 
   return (
-    <div className="leaderboard-container">
+    <div className="centered-element">
       <div className="leaderboard">
         {!fromStartScreen && <div className='center'><div className='user-score'>{score}</div></div>}
         <h2 className='leaderboard-title'>Leaderboard</h2>

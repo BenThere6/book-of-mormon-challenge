@@ -5,7 +5,6 @@ import TextField from '@mui/material/TextField';
 import '../assets/css/Username.css';
 
 function UsernameEntry({ setUsername, startGame, onClose }) {
-    const navigate = useNavigate();
     const [usernameInput, setUsernameInput] = useState('');
     const location = useLocation();
 

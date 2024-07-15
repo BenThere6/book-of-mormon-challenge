@@ -36,27 +36,29 @@ function UsernameEntry({ setUsername, startGame, onClose }) {
     };
 
     return (
-        <div className='start-screen username-screen'>
-            <div className="username-entry">
-                <h1 id='enter-username'>Enter Your Username</h1>
-                <TextField
-                    id="username-input"
-                    label="Username"
-                    variant="outlined"
-                    fullWidth
-                    value={usernameInput}
-                    onChange={handleUsernameChange}
-                    onKeyDown={handleKeyPress}
-                    inputProps={{ maxLength: 15 }}
-                    required
-                />
-                <div className="submit-button-container" style={{ marginTop: '10px' }}>
-                    <Button id="username-cancel-btn" variant="outlined" onClick={handleCancel}>
-                        Cancel
-                    </Button>
-                    <Button variant="contained" onClick={handleSubmit}>
-                        Submit
-                    </Button>
+        <div className='centered-screen'>
+            <div className='username-screen'>
+                <div className="username-entry">
+                    <h1 id='enter-username'>Enter Your Username</h1>
+                    <TextField
+                        id="username-input"
+                        label="Username"
+                        variant="outlined"
+                        fullWidth
+                        value={usernameInput}
+                        onChange={handleUsernameChange}
+                        onKeyDown={handleKeyPress}
+                        inputProps={{ maxLength: 15 }}
+                        required
+                    />
+                    <div className="submit-button-container" style={{ marginTop: '10px' }}>
+                        <Button id="username-cancel-btn" variant="outlined" onClick={handleCancel}>
+                            Cancel
+                        </Button>
+                        <Button variant="contained" onClick={handleSubmit}>
+                            Submit
+                        </Button>
+                    </div>
                 </div>
             </div>
         </div>

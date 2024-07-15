@@ -1,8 +1,19 @@
 .username-screen {
+    width: calc(100% - 42px);
     z-index: 10000;
-    position: fixed;
-    top: 30vh;
+    position: absolute;
     left: 0;
+    padding: 20px;
+    background-color: #f0f0f0;
+    border: 1px solid #ccc;
+    border-radius: 8px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    font-family: 'Roboto', sans-serif;
+    text-align: center;
+}
+
+.centered-screen {
+    display: flex;
 }
 
 #username-cancel-btn {
@@ -10,9 +21,6 @@
 }
 
 @media (max-width: 768px) {
-    .username-screen {
-        width: 80vw;
-    }
     #enter-username {
         font-size: 20px;
     }

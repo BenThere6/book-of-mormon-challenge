@@ -1,4 +1,7 @@
-@import url('https://fonts.googleapis.com/css2?family=Playfair+Display&display=swap');
+/* @import url('https://fonts.googleapis.com/css2?family=Playfair+Display&display=swap'); */
+@import url('https://fonts.googleapis.com/css2?family=Lobster&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Bona+Nova+SC&display=swap');
+
 
 .start-screen {
     width: 80vw;
@@ -31,9 +34,23 @@
 }
 
 #start-title {
-    font-family: 'Playfair Display';
-    margin-top: 15px;
+    /* font-family: 'Playfair Display'; */
+    margin-top: 35px;
     font-size: 47px;
+    position: relative;
+}
+
+#lehis {
+    font-family: 'Lobster';
+    position: absolute;
+    top: -20px;
+    left: 80px;
+}
+
+#legacy {
+    font-family: 'Bona Nova SC';
+    font-size: 90px;
+    font-weight:100;
 }
 
 .start-screen h1 {

@@ -18,8 +18,9 @@
 }
 
 #logo {
-    width: 200px;
-    margin-bottom: 20px;
+    position:fixed;
+    width: 100px;
+    /* margin-bottom: 20px; */
     box-shadow: 0 0 8px 8px #f0f0f0 inset;
 }
 

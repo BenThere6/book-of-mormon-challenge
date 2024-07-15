@@ -87,10 +87,10 @@ function StartScreen({ startGame }) {
           </div>
           <Button variant="text" onClick={handleViewLeaderboard}>Leaderboard</Button>
         </div>
-        {/* <div className="image-container">
-          <img id="logo" className='faded-image' src="/images/logo.png" alt="Game Logo" />
-        </div> */}
-        <h1 id='start-title'><span id='lehis'>Lehi's</span> <span id='legacy'>Legacy</span></h1>
+        <div className="image-container">
+          <img id="title" src="/title.png" alt="Lehi's Legacy" />
+        </div>
+        {/* <h1 id='start-title'><span id='lehis'>Lehi's</span> <span id='legacy'>Legacy</span></h1> */}
         <div className="button-group">
           <ButtonGroup variant="contained">
             <Button

@@ -48,6 +48,10 @@
     left: 80px;
 }
 
+#title {
+    width: 300px;
+}
+
 #legacy {
     font-family: 'Bona Nova SC';
     font-size: 90px;
@@ -85,5 +89,11 @@
 @media (max-width: 768px) {
     .start-screen {
         width: 80vw;
+    }
+}
+
+@media (max-width: 400px) {
+    #title {
+        width: 250px;
     }
 }

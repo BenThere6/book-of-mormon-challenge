@@ -8,19 +8,21 @@ import './assets/css/style.css';
 
 function App() {
   const [difficulty, setDifficulty] = useState(null);
+  const [category, setCategory] = useState('all-verses'); // Default to 'all-verses'
   const [score, setScore] = useState(0);
   const [username, setUsername] = useState(''); // State for username
   const navigate = useNavigate();
   let usedVerses = [];
 
-  const startGame = (gameID, selectedDifficulty) => {
+  const startGame = (gameID, selectedDifficulty, selectedCategory) => {
     setDifficulty(selectedDifficulty);
-    navigate('/game');
+    setCategory(selectedCategory);
+    navigate('/game', { state: { difficulty: selectedDifficulty, category: selectedCategory, gameID } });
   };
 
   const endGame = (finalScore) => {
     setScore(finalScore);
-    navigate('/leaderboard', { state: { score: finalScore } });
+    navigate('/leaderboard', { state: { score: finalScore, difficulty, category, username } });
   };
 
   const handleStartScreen = () => {
@@ -31,8 +33,8 @@ function App() {
     <div className="app">
       <Routes>
         <Route path="/" element={<StartScreen startGame={startGame} />} />
-        <Route path="/game" element={<Game difficulty={difficulty} endGame={endGame} usedVerses={usedVerses} username={username} />} />
-        <Route path="/leaderboard" element={<Leaderboard score={score} onStartScreen={handleStartScreen} />} />
+        <Route path="/game" element={<Game difficulty={difficulty} category={category} endGame={endGame} usedVerses={usedVerses} username={username} />} />
+        <Route path="/leaderboard" element={<Leaderboard score={score} difficulty={difficulty} category={category} onStartScreen={handleStartScreen} />} />
         <Route path="/username" element={<UsernameEntry startGame={startGame} setUsername={setUsername} />} /> {/* Route for UsernameEntry */}
       </Routes>
     </div>

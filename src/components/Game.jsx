@@ -15,7 +15,7 @@ import '../assets/css/Game.css';
 
 let countNewVerses = 0;
 
-function Game({ difficulty, endGame, usedVerses }) {
+function Game({ difficulty, category, endGame, usedVerses, username }) {
   const [score, setScore] = useState(localStorage.getItem('gameScore') ? parseInt(localStorage.getItem('gameScore')) : 0);
   const [lives, setLives] = useState(localStorage.getItem('gameLives') ? parseInt(localStorage.getItem('gameLives')) : 3);
   const [currentVerse, setCurrentVerse] = useState(localStorage.getItem('gameCurrentVerse') || getRandomVerse());
@@ -53,38 +53,36 @@ function Game({ difficulty, endGame, usedVerses }) {
 
   function getRandomVerse(needNewVerse) {
     countNewVerses += 1;
-
+  
     let verseKeys;
-
-    if (difficulty === 'easy' || difficulty === null) {
+  
+    if (category === 'scripture-mastery') {
       verseKeys = Object.keys(scriptureMasteryVerses);
     } else {
       verseKeys = Object.keys(verses);
     }
-
+  
     // Check if the game should end due to verse count limit
-    if (usedVerses.length >= 25 && (difficulty === 'easy' || difficulty === null)) {
+    if (usedVerses.length >= 25 && category === 'scripture-mastery') {
       endGame(score);
       return null;
     }
-
+  
     let randomKey = verseKeys[Math.floor(Math.random() * verseKeys.length)];
-
+  
     // Ensure the selected verse hasn't been used before
     while (usedVerses.includes(randomKey)) {
       randomKey = verseKeys[Math.floor(Math.random() * verseKeys.length)];
     }
-
+  
     // Add the selected verse to usedVerses
     if (needNewVerse || countNewVerses === 2) {
       usedVerses.push(randomKey);
     }
-
-    // console.log('usedVerses: ' + usedVerses)
-
+  
     return randomKey;
   }
-
+  
   function handleBookSelection(book) {
     setSelectedBook(book);
     setSelectedChapter('');
@@ -369,19 +367,19 @@ function Game({ difficulty, endGame, usedVerses }) {
 
   const getCurrentVerseText = () => {
     let verseText;
-    if (difficulty === 'easy' || difficulty === null) {
+    if (category === 'scripture-mastery') {
       verseText = scriptureMasteryVerses[currentVerse];
     } else {
       verseText = verses[currentVerse];
     }
-
+  
     if (!verseText) {
       console.log(`Verse Not Found for key: ${currentVerse}`);
       return 'Verse Not Found';
     }
-
+  
     const versesArray = verseText.split('\n\n');
-
+  
     return (
       <div className="verse-text">
         {versesArray.map((verse, index) => (
@@ -390,7 +388,7 @@ function Game({ difficulty, endGame, usedVerses }) {
       </div>
     );
   };
-
+  
   return (
     <div className='centered-element'>
       <div className="game-container">

@@ -2,6 +2,10 @@ import React, { useState, useEffect, useRef } from 'react';
 import { useLocation, useNavigate } from 'react-router-dom';
 import '../assets/css/Leaderboard.css';
 import Button from '@mui/material/Button';
+import Select from '@mui/material/Select';
+import MenuItem from '@mui/material/MenuItem';
+import FormControl from '@mui/material/FormControl';
+import InputLabel from '@mui/material/InputLabel';
 
 const apiurl = 'https://bens-api-dd63362f50db.herokuapp.com/leaderboard/';
 
@@ -10,9 +14,13 @@ const Leaderboard = () => {
   const navigate = useNavigate();
   const score = location.state?.score || 0;
   const fromStartScreen = location.state?.fromStartScreen || false;
+  const initialDifficulty = location.state?.difficulty || 'hard';
+  const initialCategory = location.state?.category || 'all-verses';
   const [leaderboard, setLeaderboard] = useState([]);
   const [username, setUsername] = useState('');
   const [userRank, setUserRank] = useState(null);
+  const [difficulty, setDifficulty] = useState(initialDifficulty);
+  const [category, setCategory] = useState(initialCategory);
   const [isScoreSubmitted, setIsScoreSubmitted] = useState(false);
   const isSubmittingRef = useRef(false);
 
@@ -24,10 +32,10 @@ const Leaderboard = () => {
       submitScore(storedUsername, score);
     }
     fetchLeaderboard();
-  }, [isScoreSubmitted, score]);
+  }, [isScoreSubmitted, score, difficulty, category]);
 
   const fetchLeaderboard = () => {
-    fetch(apiurl)
+    fetch(`${apiurl}${difficulty}/${category}`)
       .then(response => {
         if (!response.ok) {
           console.log("API response was not 'ok'");
@@ -56,9 +64,9 @@ const Leaderboard = () => {
       return;
     }
 
-    console.log('Submitting score:', { username, score });
+    console.log('Submitting score:', { username, score, difficulty, category });
 
-    fetch(apiurl, {
+    fetch(`${apiurl}${difficulty}/${category}`, {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify({ username, score }),
@@ -109,6 +117,24 @@ const Leaderboard = () => {
       <div className="leaderboard">
         {!fromStartScreen && <div className='center'><div className='user-score'>{score}</div></div>}
         <h2 className='leaderboard-title'>Leaderboard</h2>
+        
+        <FormControl variant="outlined" className="form-control">
+          <InputLabel>Difficulty</InputLabel>
+          <Select value={difficulty} onChange={e => setDifficulty(e.target.value)} label="Difficulty">
+            <MenuItem value="easy">Easy</MenuItem>
+            <MenuItem value="medium">Medium</MenuItem>
+            <MenuItem value="hard">Hard</MenuItem>
+          </Select>
+        </FormControl>
+
+        <FormControl variant="outlined" className="form-control">
+          <InputLabel>Category</InputLabel>
+          <Select value={category} onChange={e => setCategory(e.target.value)} label="Category">
+            <MenuItem value="all-verses">All Verses</MenuItem>
+            <MenuItem value="scripture-mastery">Scripture Mastery</MenuItem>
+          </Select>
+        </FormControl>
+
         <ol className='leaderboard-items-container'>
           {leaderboard.map((entry, index) => (
             <li key={index} className={isUserInTopTen(index) ? 'highlighted' : ''}>

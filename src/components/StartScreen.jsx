@@ -26,7 +26,7 @@ function StartScreen({ startGame }) {
   const handleStart = () => {
     localStorage.setItem('gameScore', 0);
     localStorage.setItem('gameLives', 3);
-    localStorage.setItem('gameCurrentVerse', '')
+    localStorage.setItem('gameCurrentVerse', '');
 
     // Generate game ID object if it doesn't exist in localStorage
     let gameIDs = JSON.parse(localStorage.getItem('gameIDs')) || {};
@@ -35,8 +35,10 @@ function StartScreen({ startGame }) {
 
     localStorage.setItem('gameIDs', JSON.stringify(gameIDs));
 
+    const category = difficulty === 'easy' ? 'scripture-mastery' : 'all-verses';
+
     if (storedUsername) {
-      startGame(newGameID, difficulty); // Pass gameID and difficulty to startGame function
+      startGame(newGameID, difficulty, category); // Pass gameID, difficulty, and category to startGame function
     } else {
       setShowUsernameModal(true); // Show Username modal if username is not set
     }
@@ -90,7 +92,6 @@ function StartScreen({ startGame }) {
         <div className="image-container">
           <img id="title" src="/title.png" alt="Lehi's Legacy" />
         </div>
-        {/* <h1 id='start-title'><span id='lehis'>Lehi's</span> <span id='legacy'>Legacy</span></h1> */}
         <div className="button-group">
           <ButtonGroup variant="contained">
             <Button

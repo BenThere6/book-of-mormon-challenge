@@ -4,6 +4,7 @@ import StartScreen from './components/StartScreen';
 import Game from './components/Game';
 import Leaderboard from './components/Leaderboard';
 import UsernameEntry from './components/Username';
+import Feedback from './components/Feedback'; // Import the Feedback component
 import './assets/css/style.css';
 
 function App() {
@@ -35,7 +36,8 @@ function App() {
         <Route path="/" element={<StartScreen startGame={startGame} />} />
         <Route path="/game" element={<Game difficulty={difficulty} category={category} endGame={endGame} usedVerses={usedVerses} username={username} />} />
         <Route path="/leaderboard" element={<Leaderboard score={score} difficulty={difficulty} category={category} onStartScreen={handleStartScreen} />} />
-        <Route path="/username" element={<UsernameEntry startGame={startGame} setUsername={setUsername} />} /> {/* Route for UsernameEntry */}
+        <Route path="/username" element={<UsernameEntry startGame={startGame} setUsername={setUsername} />} />
+        <Route path="/feedback" element={<Feedback username={username} />} />
       </Routes>
     </div>
   );

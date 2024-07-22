@@ -18,6 +18,10 @@ function StartScreen({ startGame }) {
   const storedUsername = localStorage.getItem('username');
   const storedUpdateVersion = localStorage.getItem('updateVersion');
 
+  const handleFeedbackClick = () => {
+    navigate('/feedback', { state: { username: storedUsername } });
+  };
+
   useEffect(() => {
     if (storedUpdateVersion !== UPDATE_VERSION) {
       setShowUpdateModal(true);
@@ -145,6 +149,7 @@ function StartScreen({ startGame }) {
         <div className="start-button-container">
           <Button variant="contained" onClick={handleStart} disabled={!difficulty}>Start Game</Button>
         </div>
+        <Button id='feedback-button' variant="text" onClick={handleFeedbackClick}>Feedback</Button>
       </div>
       <UpdateModal open={showUpdateModal} onClose={handleUpdateModalClose} updateMessage={UPDATE_MESSAGE} updateVersion={UPDATE_VERSION} />
     </div>

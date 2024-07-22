@@ -25,3 +25,11 @@ body {
     width: 100%;
     max-width: 400px;
 }
+
+.feedback-container-container-lol {
+    min-width: 50vw;
+}
+
+.feedback-container {
+    width: 100%;
+}

@@ -2,19 +2,16 @@ import React from 'react';
 import Dialog from '@mui/material/Dialog';
 import DialogActions from '@mui/material/DialogActions';
 import DialogContent from '@mui/material/DialogContent';
+import DialogContentText from '@mui/material/DialogContentText';
 import DialogTitle from '@mui/material/DialogTitle';
 import Button from '@mui/material/Button';
 
-const UpdateModal = ({ open, onClose, updateMessage, updateVersion }) => {
+const DevelopmentModal = ({ open, onClose, developmentMessage }) => {
   return (
     <Dialog open={open} onClose={onClose}>
-      <DialogTitle>Update version {updateVersion}</DialogTitle>
+      <DialogTitle>Development Notice</DialogTitle>
       <DialogContent>
-        <ul>
-          {updateMessage.map((message, index) => (
-            <li key={index}>{message}</li>
-          ))}
-        </ul>
+        <DialogContentText>{developmentMessage}</DialogContentText>
       </DialogContent>
       <DialogActions>
         <Button onClick={onClose} color="primary">
@@ -25,4 +22,4 @@ const UpdateModal = ({ open, onClose, updateMessage, updateVersion }) => {
   );
 };
 
-export default UpdateModal;
+export default DevelopmentModal;

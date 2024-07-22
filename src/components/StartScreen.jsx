@@ -4,19 +4,27 @@ import Button from '@mui/material/Button';
 import ButtonGroup from '@mui/material/ButtonGroup';
 import UsernameEntry from './Username'; // Import Username component
 import UpdateModal from './UpdateModal'; // Import the UpdateModal component
+import DevelopmentModal from './DevelopmentModal'; // Import the DevelopmentModal component
 import '../assets/css/StartScreen.css';
 
 const UPDATE_VERSION = '1.5.0'; // Change this version number when there's a new update
-const UPDATE_MESSAGE = 'There is now a leaderboard for each difficulty.'; // Update message content
+const UPDATE_MESSAGE = [
+  'There is now a leaderboard for each difficulty.',
+  'Added feedback section.',
+  
+];
+const DEVELOPMENT_MESSAGE = 'This application is currently under development. You might encounter bugs, design flaws, or areas that could be improved. If you notice any issues or have suggestions for enhancements, please click the feedback button in the bottom left corner of the start screen to share your thoughts.';
 
 function StartScreen({ startGame }) {
   const [difficulty, setDifficulty] = useState(''); // Default to empty string
   const [showUsernameModal, setShowUsernameModal] = useState(false); // State for showing Username modal
+  const [showDevelopmentModal, setShowDevelopmentModal] = useState(false); // State for showing Development modal
   const [showUpdateModal, setShowUpdateModal] = useState(false); // State for showing Update modal
   const navigate = useNavigate();
 
   const storedUsername = localStorage.getItem('username');
   const storedUpdateVersion = localStorage.getItem('updateVersion');
+  const storedDevelopmentNotice = localStorage.getItem('developmentNotice');
 
   const handleFeedbackClick = () => {
     navigate('/feedback', { state: { username: storedUsername } });
@@ -26,7 +34,15 @@ function StartScreen({ startGame }) {
     if (storedUpdateVersion !== UPDATE_VERSION) {
       setShowUpdateModal(true);
     }
-  }, [storedUpdateVersion]);
+    if (!storedDevelopmentNotice) {
+      setShowDevelopmentModal(true);
+    }
+  }, [storedUpdateVersion, storedDevelopmentNotice]);
+
+  const handleDevelopmentModalClose = () => {
+    setShowDevelopmentModal(false);
+    localStorage.setItem('developmentNotice', 'shown');
+  };
 
   const handleUsernameClick = () => {
     setShowUsernameModal(true); // Show Username modal
@@ -151,6 +167,11 @@ function StartScreen({ startGame }) {
         </div>
         <Button id='feedback-button' variant="text" onClick={handleFeedbackClick}>Feedback</Button>
       </div>
+      <DevelopmentModal
+        open={showDevelopmentModal}
+        onClose={handleDevelopmentModalClose}
+        developmentMessage={DEVELOPMENT_MESSAGE}
+      />
       <UpdateModal open={showUpdateModal} onClose={handleUpdateModalClose} updateMessage={UPDATE_MESSAGE} updateVersion={UPDATE_VERSION} />
     </div>
   );

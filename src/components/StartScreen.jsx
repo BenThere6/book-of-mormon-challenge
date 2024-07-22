@@ -1,16 +1,28 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import Button from '@mui/material/Button';
 import ButtonGroup from '@mui/material/ButtonGroup';
 import UsernameEntry from './Username'; // Import Username component
+import UpdateModal from './UpdateModal'; // Import the UpdateModal component
 import '../assets/css/StartScreen.css';
+
+const UPDATE_VERSION = '1.5.0'; // Change this version number when there's a new update
+const UPDATE_MESSAGE = 'There is now a leaderboard for each difficulty.'; // Update message content
 
 function StartScreen({ startGame }) {
   const [difficulty, setDifficulty] = useState(''); // Default to empty string
   const [showUsernameModal, setShowUsernameModal] = useState(false); // State for showing Username modal
+  const [showUpdateModal, setShowUpdateModal] = useState(false); // State for showing Update modal
   const navigate = useNavigate();
 
   const storedUsername = localStorage.getItem('username');
+  const storedUpdateVersion = localStorage.getItem('updateVersion');
+
+  useEffect(() => {
+    if (storedUpdateVersion !== UPDATE_VERSION) {
+      setShowUpdateModal(true);
+    }
+  }, [storedUpdateVersion]);
 
   const handleUsernameClick = () => {
     setShowUsernameModal(true); // Show Username modal
@@ -75,6 +87,11 @@ function StartScreen({ startGame }) {
     }
   };
 
+  const handleUpdateModalClose = () => {
+    setShowUpdateModal(false);
+    localStorage.setItem('updateVersion', UPDATE_VERSION);
+  };
+
   return (
     <div className='centered-element'>
       <div className="start-screen">
@@ -129,6 +146,7 @@ function StartScreen({ startGame }) {
           <Button variant="contained" onClick={handleStart} disabled={!difficulty}>Start Game</Button>
         </div>
       </div>
+      <UpdateModal open={showUpdateModal} onClose={handleUpdateModalClose} updateMessage={UPDATE_MESSAGE} updateVersion={UPDATE_VERSION} />
     </div>
   );
 }

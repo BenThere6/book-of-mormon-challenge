@@ -13,10 +13,12 @@ const UPDATE_MESSAGE = [
   'Added feedback section.',
 ];
 const DEVELOPMENT_MESSAGE = 'This application is currently under development. You might encounter bugs, design flaws, or areas that could be improved. If you notice any issues or have suggestions for enhancements, please click the feedback button in the bottom left corner of the start screen to share your thoughts.';
-
-const token = localStorage.getItem('token');
+const SECRET_CODE = ['easy', 'hard', 'hard', 'easy', 'medium', 'medium', 'easy', 'hard'];
+const SECRET_CODE_TIME_LIMIT = 10000; // 10 seconds
 
 function StartScreen({ startGame }) {
+  const [secretCodeIndex, setSecretCodeIndex] = useState(0);
+  const [firstClickTime, setFirstClickTime] = useState(null);
   const [difficulty, setDifficulty] = useState(''); // Default to empty string
   const [showUsernameModal, setShowUsernameModal] = useState(false); // State for showing Username modal
   const [showDevelopmentModal, setShowDevelopmentModal] = useState(false); // State for showing Development modal
@@ -81,6 +83,40 @@ function StartScreen({ startGame }) {
     navigate('/leaderboard', { state: { fromStartScreen: true } });
   };
 
+  const handleDifficultyClick = (selectedDifficulty) => {
+    setDifficulty(selectedDifficulty);
+
+    const currentTime = new Date().getTime();
+
+    if (firstClickTime && currentTime - firstClickTime > SECRET_CODE_TIME_LIMIT) {
+      // Reset if time limit is exceeded
+      setSecretCodeIndex(0);
+      setFirstClickTime(null);
+    }
+
+    if (selectedDifficulty === SECRET_CODE[secretCodeIndex]) {
+      // Correct button clicked
+      if (secretCodeIndex === 0) {
+        // Record the time of the first correct click
+        setFirstClickTime(currentTime);
+      }
+
+      const nextIndex = secretCodeIndex + 1;
+      setSecretCodeIndex(nextIndex);
+
+      if (nextIndex === SECRET_CODE.length) {
+        // Secret code sequence completed
+        navigate('/login');
+        setSecretCodeIndex(0);
+        setFirstClickTime(null);
+      }
+    } else {
+      // Incorrect button clicked, reset the sequence
+      setSecretCodeIndex(0);
+      setFirstClickTime(null);
+    }
+  };
+
   const getDifficultyDescription = () => {
     switch (difficulty) {
       case 'easy':
@@ -133,19 +169,19 @@ function StartScreen({ startGame }) {
         <div className="button-group">
           <ButtonGroup variant="contained">
             <Button
-              onClick={() => setDifficulty('easy')}
+              onClick={() => handleDifficultyClick('easy')}
               color={difficulty === 'easy' ? 'primary' : 'inherit'}
             >
               Easy
             </Button>
             <Button
-              onClick={() => setDifficulty('medium')}
+              onClick={() => handleDifficultyClick('medium')}
               color={difficulty === 'medium' ? 'primary' : 'inherit'}
             >
               Medium
             </Button>
             <Button
-              onClick={() => setDifficulty('hard')}
+              onClick={() => handleDifficultyClick('hard')}
               color={difficulty === 'hard' ? 'primary' : 'inherit'}
             >
               Hard
@@ -167,7 +203,7 @@ function StartScreen({ startGame }) {
           <Button variant="contained" onClick={handleStart} disabled={!difficulty}>Start Game</Button>
         </div>
         <Button id='feedback-button' variant="text" onClick={handleFeedbackClick}>Feedback</Button>
-        {token && <Link className='admin-link' to="/admin">Admin Dashboard</Link>}
+        {/* {token && <Link className='admin-link' to="/admin">Admin Dashboard</Link>} */}
       </div>
       <DevelopmentModal
         open={showDevelopmentModal}

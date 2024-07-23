@@ -26,6 +26,11 @@ body {
     max-width: 400px;
 }
 
+.login-box {
+    padding-left: 10px;
+    padding-right: 10px;
+}
+
 .home-link {
     margin-bottom: 30px;
 }
@@ -40,5 +45,5 @@ body {
 }
 
 .feedback-container {
-    width: 100%;
+    width: 95%;
 }

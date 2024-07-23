@@ -15,7 +15,7 @@ const Leaderboard = () => {
   const score = location.state?.score || 0;
   const fromStartScreen = location.state?.fromStartScreen || false;
   const initialDifficulty = location.state?.difficulty || 'hard';
-  const initialCategory = location.state?.category || 'all-verses';
+  const initialCategory = 'all-verses';
   const [leaderboard, setLeaderboard] = useState([]);
   const [username, setUsername] = useState('');
   const [userRank, setUserRank] = useState(null);
@@ -124,14 +124,6 @@ const Leaderboard = () => {
             <MenuItem value="easy">Easy</MenuItem>
             <MenuItem value="medium">Medium</MenuItem>
             <MenuItem value="hard">Hard</MenuItem>
-          </Select>
-        </FormControl>
-
-        <FormControl variant="outlined" className="form-control">
-          <InputLabel>Category</InputLabel>
-          <Select value={category} onChange={e => setCategory(e.target.value)} label="Category">
-            <MenuItem value="all-verses">All Verses</MenuItem>
-            <MenuItem value="scripture-mastery">Scripture Mastery</MenuItem>
           </Select>
         </FormControl>
 

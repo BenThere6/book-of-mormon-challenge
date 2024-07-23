@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import verses from '../assets/js/verses';
 import verseCounts from '../assets/js/verseCounts';
-import scriptureMasteryVerses from '../assets/js/scriptureMasteryVerses';
+// import scriptureMasteryVerses from '../assets/js/scriptureMasteryVerses';
 import Button from '@mui/material/Button';
 import Dialog from '@mui/material/Dialog';
 import DialogActions from '@mui/material/DialogActions';
@@ -258,7 +258,7 @@ function Game({ difficulty, category, endGame, usedVerses, username }) {
         if (!scriptureMasteryVerses) {
           console.log('Scripture Mastery Verses not loaded.');
         }
-        return { multiplier: 1, chapterRange: 8, verseRange: 12 };
+        return { multiplier: 1, chapterRange: 15, verseRange: 20 };
       case 'medium':
         return { multiplier: 8, chapterRange: 7, verseRange: 10 };
       case 'hard':

@@ -7,11 +7,12 @@ import UpdateModal from './UpdateModal'; // Import the UpdateModal component
 import DevelopmentModal from './DevelopmentModal'; // Import the DevelopmentModal component
 import '../assets/css/StartScreen.css';
 
-const UPDATE_VERSION = '1.6.0'; // Change this version number when there's a new update
+const UPDATE_VERSION = '1.7.0'; // Change this version number when there's a new update
 const UPDATE_MESSAGE = [
-  'There is now a leaderboard for each difficulty.',
+  'Added leaderboard for each difficulty.',
   'Added feedback section.',
-  'Removed scripture mastery category - easy difficulty now includes all Book of Mormon verses. (We\'re working on making easy multiple choice.)'
+  'Removed scripture mastery category - easy difficulty now includes all Book of Mormon verses. (We\'re working on making easy multiple choice.)',
+  'Added verse history.'
 ];
 const DEVELOPMENT_MESSAGE = 'This application is currently under development. You might encounter bugs, design flaws, or areas that could be improved. If you notice any issues or have suggestions for enhancements, please click the feedback button in the bottom left corner of the start screen to share your thoughts.';
 const SECRET_CODE = ['easy', 'hard', 'hard', 'easy', 'medium', 'medium', 'easy', 'hard'];
@@ -32,6 +33,10 @@ function StartScreen({ startGame }) {
 
   const handleFeedbackClick = () => {
     navigate('/feedback', { state: { username: storedUsername } });
+  };
+
+  const handleViewHistory = () => {
+    navigate('/history');
   };
 
   useEffect(() => {
@@ -205,6 +210,7 @@ function StartScreen({ startGame }) {
         </div>
         <Button id='feedback-button' variant="text" onClick={handleFeedbackClick}>Feedback</Button>
         {/* {token && <Link className='admin-link' to="/admin">Admin Dashboard</Link>} */}
+        <Button id='history-button' variant="text" onClick={handleViewHistory}>History</Button>
       </div>
       <DevelopmentModal
         open={showDevelopmentModal}

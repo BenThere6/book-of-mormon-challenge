@@ -31,6 +31,7 @@ function Game({ difficulty, category, endGame, usedVerses, username }) {
     localStorage.setItem('gameScore', score);
     localStorage.setItem('gameLives', lives);
     localStorage.setItem('gameCurrentVerse', currentVerse);
+    saveServedVerse(currentVerse);
 
     const handlePopState = (event) => {
       if (window.confirm('Are you sure you want to leave? Your game progress will be lost.')) {
@@ -75,12 +76,28 @@ function Game({ difficulty, category, endGame, usedVerses, username }) {
       randomKey = verseKeys[Math.floor(Math.random() * verseKeys.length)];
     }
   
-    // Add the selected verse to usedVerses
+    // Add the selected verse to usedVerses and save it to local storage
     if (needNewVerse || countNewVerses === 2) {
       usedVerses.push(randomKey);
+      // saveServedVerse(randomKey);
     }
   
     return randomKey;
+  }
+  
+  function saveServedVerse(verse) {
+    const date = new Date().toISOString().split('T')[0]; // Get current date in YYYY-MM-DD format
+    const servedVerses = JSON.parse(localStorage.getItem('servedVerses')) || {};
+  
+    if (!servedVerses[date]) {
+      servedVerses[date] = [];
+    }
+  
+    if (!servedVerses[date].includes(verse)) {
+      servedVerses[date].push(verse);
+    }
+  
+    localStorage.setItem('servedVerses', JSON.stringify(servedVerses));
   }
   
   function handleBookSelection(book) {
@@ -255,9 +272,6 @@ function Game({ difficulty, category, endGame, usedVerses, username }) {
   const getDifficultySettings = (difficulty) => {
     switch (difficulty) {
       case 'easy':
-        if (!scriptureMasteryVerses) {
-          console.log('Scripture Mastery Verses not loaded.');
-        }
         return { multiplier: 1, chapterRange: 15, verseRange: 20 };
       case 'medium':
         return { multiplier: 8, chapterRange: 7, verseRange: 10 };
@@ -388,10 +402,15 @@ function Game({ difficulty, category, endGame, usedVerses, username }) {
       </div>
     );
   };
+
+  const handleViewHistory = () => {
+    navigate('/history');
+  };
   
   return (
     <div className='centered-element'>
       <div className="game-container">
+      <Button id='history-button' variant="text" onClick={handleViewHistory}>History</Button>
         <div className="header">
           <h2 className="score">Score: {score}</h2>
           <h2 className="lives">Lives: {lives}</h2>

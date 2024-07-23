@@ -8,6 +8,7 @@ import Feedback from './components/Feedback'; // Import the Feedback component
 import Admin from './components/Admin'; // Import the Admin component
 import Login from './components/Login'; // Import the Login component
 import PrivateRoute from './components/PrivateRoute'; // Import the PrivateRoute component
+import VerseHistory from './components/VerseHistory';
 import './assets/css/style.css';
 
 function App() {
@@ -42,7 +43,8 @@ function App() {
         <Route path="/username" element={<UsernameEntry startGame={startGame} setUsername={setUsername} />} />
         <Route path="/feedback" element={<Feedback username={username} />} />
         <Route path="/login" element={<Login />} />
-        <Route path="/admin" element={<PrivateRoute element={Admin} />} /> {/* Protect the Admin route */}
+        <Route path="/admin" element={<PrivateRoute element={Admin} />} />
+        <Route path="/history" element={<VerseHistory />} />
       </Routes>
     </div>
   );

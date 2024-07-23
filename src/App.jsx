@@ -39,7 +39,7 @@ function App() {
         <Route path="/leaderboard" element={<Leaderboard score={score} difficulty={difficulty} category={category} onStartScreen={handleStartScreen} />} />
         <Route path="/username" element={<UsernameEntry startGame={startGame} setUsername={setUsername} />} />
         <Route path="/feedback" element={<Feedback username={username} />} />
-        <Route path="/admin" element={<Admin />} /> {/* Add the Admin route */}
+        <Route path="/admin" element={<Admin />} />
       </Routes>
     </div>
   );

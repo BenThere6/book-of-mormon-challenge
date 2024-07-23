@@ -99,6 +99,13 @@
     font-size: 10px;
 }
 
+.admin-link {
+    position: fixed;
+    bottom: 0;
+    right: 0;
+    font-size: 5;
+}
+
 @media (max-width: 768px) {
     .start-screen {
         width: 100vw;

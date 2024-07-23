@@ -26,6 +26,15 @@ body {
     max-width: 400px;
 }
 
+.home-link {
+    margin-bottom: 30px;
+}
+
+.centered {
+    display: flex;
+    justify-content: center;
+}
+
 .feedback-container-container-lol {
     min-width: 50vw;
 }

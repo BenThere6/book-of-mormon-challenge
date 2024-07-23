@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, Link } from 'react-router-dom';
 import Button from '@mui/material/Button';
 import ButtonGroup from '@mui/material/ButtonGroup';
 import UsernameEntry from './Username'; // Import Username component
@@ -11,9 +11,10 @@ const UPDATE_VERSION = '1.5.0'; // Change this version number when there's a new
 const UPDATE_MESSAGE = [
   'There is now a leaderboard for each difficulty.',
   'Added feedback section.',
-  
 ];
 const DEVELOPMENT_MESSAGE = 'This application is currently under development. You might encounter bugs, design flaws, or areas that could be improved. If you notice any issues or have suggestions for enhancements, please click the feedback button in the bottom left corner of the start screen to share your thoughts.';
+
+const token = localStorage.getItem('token');
 
 function StartScreen({ startGame }) {
   const [difficulty, setDifficulty] = useState(''); // Default to empty string
@@ -166,6 +167,7 @@ function StartScreen({ startGame }) {
           <Button variant="contained" onClick={handleStart} disabled={!difficulty}>Start Game</Button>
         </div>
         <Button id='feedback-button' variant="text" onClick={handleFeedbackClick}>Feedback</Button>
+        {token && <Link className='admin-link' to="/admin">Admin Dashboard</Link>}
       </div>
       <DevelopmentModal
         open={showDevelopmentModal}

@@ -63,7 +63,7 @@ const Admin = () => {
       <div className='centered'>
         <Link className='home-link' to="/">Home</Link>
       </div>
-      <button onClick={handleLogout}>Logout</button>
+      {/* <button onClick={handleLogout}>Logout</button> */}
 
       <section>
         <h3>Unique Users</h3>

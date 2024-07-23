@@ -8,7 +8,7 @@ import Button from '@mui/material/Button';
 const UpdateModal = ({ open, onClose, updateMessage, updateVersion }) => {
   return (
     <Dialog open={open} onClose={onClose}>
-      <DialogTitle>Update version {updateVersion}</DialogTitle>
+      <DialogTitle>Update {updateVersion}</DialogTitle>
       <DialogContent>
         <ul>
           {updateMessage.map((message, index) => (

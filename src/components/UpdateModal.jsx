@@ -5,16 +5,21 @@ import DialogContent from '@mui/material/DialogContent';
 import DialogTitle from '@mui/material/DialogTitle';
 import Button from '@mui/material/Button';
 
-const UpdateModal = ({ open, onClose, updateMessage, updateVersion }) => {
+const UpdateModal = ({ open, onClose, updates }) => {
   return (
     <Dialog open={open} onClose={onClose}>
-      <DialogTitle>Update {updateVersion}</DialogTitle>
+      <DialogTitle>Updates</DialogTitle>
       <DialogContent>
-        <ul>
-          {updateMessage.map((message, index) => (
-            <li key={index}>{message}</li>
-          ))}
-        </ul>
+        {updates.map((update, index) => (
+          <div key={index}>
+            <h4>Version {update.version}</h4>
+            <ul>
+              {update.messages.map((message, msgIndex) => (
+                <li key={msgIndex}>{message}</li>
+              ))}
+            </ul>
+          </div>
+        ))}
       </DialogContent>
       <DialogActions>
         <Button onClick={onClose} color="primary">

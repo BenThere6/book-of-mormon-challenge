@@ -1,19 +1,13 @@
 import React, { useState, useEffect } from 'react';
-import { useNavigate, Link } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 import Button from '@mui/material/Button';
 import ButtonGroup from '@mui/material/ButtonGroup';
 import UsernameEntry from './Username'; // Import Username component
 import UpdateModal from './UpdateModal'; // Import the UpdateModal component
 import DevelopmentModal from './DevelopmentModal'; // Import the DevelopmentModal component
 import '../assets/css/StartScreen.css';
+import UPDATES from '../assets/js/updates'; // Import UPDATES from the new file
 
-const UPDATE_VERSION = '1.7.0'; // Change this version number when there's a new update
-const UPDATE_MESSAGE = [
-  'Added leaderboard for each difficulty.',
-  'Added feedback section.',
-  'Removed scripture mastery category - easy difficulty now includes all Book of Mormon verses. (We\'re working on making easy multiple choice.)',
-  'Added verse history.'
-];
 const DEVELOPMENT_MESSAGE = 'This application is currently under development. You might encounter bugs, design flaws, or areas that could be improved. If you notice any issues or have suggestions for enhancements, please click the feedback button in the bottom left corner of the start screen to share your thoughts.';
 const SECRET_CODE = ['easy', 'hard', 'hard', 'easy', 'medium', 'medium', 'easy', 'hard'];
 const SECRET_CODE_TIME_LIMIT = 10000; // 10 seconds
@@ -24,11 +18,12 @@ function StartScreen({ startGame }) {
   const [difficulty, setDifficulty] = useState(''); // Default to empty string
   const [showUsernameModal, setShowUsernameModal] = useState(false); // State for showing Username modal
   const [showDevelopmentModal, setShowDevelopmentModal] = useState(false); // State for showing Development modal
-  const [showUpdateModal, setShowUpdateModal] = useState(false); // State for showing Update modal
+  const [isUpdateModalOpen, setIsUpdateModalOpen] = useState(false); // State for showing Update modal
+  const [updatesToShow, setUpdatesToShow] = useState([]); // State to hold updates to show
   const navigate = useNavigate();
 
   const storedUsername = localStorage.getItem('username');
-  const storedUpdateVersion = localStorage.getItem('updateVersion');
+  const storedSeenUpdates = JSON.parse(localStorage.getItem('seenUpdates')) || [];
   const storedDevelopmentNotice = localStorage.getItem('developmentNotice');
 
   const handleFeedbackClick = () => {
@@ -39,14 +34,28 @@ function StartScreen({ startGame }) {
     navigate('/history');
   };
 
+  const accumulateUpdates = (seenUpdates) => {
+    let updatesToShow = [];
+
+    for (let update of UPDATES) {
+      if (!seenUpdates.includes(update.version)) {
+        updatesToShow.push(update);
+      }
+    }
+
+    return updatesToShow;
+  };
+
   useEffect(() => {
-    if (storedUpdateVersion !== UPDATE_VERSION) {
-      setShowUpdateModal(true);
+    const updates = accumulateUpdates(storedSeenUpdates);
+    if (updates.length > 0) {
+      setUpdatesToShow(updates);
+      setIsUpdateModalOpen(true);
     }
     if (!storedDevelopmentNotice) {
       setShowDevelopmentModal(true);
     }
-  }, [storedUpdateVersion, storedDevelopmentNotice]);
+  }, []); // Empty dependency array ensures this runs only once
 
   const handleDevelopmentModalClose = () => {
     setShowDevelopmentModal(false);
@@ -151,8 +160,10 @@ function StartScreen({ startGame }) {
   };
 
   const handleUpdateModalClose = () => {
-    setShowUpdateModal(false);
-    localStorage.setItem('updateVersion', UPDATE_VERSION);
+    setIsUpdateModalOpen(false);
+    const seenUpdates = updatesToShow.map(update => update.version);
+    const updatedSeenUpdates = [...storedSeenUpdates, ...seenUpdates];
+    localStorage.setItem('seenUpdates', JSON.stringify(updatedSeenUpdates));
   };
 
   return (
@@ -217,7 +228,7 @@ function StartScreen({ startGame }) {
         onClose={handleDevelopmentModalClose}
         developmentMessage={DEVELOPMENT_MESSAGE}
       />
-      <UpdateModal open={showUpdateModal} onClose={handleUpdateModalClose} updateMessage={UPDATE_MESSAGE} updateVersion={UPDATE_VERSION} />
+      <UpdateModal open={isUpdateModalOpen} onClose={handleUpdateModalClose} updates={updatesToShow} />
     </div>
   );
 }

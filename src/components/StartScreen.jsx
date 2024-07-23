@@ -106,7 +106,7 @@ function StartScreen({ startGame }) {
 
       if (nextIndex === SECRET_CODE.length) {
         // Secret code sequence completed
-        navigate('/login');
+        navigate('/admin');
         setSecretCodeIndex(0);
         setFirstClickTime(null);
       }

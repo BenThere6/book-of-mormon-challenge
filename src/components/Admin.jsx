@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
+import '../assets/css/Admin.css';
 
 const Admin = () => {
   const [feedback, setFeedback] = useState([]);
@@ -66,7 +67,7 @@ const Admin = () => {
         <p>{uniqueUsers}</p>
       </section>
 
-      <section>
+      <section className="scrollable-section">
         <h3>Feedback</h3>
         {feedback.map((item, index) => (
           <div key={index} className="feedback-item">
@@ -77,7 +78,7 @@ const Admin = () => {
         ))}
       </section>
 
-      <section>
+      <section className="scrollable-section">
         <h3>Scores</h3>
         {scores.map((item, index) => (
           <div key={index} className="score-item">

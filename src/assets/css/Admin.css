@@ -1,0 +1,46 @@
+/* Admin.css */
+
+.admin-container {
+    max-width: 800px;
+    margin: 0 auto;
+    padding: 20px;
+}
+
+.admin-container h2 {
+    text-align: center;
+    margin-bottom: 20px;
+}
+
+.admin-container button {
+    display: block;
+    margin: 0 auto 20px;
+}
+
+.admin-container section {
+    margin-bottom: 20px;
+    padding: 10px;
+    border: 1px solid #ddd;
+    border-radius: 8px;
+    background-color: #f9f9f9;
+}
+
+.admin-container h3 {
+    margin-top: 0;
+}
+
+.admin-container .feedback-item,
+.admin-container .score-item {
+    padding: 10px;
+    border-bottom: 1px solid #ddd;
+}
+
+.admin-container .feedback-item:last-child,
+.admin-container .score-item:last-child {
+    border-bottom: none;
+}
+
+.scrollable-section {
+    max-height: 300px;
+    /* Adjust as needed */
+    overflow-y: auto;
+}

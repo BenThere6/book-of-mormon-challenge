@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import Button from '@mui/material/Button';
 import TextField from '@mui/material/TextField';
-// import './Login.css';
+import '../assets/css/Login.css';
 
 const Login = () => {
   const [username, setUsername] = useState('');
@@ -22,8 +22,20 @@ const Login = () => {
 
       if (response.ok) {
         const data = await response.json();
-        localStorage.setItem('token', data.token); // Save the token in localStorage
-        navigate('/admin'); // Redirect to admin page
+        if (data.token) {
+          const tokenParts = data.token.split('.');
+          if (tokenParts.length === 3) {
+            const decodedPayload = JSON.parse(atob(tokenParts[1]));
+            const tokenExpiration = decodedPayload.exp * 1000; // exp is in seconds, convert to milliseconds
+            localStorage.setItem('token', data.token);
+            localStorage.setItem('tokenExpiration', tokenExpiration);
+            navigate('/admin');
+          } else {
+            setError('Login failed, please try again.');
+          }
+        } else {
+          setError('Login failed, please try again.');
+        }
       } else {
         setError('Invalid username or password');
       }

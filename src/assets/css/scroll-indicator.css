@@ -1,0 +1,54 @@
+.scroll-container {
+    position: relative;
+    overflow: auto;
+    max-height: 300px;
+    /* Adjust based on your requirements */
+    padding-right: 10px;
+    /* Ensure space for scroll indicator */
+}
+
+.scroll-container::after {
+    content: '';
+    position: absolute;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    width: 10px;
+    /* Width of the scroll indicator */
+    background: linear-gradient(to bottom, transparent, rgba(0, 0, 0, 0.1));
+    pointer-events: none;
+    z-index: 1;
+    opacity: 0;
+    /* Hidden by default */
+    transition: opacity 0.3s;
+}
+
+.scroll-container::-webkit-scrollbar {
+    width: 8px;
+}
+
+.scroll-container::-webkit-scrollbar-thumb {
+    background-color: rgba(0, 0, 0, 0.2);
+    border-radius: 4px;
+}
+
+.scroll-container::-webkit-scrollbar-track {
+    background: transparent;
+}
+
+.scroll-container.scrollable::after {
+    opacity: 1;
+    /* Show the indicator when scrollable */
+}
+
+.scroll-container.top::after {
+    background: linear-gradient(to bottom, rgba(0, 0, 0, 0.1), transparent, rgba(0, 0, 0, 0.1));
+}
+
+.scroll-container.bottom::after {
+    background: linear-gradient(to bottom, transparent, rgba(0, 0, 0, 0.1));
+}
+
+.scroll-container.both::after {
+    background: linear-gradient(to bottom, rgba(0, 0, 0, 0.1), transparent, rgba(0, 0, 0, 0.1));
+}

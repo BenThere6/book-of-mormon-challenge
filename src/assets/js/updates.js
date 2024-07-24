@@ -19,27 +19,6 @@ const UPDATES = [
             'Added update system.'
         ]
     },
-    {
-        version: '1.8.0',
-        messages: [
-            'Added verse history.',
-            'Added update system.'
-        ]
-    },
-    {
-        version: '1.9.0',
-        messages: [
-            'Added verse history.',
-            'Added update system.'
-        ]
-    },
-    {
-        version: '1.10.0',
-        messages: [
-            'Added verse history.',
-            'Added update system.'
-        ]
-    },
 ];
 
 export default UPDATES;  

@@ -410,7 +410,7 @@ function Game({ difficulty, category, endGame, usedVerses, username }) {
   return (
     <div className='centered-element'>
       <div className="game-container">
-      <Button id='history-button' variant="text" onClick={handleViewHistory}>History</Button>
+      {/* <Button id='history-button' variant="text" onClick={handleViewHistory}>History</Button> */}
         <div className="header">
           <h2 className="score">Score: {score}</h2>
           <h2 className="lives">Lives: {lives}</h2>

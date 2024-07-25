@@ -1,7 +1,8 @@
 .game-container {
-    /* width: 100%; */
     max-width: 800px;
-    margin: auto;
+    max-height: 800px;
+    height: 100%;
+    margin: 0 auto;
     padding: 20px;
     background-color: #f0f0f0;
     border: 1px solid #ccc;
@@ -9,7 +10,13 @@
     box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
     font-family: 'Roboto', sans-serif;
     text-align: center;
-    position: relative;
+    display: flex;
+    flex-direction: column;
+    box-sizing: border-box;
+}
+
+p {
+    margin: 0;
 }
 
 .game-container h2 {
@@ -23,14 +30,17 @@
 }
 
 .selection-section {
-    margin-bottom: 20px;
-    position: relative;
-    
-    /* margin-bottom: 20px;
-    position: relative;
+    /* margin-bottom: 20px; */
+    flex-grow: 1;
     display: flex;
-    justify-content: space-between;
-    align-items: center; */
+    flex-direction: column;
+    overflow: hidden; /* Ensures that overflow content is hidden */
+}
+
+.options-container {
+    flex-grow: 1;
+    overflow-y: auto;
+    /* padding-right: 10px; */
 }
 
 .selection-section h3 {
@@ -71,10 +81,6 @@
 }
 
 .bomb-container {
-    /* position: relative;
-    display: inline-block; */
-
-    /* display: flex; */
     align-items: center;
     position: relative;
 }
@@ -99,7 +105,6 @@
 
 .guess-box {
     border: 1px solid #ccc;
-    /* padding: 10px; */
     margin: 10px 0;
     min-height: 75px;
     border-radius: 15px;
@@ -108,10 +113,8 @@
     align-items: center;
     position: sticky;
     top: 50px;
-    /* Stick to the top of the viewport */
     background-color: #f0f0f0;
     z-index: 1000;
-    /* Ensure it's above other content */
 }
 
 .guess-text {
@@ -132,13 +135,6 @@
 }
 
 .back-container {
-    /* width: 100%;
-    height: 100%;
-    display: flex;
-    height: 0; */
-
-
     margin: 0;
-    /* display: flex; */
     align-items: center;
 }

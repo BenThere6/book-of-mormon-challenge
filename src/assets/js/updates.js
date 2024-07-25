@@ -25,6 +25,12 @@ const UPDATES = [
             'Added Liahonas'
         ]
     },
+    {
+        version: '1.8.1',
+        messages: [
+            'Fix scroll bug'
+        ]
+    },
 ];
 
 export default UPDATES;  

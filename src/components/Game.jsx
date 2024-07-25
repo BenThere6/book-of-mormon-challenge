@@ -13,6 +13,7 @@ import ArrowBack from '@mui/icons-material/ArrowBack';
 import LiahonaIcon from '/liahona_icon.png';
 import { useNavigate } from 'react-router-dom';
 import '../assets/css/Game.css';
+import ScrollIndicatorContainer from './ScrollIndicatorContainer';
 
 let countNewVerses = 0;
 
@@ -386,18 +387,20 @@ function Game({ difficulty, category, endGame, usedVerses, username }) {
         </div>
       </div>
       <h3>Book</h3>
-      <div className='options-container'>
-        {Object.keys(verseCounts).map((book) => (
-          <Button
-            variant="outlined"
-            key={book}
-            onClick={() => handleBookSelection(book)}
-            disabled={disabledBooks.includes(book)}
-          >
-            {book}
-          </Button>
-        ))}
-      </div>
+      <ScrollIndicatorContainer>
+        <div className='options-container'>
+          {Object.keys(verseCounts).map((book) => (
+            <Button
+              variant="outlined"
+              key={book}
+              onClick={() => handleBookSelection(book)}
+              disabled={disabledBooks.includes(book)}
+            >
+              {book}
+            </Button>
+          ))}
+        </div>
+      </ScrollIndicatorContainer>
       <div className="submit-button">
         <Button
           variant="contained"
@@ -439,18 +442,20 @@ function Game({ difficulty, category, endGame, usedVerses, username }) {
           </div>
         </div>
         <h3>Chapter</h3>
-        <div className='options-container'>
-          {chapters.map((chapter) => (
-            <Button
-              variant="outlined"
-              key={chapter}
-              onClick={() => handleChapterSelection(chapter)}
-              disabled={disabledChapters.includes(chapter)} // Add disabled condition
-            >
-              {chapter}
-            </Button>
-          ))}
-        </div>
+        <ScrollIndicatorContainer>
+          <div className='options-container'>
+            {chapters.map((chapter) => (
+              <Button
+                variant="outlined"
+                key={chapter}
+                onClick={() => handleChapterSelection(chapter)}
+                disabled={disabledChapters.includes(chapter)} // Add disabled condition
+              >
+                {chapter}
+              </Button>
+            ))}
+          </div>
+        </ScrollIndicatorContainer>
         <div className="submit-button">
           <Button
             variant="contained"
@@ -496,18 +501,20 @@ function Game({ difficulty, category, endGame, usedVerses, username }) {
           </div>
         </div>
         <h3>Verse</h3>
-        <div className='options-container'>
-          {verses.map((verse) => (
-            <Button
-              variant="outlined"
-              key={verse}
-              onClick={() => handleVerseSelection(verse)}
-              disabled={disabledVerses.includes(verse)} // Add disabled condition
-            >
-              {verse}
-            </Button>
-          ))}
-        </div>
+        <ScrollIndicatorContainer>
+          <div className='options-container'>
+            {verses.map((verse) => (
+              <Button
+                variant="outlined"
+                key={verse}
+                onClick={() => handleVerseSelection(verse)}
+                disabled={disabledVerses.includes(verse)} // Add disabled condition
+              >
+                {verse}
+              </Button>
+            ))}
+          </div>
+        </ScrollIndicatorContainer>
         <div className="submit-button">
           <Button
             variant="contained"

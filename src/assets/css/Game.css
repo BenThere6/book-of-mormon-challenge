@@ -25,7 +25,12 @@
 .selection-section {
     margin-bottom: 20px;
     position: relative;
-    /* Make this relative to position back button absolutely */
+    
+    /* margin-bottom: 20px;
+    position: relative;
+    display: flex;
+    justify-content: space-between;
+    align-items: center; */
 }
 
 .selection-section h3 {
@@ -48,6 +53,8 @@
     display: flex;
     justify-content: space-between;
     padding: 10px;
+    position: sticky;
+    top: 5px;
 }
 
 .score {
@@ -56,6 +63,38 @@
 
 .lives {
     margin: 0;
+}
+
+.bombs {
+    margin: 0;
+    padding-left: 15px;
+}
+
+.bomb-container {
+    /* position: relative;
+    display: inline-block; */
+
+    /* display: flex; */
+    align-items: center;
+    position: relative;
+}
+
+.icons-container {
+    display: flex;
+    justify-content: space-between;
+}
+
+#bomb-count-container {
+    position: absolute;
+    bottom: 10px;
+    right: 10px;
+    transform: translate(50%, 50%);
+    background-color: red;
+    border-radius: 50%;
+    color: white;
+    padding: 2px 5px;
+    font-size: 10px;
+    font-weight: bold;
 }
 
 .guess-box {
@@ -68,9 +107,11 @@
     justify-content: center;
     align-items: center;
     position: sticky;
-    top: 0; /* Stick to the top of the viewport */
+    top: 50px;
+    /* Stick to the top of the viewport */
     background-color: #f0f0f0;
-    z-index: 1000; /* Ensure it's above other content */
+    z-index: 1000;
+    /* Ensure it's above other content */
 }
 
 .guess-text {
@@ -91,7 +132,13 @@
 }
 
 .back-container {
-    width: 100%;
+    /* width: 100%;
+    height: 100%;
     display: flex;
-    height: 0;
+    height: 0; */
+
+
+    margin: 0;
+    /* display: flex; */
+    align-items: center;
 }

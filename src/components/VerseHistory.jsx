@@ -36,6 +36,7 @@ const VerseHistory = () => {
         </IconButton>
       </div>
       <h2>Verse History</h2>
+      <div className='history-content-container'>
       {Object.keys(reversedServedVerses).map(date => (
         <div key={date} className="date-section">
           <h3>{date}</h3>
@@ -46,6 +47,7 @@ const VerseHistory = () => {
           </ul>
         </div>
       ))}
+      </div>
     </div>
   );
 };

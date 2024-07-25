@@ -10,10 +10,25 @@ import DialogContentText from '@mui/material/DialogContentText';
 import DialogTitle from '@mui/material/DialogTitle';
 import IconButton from '@mui/material/IconButton';
 import ArrowBack from '@mui/icons-material/ArrowBack';
+import LiahonaIcon from '/liahona_icon.png';
 import { useNavigate } from 'react-router-dom';
 import '../assets/css/Game.css';
 
 let countNewVerses = 0;
+
+const getDifficultySettings = (difficulty) => {
+  switch (difficulty) {
+    case 'easy':
+      return { multiplier: 1, chapterRange: 15, verseRange: 20, bombCount: 4, removeBookCount: 6, removeChapterCount: 7, removeVerseCount: 10 };
+    case 'medium':
+      return { multiplier: 8, chapterRange: 7, verseRange: 10, bombCount: 3, removeBookCount: 5, removeChapterCount: 6, removeVerseCount: 9 };
+    case 'hard':
+      return { multiplier: 12, chapterRange: 3, verseRange: 8, bombCount: 2, removeBookCount: 4, removeChapterCount: 5, removeVerseCount: 8 };
+    default:
+      console.log('Invalid difficulty level: ' + difficulty);
+      return { multiplier: 1, chapterRange: 8, verseRange: 12, bombCount: 3, removeBookCount: 3, removeChapterCount: 3, removeVerseCount: 5 };
+  }
+};
 
 function Game({ difficulty, category, endGame, usedVerses, username }) {
   const [score, setScore] = useState(localStorage.getItem('gameScore') ? parseInt(localStorage.getItem('gameScore')) : 0);
@@ -25,6 +40,10 @@ function Game({ difficulty, category, endGame, usedVerses, username }) {
   const [currentStep, setCurrentStep] = useState('book');
   const [showModal, setShowModal] = useState(false);
   const [modalContent, setModalContent] = useState({});
+  const [bombs, setBombs] = useState(() => getDifficultySettings(difficulty).bombCount);
+  const [disabledBooks, setDisabledBooks] = useState([]);
+  const [disabledChapters, setDisabledChapters] = useState([]);
+  const [disabledVerses, setDisabledVerses] = useState([]);
   const navigate = useNavigate();
 
   useEffect(() => {
@@ -54,52 +73,52 @@ function Game({ difficulty, category, endGame, usedVerses, username }) {
 
   function getRandomVerse(needNewVerse) {
     countNewVerses += 1;
-  
+
     let verseKeys;
-  
+
     if (category === 'scripture-mastery') {
       verseKeys = Object.keys(scriptureMasteryVerses);
     } else {
       verseKeys = Object.keys(verses);
     }
-  
+
     // Check if the game should end due to verse count limit
     if (usedVerses.length >= 25 && category === 'scripture-mastery') {
       endGame(score);
       return null;
     }
-  
+
     let randomKey = verseKeys[Math.floor(Math.random() * verseKeys.length)];
-  
+
     // Ensure the selected verse hasn't been used before
     while (usedVerses.includes(randomKey)) {
       randomKey = verseKeys[Math.floor(Math.random() * verseKeys.length)];
     }
-  
-    // Add the selected verse to usedVerses and save it to local storage
+
+    // Add the selected verse to usedVerses
     if (needNewVerse || countNewVerses === 2) {
       usedVerses.push(randomKey);
       // saveServedVerse(randomKey);
     }
-  
+
     return randomKey;
   }
-  
+
   function saveServedVerse(verse) {
     const date = new Date().toISOString().split('T')[0]; // Get current date in YYYY-MM-DD format
     const servedVerses = JSON.parse(localStorage.getItem('servedVerses')) || {};
-  
+
     if (!servedVerses[date]) {
       servedVerses[date] = [];
     }
-  
+
     if (!servedVerses[date].includes(verse)) {
       servedVerses[date].push(verse);
     }
-  
+
     localStorage.setItem('servedVerses', JSON.stringify(servedVerses));
   }
-  
+
   function handleBookSelection(book) {
     setSelectedBook(book);
     setSelectedChapter('');
@@ -120,7 +139,7 @@ function Game({ difficulty, category, endGame, usedVerses, username }) {
   function handleBack(step) {
     setSelectedVerse('');
     setSelectedChapter('');
-    if (step == 'book') {
+    if (step === 'book') {
       setSelectedBook('');
     }
     setCurrentStep(step);
@@ -181,6 +200,10 @@ function Game({ difficulty, category, endGame, usedVerses, username }) {
       setSelectedChapter('');
       setSelectedVerse('');
       setCurrentStep('book');
+      // Enable all buttons again
+      setDisabledBooks([]);
+      setDisabledChapters([]);
+      setDisabledVerses([]);
     }
   };
 
@@ -269,30 +292,107 @@ function Game({ difficulty, category, endGame, usedVerses, username }) {
     return bestAccuracy;
   };
 
-  const getDifficultySettings = (difficulty) => {
-    switch (difficulty) {
-      case 'easy':
-        return { multiplier: 1, chapterRange: 15, verseRange: 20 };
-      case 'medium':
-        return { multiplier: 8, chapterRange: 7, verseRange: 10 };
-      case 'hard':
-        return { multiplier: 12, chapterRange: 3, verseRange: 8 };
-      default:
-        console.log('Invalid difficulty level: ' + difficulty);
-        return { multiplier: 1, chapterRange: 8, verseRange: 12 };
+  const handleUseBomb = () => {
+    if (bombs > 0 && canUseBomb()) {
+      setBombs(bombs - 1);
+      applyBombEffect();
     }
+  };
+
+  const canUseBomb = () => {
+    const { removeBookCount, removeChapterCount, removeVerseCount } = getDifficultySettings(difficulty);
+    switch (currentStep) {
+      case 'book':
+        return Object.keys(verseCounts).length > removeBookCount;
+      case 'chapter':
+        return selectedBook && verseCounts[selectedBook].length > removeChapterCount;
+      case 'verse':
+        return selectedBook && selectedChapter && verseCounts[selectedBook][selectedChapter - 1] > removeVerseCount;
+      default:
+        return false;
+    }
+  };
+
+  const applyBombEffect = () => {
+    switch (currentStep) {
+      case 'book':
+        disableIncorrectBooks();
+        break;
+      case 'chapter':
+        disableIncorrectChapters();
+        break;
+      case 'verse':
+        disableIncorrectVerses();
+        break;
+      default:
+        break;
+    }
+  };
+
+  const getRandomItems = (items, count) => {
+    const shuffled = items.sort(() => 0.5 - Math.random());
+    return shuffled.slice(0, count);
+  };
+
+  const disableIncorrectBooks = () => {
+    const correctBook = currentVerse.split(' ')[0];
+    const allBooks = Object.keys(verseCounts);
+    const { removeBookCount } = getDifficultySettings(difficulty);
+    const booksToDisable = getRandomItems(allBooks.filter(book => book !== correctBook && !disabledBooks.includes(book)), removeBookCount);
+
+    setDisabledBooks(disabledBooks.concat(booksToDisable));
+  };
+
+  const disableIncorrectChapters = () => {
+    const correctChapter = parseInt(currentVerse.split(':')[0].split(' ')[1]);
+    const chapterCount = verseCounts[selectedBook].length;
+    const allChapters = Array.from({ length: chapterCount }, (_, index) => index + 1);
+    const { removeChapterCount } = getDifficultySettings(difficulty);
+    const chaptersToDisable = getRandomItems(allChapters.filter(chapter => chapter !== correctChapter && !disabledChapters.includes(chapter)), removeChapterCount);
+
+    setDisabledChapters(disabledChapters.concat(chaptersToDisable));
+  };
+
+  const disableIncorrectVerses = () => {
+    const correctVerse = parseInt(currentVerse.split(':')[1]);
+    const verseCount = verseCounts[selectedBook][selectedChapter - 1];
+    const allVerses = Array.from({ length: verseCount }, (_, index) => index + 1);
+    const { removeVerseCount } = getDifficultySettings(difficulty);
+    const versesToDisable = getRandomItems(allVerses.filter(verse => verse !== correctVerse && !disabledVerses.includes(verse)), removeVerseCount);
+
+    setDisabledVerses(disabledVerses.concat(versesToDisable));
   };
 
   const renderBooks = () => (
     <div className="selection-section">
-      <div className='back-container'>
-        <IconButton className="back-button" onClick={() => navigate(-1)}>
-          <ArrowBack />
-        </IconButton>
+      <div className='icons-container'>
+        <div className='back-container'>
+          <IconButton className="back-button" onClick={() => navigate(-1)}>
+            <ArrowBack />
+          </IconButton>
+        </div>
+        <div className='bomb-container'>
+          <IconButton
+            onClick={handleUseBomb}
+            disabled={bombs <= 0 || !canUseBomb()}
+            color="primary"
+            aria-label="use bomb"
+          >
+            <img src={LiahonaIcon} alt="liahona" style={{ width: 24, height: 24 }} />
+          </IconButton>
+          <div id='bomb-count-container'>
+            <span id='bomb-count'>{bombs}</span>
+          </div>
+        </div>
       </div>
       <h3>Book</h3>
       {Object.keys(verseCounts).map((book) => (
-        <Button variant="outlined" key={book} onClick={() => handleBookSelection(book)}>
+        <Button
+          variant="outlined"
+          key={book}
+          onClick={() => handleBookSelection(book)}
+          disabled={disabledBooks.includes(book)} // Add disabled condition
+        >
           {book}
         </Button>
       ))}
@@ -316,14 +416,34 @@ function Game({ difficulty, category, endGame, usedVerses, username }) {
 
     return (
       <div className="selection-section">
-        <div className='back-container'>
-          <IconButton className="back-button" onClick={() => handleBack('book')}>
-            <ArrowBack />
-          </IconButton>
+        <div className='icons-container'>
+          <div className='back-container'>
+            <IconButton className="back-button" onClick={() => handleBack('book')}>
+              <ArrowBack />
+            </IconButton>
+          </div>
+          <div className='bomb-container'>
+            <IconButton
+              onClick={handleUseBomb}
+              disabled={bombs <= 0 || !canUseBomb()}
+              color="primary"
+              aria-label="use bomb"
+            >
+              <img src={LiahonaIcon} alt="liahona" style={{ width: 24, height: 24 }} />
+            </IconButton>
+            <div id='bomb-count-container'>
+              <span id='bomb-count'>{bombs}</span>
+            </div>
+          </div>
         </div>
         <h3>Chapter</h3>
         {chapters.map((chapter) => (
-          <Button variant="outlined" key={chapter} onClick={() => handleChapterSelection(chapter)}>
+          <Button
+            variant="outlined"
+            key={chapter}
+            onClick={() => handleChapterSelection(chapter)}
+            disabled={disabledChapters.includes(chapter)} // Add disabled condition
+          >
             {chapter}
           </Button>
         ))}
@@ -351,10 +471,25 @@ function Game({ difficulty, category, endGame, usedVerses, username }) {
 
     return (
       <div className="selection-section">
-        <div className='back-container'>
-          <IconButton className="back-button" onClick={() => handleBack('chapter')}>
-            <ArrowBack />
-          </IconButton>
+        <div className='icons-container'>
+          <div className='back-container'>
+            <IconButton className="back-button" onClick={() => handleBack('chapter')}>
+              <ArrowBack />
+            </IconButton>
+          </div>
+          <div className='bomb-container'>
+            <IconButton
+              onClick={handleUseBomb}
+              disabled={bombs <= 0 || !canUseBomb()}
+              color="primary"
+              aria-label="use bomb"
+            >
+              <img src={LiahonaIcon} alt="liahona" style={{ width: 24, height: 24 }} />
+            </IconButton>
+            <div id='bomb-count-container'>
+              <span id='bomb-count'>{bombs}</span>
+            </div>
+          </div>
         </div>
         <h3>Verse</h3>
         {verses.map((verse) => (
@@ -362,6 +497,7 @@ function Game({ difficulty, category, endGame, usedVerses, username }) {
             variant="outlined"
             key={verse}
             onClick={() => handleVerseSelection(verse)}
+            disabled={disabledVerses.includes(verse)} // Add disabled condition
           >
             {verse}
           </Button>
@@ -386,14 +522,14 @@ function Game({ difficulty, category, endGame, usedVerses, username }) {
     } else {
       verseText = verses[currentVerse];
     }
-  
+
     if (!verseText) {
       console.log(`Verse Not Found for key: ${currentVerse}`);
       return 'Verse Not Found';
     }
-  
+
     const versesArray = verseText.split('\n\n');
-  
+
     return (
       <div className="verse-text">
         {versesArray.map((verse, index) => (
@@ -403,17 +539,18 @@ function Game({ difficulty, category, endGame, usedVerses, username }) {
     );
   };
 
-  const handleViewHistory = () => {
-    navigate('/history');
-  };
-  
+  // const handleViewHistory = () => {
+  //   navigate('/history');
+  // };
+
   return (
     <div className='centered-element'>
       <div className="game-container">
-      {/* <Button id='history-button' variant="text" onClick={handleViewHistory}>History</Button> */}
+        {/* <Button id='history-button' variant="text" onClick={handleViewHistory}>History</Button> */}
         <div className="header">
           <h2 className="score">Score: {score}</h2>
           <h2 className="lives">Lives: {lives}</h2>
+          {/* <h2 className="bombs">Bombs: {bombs}</h2> */}
         </div>
         <div className="guess-box">
           <p
@@ -424,6 +561,19 @@ function Game({ difficulty, category, endGame, usedVerses, username }) {
         {currentStep === 'book' && renderBooks()}
         {currentStep === 'chapter' && renderChapters()}
         {currentStep === 'verse' && renderVerses()}
+        {/* <div className='bomb-container'>
+          <IconButton
+            onClick={handleUseBomb}
+            disabled={bombs <= 0 || !canUseBomb()}
+            color="primary"
+            aria-label="use bomb"
+          >
+            <img src={LiahonaIcon} alt="liahona" style={{ width: 24, height: 24 }} />
+          </IconButton>
+          <div id='bomb-count-container'>
+            <span id='bomb-count'>{bombs}</span>
+          </div>
+        </div> */}
         <Dialog open={showModal} onClose={handleCloseModal}>
           <DialogTitle>Guess Results</DialogTitle>
           <DialogContent>

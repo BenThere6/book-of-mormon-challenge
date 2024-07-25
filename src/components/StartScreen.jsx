@@ -132,29 +132,32 @@ function StartScreen({ startGame }) {
     }
   };
 
-  const getDifficultyDescription = () => {
+  const getDifficultyDescription = (difficulty) => {
     switch (difficulty) {
       case 'easy':
         return [
           'Only scripture mastery verses',
           '15',
-          '1x'
+          '1x',
+          '4'
         ];
       case 'medium':
         return [
           'Any Book of Mormon verse',
           '7',
-          '8x'
+          '8x',
+          '3'
         ];
       case 'hard':
         return [
           'Any Book of Mormon verse',
           '3',
-          '12x'
+          '12x',
+          '2'
         ];
       default:
         return [
-          'Select a difficulty to see the description.'
+          ''
         ];
     }
   };
@@ -205,15 +208,18 @@ function StartScreen({ startGame }) {
             </Button>
           </ButtonGroup>
         </div>
-        {/* <h3 className='this'> {getDifficultyDescription()[0]}</h3> */}
         <div className='difficulty-details-container'>
           <div>
             {difficulty && <p className='detail-title'>Chapter Margin</p>}
-            <p>{getDifficultyDescription()[1]}</p>
+            <p>{getDifficultyDescription(difficulty)[1]}</p>
           </div>
           <div>
             {difficulty && <p className='detail-title'>Points Multiplier</p>}
-            <p>{getDifficultyDescription()[2]}</p>
+            <p>{getDifficultyDescription(difficulty)[2]}</p>
+          </div>
+          <div>
+            {difficulty && <p className='detail-title'>Liahonas</p>}
+            <p>{getDifficultyDescription(difficulty)[3]}</p>
           </div>
         </div>
         <div className="start-button-container">

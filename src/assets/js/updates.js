@@ -19,6 +19,12 @@ const UPDATES = [
             'Added update system.'
         ]
     },
+    {
+        version: '1.8.0',
+        messages: [
+            'Added Liahonas'
+        ]
+    },
 ];
 
 export default UPDATES;  

@@ -386,20 +386,22 @@ function Game({ difficulty, category, endGame, usedVerses, username }) {
         </div>
       </div>
       <h3>Book</h3>
-      {Object.keys(verseCounts).map((book) => (
-        <Button
-          variant="outlined"
-          key={book}
-          onClick={() => handleBookSelection(book)}
-          disabled={disabledBooks.includes(book)} // Add disabled condition
-        >
-          {book}
-        </Button>
-      ))}
+      <div className='options-container'>
+        {Object.keys(verseCounts).map((book) => (
+          <Button
+            variant="outlined"
+            key={book}
+            onClick={() => handleBookSelection(book)}
+            disabled={disabledBooks.includes(book)}
+          >
+            {book}
+          </Button>
+        ))}
+      </div>
       <div className="submit-button">
         <Button
           variant="contained"
-          disabled={currentStep !== 'verse'} // Disable the button if currentStep is not 'verse'
+          disabled={currentStep !== 'verse'}
           onClick={handleSubmit}
         >
           Submit Guess
@@ -437,16 +439,18 @@ function Game({ difficulty, category, endGame, usedVerses, username }) {
           </div>
         </div>
         <h3>Chapter</h3>
-        {chapters.map((chapter) => (
-          <Button
-            variant="outlined"
-            key={chapter}
-            onClick={() => handleChapterSelection(chapter)}
-            disabled={disabledChapters.includes(chapter)} // Add disabled condition
-          >
-            {chapter}
-          </Button>
-        ))}
+        <div className='options-container'>
+          {chapters.map((chapter) => (
+            <Button
+              variant="outlined"
+              key={chapter}
+              onClick={() => handleChapterSelection(chapter)}
+              disabled={disabledChapters.includes(chapter)} // Add disabled condition
+            >
+              {chapter}
+            </Button>
+          ))}
+        </div>
         <div className="submit-button">
           <Button
             variant="contained"
@@ -492,16 +496,18 @@ function Game({ difficulty, category, endGame, usedVerses, username }) {
           </div>
         </div>
         <h3>Verse</h3>
-        {verses.map((verse) => (
-          <Button
-            variant="outlined"
-            key={verse}
-            onClick={() => handleVerseSelection(verse)}
-            disabled={disabledVerses.includes(verse)} // Add disabled condition
-          >
-            {verse}
-          </Button>
-        ))}
+        <div className='options-container'>
+          {verses.map((verse) => (
+            <Button
+              variant="outlined"
+              key={verse}
+              onClick={() => handleVerseSelection(verse)}
+              disabled={disabledVerses.includes(verse)} // Add disabled condition
+            >
+              {verse}
+            </Button>
+          ))}
+        </div>
         <div className="submit-button">
           <Button
             variant="contained"

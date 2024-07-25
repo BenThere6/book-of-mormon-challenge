@@ -3,7 +3,8 @@
     max-height: 800px;
     height: 100%;
     margin: 0 auto;
-    padding: 20px;
+    padding-left: 20px;
+    padding-right: 20px;
     background-color: #f0f0f0;
     border: 1px solid #ccc;
     border-radius: 8px;
@@ -16,7 +17,11 @@
 }
 
 p {
-    margin: 0;
+    margin-top: 5px;
+}
+
+h3 {
+    padding-top: 10px;
 }
 
 .game-container h2 {
@@ -25,7 +30,7 @@ p {
 }
 
 .verse-text {
-    margin-bottom: 20px;
+    /* margin-bottom: 20px; */
     text-align: left;
 }
 
@@ -62,8 +67,8 @@ p {
 .header {
     display: flex;
     justify-content: space-between;
-    padding: 10px;
-    position: sticky;
+    padding-top: 5px;
+    /* position: sticky; */
     top: 5px;
 }
 
@@ -86,6 +91,8 @@ p {
 }
 
 .icons-container {
+    position: absolute;
+    width: calc(100% - 40px);
     display: flex;
     justify-content: space-between;
 }
@@ -105,20 +112,20 @@ p {
 
 .guess-box {
     border: 1px solid #ccc;
-    margin: 10px 0;
-    min-height: 75px;
+    margin-bottom: 10px;
+    min-height: 40px;
     border-radius: 15px;
     display: flex;
     justify-content: center;
     align-items: center;
-    position: sticky;
+    /* position: sticky; */
     top: 50px;
     background-color: #f0f0f0;
     z-index: 1000;
 }
 
 .guess-text {
-    font-size: 50px;
+    font-size: 30px;
     font-family: 'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande', 'Lucida Sans', Arial, sans-serif;
     color: brown;
     margin: 0;

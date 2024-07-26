@@ -400,7 +400,6 @@ function Game({ difficulty, category, endGame, usedVerses, username }) {
             </Button>
           ))}
         </div>
-      </ScrollIndicatorContainer>
       <div className="submit-button">
         <Button
           variant="contained"
@@ -410,6 +409,7 @@ function Game({ difficulty, category, endGame, usedVerses, username }) {
           Submit Guess
         </Button>
       </div>
+      </ScrollIndicatorContainer>
     </div>
   );
 
@@ -455,7 +455,6 @@ function Game({ difficulty, category, endGame, usedVerses, username }) {
               </Button>
             ))}
           </div>
-        </ScrollIndicatorContainer>
         <div className="submit-button">
           <Button
             variant="contained"
@@ -465,6 +464,7 @@ function Game({ difficulty, category, endGame, usedVerses, username }) {
             Submit Guess
           </Button>
         </div>
+        </ScrollIndicatorContainer>
       </div>
     );
   };
@@ -514,7 +514,6 @@ function Game({ difficulty, category, endGame, usedVerses, username }) {
               </Button>
             ))}
           </div>
-        </ScrollIndicatorContainer>
         <div className="submit-button">
           <Button
             variant="contained"
@@ -524,6 +523,7 @@ function Game({ difficulty, category, endGame, usedVerses, username }) {
             Submit Guess
           </Button>
         </div>
+        </ScrollIndicatorContainer>
       </div>
     );
   };

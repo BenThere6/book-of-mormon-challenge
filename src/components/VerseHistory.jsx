@@ -3,27 +3,23 @@ import IconButton from '@mui/material/IconButton';
 import ArrowBack from '@mui/icons-material/ArrowBack';
 import { useNavigate } from 'react-router-dom';
 import ScrollIndicatorContainer from './ScrollIndicatorContainer';
-import '../assets/css/VerseHistory.css';
+import '../assets/css/VerseHistory.css'; // Ensure this is imported for the CSS styles
 
 const VerseHistory = () => {
   const [verseHistory, setVerseHistory] = useState({});
   const navigate = useNavigate();
 
   useEffect(() => {
-    const storedHistory = JSON.parse(localStorage.getItem('verseHistory')) || {};
-    setVerseHistory(storedHistory);
+    const storedVerseHistory = JSON.parse(localStorage.getItem('verseHistory')) || {};
+    setVerseHistory(storedVerseHistory);
   }, []);
 
   const getReversedVerseHistory = (history) => {
-    const reversedDates = Object.keys(history).sort((a, b) => new Date(b) - new Date(a));
     const reversedHistory = {};
+    const sortedDates = Object.keys(history).sort((a, b) => new Date(b) - new Date(a));
 
-    reversedDates.forEach(date => {
-      reversedHistory[date] = {};
-      const gameIDs = Object.keys(history[date]).sort((a, b) => b - a);
-      gameIDs.forEach(gameID => {
-        reversedHistory[date][gameID] = history[date][gameID].slice().reverse();
-      });
+    sortedDates.forEach(date => {
+      reversedHistory[date] = history[date];
     });
 
     return reversedHistory;
@@ -49,18 +45,20 @@ const VerseHistory = () => {
           {Object.keys(reversedVerseHistory).map(date => (
             <div key={date} className="date-section">
               <h3>{convertToLocalDate(date)}</h3>
-              {Object.keys(reversedVerseHistory[date]).map(gameID => (
-                <div key={gameID} className="game-section">
-                  <h4>Game ID: {gameID}</h4>
-                  <ul>
-                    {reversedVerseHistory[date][gameID].map((entry, index) => (
-                      <li key={index} className={entry.correct ? 'correct' : 'incorrect'}>
-                        {entry.verse}
-                      </li>
-                    ))}
-                  </ul>
-                </div>
-              ))}
+              {Object.keys(reversedVerseHistory[date])
+                .sort((a, b) => b - a) // Sort game IDs in descending order
+                .map(gameID => (
+                  <div key={gameID} className="game-section">
+                    <h4>Game ID: {gameID}</h4>
+                    <ul>
+                      {[...reversedVerseHistory[date][gameID]].reverse().map((verseData, index) => ( // Reverse the order of verses within each game
+                        <li key={index} className={verseData.isCorrect ? 'correct' : 'incorrect'}>
+                          {verseData.verse}
+                        </li>
+                      ))}
+                    </ul>
+                  </div>
+                ))}
             </div>
           ))}
         </div>

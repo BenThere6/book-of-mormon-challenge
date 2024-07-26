@@ -91,7 +91,7 @@ function Game({ difficulty, category, endGame, usedVerses, username }) {
     return randomKey;
   }
 
-  function saveVerseToHistory(verse, correct) {
+  function saveVerseToHistory(verse, isCorrect) {
     const date = new Date().toISOString().split('T')[0];
     const gameID = JSON.parse(localStorage.getItem('currentGameID'));
     const verseHistory = JSON.parse(localStorage.getItem('verseHistory')) || {};
@@ -104,7 +104,7 @@ function Game({ difficulty, category, endGame, usedVerses, username }) {
       verseHistory[date][gameID] = [];
     }
 
-    verseHistory[date][gameID].push({ verse, correct });
+    verseHistory[date][gameID].push({ verse, isCorrect });
 
     localStorage.setItem('verseHistory', JSON.stringify(verseHistory));
   }
@@ -155,29 +155,30 @@ function Game({ difficulty, category, endGame, usedVerses, username }) {
     const { chapterRange } = difficultySettings || {};
 
     let newScore = score;
-    let lifeLost = false;
+    let isCorrect = false;
 
     if (guessAccuracy > 0) {
       newScore += guessAccuracy;
       setScore(newScore);
+      isCorrect = true;
     }
 
     if (chapterDifference > chapterRange || guess.book !== correctBook) {
-      lifeLost = true;
+      isCorrect = false;
     }
 
     setModalContent({
       guess,
       correctVerse: currentVerse,
       pointsEarned: guessAccuracy,
-      lifeLost,
+      lifeLost: !isCorrect,
     });
 
     setShowModal(true);
 
-    saveVerseToHistory(currentVerse, !lifeLost);
+    saveVerseToHistory(currentVerse, isCorrect);
 
-    if (lifeLost) {
+    if (!isCorrect) {
       setLives((prevLives) => prevLives - 1);
     }
   };

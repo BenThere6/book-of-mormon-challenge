@@ -1,5 +1,3 @@
-// src/components/Game.jsx
-
 import React, { useState, useEffect } from 'react';
 import verses from '../assets/js/verses';
 import verseCounts from '../assets/js/verseCounts';
@@ -47,7 +45,6 @@ function Game({ difficulty, category, endGame, usedVerses, username }) {
     localStorage.setItem('gameBombs', bombs);
     localStorage.setItem('gameCurrentVerse', currentVerse);
     localStorage.setItem('gameDifficulty', savedDifficulty);
-    saveServedVerse(currentVerse);
 
     const handlePopState = (event) => {
       if (window.confirm('Are you sure you want to leave? Your game progress will be lost.')) {
@@ -94,19 +91,22 @@ function Game({ difficulty, category, endGame, usedVerses, username }) {
     return randomKey;
   }
 
-  function saveServedVerse(verse) {
+  function saveVerseToHistory(verse, correct) {
     const date = new Date().toISOString().split('T')[0];
-    const servedVerses = JSON.parse(localStorage.getItem('servedVerses')) || {};
+    const gameID = JSON.parse(localStorage.getItem('currentGameID'));
+    const verseHistory = JSON.parse(localStorage.getItem('verseHistory')) || {};
 
-    if (!servedVerses[date]) {
-      servedVerses[date] = [];
+    if (!verseHistory[date]) {
+      verseHistory[date] = {};
     }
 
-    if (!servedVerses[date].includes(verse)) {
-      servedVerses[date].push(verse);
+    if (!verseHistory[date][gameID]) {
+      verseHistory[date][gameID] = [];
     }
 
-    localStorage.setItem('servedVerses', JSON.stringify(servedVerses));
+    verseHistory[date][gameID].push({ verse, correct });
+
+    localStorage.setItem('verseHistory', JSON.stringify(verseHistory));
   }
 
   function handleBookSelection(book) {
@@ -174,6 +174,8 @@ function Game({ difficulty, category, endGame, usedVerses, username }) {
     });
 
     setShowModal(true);
+
+    saveVerseToHistory(currentVerse, !lifeLost);
 
     if (lifeLost) {
       setLives((prevLives) => prevLives - 1);

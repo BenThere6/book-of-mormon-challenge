@@ -1,5 +1,3 @@
-// src/components/StartScreen.jsx
-
 import React, { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import Button from '@mui/material/Button';
@@ -88,6 +86,7 @@ function StartScreen({ startGame }) {
     gameIDs[newGameID] = false;
 
     localStorage.setItem('gameIDs', JSON.stringify(gameIDs));
+    localStorage.setItem('currentGameID', newGameID);
 
     const category = 'all-verses';
 

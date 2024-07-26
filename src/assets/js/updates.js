@@ -1,4 +1,3 @@
-// src/updates.js
 const UPDATES = [
     {
         version: '1.4.0',

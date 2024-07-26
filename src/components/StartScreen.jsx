@@ -1,12 +1,15 @@
+// src/components/StartScreen.jsx
+
 import React, { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import Button from '@mui/material/Button';
 import ButtonGroup from '@mui/material/ButtonGroup';
-import UsernameEntry from './Username'; // Import Username component
-import UpdateModal from './UpdateModal'; // Import the UpdateModal component
-import DevelopmentModal from './DevelopmentModal'; // Import the DevelopmentModal component
+import UsernameEntry from './Username';
+import UpdateModal from './UpdateModal';
+import DevelopmentModal from './DevelopmentModal';
 import '../assets/css/StartScreen.css';
-import UPDATES from '../assets/js/updates'; // Import UPDATES from the new file
+import UPDATES from '../assets/js/updates';
+import getDifficultySettings from '../assets/js/difficultySettings';
 
 const DEVELOPMENT_MESSAGE = 'This application is currently under development. You might encounter bugs, design flaws, or areas that could be improved. If you notice any issues or have suggestions for enhancements, please click the feedback button in the bottom left corner of the start screen to share your thoughts.';
 const SECRET_CODE = ['easy', 'hard', 'hard', 'easy', 'medium', 'medium', 'easy', 'hard'];
@@ -15,11 +18,11 @@ const SECRET_CODE_TIME_LIMIT = 10000; // 10 seconds
 function StartScreen({ startGame }) {
   const [secretCodeIndex, setSecretCodeIndex] = useState(0);
   const [firstClickTime, setFirstClickTime] = useState(null);
-  const [difficulty, setDifficulty] = useState(''); // Default to empty string
-  const [showUsernameModal, setShowUsernameModal] = useState(false); // State for showing Username modal
-  const [showDevelopmentModal, setShowDevelopmentModal] = useState(false); // State for showing Development modal
-  const [isUpdateModalOpen, setIsUpdateModalOpen] = useState(false); // State for showing Update modal
-  const [updatesToShow, setUpdatesToShow] = useState([]); // State to hold updates to show
+  const [difficulty, setDifficulty] = useState('');
+  const [showUsernameModal, setShowUsernameModal] = useState(false);
+  const [showDevelopmentModal, setShowDevelopmentModal] = useState(false);
+  const [isUpdateModalOpen, setIsUpdateModalOpen] = useState(false);
+  const [updatesToShow, setUpdatesToShow] = useState([]);
   const navigate = useNavigate();
 
   const storedUsername = localStorage.getItem('username');
@@ -55,7 +58,7 @@ function StartScreen({ startGame }) {
     if (!storedDevelopmentNotice) {
       setShowDevelopmentModal(true);
     }
-  }, []); // Empty dependency array ensures this runs only once
+  }, []);
 
   const handleDevelopmentModalClose = () => {
     setShowDevelopmentModal(false);
@@ -63,34 +66,35 @@ function StartScreen({ startGame }) {
   };
 
   const handleUsernameClick = () => {
-    setShowUsernameModal(true); // Show Username modal
+    setShowUsernameModal(true);
   };
 
   const handleUsernameChange = (newUsername) => {
     if (newUsername) {
       localStorage.setItem('username', newUsername);
-      setShowUsernameModal(false); // Hide Username modal after username is set
+      setShowUsernameModal(false);
     }
   };
 
   const handleStart = () => {
     localStorage.setItem('gameScore', 0);
     localStorage.setItem('gameLives', 3);
+    const difficultySettings = getDifficultySettings(difficulty);
+    localStorage.setItem('gameBombs', difficultySettings?.bombCount || 3);
     localStorage.setItem('gameCurrentVerse', '');
 
-    // Generate game ID object if it doesn't exist in localStorage
     let gameIDs = JSON.parse(localStorage.getItem('gameIDs')) || {};
     const newGameID = Object.keys(gameIDs).length > 0 ? Math.max(...Object.keys(gameIDs)) + 1 : 1;
-    gameIDs[newGameID] = false; // Initialize new game ID with false
+    gameIDs[newGameID] = false;
 
     localStorage.setItem('gameIDs', JSON.stringify(gameIDs));
 
     const category = 'all-verses';
 
     if (storedUsername) {
-      startGame(newGameID, difficulty, category); // Pass gameID, difficulty, and category to startGame function
+      startGame(newGameID, difficulty, category);
     } else {
-      setShowUsernameModal(true); // Show Username modal if username is not set
+      setShowUsernameModal(true);
     }
   };
 
@@ -104,15 +108,12 @@ function StartScreen({ startGame }) {
     const currentTime = new Date().getTime();
 
     if (firstClickTime && currentTime - firstClickTime > SECRET_CODE_TIME_LIMIT) {
-      // Reset if time limit is exceeded
       setSecretCodeIndex(0);
       setFirstClickTime(null);
     }
 
     if (selectedDifficulty === SECRET_CODE[secretCodeIndex]) {
-      // Correct button clicked
       if (secretCodeIndex === 0) {
-        // Record the time of the first correct click
         setFirstClickTime(currentTime);
       }
 
@@ -120,13 +121,11 @@ function StartScreen({ startGame }) {
       setSecretCodeIndex(nextIndex);
 
       if (nextIndex === SECRET_CODE.length) {
-        // Secret code sequence completed
         navigate('/admin');
         setSecretCodeIndex(0);
         setFirstClickTime(null);
       }
     } else {
-      // Incorrect button clicked, reset the sequence
       setSecretCodeIndex(0);
       setFirstClickTime(null);
     }
@@ -135,36 +134,19 @@ function StartScreen({ startGame }) {
   const getDifficultyDescription = (difficulty) => {
     switch (difficulty) {
       case 'easy':
-        return [
-          'Only scripture mastery verses',
-          '15',
-          '1x',
-          '4'
-        ];
+        return ['Only scripture mastery verses', '15', '1x', '4'];
       case 'medium':
-        return [
-          'Any Book of Mormon verse',
-          '7',
-          '8x',
-          '3'
-        ];
+        return ['Any Book of Mormon verse', '7', '8x', '3'];
       case 'hard':
-        return [
-          'Any Book of Mormon verse',
-          '3',
-          '12x',
-          '2'
-        ];
+        return ['Any Book of Mormon verse', '3', '12x', '2'];
       default:
-        return [
-          ''
-        ];
+        return [''];
     }
   };
 
   const handleUpdateModalClose = () => {
     setIsUpdateModalOpen(false);
-    const seenUpdates = updatesToShow.map(update => update.version);
+    const seenUpdates = updatesToShow.map((update) => update.version);
     const updatedSeenUpdates = [...storedSeenUpdates, ...seenUpdates];
     localStorage.setItem('seenUpdates', JSON.stringify(updatedSeenUpdates));
   };
@@ -226,7 +208,6 @@ function StartScreen({ startGame }) {
           <Button variant="contained" onClick={handleStart} disabled={!difficulty}>Start Game</Button>
         </div>
         <Button id='feedback-button' variant="text" onClick={handleFeedbackClick}>Feedback</Button>
-        {/* {token && <Link className='admin-link' to="/admin">Admin Dashboard</Link>} */}
         <Button id='history-button' variant="text" onClick={handleViewHistory}>History</Button>
       </div>
       <DevelopmentModal

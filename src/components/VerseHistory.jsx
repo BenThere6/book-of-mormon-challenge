@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react';
 import IconButton from '@mui/material/IconButton';
 import ArrowBack from '@mui/icons-material/ArrowBack';
 import { useNavigate } from 'react-router-dom';
-// import '../assets/css/VerseHistory.css';
+import ScrollIndicatorContainer from './ScrollIndicatorContainer';
 
 const VerseHistory = () => {
   const [servedVerses, setServedVerses] = useState({});
@@ -26,6 +26,11 @@ const VerseHistory = () => {
     return reversedServedVerses;
   };
 
+  const convertToLocalDate = (dateString) => {
+    const date = new Date(dateString);
+    return date.toLocaleDateString();
+  };
+
   const reversedServedVerses = getReversedServedVerses(servedVerses);
 
   return (
@@ -36,18 +41,20 @@ const VerseHistory = () => {
         </IconButton>
       </div>
       <h2>Verse History</h2>
-      <div className='history-content-container'>
-      {Object.keys(reversedServedVerses).map(date => (
-        <div key={date} className="date-section">
-          <h3>{date}</h3>
-          <ul>
-            {reversedServedVerses[date].map((verse, index) => (
-              <li key={index}>{verse}</li>
-            ))}
-          </ul>
+      <ScrollIndicatorContainer>
+        <div className='history-content-container'>
+          {Object.keys(reversedServedVerses).map(date => (
+            <div key={date} className="date-section">
+              <h3>{convertToLocalDate(date)}</h3>
+              <ul>
+                {reversedServedVerses[date].map((verse, index) => (
+                  <li key={index}>{verse}</li>
+                ))}
+              </ul>
+            </div>
+          ))}
         </div>
-      ))}
-      </div>
+      </ScrollIndicatorContainer>
     </div>
   );
 };

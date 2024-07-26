@@ -25,7 +25,7 @@ const Feedback = () => {
     }
 
     try {
-      const response = await fetch('https://bens-api-dd63362f50db.herokuapp.com/leaderboard/feedback', {
+      const response = await fetch('https://bens-api-dd63362f50db.herokuapp.com/feedback', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ username, feedback }),

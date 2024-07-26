@@ -36,12 +36,13 @@ body {
     max-width: 95vw;
     width: 100%;
     background-color: #f0f0f0;
-    /* overflow-y: scroll; */
+    overflow-y: hidden;
 }
 
 .history-content-container {
-    max-height: 100vh;
-    overflow-y: scroll;
+    max-height: calc(100vh - 150px);
+    /* overflow-y: hidden; */
+    /* overflow-y: scroll; */
 }
 
 .back-button {

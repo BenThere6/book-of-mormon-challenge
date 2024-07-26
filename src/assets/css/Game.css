@@ -61,7 +61,8 @@ h3 {
 }
 
 .submit-button {
-    margin-top: 20px;
+    margin-top: 10px;
+    margin-bottom: 10px;
 }
 
 .header {
@@ -112,7 +113,7 @@ h3 {
 
 .guess-box {
     border: 1px solid #ccc;
-    margin-bottom: 10px;
+    margin-top: 5px;
     min-height: 40px;
     border-radius: 15px;
     display: flex;
@@ -129,10 +130,6 @@ h3 {
     font-family: 'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande', 'Lucida Sans', Arial, sans-serif;
     color: brown;
     margin: 0;
-}
-
-.submit-button {
-    margin-top: 20px;
 }
 
 .back-button {

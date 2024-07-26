@@ -1,27 +1,27 @@
-import React, { useEffect, useState, useRef } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import '../assets/css/scroll-indicator.css';
 
 const ScrollIndicatorContainer = ({ children }) => {
   const containerRef = useRef(null);
-  const [scrollState, setScrollState] = useState('');
+  const [scrollState, setScrollState] = useState({ top: false, bottom: false });
 
   const handleScroll = () => {
     const { scrollTop, scrollHeight, clientHeight } = containerRef.current;
-    if (scrollTop === 0) {
-      setScrollState('bottom');
-    } else if (scrollTop + clientHeight >= scrollHeight) {
-      setScrollState('top');
-    } else {
-      setScrollState('both');
-    }
+    setScrollState({
+      top: scrollTop > 0,
+      bottom: scrollTop + clientHeight < scrollHeight,
+    });
   };
 
   useEffect(() => {
     const container = containerRef.current;
     if (container.scrollHeight > container.clientHeight) {
-      setScrollState('both');
+      setScrollState({
+        top: container.scrollTop > 0,
+        bottom: container.scrollTop + container.clientHeight < container.scrollHeight,
+      });
     } else {
-      setScrollState('');
+      setScrollState({ top: false, bottom: false });
     }
     container.addEventListener('scroll', handleScroll);
     return () => {
@@ -30,8 +30,15 @@ const ScrollIndicatorContainer = ({ children }) => {
   }, []);
 
   return (
-    <div ref={containerRef} className={`scroll-container ${scrollState}`}>
-      {children}
+    <div
+      id="example3"
+      className={`${scrollState.top ? 'off-top' : ''} ${scrollState.bottom ? 'off-bottom' : ''}`}
+    >
+      <div className="scrollbox" ref={containerRef}>
+        {children}
+      </div>
+      <div className="shadow shadow-top"></div>
+      <div className="shadow shadow-bottom"></div>
     </div>
   );
 };

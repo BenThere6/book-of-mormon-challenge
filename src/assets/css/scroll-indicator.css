@@ -1,54 +1,28 @@
-.scroll-container {
+#example3 {
+    overflow: hidden;
     position: relative;
+    border-radius: 15px;
+}
+
+.scrollbox {
+    height: 100%;
     overflow: auto;
-    max-height: 300px;
-    /* Adjust based on your requirements */
-    padding-right: 3px;
-    /* Ensure space for scroll indicator */
 }
 
-.scroll-container::after {
-    content: '';
-    position: absolute;
-    top: 0;
-    right: 0;
+.shadow {
     bottom: 0;
-    width: 10px;
-    /* Width of the scroll indicator */
-    background: linear-gradient(to bottom, transparent, rgba(0, 0, 0, 0.1));
+    left: 0;
     pointer-events: none;
-    z-index: 1;
-    opacity: 0;
-    /* Hidden by default */
-    transition: opacity 0.3s;
+    position: absolute;
+    right: 0;
+    top: 0;
+    transition: all 0.2s ease-out;
 }
 
-.scroll-container::-webkit-scrollbar {
-    width: 8px;
+.off-top .shadow-top {
+    box-shadow: 0 1em 1em -1em black inset;
 }
 
-.scroll-container::-webkit-scrollbar-thumb {
-    background-color: rgba(0, 0, 0, 0.2);
-    border-radius: 4px;
-}
-
-.scroll-container::-webkit-scrollbar-track {
-    background: transparent;
-}
-
-.scroll-container.scrollable::after {
-    opacity: 1;
-    /* Show the indicator when scrollable */
-}
-
-.scroll-container.top::after {
-    background: linear-gradient(to bottom, rgba(0, 0, 0, 0.1), transparent, rgba(0, 0, 0, 0.1));
-}
-
-.scroll-container.bottom::after {
-    background: linear-gradient(to bottom, transparent, rgba(0, 0, 0, 0.1));
-}
-
-.scroll-container.both::after {
-    background: linear-gradient(to bottom, rgba(0, 0, 0, 0.1), transparent, rgba(0, 0, 0, 0.1));
+.off-bottom .shadow-bottom {
+    box-shadow: 0 -1em 1em -1em black inset;
 }

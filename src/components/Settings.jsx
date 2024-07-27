@@ -52,9 +52,29 @@ const Settings = () => {
     }
   };
 
-  const submitFeedback = () => {
-    // Submit feedback to the backend or email
-    alert('Feedback submitted!');
+  const submitFeedback = async () => {
+    if (!username) {
+      alert('Please set your username first.');
+      return;
+    }
+
+    try {
+      const response = await fetch('https://bens-api-dd63362f50db.herokuapp.com/feedback', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ username, feedback }),
+      });
+
+      if (response.ok) {
+        alert('Thank you for your feedback!');
+        setFeedback('');
+      } else {
+        alert('Failed to submit feedback. Please try again.');
+      }
+    } catch (error) {
+      console.error('Error submitting feedback:', error);
+      alert('An error occurred. Please try again.');
+    }
   };
 
   return (
@@ -73,6 +93,7 @@ const Settings = () => {
             onChange={handleChange(setUsername)}
             variant="outlined"
             {...(username && { placeholder: username })}
+            InputLabelProps={{ shrink: true }}
           />
         </FormControl>
       </Box>
@@ -239,7 +260,6 @@ const Settings = () => {
             multiline
             rows={4}
             value={feedback}
-            onChange={handleChange(setFeedback)}
             variant="outlined"
             placeholder="Enter your feedback here"
           />

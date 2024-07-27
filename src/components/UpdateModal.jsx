@@ -8,10 +8,10 @@ import ScrollIndicatorContainer from './ScrollIndicatorContainer';
 
 const UpdateModal = ({ open, onClose, updates }) => {
   return (
-    <Dialog open={open} onClose={onClose}>
+    <Dialog open={open} onClose={onClose} maxWidth="md" fullWidth>
       <DialogTitle>Updates</DialogTitle>
-      <ScrollIndicatorContainer>
-        <DialogContent>
+      <DialogContent>
+        <ScrollIndicatorContainer>
           {updates.map((update, index) => (
             <div key={index}>
               <h4>Version {update.version}</h4>
@@ -22,8 +22,8 @@ const UpdateModal = ({ open, onClose, updates }) => {
               </ul>
             </div>
           ))}
-        </DialogContent>
-      </ScrollIndicatorContainer>
+        </ScrollIndicatorContainer>
+      </DialogContent>
       <DialogActions>
         <Button onClick={onClose} color="primary">
           Okay

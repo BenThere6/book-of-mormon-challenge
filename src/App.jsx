@@ -11,6 +11,7 @@ import Admin from './components/Admin'; // Import the Admin component
 import Login from './components/Login'; // Import the Login component
 import PrivateRoute from './components/PrivateRoute'; // Import the PrivateRoute component
 import VerseHistory from './components/VerseHistory';
+import Settings from './components/Settings';
 import './assets/css/style.css';
 
 function App() {
@@ -47,6 +48,7 @@ function App() {
         <Route path="/login" element={<Login />} />
         <Route path="/admin" element={<PrivateRoute element={Admin} />} />
         <Route path="/history" element={<VerseHistory />} />
+        <Route path="/settings" element={<Settings />} />
       </Routes>
     </div>
   );

@@ -33,4 +33,5 @@ const getDifficultySettings = (difficulty) => {
     }
   };
   
-  export default getDifficultySettings;  
+  export default getDifficultySettings;
+  

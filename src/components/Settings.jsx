@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
-import { Button, TextField, Select, MenuItem, FormControl, InputLabel, Typography, Box, Paper, Dialog, DialogActions, DialogContent, DialogContentText, DialogTitle, Card, CardContent, Grid } from '@mui/material';
+import { Button, TextField, Select, MenuItem, FormControl, InputLabel, Typography, Box, Paper, Dialog, DialogActions, DialogContent, DialogContentText, DialogTitle, Card, CardContent, Grid, IconButton } from '@mui/material';
 import { useNavigate } from 'react-router-dom';
+import ArrowBackIcon from '@mui/icons-material/ArrowBack';
 
 const Settings = () => {
   const [username, setUsername] = useState('');
@@ -79,9 +80,14 @@ const Settings = () => {
 
   return (
     <Box sx={{ p: 4, maxWidth: 600, mx: 'auto', mb: 4, pb: 4 }}>
-      <Typography variant="h4" gutterBottom>
-        Settings
-      </Typography>
+      <Box sx={{ display: 'flex', alignItems: 'center', mb: 2 }}>
+        <IconButton onClick={() => navigate('/')}>
+          <ArrowBackIcon />
+        </IconButton>
+        <Typography variant="h4" gutterBottom sx={{ mb: 0 }}>
+          Settings
+        </Typography>
+      </Box>
 
       <Box sx={{ mb: 2 }}>
         <Typography variant="h6" gutterBottom>
@@ -260,6 +266,7 @@ const Settings = () => {
             multiline
             rows={4}
             value={feedback}
+            onChange={handleChange(setFeedback)}
             variant="outlined"
             placeholder="Enter your feedback here"
           />

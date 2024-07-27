@@ -1,15 +1,28 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { Button, TextField, Select, MenuItem, FormControl, InputLabel, Typography, Box, Paper, Dialog, DialogActions, DialogContent, DialogContentText, DialogTitle, Card, CardContent, Grid } from '@mui/material';
 import { useNavigate } from 'react-router-dom';
 
 const Settings = () => {
   const [username, setUsername] = useState('');
-  const [difficulty, setDifficulty] = useState('Easy');
+  const [difficulty, setDifficulty] = useState('Medium');
   const [feedback, setFeedback] = useState('');
   const [unsavedChanges, setUnsavedChanges] = useState(false);
   const [open, setOpen] = useState(false);
 
   const navigate = useNavigate();
+
+  useEffect(() => {
+    const savedUsername = localStorage.getItem('username');
+    const savedDifficulty = localStorage.getItem('gameDifficulty');
+    if (savedUsername) {
+      setUsername(savedUsername);
+    }
+    if (savedDifficulty) {
+      // Capitalize the first letter to match the dropdown options
+      const capitalizedDifficulty = savedDifficulty.charAt(0).toUpperCase() + savedDifficulty.slice(1).toLowerCase();
+      setDifficulty(capitalizedDifficulty);
+    }
+  }, []);
 
   const handleChange = (setter) => (event) => {
     setter(event.target.value);
@@ -18,6 +31,8 @@ const Settings = () => {
 
   const saveSettings = () => {
     // Save settings to local storage or backend
+    localStorage.setItem('username', username);
+    localStorage.setItem('gameDifficulty', difficulty.toLowerCase());
     alert('Settings saved!');
     setUnsavedChanges(false);
   };
@@ -55,9 +70,9 @@ const Settings = () => {
         <FormControl fullWidth sx={{ mb: 1 }}>
           <TextField
             label="Username"
-            value={username}
             onChange={handleChange(setUsername)}
             variant="outlined"
+            {...(username && { placeholder: username })}
           />
         </FormControl>
       </Box>

@@ -351,6 +351,7 @@ function Game({ difficulty, category, endGame, usedVerses, username }) {
           <IconButton
             onClick={handleUseBomb}
             disabled={bombs <= 0 || !canUseBomb()}
+            className={bombs <= 0 || !canUseBomb() ? 'bomb-button-disabled' : ''}
             color="primary"
             aria-label="use bomb"
           >
@@ -406,6 +407,7 @@ function Game({ difficulty, category, endGame, usedVerses, username }) {
             <IconButton
               onClick={handleUseBomb}
               disabled={bombs <= 0 || !canUseBomb()}
+              className={bombs <= 0 || !canUseBomb() ? 'bomb-button-disabled' : ''}
               color="primary"
               aria-label="use bomb"
             >
@@ -464,6 +466,7 @@ function Game({ difficulty, category, endGame, usedVerses, username }) {
             <IconButton
               onClick={handleUseBomb}
               disabled={bombs <= 0 || !canUseBomb()}
+              className={bombs <= 0 || !canUseBomb() ? 'bomb-button-disabled' : ''}
               color="primary"
               aria-label="use bomb"
             >

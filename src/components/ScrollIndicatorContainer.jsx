@@ -30,9 +30,7 @@ const ScrollIndicatorContainer = ({ children }) => {
   }, []);
 
   return (
-    <div
-      className={`example3 ${scrollState.top ? 'off-top' : ''} ${scrollState.bottom ? 'off-bottom' : ''}`}
-    >
+    <div className={`example3 ${scrollState.top ? 'off-top' : ''} ${scrollState.bottom ? 'off-bottom' : ''}`} >
       <div className="scrollbox" ref={containerRef}>
         {children}
       </div>

@@ -40,7 +40,8 @@ h3 {
     flex-grow: 1;
     display: flex;
     flex-direction: column;
-    overflow: hidden; /* Ensures that overflow content is hidden */
+    overflow: hidden;
+    /* Ensures that overflow content is hidden */
 }
 
 .options-container {
@@ -90,6 +91,11 @@ h3 {
 .bomb-container {
     align-items: center;
     position: relative;
+}
+
+.bomb-button-disabled img {
+    filter: grayscale(100%);
+    opacity: 0.5;
 }
 
 .icons-container {
@@ -148,4 +154,4 @@ h3 {
     .game-container {
         border: none;
     }
-  }
+}

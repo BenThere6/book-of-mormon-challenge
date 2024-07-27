@@ -36,6 +36,13 @@ const UPDATES = [
             'Fix scroll bug'
         ]
     },
+    {
+        version: '1.9.0',
+        date: 'July 27, 2024',
+        messages: [
+            'Add skips'
+        ]
+    },
 ];
 
 export default UPDATES;  

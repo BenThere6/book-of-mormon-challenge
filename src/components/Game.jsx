@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import verses from '../assets/js/verses';
 import verseCounts from '../assets/js/verseCounts';
-import getDifficultySettings from '../assets/js/difficultySettings'; // Import the difficulty settings
+import getDifficultySettings from '../assets/js/difficultySettings';
 import Button from '@mui/material/Button';
 import Dialog from '@mui/material/Dialog';
 import DialogActions from '@mui/material/DialogActions';
@@ -10,6 +10,7 @@ import DialogContentText from '@mui/material/DialogContentText';
 import DialogTitle from '@mui/material/DialogTitle';
 import IconButton from '@mui/material/IconButton';
 import ArrowBack from '@mui/icons-material/ArrowBack';
+import KeyboardTab from '@mui/icons-material/KeyboardTab';
 import LiahonaIcon from '/liahona_icon.png';
 import { useNavigate } from 'react-router-dom';
 import '../assets/css/Game.css';
@@ -23,10 +24,12 @@ function Game({ difficulty, category, endGame, usedVerses, username }) {
   const savedScore = localStorage.getItem('gameScore') ? parseInt(localStorage.getItem('gameScore')) : 0;
   const savedLives = localStorage.getItem('gameLives') ? parseInt(localStorage.getItem('gameLives')) : 3;
   const savedBombs = localStorage.getItem('gameBombs') ? parseInt(localStorage.getItem('gameBombs')) : difficultySettings?.bombCount || 3;
+  const savedSkips = localStorage.getItem('gameSkips') ? parseInt(localStorage.getItem('gameSkips')) : difficultySettings?.skipCount || 3;
 
   const [score, setScore] = useState(savedScore);
   const [lives, setLives] = useState(savedLives);
   const [bombs, setBombs] = useState(savedBombs);
+  const [skips, setSkips] = useState(savedSkips);
   const [currentVerse, setCurrentVerse] = useState(localStorage.getItem('gameCurrentVerse') || getRandomVerse());
   const [selectedBook, setSelectedBook] = useState('');
   const [selectedChapter, setSelectedChapter] = useState('');
@@ -43,6 +46,7 @@ function Game({ difficulty, category, endGame, usedVerses, username }) {
     localStorage.setItem('gameScore', score);
     localStorage.setItem('gameLives', lives);
     localStorage.setItem('gameBombs', bombs);
+    localStorage.setItem('gameSkips', skips);
     localStorage.setItem('gameCurrentVerse', currentVerse);
     localStorage.setItem('gameDifficulty', savedDifficulty);
 
@@ -60,7 +64,7 @@ function Game({ difficulty, category, endGame, usedVerses, username }) {
     return () => {
       window.removeEventListener('popstate', handlePopState);
     };
-  }, [navigate, score, lives, bombs, currentVerse, savedDifficulty]);
+  }, [navigate, score, lives, bombs, skips, currentVerse, savedDifficulty]);
 
   function getRandomVerse(needNewVerse) {
     countNewVerses += 1;
@@ -104,6 +108,7 @@ function Game({ difficulty, category, endGame, usedVerses, username }) {
       verseHistory[date][gameID] = [];
     }
 
+    // Save the verse with its status (correct, incorrect, or skipped)
     verseHistory[date][gameID].push({ verse, isCorrect });
 
     localStorage.setItem('verseHistory', JSON.stringify(verseHistory));
@@ -259,16 +264,32 @@ function Game({ difficulty, category, endGame, usedVerses, username }) {
   };
 
   const handleUseBomb = () => {
-    if (bombs > 0 && canUseBomb()) {
+    if (canUseBomb()) {
       setBombs(bombs - 1);
       localStorage.setItem('gameBombs', bombs - 1);
       applyBombEffect();
     }
   };
 
+  const handleUseSkip = () => {
+    if (canUseSkip()) {
+      setSkips(skips - 1);
+      localStorage.setItem('gameSkips', skips - 1);
+      saveVerseToHistory(currentVerse, null);
+      setCurrentVerse(getRandomVerse(true));
+      setSelectedBook('');
+      setSelectedChapter('');
+      setSelectedVerse('');
+      setCurrentStep('book');
+      setDisabledBooks([]);
+      setDisabledChapters([]);
+      setDisabledVerses([]);
+    }
+  };
+
   const canUseBomb = () => {
     if (bombs <= 0) return false;
-  
+
     let availableOptions;
     switch (currentStep) {
       case 'book':
@@ -284,10 +305,14 @@ function Game({ difficulty, category, endGame, usedVerses, username }) {
       default:
         return false;
     }
-  
+
     return availableOptions.length >= 6;
   };
-  
+
+  const canUseSkip = () => {
+    return skips > 0;
+  };
+
   const applyBombEffect = () => {
     switch (currentStep) {
       case 'book':
@@ -318,8 +343,6 @@ function Game({ difficulty, category, endGame, usedVerses, username }) {
       removeCount
     );
 
-    console.log(`Removed ` + difficultySettings.removePercentage + '% of options')
-
     setDisabledBooks(disabledBooks.concat(booksToDisable));
   };
 
@@ -333,7 +356,7 @@ function Game({ difficulty, category, endGame, usedVerses, username }) {
       removeCount
     );
 
-    setDisabledChapters(disabledChapters.concat(chaptersToDisable));
+    setDisabledChapters(chaptersToDisable);
   };
 
   const disableIncorrectVerses = () => {
@@ -346,7 +369,7 @@ function Game({ difficulty, category, endGame, usedVerses, username }) {
       removeCount
     );
 
-    setDisabledVerses(disabledVerses.concat(versesToDisable));
+    setDisabledVerses(versesToDisable);
   };
 
   const renderBooks = () => (
@@ -357,18 +380,34 @@ function Game({ difficulty, category, endGame, usedVerses, username }) {
             <ArrowBack />
           </IconButton>
         </div>
-        <div className='bomb-container'>
-          <IconButton
-            onClick={handleUseBomb}
-            disabled={!canUseBomb()}
-            className={!canUseBomb() ? 'bomb-button-disabled' : ''}
-            color="primary"
-            aria-label="use bomb"
-          >
-            <img src={LiahonaIcon} alt="liahona" style={{ width: 24, height: 24 }} />
-          </IconButton>
-          <div id='bomb-count-container'>
-            <span id='bomb-count'>{bombs}</span>
+        <div className='powerups-container'>
+          <div className='bomb-container'>
+            <IconButton
+              onClick={handleUseBomb}
+              disabled={!canUseBomb()}
+              className={!canUseBomb() ? 'bomb-button-disabled' : ''}
+              color="primary"
+              aria-label="use bomb"
+            >
+              <img src={LiahonaIcon} alt="liahona" style={{ width: 24, height: 24 }} />
+            </IconButton>
+            <div id='bomb-count-container'>
+              <span id='bomb-count'>{bombs}</span>
+            </div>
+          </div>
+          <div className='skip-container'>
+            <IconButton
+              onClick={handleUseSkip}
+              disabled={!canUseSkip()}
+              className={!canUseSkip() ? 'skip-button-disabled' : ''}
+              color="black"
+              aria-label="use skip"
+            >
+              <KeyboardTab />
+            </IconButton>
+            <div id='skip-count-container'>
+              <span id='skip-count'>{skips}</span>
+            </div>
           </div>
         </div>
       </div>
@@ -413,18 +452,34 @@ function Game({ difficulty, category, endGame, usedVerses, username }) {
               <ArrowBack />
             </IconButton>
           </div>
-          <div className='bomb-container'>
-            <IconButton
-              onClick={handleUseBomb}
-              disabled={!canUseBomb()}
-              className={!canUseBomb() ? 'bomb-button-disabled' : ''}
-              color="primary"
-              aria-label="use bomb"
-            >
-              <img src={LiahonaIcon} alt="liahona" style={{ width: 24, height: 24 }} />
-            </IconButton>
-            <div id='bomb-count-container'>
-              <span id='bomb-count'>{bombs}</span>
+          <div className='powerups-container'>
+            <div className='bomb-container'>
+              <IconButton
+                onClick={handleUseBomb}
+                disabled={!canUseBomb()}
+                className={!canUseBomb() ? 'bomb-button-disabled' : ''}
+                color="primary"
+                aria-label="use bomb"
+              >
+                <img src={LiahonaIcon} alt="liahona" style={{ width: 24, height: 24 }} />
+              </IconButton>
+              <div id='bomb-count-container'>
+                <span id='bomb-count'>{bombs}</span>
+              </div>
+            </div>
+            <div className='skip-container'>
+              <IconButton
+                onClick={handleUseSkip}
+                disabled={!canUseSkip()}
+                className={!canUseSkip() ? 'skip-button-disabled' : ''}
+                color="black"
+                aria-label="use skip"
+              >
+                <KeyboardTab />
+              </IconButton>
+              <div id='skip-count-container'>
+                <span id='skip-count'>{skips}</span>
+              </div>
             </div>
           </div>
         </div>
@@ -472,18 +527,34 @@ function Game({ difficulty, category, endGame, usedVerses, username }) {
               <ArrowBack />
             </IconButton>
           </div>
-          <div className='bomb-container'>
-            <IconButton
-              onClick={handleUseBomb}
-              disabled={!canUseBomb()}
-              className={!canUseBomb() ? 'bomb-button-disabled' : ''}
-              color="primary"
-              aria-label="use bomb"
-            >
-              <img src={LiahonaIcon} alt="liahona" style={{ width: 24, height: 24 }} />
-            </IconButton>
-            <div id='bomb-count-container'>
-              <span id='bomb-count'>{bombs}</span>
+          <div className='powerups-container'>
+            <div className='bomb-container'>
+              <IconButton
+                onClick={handleUseBomb}
+                disabled={!canUseBomb()}
+                className={!canUseBomb() ? 'bomb-button-disabled' : ''}
+                color="primary"
+                aria-label="use bomb"
+              >
+                <img src={LiahonaIcon} alt="liahona" style={{ width: 24, height: 24 }} />
+              </IconButton>
+              <div id='bomb-count-container'>
+                <span id='bomb-count'>{bombs}</span>
+              </div>
+            </div>
+            <div className='skip-container'>
+              <IconButton
+                onClick={handleUseSkip}
+                disabled={!canUseSkip()}
+                className={!canUseSkip() ? 'skip-button-disabled' : ''}
+                color="black"
+                aria-label="use skip"
+              >
+                <KeyboardTab />
+              </IconButton>
+              <div id='skip-count-container'>
+                <span id='skip-count'>{skips}</span>
+              </div>
             </div>
           </div>
         </div>

@@ -6,6 +6,7 @@ const getDifficultySettings = (difficulty) => {
           chapterRange: 15, 
           verseRange: 20, 
           bombCount: 3, 
+          skipCount: 3,
           removePercentage: 70
         };
       case 'medium':
@@ -14,6 +15,7 @@ const getDifficultySettings = (difficulty) => {
           chapterRange: 7, 
           verseRange: 10, 
           bombCount: 3, 
+          skipCount: 2,
           removePercentage: 60
         };
       case 'hard':
@@ -22,6 +24,7 @@ const getDifficultySettings = (difficulty) => {
           chapterRange: 3, 
           verseRange: 8, 
           bombCount: 3, 
+          skipCount: 1,
           removePercentage: 50
         };
       default:

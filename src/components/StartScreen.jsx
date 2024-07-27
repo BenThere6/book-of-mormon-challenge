@@ -81,6 +81,7 @@ function StartScreen({ startGame }) {
     localStorage.setItem('gameDifficulty', difficulty);
     const difficultySettings = getDifficultySettings(difficulty);
     localStorage.setItem('gameBombs', difficultySettings?.bombCount || 3);
+    localStorage.setItem('gameSkips', difficultySettings?.skipCount || 3);
     localStorage.setItem('gameCurrentVerse', '');
 
     let gameIDs = JSON.parse(localStorage.getItem('gameIDs')) || {};

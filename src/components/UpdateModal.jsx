@@ -14,7 +14,7 @@ const UpdateModal = ({ open, onClose, updates }) => {
         <ScrollIndicatorContainer>
           {updates.map((update, index) => (
             <div key={index}>
-              <h4>Version {update.version}</h4>
+              <h4>Version {update.version} - {update.date}</h4>
               <ul>
                 {update.messages.map((message, msgIndex) => (
                   <li key={msgIndex}>{message}</li>

@@ -14,7 +14,7 @@ const SECRET_CODE = ['easy', 'hard', 'hard', 'easy', 'medium', 'medium', 'easy',
 const SECRET_CODE_TIME_LIMIT = 10000; // 10 seconds
 
 function StartScreen({ startGame }) {
-  localStorage.removeItem('difficulty')
+  localStorage.clear();
   const [secretCodeIndex, setSecretCodeIndex] = useState(0);
   const [firstClickTime, setFirstClickTime] = useState(null);
   const [difficulty, setDifficulty] = useState('');

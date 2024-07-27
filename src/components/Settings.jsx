@@ -1,6 +1,5 @@
 import React, { useState } from 'react';
-import { Button, TextField, Select, MenuItem, FormControl, InputLabel, Typography, Box, Paper, Dialog, DialogActions, DialogContent, DialogContentText, DialogTitle, Card, CardContent, Grid, Tooltip, IconButton } from '@mui/material';
-import InfoIcon from '@mui/icons-material/Info';
+import { Button, TextField, Select, MenuItem, FormControl, InputLabel, Typography, Box, Paper, Dialog, DialogActions, DialogContent, DialogContentText, DialogTitle, Card, CardContent, Grid } from '@mui/material';
 import { useNavigate } from 'react-router-dom';
 
 const Settings = () => {
@@ -81,15 +80,20 @@ const Settings = () => {
         </FormControl>
 
         <Paper elevation={3} sx={{ p: 2, mt: 2 }}>
-          <Typography variant="subtitle1" gutterBottom>
-            Difficulty Levels:
+          <Typography variant="h6" gutterBottom>
+            How to Play
           </Typography>
           <Typography variant="body2" paragraph>
-            <strong>Note:</strong> The goal is to identify the reference (book, chapter, and verse) of the provided scripture. To avoid losing a life, the user must guess the correct book and be within the specified chapter range. Points are awarded based on the proximity to the correct chapter and verse.
+            The goal is to identify the reference (book, chapter, and verse) of the provided scripture. To avoid losing a life, the user must guess the correct book and be within the specified chapter range. Points are awarded based on the proximity to the correct chapter and verse.
           </Typography>
           <Typography variant="body2" paragraph>
             Players have access to Liahonas and Skips as power-ups during the game. Each difficulty level grants 3 Liahonas and a varying number of Skips. Skips allow players to bypass a scripture without losing a life or earning points. Liahonas remove a percentage of incorrect options.
           </Typography>
+
+          {/* <Typography variant="h6" gutterBottom>
+            Difficulty Levels
+          </Typography> */}
+
           <Grid container spacing={2}>
             {/* Easy Difficulty */}
             <Grid item xs={12}>

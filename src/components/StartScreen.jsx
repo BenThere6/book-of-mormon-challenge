@@ -194,14 +194,14 @@ function StartScreen({ startGame }) {
             {difficulty && <p className='detail-title'>Chapter Margin</p>}
             <p>{getDifficultyDescription(difficulty)[1]}</p>
           </div>
-          <div>
+          {/* <div>
             {difficulty && <p className='detail-title'>Points Multiplier</p>}
             <p>{getDifficultyDescription(difficulty)[2]}</p>
-          </div>
-          <div>
+          </div> */}
+          {/* <div>
             {difficulty && <p className='detail-title'>Liahonas</p>}
             <p>{getDifficultyDescription(difficulty)[3]}</p>
-          </div>
+          </div> */}
         </div>
         <div className="start-button-container">
           <Button variant="contained" onClick={handleStart} disabled={!difficulty}>Start Game</Button>

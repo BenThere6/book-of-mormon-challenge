@@ -43,7 +43,7 @@ const Settings = () => {
   };
 
   return (
-    <Box sx={{ p: 4, maxWidth: 600, mx: 'auto' }}>
+    <Box sx={{ p: 4, maxWidth: 600, mx: 'auto', mb: 4 }}>
       <Typography variant="h4" gutterBottom>
         Settings
       </Typography>
@@ -78,135 +78,6 @@ const Settings = () => {
             <MenuItem value="Hard">Hard</MenuItem>
           </Select>
         </FormControl>
-
-        <Paper elevation={3} sx={{ p: 2, mt: 2 }}>
-          <Typography variant="h6" gutterBottom>
-            How to Play
-          </Typography>
-          <Typography variant="body2" paragraph>
-            The goal is to identify the reference (book, chapter, and verse) of the provided scripture. To avoid losing a life, the user must guess the correct book and be within the specified chapter range. Points are awarded based on the proximity to the correct chapter and verse.
-          </Typography>
-          <Typography variant="body2" paragraph>
-            Players have access to Liahonas and Skips as power-ups during the game. Each difficulty level grants 3 Liahonas and a varying number of Skips. Skips allow players to bypass a scripture without losing a life or earning points. Liahonas remove a percentage of incorrect options.
-          </Typography>
-
-          {/* <Typography variant="h6" gutterBottom>
-            Difficulty Levels
-          </Typography> */}
-
-          <Grid container spacing={2}>
-            {/* Easy Difficulty */}
-            <Grid item xs={12}>
-              <Typography variant="h6">Easy</Typography>
-            </Grid>
-            <Grid item xs={12} sm={6}>
-              <Card elevation={3} sx={{ backgroundColor: '#e0f7fa' }}>
-                <CardContent>
-                  <Typography variant="subtitle2" align="center">Chapter Range</Typography>
-                  <Typography variant="h4" align="center">15</Typography>
-                </CardContent>
-              </Card>
-            </Grid>
-            <Grid item xs={12} sm={6}>
-              <Card elevation={3} sx={{ backgroundColor: '#ffecb3' }}>
-                <CardContent>
-                  <Typography variant="subtitle2" align="center">Verse Range</Typography>
-                  <Typography variant="h4" align="center">20</Typography>
-                </CardContent>
-              </Card>
-            </Grid>
-            <Grid item xs={12} sm={6}>
-              <Card elevation={3} sx={{ backgroundColor: '#c8e6c9' }}>
-                <CardContent>
-                  <Typography variant="subtitle2" align="center">Liahona Power</Typography>
-                  <Typography variant="h4" align="center">70%</Typography>
-                </CardContent>
-              </Card>
-            </Grid>
-            <Grid item xs={12} sm={6}>
-              <Card elevation={3} sx={{ backgroundColor: '#ffccbc' }}>
-                <CardContent>
-                  <Typography variant="subtitle2" align="center">Skips</Typography>
-                  <Typography variant="h4" align="center">3</Typography>
-                </CardContent>
-              </Card>
-            </Grid>
-
-            {/* Medium Difficulty */}
-            <Grid item xs={12}>
-              <Typography variant="h6">Medium</Typography>
-            </Grid>
-            <Grid item xs={12} sm={6}>
-              <Card elevation={3} sx={{ backgroundColor: '#e0f7fa' }}>
-                <CardContent>
-                  <Typography variant="subtitle2" align="center">Chapter Range</Typography>
-                  <Typography variant="h4" align="center">7</Typography>
-                </CardContent>
-              </Card>
-            </Grid>
-            <Grid item xs={12} sm={6}>
-              <Card elevation={3} sx={{ backgroundColor: '#ffecb3' }}>
-                <CardContent>
-                  <Typography variant="subtitle2" align="center">Verse Range</Typography>
-                  <Typography variant="h4" align="center">10</Typography>
-                </CardContent>
-              </Card>
-            </Grid>
-            <Grid item xs={12} sm={6}>
-              <Card elevation={3} sx={{ backgroundColor: '#c8e6c9' }}>
-                <CardContent>
-                  <Typography variant="subtitle2" align="center">Liahona Power</Typography>
-                  <Typography variant="h4" align="center">60%</Typography>
-                </CardContent>
-              </Card>
-            </Grid>
-            <Grid item xs={12} sm={6}>
-              <Card elevation={3} sx={{ backgroundColor: '#ffccbc' }}>
-                <CardContent>
-                  <Typography variant="subtitle2" align="center">Skips</Typography>
-                  <Typography variant="h4" align="center">2</Typography>
-                </CardContent>
-              </Card>
-            </Grid>
-
-            {/* Hard Difficulty */}
-            <Grid item xs={12}>
-              <Typography variant="h6">Hard</Typography>
-            </Grid>
-            <Grid item xs={12} sm={6}>
-              <Card elevation={3} sx={{ backgroundColor: '#e0f7fa' }}>
-                <CardContent>
-                  <Typography variant="subtitle2" align="center">Chapter Range</Typography>
-                  <Typography variant="h4" align="center">3</Typography>
-                </CardContent>
-              </Card>
-            </Grid>
-            <Grid item xs={12} sm={6}>
-              <Card elevation={3} sx={{ backgroundColor: '#ffecb3' }}>
-                <CardContent>
-                  <Typography variant="subtitle2" align="center">Verse Range</Typography>
-                  <Typography variant="h4" align="center">8</Typography>
-                </CardContent>
-              </Card>
-            </Grid>
-            <Grid item xs={12} sm={6}>
-              <Card elevation={3} sx={{ backgroundColor: '#c8e6c9' }}>
-                <CardContent>
-                  <Typography variant="subtitle2" align="center">Liahona Power</Typography>
-                  <Typography variant="h4" align="center">60%</Typography>
-                </CardContent>
-              </Card>
-            </Grid>
-            <Grid item xs={12} sm={6}>
-              <Card elevation={3} sx={{ backgroundColor: '#ffccbc' }}>
-                <CardContent>
-                  <Typography variant="subtitle2" align="center">Skips</Typography>
-                  <Typography variant="h4" align="center">1</Typography>
-                </CardContent>
-              </Card>
-            </Grid>
-          </Grid>
-        </Paper>
       </Box>
 
       <Box sx={{ display: 'flex', gap: 2, mb: 4 }}>
@@ -217,6 +88,131 @@ const Settings = () => {
           Cancel
         </Button>
       </Box>
+
+      <Paper elevation={3} sx={{ p: 2, mt: 2 }}>
+        <Typography variant="h6" gutterBottom>
+          How to Play
+        </Typography>
+        <Typography variant="body2" paragraph>
+          The goal is to identify the reference (book, chapter, and verse) of the provided scripture. To avoid losing a life, the user must guess the correct book and be within the specified chapter range. Points are awarded based on the proximity to the correct chapter and verse.
+        </Typography>
+        <Typography variant="body2" paragraph>
+          Players have access to Liahonas and Skips as power-ups during the game. Each difficulty level grants 3 Liahonas and a varying number of Skips. Skips allow players to bypass a scripture without losing a life or earning points. Liahonas remove a percentage of incorrect options.
+        </Typography>
+
+        <Grid container spacing={2}>
+          {/* Easy Difficulty */}
+          <Grid item xs={12}>
+            <Typography variant="h6">Easy</Typography>
+          </Grid>
+          <Grid item xs={12} sm={6}>
+            <Card elevation={3} sx={{ backgroundColor: '#e0f7fa' }}>
+              <CardContent>
+                <Typography variant="subtitle2" align="center">Chapter Range</Typography>
+                <Typography variant="h4" align="center">15</Typography>
+              </CardContent>
+            </Card>
+          </Grid>
+          <Grid item xs={12} sm={6}>
+            <Card elevation={3} sx={{ backgroundColor: '#ffecb3' }}>
+              <CardContent>
+                <Typography variant="subtitle2" align="center">Verse Range</Typography>
+                <Typography variant="h4" align="center">20</Typography>
+              </CardContent>
+            </Card>
+          </Grid>
+          <Grid item xs={12} sm={6}>
+            <Card elevation={3} sx={{ backgroundColor: '#c8e6c9' }}>
+              <CardContent>
+                <Typography variant="subtitle2" align="center">Liahona Power</Typography>
+                <Typography variant="h4" align="center">70%</Typography>
+              </CardContent>
+            </Card>
+          </Grid>
+          <Grid item xs={12} sm={6}>
+            <Card elevation={3} sx={{ backgroundColor: '#ffccbc' }}>
+              <CardContent>
+                <Typography variant="subtitle2" align="center">Skips</Typography>
+                <Typography variant="h4" align="center">3</Typography>
+              </CardContent>
+            </Card>
+          </Grid>
+
+          {/* Medium Difficulty */}
+          <Grid item xs={12}>
+            <Typography variant="h6">Medium</Typography>
+          </Grid>
+          <Grid item xs={12} sm={6}>
+            <Card elevation={3} sx={{ backgroundColor: '#e0f7fa' }}>
+              <CardContent>
+                <Typography variant="subtitle2" align="center">Chapter Range</Typography>
+                <Typography variant="h4" align="center">7</Typography>
+              </CardContent>
+            </Card>
+          </Grid>
+          <Grid item xs={12} sm={6}>
+            <Card elevation={3} sx={{ backgroundColor: '#ffecb3' }}>
+              <CardContent>
+                <Typography variant="subtitle2" align="center">Verse Range</Typography>
+                <Typography variant="h4" align="center">10</Typography>
+              </CardContent>
+            </Card>
+          </Grid>
+          <Grid item xs={12} sm={6}>
+            <Card elevation={3} sx={{ backgroundColor: '#c8e6c9' }}>
+              <CardContent>
+                <Typography variant="subtitle2" align="center">Liahona Power</Typography>
+                <Typography variant="h4" align="center">60%</Typography>
+              </CardContent>
+            </Card>
+          </Grid>
+          <Grid item xs={12} sm={6}>
+            <Card elevation={3} sx={{ backgroundColor: '#ffccbc' }}>
+              <CardContent>
+                <Typography variant="subtitle2" align="center">Skips</Typography>
+                <Typography variant="h4" align="center">2</Typography>
+              </CardContent>
+            </Card>
+          </Grid>
+
+          {/* Hard Difficulty */}
+          <Grid item xs={12}>
+            <Typography variant="h6">Hard</Typography>
+          </Grid>
+          <Grid item xs={12} sm={6}>
+            <Card elevation={3} sx={{ backgroundColor: '#e0f7fa' }}>
+              <CardContent>
+                <Typography variant="subtitle2" align="center">Chapter Range</Typography>
+                <Typography variant="h4" align="center">3</Typography>
+              </CardContent>
+            </Card>
+          </Grid>
+          <Grid item xs={12} sm={6}>
+            <Card elevation={3} sx={{ backgroundColor: '#ffecb3' }}>
+              <CardContent>
+                <Typography variant="subtitle2" align="center">Verse Range</Typography>
+                <Typography variant="h4" align="center">8</Typography>
+              </CardContent>
+            </Card>
+          </Grid>
+          <Grid item xs={12} sm={6}>
+            <Card elevation={3} sx={{ backgroundColor: '#c8e6c9' }}>
+              <CardContent>
+                <Typography variant="subtitle2" align="center">Liahona Power</Typography>
+                <Typography variant="h4" align="center">60%</Typography>
+              </CardContent>
+            </Card>
+          </Grid>
+          <Grid item xs={12} sm={6}>
+            <Card elevation={3} sx={{ backgroundColor: '#ffccbc' }}>
+              <CardContent>
+                <Typography variant="subtitle2" align="center">Skips</Typography>
+                <Typography variant="h4" align="center">1</Typography>
+              </CardContent>
+            </Card>
+          </Grid>
+        </Grid>
+      </Paper>
 
       <Box sx={{ mb: 4 }}>
         <Typography variant="h6" gutterBottom>

@@ -2,31 +2,28 @@ const getDifficultySettings = (difficulty) => {
     switch (difficulty) {
       case 'easy':
         return { 
-            multiplier: 1, 
-            chapterRange: 15, 
-            verseRange: 20, 
-            bombCount: 3, 
-            removeBookCount: 6, 
-            removeChapterCount: 7, 
-            removeVerseCount: 10 };
+          multiplier: 1, 
+          chapterRange: 15, 
+          verseRange: 20, 
+          bombCount: 3, 
+          removePercentage: 70
+        };
       case 'medium':
         return { 
-            multiplier: 8, 
-            chapterRange: 7, 
-            verseRange: 10, 
-            bombCount: 3, 
-            removeBookCount: 5, 
-            removeChapterCount: 6, 
-            removeVerseCount: 9 };
+          multiplier: 8, 
+          chapterRange: 7, 
+          verseRange: 10, 
+          bombCount: 3, 
+          removePercentage: 60
+        };
       case 'hard':
         return { 
-            multiplier: 12, 
-            chapterRange: 3, 
-            verseRange: 8, 
-            bombCount: 3, 
-            removeBookCount: 4, 
-            removeChapterCount: 5, 
-            removeVerseCount: 8 };
+          multiplier: 12, 
+          chapterRange: 3, 
+          verseRange: 8, 
+          bombCount: 3, 
+          removePercentage: 50
+        };
       default:
         console.log('Invalid difficulty level: ' + difficulty);
         return null;

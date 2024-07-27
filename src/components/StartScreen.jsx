@@ -78,6 +78,7 @@ function StartScreen({ startGame }) {
   const handleStart = () => {
     localStorage.setItem('gameScore', 0);
     localStorage.setItem('gameLives', 3);
+    localStorage.setItem('gameDifficulty', difficulty);
     const difficultySettings = getDifficultySettings(difficulty);
     localStorage.setItem('gameBombs', difficultySettings?.bombCount || 3);
     localStorage.setItem('gameCurrentVerse', '');

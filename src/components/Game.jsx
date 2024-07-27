@@ -267,19 +267,27 @@ function Game({ difficulty, category, endGame, usedVerses, username }) {
   };
 
   const canUseBomb = () => {
-    const { removeBookCount, removeChapterCount, removeVerseCount } = difficultySettings || {};
+    if (bombs <= 0) return false;
+  
+    let availableOptions;
     switch (currentStep) {
       case 'book':
-        return Object.keys(verseCounts).length > removeBookCount;
+        availableOptions = Object.keys(verseCounts).filter(book => !disabledBooks.includes(book));
+        break;
       case 'chapter':
-        return selectedBook && verseCounts[selectedBook].length > removeChapterCount;
+        availableOptions = verseCounts[selectedBook]?.filter((_, index) => !disabledChapters.includes(index + 1));
+        break;
       case 'verse':
-        return selectedBook && selectedChapter && verseCounts[selectedBook][selectedChapter - 1] > removeVerseCount;
+        availableOptions = Array.from({ length: verseCounts[selectedBook][selectedChapter - 1] }, (_, index) => index + 1)
+          .filter(verse => !disabledVerses.includes(verse));
+        break;
       default:
         return false;
     }
+  
+    return availableOptions.length >= 6;
   };
-
+  
   const applyBombEffect = () => {
     switch (currentStep) {
       case 'book':
@@ -304,11 +312,13 @@ function Game({ difficulty, category, endGame, usedVerses, username }) {
   const disableIncorrectBooks = () => {
     const correctBook = currentVerse.split(' ')[0];
     const allBooks = Object.keys(verseCounts);
-    const { removeBookCount } = difficultySettings || {};
+    const removeCount = Math.ceil((allBooks.length - 1) * (difficultySettings.removePercentage / 100));
     const booksToDisable = getRandomItems(
       allBooks.filter((book) => book !== correctBook && !disabledBooks.includes(book)),
-      removeBookCount
+      removeCount
     );
+
+    console.log(`Removed ` + difficultySettings.removePercentage + '% of options')
 
     setDisabledBooks(disabledBooks.concat(booksToDisable));
   };
@@ -317,10 +327,10 @@ function Game({ difficulty, category, endGame, usedVerses, username }) {
     const correctChapter = parseInt(currentVerse.split(':')[0].split(' ')[1]);
     const chapterCount = verseCounts[selectedBook].length;
     const allChapters = Array.from({ length: chapterCount }, (_, index) => index + 1);
-    const { removeChapterCount } = difficultySettings || {};
+    const removeCount = Math.ceil((allChapters.length - 1) * (difficultySettings.removePercentage / 100));
     const chaptersToDisable = getRandomItems(
       allChapters.filter((chapter) => chapter !== correctChapter && !disabledChapters.includes(chapter)),
-      removeChapterCount
+      removeCount
     );
 
     setDisabledChapters(disabledChapters.concat(chaptersToDisable));
@@ -330,10 +340,10 @@ function Game({ difficulty, category, endGame, usedVerses, username }) {
     const correctVerse = parseInt(currentVerse.split(':')[1]);
     const verseCount = verseCounts[selectedBook][selectedChapter - 1];
     const allVerses = Array.from({ length: verseCount }, (_, index) => index + 1);
-    const { removeVerseCount } = difficultySettings || {};
+    const removeCount = Math.ceil((allVerses.length - 1) * (difficultySettings.removePercentage / 100));
     const versesToDisable = getRandomItems(
       allVerses.filter((verse) => verse !== correctVerse && !disabledVerses.includes(verse)),
-      removeVerseCount
+      removeCount
     );
 
     setDisabledVerses(disabledVerses.concat(versesToDisable));
@@ -350,8 +360,8 @@ function Game({ difficulty, category, endGame, usedVerses, username }) {
         <div className='bomb-container'>
           <IconButton
             onClick={handleUseBomb}
-            disabled={bombs <= 0 || !canUseBomb()}
-            className={bombs <= 0 || !canUseBomb() ? 'bomb-button-disabled' : ''}
+            disabled={!canUseBomb()}
+            className={!canUseBomb() ? 'bomb-button-disabled' : ''}
             color="primary"
             aria-label="use bomb"
           >
@@ -406,8 +416,8 @@ function Game({ difficulty, category, endGame, usedVerses, username }) {
           <div className='bomb-container'>
             <IconButton
               onClick={handleUseBomb}
-              disabled={bombs <= 0 || !canUseBomb()}
-              className={bombs <= 0 || !canUseBomb() ? 'bomb-button-disabled' : ''}
+              disabled={!canUseBomb()}
+              className={!canUseBomb() ? 'bomb-button-disabled' : ''}
               color="primary"
               aria-label="use bomb"
             >
@@ -465,8 +475,8 @@ function Game({ difficulty, category, endGame, usedVerses, username }) {
           <div className='bomb-container'>
             <IconButton
               onClick={handleUseBomb}
-              disabled={bombs <= 0 || !canUseBomb()}
-              className={bombs <= 0 || !canUseBomb() ? 'bomb-button-disabled' : ''}
+              disabled={!canUseBomb()}
+              className={!canUseBomb() ? 'bomb-button-disabled' : ''}
               color="primary"
               aria-label="use bomb"
             >

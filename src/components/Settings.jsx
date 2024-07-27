@@ -43,16 +43,16 @@ const Settings = () => {
   };
 
   return (
-    <Box sx={{ p: 4, maxWidth: 600, mx: 'auto', mb: 4 }}>
+    <Box sx={{ p: 4, maxWidth: 600, mx: 'auto', mb: 4, pb: 4 }}>
       <Typography variant="h4" gutterBottom>
         Settings
       </Typography>
 
-      <Box sx={{ mb: 4 }}>
+      <Box sx={{ mb: 2 }}>
         <Typography variant="h6" gutterBottom>
           Account
         </Typography>
-        <FormControl fullWidth sx={{ mb: 2 }}>
+        <FormControl fullWidth sx={{ mb: 1 }}>
           <TextField
             label="Username"
             value={username}
@@ -62,11 +62,11 @@ const Settings = () => {
         </FormControl>
       </Box>
 
-      <Box sx={{ mb: 4 }}>
+      <Box sx={{ mb: 2 }}>
         <Typography variant="h6" gutterBottom>
           Gameplay
         </Typography>
-        <FormControl fullWidth sx={{ mb: 2 }}>
+        <FormControl fullWidth sx={{ mb: 1 }}>
           <InputLabel>Difficulty</InputLabel>
           <Select
             value={difficulty}
@@ -214,7 +214,7 @@ const Settings = () => {
         </Grid>
       </Paper>
 
-      <Box sx={{ mb: 4 }}>
+      <Box sx={{ my: 4 }}>
         <Typography variant="h6" gutterBottom>
           Feedback
         </Typography>
@@ -229,7 +229,7 @@ const Settings = () => {
             placeholder="Enter your feedback here"
           />
         </FormControl>
-        <Button variant="contained" color="primary" onClick={submitFeedback}>
+        <Button sx={{ mb: 4 }} variant="contained" color="primary" onClick={submitFeedback}>
           Submit Feedback
         </Button>
       </Box>

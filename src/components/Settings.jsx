@@ -81,7 +81,7 @@ const Settings = () => {
   return (
     <Box sx={{ p: 4, maxWidth: 600, mx: 'auto', mb: 4, pb: 4 }}>
       <Box sx={{ display: 'flex', alignItems: 'center', mb: 2 }}>
-        <IconButton onClick={() => navigate('/')}>
+        <IconButton onClick={handleCancel}>
           <ArrowBackIcon />
         </IconButton>
         <Typography variant="h4" gutterBottom sx={{ mb: 0 }}>
@@ -125,9 +125,6 @@ const Settings = () => {
       <Box sx={{ display: 'flex', gap: 2, mb: 4 }}>
         <Button variant="contained" color="primary" onClick={saveSettings}>
           Save Settings
-        </Button>
-        <Button variant="outlined" color="secondary" onClick={handleCancel}>
-          Cancel
         </Button>
       </Box>
 

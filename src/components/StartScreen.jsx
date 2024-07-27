@@ -1,30 +1,33 @@
 import React, { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import Button from '@mui/material/Button';
-import ButtonGroup from '@mui/material/ButtonGroup';
-import UsernameEntry from './Username';
+import IconButton from '@mui/material/IconButton';
+import SettingsIcon from '@mui/icons-material/Settings';
+import Dialog from '@mui/material/Dialog';
+import DialogActions from '@mui/material/DialogActions';
+import DialogContent from '@mui/material/DialogContent';
+import DialogContentText from '@mui/material/DialogContentText';
+import DialogTitle from '@mui/material/DialogTitle';
 import UpdateModal from './UpdateModal';
 import DevelopmentModal from './DevelopmentModal';
 import '../assets/css/StartScreen.css';
 import UPDATES from '../assets/js/updates';
 import getDifficultySettings from '../assets/js/difficultySettings';
 
-const DEVELOPMENT_MESSAGE = 'This application is currently under development. You might encounter bugs, design flaws, or areas that could be improved. If you notice any issues or have suggestions for enhancements, please click the feedback button in the bottom left corner of the start screen to share your thoughts.';
-const SECRET_CODE = ['easy', 'hard', 'hard', 'easy', 'medium', 'medium', 'easy', 'hard'];
-const SECRET_CODE_TIME_LIMIT = 10000; // 10 seconds
+const DEVELOPMENT_MESSAGE = 'This application is currently under development. You might encounter bugs, design flaws, or areas that could be improved. If you notice any issues or have suggestions for enhancements, please click the feedback button at the bottom of the settings page to share your thoughts.';
 
 function StartScreen({ startGame }) {
-  // localStorage.clear();
   const [secretCodeIndex, setSecretCodeIndex] = useState(0);
   const [firstClickTime, setFirstClickTime] = useState(null);
   const [difficulty, setDifficulty] = useState('');
-  const [showUsernameModal, setShowUsernameModal] = useState(false);
   const [showDevelopmentModal, setShowDevelopmentModal] = useState(false);
   const [isUpdateModalOpen, setIsUpdateModalOpen] = useState(false);
   const [updatesToShow, setUpdatesToShow] = useState([]);
+  const [isNoUsernameModalOpen, setIsNoUsernameModalOpen] = useState(false);
   const navigate = useNavigate();
 
   const storedUsername = localStorage.getItem('username');
+  const storedDifficulty = localStorage.getItem('gameDifficulty') || 'medium';
   const storedSeenUpdates = JSON.parse(localStorage.getItem('seenUpdates')) || [];
   const storedDevelopmentNotice = localStorage.getItem('developmentNotice');
 
@@ -64,22 +67,20 @@ function StartScreen({ startGame }) {
     localStorage.setItem('developmentNotice', 'shown');
   };
 
-  const handleUsernameClick = () => {
-    setShowUsernameModal(true);
-  };
-
-  const handleUsernameChange = (newUsername) => {
-    if (newUsername) {
-      localStorage.setItem('username', newUsername);
-      setShowUsernameModal(false);
-    }
+  const handleSettingsClick = () => {
+    navigate('/settings');
   };
 
   const handleStart = () => {
+    if (!storedUsername) {
+      setIsNoUsernameModalOpen(true);
+      return;
+    }
+
+    const difficultySettings = getDifficultySettings(storedDifficulty);
     localStorage.setItem('gameScore', 0);
     localStorage.setItem('gameLives', 3);
-    localStorage.setItem('gameDifficulty', difficulty);
-    const difficultySettings = getDifficultySettings(difficulty);
+    localStorage.setItem('gameDifficulty', storedDifficulty);
     localStorage.setItem('gameBombs', difficultySettings?.bombCount || 3);
     localStorage.setItem('gameSkips', difficultySettings?.skipCount || 3);
     localStorage.setItem('gameCurrentVerse', '');
@@ -93,44 +94,23 @@ function StartScreen({ startGame }) {
 
     const category = 'all-verses';
 
-    if (storedUsername) {
-      startGame(newGameID, difficulty, category);
-    } else {
-      setShowUsernameModal(true);
-    }
+    startGame(newGameID, storedDifficulty, category);
   };
 
   const handleViewLeaderboard = () => {
     navigate('/leaderboard', { state: { fromStartScreen: true } });
   };
 
-  const handleDifficultyClick = (selectedDifficulty) => {
-    setDifficulty(selectedDifficulty);
+  const handleNoUsernameModalClose = () => {
+    setIsNoUsernameModalOpen(false);
+    navigate('/settings');
+  };
 
-    const currentTime = new Date().getTime();
-
-    if (firstClickTime && currentTime - firstClickTime > SECRET_CODE_TIME_LIMIT) {
-      setSecretCodeIndex(0);
-      setFirstClickTime(null);
-    }
-
-    if (selectedDifficulty === SECRET_CODE[secretCodeIndex]) {
-      if (secretCodeIndex === 0) {
-        setFirstClickTime(currentTime);
-      }
-
-      const nextIndex = secretCodeIndex + 1;
-      setSecretCodeIndex(nextIndex);
-
-      if (nextIndex === SECRET_CODE.length) {
-        navigate('/admin');
-        setSecretCodeIndex(0);
-        setFirstClickTime(null);
-      }
-    } else {
-      setSecretCodeIndex(0);
-      setFirstClickTime(null);
-    }
+  const handleUpdateModalClose = () => {
+    setIsUpdateModalOpen(false);
+    const seenUpdates = updatesToShow.map((update) => update.version);
+    const updatedSeenUpdates = [...storedSeenUpdates, ...seenUpdates];
+    localStorage.setItem('seenUpdates', JSON.stringify(updatedSeenUpdates));
   };
 
   const getDifficultyDescription = (difficulty) => {
@@ -146,71 +126,22 @@ function StartScreen({ startGame }) {
     }
   };
 
-  const handleUpdateModalClose = () => {
-    setIsUpdateModalOpen(false);
-    const seenUpdates = updatesToShow.map((update) => update.version);
-    const updatedSeenUpdates = [...storedSeenUpdates, ...seenUpdates];
-    localStorage.setItem('seenUpdates', JSON.stringify(updatedSeenUpdates));
-  };
-
   return (
     <div className='centered-element'>
       <div className="start-screen">
         <div className='top-row'>
-          <div className="username-button">
-            <Button variant="text" onClick={handleUsernameClick}>
-              {storedUsername ? `${storedUsername}` : 'Set Username'}
-            </Button>
-            {showUsernameModal && (
-              <UsernameEntry setUsername={handleUsernameChange} startGame={startGame} onClose={() => setShowUsernameModal(false)} />
-            )}
-          </div>
           <Button variant="text" onClick={handleViewLeaderboard}>Leaderboard</Button>
+          <Button variant="text" onClick={handleViewHistory}>History</Button>
+          <IconButton onClick={handleSettingsClick}>
+            <SettingsIcon />
+          </IconButton>
         </div>
         <div className="image-container">
           <img id="title" src="/title.png" alt="Lehi's Legacy" />
         </div>
-        <div className="button-group">
-          <ButtonGroup variant="contained">
-            <Button
-              onClick={() => handleDifficultyClick('easy')}
-              color={difficulty === 'easy' ? 'primary' : 'inherit'}
-            >
-              Easy
-            </Button>
-            <Button
-              onClick={() => handleDifficultyClick('medium')}
-              color={difficulty === 'medium' ? 'primary' : 'inherit'}
-            >
-              Medium
-            </Button>
-            <Button
-              onClick={() => handleDifficultyClick('hard')}
-              color={difficulty === 'hard' ? 'primary' : 'inherit'}
-            >
-              Hard
-            </Button>
-          </ButtonGroup>
-        </div>
-        <div className='difficulty-details-container'>
-          <div>
-            {difficulty && <p className='detail-title'>Chapter Margin</p>}
-            <p>{getDifficultyDescription(difficulty)[1]}</p>
-          </div>
-          {/* <div>
-            {difficulty && <p className='detail-title'>Points Multiplier</p>}
-            <p>{getDifficultyDescription(difficulty)[2]}</p>
-          </div> */}
-          {/* <div>
-            {difficulty && <p className='detail-title'>Liahonas</p>}
-            <p>{getDifficultyDescription(difficulty)[3]}</p>
-          </div> */}
-        </div>
         <div className="start-button-container">
-          <Button variant="contained" onClick={handleStart} disabled={!difficulty}>Start Game</Button>
+          <Button variant="contained" onClick={handleStart}>Start Game</Button>
         </div>
-        <Button id='feedback-button' variant="text" onClick={handleFeedbackClick}>Feedback</Button>
-        <Button id='history-button' variant="text" onClick={handleViewHistory}>History</Button>
       </div>
       <DevelopmentModal
         open={showDevelopmentModal}
@@ -218,6 +149,24 @@ function StartScreen({ startGame }) {
         developmentMessage={DEVELOPMENT_MESSAGE}
       />
       <UpdateModal open={isUpdateModalOpen} onClose={handleUpdateModalClose} updates={updatesToShow} />
+      <Dialog
+        open={isNoUsernameModalOpen}
+        onClose={handleNoUsernameModalClose}
+        aria-labelledby="alert-dialog-title"
+        aria-describedby="alert-dialog-description"
+      >
+        <DialogTitle id="alert-dialog-title">{"Set Your Username"}</DialogTitle>
+        <DialogContent>
+          <DialogContentText id="alert-dialog-description">
+            You need to set your username first. Please go to the settings page.
+          </DialogContentText>
+        </DialogContent>
+        <DialogActions>
+          <Button onClick={handleNoUsernameModalClose} color="primary" autoFocus>
+            Okay
+          </Button>
+        </DialogActions>
+      </Dialog>
     </div>
   );
 }

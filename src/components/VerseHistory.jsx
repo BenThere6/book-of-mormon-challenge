@@ -44,13 +44,12 @@ const VerseHistory = () => {
                 <div className='history-content-container'>
                     {Object.keys(reversedVerseHistory).map(date => (
                         <div key={date} className="date-section">
-                            {/* <h3>{convertToLocalDate(date)}</h3> */}
                             <h3>{date}</h3>
                             {Object.keys(reversedVerseHistory[date])
-                                .sort((a, b) => b - a) // Sort game IDs in descending order
+                                .sort((a, b) => b - a)
                                 .map(gameID => (
                                     <div key={gameID} className="game-section">
-                                        <h4>Game ID: {gameID}</h4>
+                                        <h4>Game # {gameID}</h4>
                                         <ul>
                                             {reversedVerseHistory[date][gameID].map((verseData, index) => (
                                                 <li key={index} className={verseData.isCorrect === null ? '' : (verseData.isCorrect ? 'correct' : 'incorrect')}>

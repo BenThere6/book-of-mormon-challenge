@@ -141,7 +141,7 @@ const Settings = () => {
       </Box>
 
       <Box sx={{ display: 'flex', gap: 2, mb: 4 }}>
-        <Button variant="contained" color="primary" onClick={saveSettings}>
+        <Button variant="contained" color="primary" onClick={saveSettings} disabled={!unsavedChanges}>
           Save Settings
         </Button>
       </Box>

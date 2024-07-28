@@ -8,18 +8,16 @@ import DialogActions from '@mui/material/DialogActions';
 import DialogContent from '@mui/material/DialogContent';
 import DialogContentText from '@mui/material/DialogContentText';
 import DialogTitle from '@mui/material/DialogTitle';
+import Box from '@mui/material/Box';
+import Container from '@mui/material/Container';
 import UpdateModal from './UpdateModal';
 import DevelopmentModal from './DevelopmentModal';
-import '../assets/css/StartScreen.css';
 import UPDATES from '../assets/js/updates';
 import getDifficultySettings from '../assets/js/difficultySettings';
 
 const DEVELOPMENT_MESSAGE = 'This application is currently under development. You might encounter bugs, design flaws, or areas that could be improved. If you notice any issues or have suggestions for enhancements, please click the feedback button at the bottom of the settings page to share your thoughts.';
 
 function StartScreen({ startGame }) {
-  const [secretCodeIndex, setSecretCodeIndex] = useState(0);
-  const [firstClickTime, setFirstClickTime] = useState(null);
-  const [difficulty, setDifficulty] = useState('');
   const [showDevelopmentModal, setShowDevelopmentModal] = useState(false);
   const [isUpdateModalOpen, setIsUpdateModalOpen] = useState(false);
   const [updatesToShow, setUpdatesToShow] = useState([]);
@@ -30,10 +28,6 @@ function StartScreen({ startGame }) {
   const storedDifficulty = localStorage.getItem('gameDifficulty') || 'medium';
   const storedSeenUpdates = JSON.parse(localStorage.getItem('seenUpdates')) || [];
   const storedDevelopmentNotice = localStorage.getItem('developmentNotice');
-
-  const handleFeedbackClick = () => {
-    navigate('/feedback', { state: { username: storedUsername } });
-  };
 
   const handleViewHistory = () => {
     navigate('/history');
@@ -113,36 +107,87 @@ function StartScreen({ startGame }) {
     localStorage.setItem('seenUpdates', JSON.stringify(updatedSeenUpdates));
   };
 
-  const getDifficultyDescription = (difficulty) => {
-    switch (difficulty) {
-      case 'easy':
-        return ['Only scripture mastery verses', '15', '1x', '4'];
-      case 'medium':
-        return ['Any Book of Mormon verse', '7', '8x', '3'];
-      case 'hard':
-        return ['Any Book of Mormon verse', '3', '12x', '2'];
-      default:
-        return [''];
-    }
-  };
-
   return (
-    <div className='centered-element'>
-      <div className="start-screen">
-        <div className='top-row'>
-          <Button variant="text" onClick={handleViewLeaderboard}>Leaderboard</Button>
-          <Button variant="text" onClick={handleViewHistory}>History</Button>
-          <IconButton onClick={handleSettingsClick}>
-            <SettingsIcon />
-          </IconButton>
-        </div>
-        <div className="image-container">
-          <img id="title" src="/title.png" alt="Lehi's Legacy" />
-        </div>
-        <div className="start-button-container">
-          <Button variant="contained" onClick={handleStart}>Start Game</Button>
-        </div>
-      </div>
+    <Box
+      sx={{
+        display: 'flex',
+        flexDirection: 'column',
+        justifyContent: 'center',
+        alignItems: 'center',
+        height: '100vh',
+        width: '100vw',
+        backgroundImage: `url('/title-image.jpg')`,
+        backgroundSize: 'cover',
+        backgroundPosition: 'center',
+        backgroundRepeat: 'no-repeat',
+      }}
+    >
+      <Container sx={{
+        textAlign: 'center',
+        // backgroundColor: 'rgba(255, 255, 255, 0.8)',
+        padding: 4,
+        borderRadius: 2,
+        mt: '25vh',
+        maxWidth: '600px',
+        display: 'flex',
+        flexDirection: 'column',
+        justifyContent: 'flex-end',
+        height: '75vh'
+      }}>
+        <Box sx={{
+          display: 'flex',
+          flexDirection: 'column',
+          alignItems: 'center',
+          gap: .5
+        }}>
+          <Button variant="contained" onClick={handleStart} sx={{ mt: 4 }}>Start Game</Button>
+          <Button
+            variant="outlined"
+            onClick={handleViewLeaderboard}
+            sx={{
+              backgroundColor: 'rgba(0, 0, 0, 0.6)',
+              borderColor: 'rgba(0, 0, 0, 0.3)',
+              color: 'white',
+              '&:hover': {
+                backgroundColor: 'rgba(0, 0, 0, 0.8)',
+                borderColor: 'rgba(0, 0, 0, 0.5)'
+              }
+            }}
+          >
+            Leaderboard
+          </Button>
+          <Button
+            variant="outlined"
+            onClick={handleViewHistory}
+            sx={{
+              backgroundColor: 'rgba(0, 0, 0, 0.6)',
+              borderColor: 'rgba(0, 0, 0, 0.3)',
+              color: 'white',
+              '&:hover': {
+                backgroundColor: 'rgba(0, 0, 0, 0.8)',
+                borderColor: 'rgba(0, 0, 0, 0.5)'
+              }
+            }}
+          >
+            History
+          </Button>
+          <Button
+            variant="outlined"
+            onClick={handleSettingsClick}
+            sx={{
+              backgroundColor: 'rgba(0, 0, 0, 0.6)',
+              borderColor: 'rgba(0, 0, 0, 0.3)',
+              color: 'white',
+              '&:hover': {
+                backgroundColor: 'rgba(0, 0, 0, 0.8)',
+                borderColor: 'rgba(0, 0, 0, 0.5)'
+              }
+            }}
+          >
+            Settings
+          </Button>
+        </Box>
+      </Container>
       <DevelopmentModal
         open={showDevelopmentModal}
         onClose={handleDevelopmentModalClose}
@@ -167,7 +212,7 @@ function StartScreen({ startGame }) {
           </Button>
         </DialogActions>
       </Dialog>
-    </div>
+    </Box>
   );
 }
 

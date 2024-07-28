@@ -1,4 +1,4 @@
-/* @import url('https://fonts.googleapis.com/css2?family=Playfair+Display&display=swap'); */
+@import url('https://fonts.googleapis.com/css2?family=Playfair+Display&display=swap');
 @import url('https://fonts.googleapis.com/css2?family=Lobster&display=swap');
 @import url('https://fonts.googleapis.com/css2?family=Bona+Nova+SC&display=swap');
 
@@ -7,7 +7,6 @@
     width: 80vw;
     max-width: 400px;
     margin: auto;
-    /* Center horizontally */
     padding: 20px;
     padding-bottom: 35px;;
     background-color: #f0f0f0;
@@ -21,7 +20,6 @@
 #logo {
     position:fixed;
     width: 100px;
-    /* margin-bottom: 20px; */
     box-shadow: 0 0 8px 8px #f0f0f0 inset;
 }
 
@@ -37,7 +35,6 @@
 }
 
 #start-title {
-    /* font-family: 'Playfair Display'; */
     margin-top: 35px;
     font-size: 47px;
     position: relative;

@@ -95,6 +95,10 @@ function StartScreen({ startGame }) {
     navigate('/leaderboard', { state: { fromStartScreen: true } });
   };
 
+  const handleAdmin = () => {
+    navigate('/admin')
+  }
+
   const handleNoUsernameModalClose = () => {
     setIsNoUsernameModalOpen(false);
     navigate('/settings');
@@ -122,6 +126,20 @@ function StartScreen({ startGame }) {
         backgroundRepeat: 'no-repeat',
       }}
     >
+      <Box sx={{
+        position: 'absolute',
+        top: 5,
+        right: 5,
+        backgroundColor: 'rgba(0, 0, 0, 0.6)',
+        borderColor: 'rgba(0, 0, 0, 0.3)',
+        color: 'white',
+        '&:hover': {
+          backgroundColor: 'rgba(0, 0, 0, 0.8)',
+          borderColor: 'rgba(0, 0, 0, 0.5)'
+        }
+      }}>
+        <Button variant="outlined" onClick={handleAdmin}>Admin</Button>
+      </Box>
       <Container sx={{
         textAlign: 'center',
         // backgroundColor: 'rgba(255, 255, 255, 0.8)',

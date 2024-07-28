@@ -29,6 +29,12 @@ const VerseHistory = () => {
         return reversedHistory;
     };
 
+    const formatDate = (dateString) => {
+        const date = new Date(dateString);
+        const options = { year: 'numeric', month: 'long', day: 'numeric' };
+        return date.toLocaleDateString('en-US', options);
+    };
+
     const reversedVerseHistory = getReversedVerseHistory(verseHistory);
 
     return (
@@ -42,18 +48,20 @@ const VerseHistory = () => {
             <ScrollIndicatorContainer>
                 <div className='history-content-container'>
                     {Object.keys(reversedVerseHistory).map(date => (
-                        <Box key={date} sx={{ mb: 4 }}>
-                            <Typography variant="h5" sx={{ mb: 2, maxWidth: '80%', mx: 'auto' }}>{date}</Typography>
+                        <Box key={date} sx={{ mb: 4, textAlign: 'left', maxWidth: '80%', mx: 'auto' }}>
+                            <Typography variant="h5" sx={{ mb: 2, color: '#3f51b5', fontWeight: 'bold' }}>
+                                {formatDate(date)}
+                            </Typography>
                             {Object.keys(reversedVerseHistory[date])
                                 .sort((a, b) => b - a)
                                 .map(gameID => (
-                                    <Paper key={gameID} elevation={3} className="game-section" sx={{ p: 2, mb: 2, maxWidth: '80%', mx: 'auto', textAlign: 'center' }}>
+                                    <Paper key={gameID} elevation={3} className="game-section" sx={{ p: 2, mb: 2, textAlign: 'center' }}>
                                         <Typography variant="h6" sx={{ mb: 1 }}>Game #{gameID}</Typography>
-                                            {[...reversedVerseHistory[date][gameID]].reverse().map((verseData, index) => (
-                                                <div key={index} className={verseData.isCorrect === null ? '' : (verseData.isCorrect ? 'correct' : 'incorrect')}>
-                                                    {verseData.verse}
-                                                </div>
-                                            ))}
+                                        {[...reversedVerseHistory[date][gameID]].reverse().map((verseData, index) => (
+                                            <div key={index} className={verseData.isCorrect === null ? '' : (verseData.isCorrect ? 'correct' : 'incorrect')}>
+                                                {verseData.verse}
+                                            </div>
+                                        ))}
                                     </Paper>
                                 ))}
                         </Box>

@@ -1,0 +1,19 @@
+.grid-container {
+    margin-top: 16px;
+}
+
+.grid-item {
+    width: 100%;
+}
+
+@media (max-width: 600px) {
+    .grid-container {
+        display: flex !important;
+        flex-wrap: wrap !important;
+    }
+
+    .grid-item {
+        flex: 0 0 50% !important;
+        max-width: 50% !important;
+    }
+}

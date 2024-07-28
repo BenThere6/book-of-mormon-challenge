@@ -3,6 +3,8 @@ import { Button, TextField, Select, MenuItem, FormControl, InputLabel, Typograph
 import { useNavigate } from 'react-router-dom';
 import ArrowBackIcon from '@mui/icons-material/ArrowBack';
 import { uniqueNamesGenerator, adjectives, animals } from 'unique-names-generator';
+import getDifficultySettings from '../assets/js/difficultySettings';
+import '../assets/css/Settings.css';
 
 const Settings = () => {
   const [username, setUsername] = useState('');
@@ -89,6 +91,8 @@ const Settings = () => {
     setUnsavedChanges(true);
   };
 
+  const difficultySettings = getDifficultySettings(difficulty.toLowerCase());
+
   return (
     <Box sx={{ p: 4, maxWidth: 600, mx: 'auto', mb: 4, pb: 4 }}>
       <Box sx={{ display: 'flex', alignItems: 'center', mb: 2 }}>
@@ -109,7 +113,7 @@ const Settings = () => {
             label="Username"
             onChange={handleChange(setUsername)}
             variant="outlined"
-            {...(username && { placeholder: username })}
+            value={username}
             InputLabelProps={{ shrink: true }}
           />
           <Button variant="outlined" onClick={generateUsername} sx={{ mt: 1 }}>
@@ -153,40 +157,40 @@ const Settings = () => {
           Players have access to Liahonas and Skips as power-ups during the game. Each difficulty level grants 3 Liahonas and a varying number of Skips. Skips allow players to bypass a scripture without losing a life or earning points. Liahonas remove a percentage of incorrect options.
         </Typography>
 
-        <Grid container spacing={2}>
+        <Grid container spacing={2} className="grid-container">
           {/* Easy Difficulty */}
           <Grid item xs={12}>
             <Typography variant="h6">Easy</Typography>
           </Grid>
-          <Grid item xs={12} sm={6} md={6}>
+          <Grid item xs={12} sm={6} className="grid-item">
             <Card elevation={3} sx={{ backgroundColor: '#e0f7fa' }}>
               <CardContent>
                 <Typography variant="subtitle2" align="center">Chapter Range</Typography>
-                <Typography variant="h4" align="center">15</Typography>
+                <Typography variant="h4" align="center">{getDifficultySettings('easy').chapterRange}</Typography>
               </CardContent>
             </Card>
           </Grid>
-          <Grid item xs={12} sm={6} md={6}>
+          <Grid item xs={12} sm={6} className="grid-item">
             <Card elevation={3} sx={{ backgroundColor: '#ffecb3' }}>
               <CardContent>
                 <Typography variant="subtitle2" align="center">Verse Range</Typography>
-                <Typography variant="h4" align="center">20</Typography>
+                <Typography variant="h4" align="center">{getDifficultySettings('easy').verseRange}</Typography>
               </CardContent>
             </Card>
           </Grid>
-          <Grid item xs={12} sm={6} md={6}>
+          <Grid item xs={12} sm={6} className="grid-item">
             <Card elevation={3} sx={{ backgroundColor: '#c8e6c9' }}>
               <CardContent>
                 <Typography variant="subtitle2" align="center">Liahona Power</Typography>
-                <Typography variant="h4" align="center">70%</Typography>
+                <Typography variant="h4" align="center">{getDifficultySettings('easy').removePercentage}%</Typography>
               </CardContent>
             </Card>
           </Grid>
-          <Grid item xs={12} sm={6} md={6}>
+          <Grid item xs={12} sm={6} className="grid-item">
             <Card elevation={3} sx={{ backgroundColor: '#ffccbc' }}>
               <CardContent>
                 <Typography variant="subtitle2" align="center">Skips</Typography>
-                <Typography variant="h4" align="center">3</Typography>
+                <Typography variant="h4" align="center">{getDifficultySettings('easy').skipCount}</Typography>
               </CardContent>
             </Card>
           </Grid>
@@ -195,35 +199,35 @@ const Settings = () => {
           <Grid item xs={12}>
             <Typography variant="h6">Medium</Typography>
           </Grid>
-          <Grid item xs={12} sm={6} md={6}>
+          <Grid item xs={12} sm={6} className="grid-item">
             <Card elevation={3} sx={{ backgroundColor: '#e0f7fa' }}>
               <CardContent>
                 <Typography variant="subtitle2" align="center">Chapter Range</Typography>
-                <Typography variant="h4" align="center">7</Typography>
+                <Typography variant="h4" align="center">{getDifficultySettings('medium').chapterRange}</Typography>
               </CardContent>
             </Card>
           </Grid>
-          <Grid item xs={12} sm={6} md={6}>
+          <Grid item xs={12} sm={6} className="grid-item">
             <Card elevation={3} sx={{ backgroundColor: '#ffecb3' }}>
               <CardContent>
                 <Typography variant="subtitle2" align="center">Verse Range</Typography>
-                <Typography variant="h4" align="center">10</Typography>
+                <Typography variant="h4" align="center">{getDifficultySettings('medium').verseRange}</Typography>
               </CardContent>
             </Card>
           </Grid>
-          <Grid item xs={12} sm={6} md={6}>
+          <Grid item xs={12} sm={6} className="grid-item">
             <Card elevation={3} sx={{ backgroundColor: '#c8e6c9' }}>
               <CardContent>
                 <Typography variant="subtitle2" align="center">Liahona Power</Typography>
-                <Typography variant="h4" align="center">60%</Typography>
+                <Typography variant="h4" align="center">{getDifficultySettings('medium').removePercentage}%</Typography>
               </CardContent>
             </Card>
           </Grid>
-          <Grid item xs={12} sm={6} md={6}>
+          <Grid item xs={12} sm={6} className="grid-item">
             <Card elevation={3} sx={{ backgroundColor: '#ffccbc' }}>
               <CardContent>
                 <Typography variant="subtitle2" align="center">Skips</Typography>
-                <Typography variant="h4" align="center">2</Typography>
+                <Typography variant="h4" align="center">{getDifficultySettings('medium').skipCount}</Typography>
               </CardContent>
             </Card>
           </Grid>
@@ -232,35 +236,35 @@ const Settings = () => {
           <Grid item xs={12}>
             <Typography variant="h6">Hard</Typography>
           </Grid>
-          <Grid item xs={12} sm={6} md={6}>
+          <Grid item xs={12} sm={6} className="grid-item">
             <Card elevation={3} sx={{ backgroundColor: '#e0f7fa' }}>
               <CardContent>
                 <Typography variant="subtitle2" align="center">Chapter Range</Typography>
-                <Typography variant="h4" align="center">3</Typography>
+                <Typography variant="h4" align="center">{getDifficultySettings('hard').chapterRange}</Typography>
               </CardContent>
             </Card>
           </Grid>
-          <Grid item xs={12} sm={6} md={6}>
+          <Grid item xs={12} sm={6} className="grid-item">
             <Card elevation={3} sx={{ backgroundColor: '#ffecb3' }}>
               <CardContent>
                 <Typography variant="subtitle2" align="center">Verse Range</Typography>
-                <Typography variant="h4" align="center">8</Typography>
+                <Typography variant="h4" align="center">{getDifficultySettings('hard').verseRange}</Typography>
               </CardContent>
             </Card>
           </Grid>
-          <Grid item xs={12} sm={6} md={6}>
+          <Grid item xs={12} sm={6} className="grid-item">
             <Card elevation={3} sx={{ backgroundColor: '#c8e6c9' }}>
               <CardContent>
                 <Typography variant="subtitle2" align="center">Liahona Power</Typography>
-                <Typography variant="h4" align="center">60%</Typography>
+                <Typography variant="h4" align="center">{getDifficultySettings('hard').removePercentage}%</Typography>
               </CardContent>
             </Card>
           </Grid>
-          <Grid item xs={12} sm={6} md={6}>
+          <Grid item xs={12} sm={6} className="grid-item">
             <Card elevation={3} sx={{ backgroundColor: '#ffccbc' }}>
               <CardContent>
                 <Typography variant="subtitle2" align="center">Skips</Typography>
-                <Typography variant="h4" align="center">1</Typography>
+                <Typography variant="h4" align="center">{getDifficultySettings('hard').skipCount}</Typography>
               </CardContent>
             </Card>
           </Grid>

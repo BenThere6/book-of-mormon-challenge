@@ -108,8 +108,16 @@ const Leaderboard = () => {
     setUserRank(userIndex !== -1 ? userIndex + 1 : null);
   };
 
-  const isUserInTopTen = index => {
-    return userRank !== null && index === userRank - 1;
+  const isUserInTopTen = (entry) => {
+    const latestDifficulty = localStorage.getItem('latestDifficulty');
+    const latestScore = localStorage.getItem('gameScore');
+    const latestUsername = localStorage.getItem('username');
+
+    return (
+      latestDifficulty === difficulty &&
+      entry.score === parseInt(latestScore, 10) &&
+      entry.username === latestUsername
+    );
   };
 
   return (
@@ -129,7 +137,7 @@ const Leaderboard = () => {
 
         <ol className='leaderboard-items-container'>
           {leaderboard.map((entry, index) => (
-            <li key={index} className={isUserInTopTen(index) ? 'highlighted' : ''}>
+            <li key={index} className={isUserInTopTen(entry) ? 'highlighted' : ''}>
               <span className="rank">{index + 1}.</span>
               <span className="username">{entry.username}</span>
               <span className="score">{entry.score}</span>

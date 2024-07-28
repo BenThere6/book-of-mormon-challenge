@@ -30,6 +30,7 @@ function App() {
 
   const endGame = (finalScore) => {
     setScore(finalScore);
+    localStorage.setItem('latestDifficulty', difficulty)
     navigate('/leaderboard', { state: { score: finalScore, difficulty, category, username } });
   };
 

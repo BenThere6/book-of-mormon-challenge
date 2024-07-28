@@ -25,11 +25,6 @@ const VerseHistory = () => {
         return reversedHistory;
     };
 
-    const convertToLocalDate = (dateString) => {
-        const date = new Date(dateString);
-        return date.toLocaleDateString();
-    };
-
     const reversedVerseHistory = getReversedVerseHistory(verseHistory);
 
     return (
@@ -51,7 +46,7 @@ const VerseHistory = () => {
                                     <div key={gameID} className="game-section">
                                         <h4>Game # {gameID}</h4>
                                         <ul>
-                                            {reversedVerseHistory[date][gameID].map((verseData, index) => (
+                                            {[...reversedVerseHistory[date][gameID]].reverse().map((verseData, index) => (
                                                 <li key={index} className={verseData.isCorrect === null ? '' : (verseData.isCorrect ? 'correct' : 'incorrect')}>
                                                     {verseData.verse}
                                                 </li>

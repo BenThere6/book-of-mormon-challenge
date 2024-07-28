@@ -158,7 +158,7 @@ function StartScreen({ startGame }) {
         <DialogTitle id="alert-dialog-title">{"Set Your Username"}</DialogTitle>
         <DialogContent>
           <DialogContentText id="alert-dialog-description">
-            You need to set your username first. Please go to the settings page.
+            You need to set your username first.
           </DialogContentText>
         </DialogContent>
         <DialogActions>

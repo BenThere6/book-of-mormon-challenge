@@ -91,8 +91,6 @@ const Settings = () => {
     setUnsavedChanges(true);
   };
 
-  const difficultySettings = getDifficultySettings(difficulty.toLowerCase());
-
   return (
     <Box sx={{ p: 4, maxWidth: 600, mx: 'auto', mb: 4, pb: 4 }}>
       <Box sx={{ display: 'flex', alignItems: 'center', mb: 2 }}>
@@ -117,7 +115,7 @@ const Settings = () => {
             InputLabelProps={{ shrink: true }}
           />
         </FormControl>
-        <Box sx={{ display: 'flex', justifyContent: 'center', mt: 1 }}>
+        <Box sx={{ display: 'flex', mt: 1 }}>
           <Button variant="outlined" onClick={generateUsername}>
             Generate Username
           </Button>
@@ -142,7 +140,7 @@ const Settings = () => {
         </FormControl>
       </Box>
 
-      <Box sx={{ display: 'flex', justifyContent: 'center', gap: 2, mb: 4 }}>
+      <Box sx={{ display: 'flex', gap: 2, mb: 4 }}>
         <Button variant="contained" color="primary" onClick={saveSettings}>
           Save Settings
         </Button>

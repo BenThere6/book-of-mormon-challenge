@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { Button, TextField, Select, MenuItem, FormControl, InputLabel, Typography, Box, Paper, Dialog, DialogActions, DialogContent, DialogContentText, DialogTitle, Card, CardContent, Grid, IconButton } from '@mui/material';
 import { useNavigate } from 'react-router-dom';
 import ArrowBackIcon from '@mui/icons-material/ArrowBack';
+import { uniqueNamesGenerator, adjectives, animals } from 'unique-names-generator';
 
 const Settings = () => {
   const [username, setUsername] = useState('');
@@ -78,6 +79,16 @@ const Settings = () => {
     }
   };
 
+  const generateUsername = () => {
+    const randomUsername = uniqueNamesGenerator({
+      dictionaries: [adjectives, animals],
+      separator: '',
+      style: 'capital',
+    });
+    setUsername(randomUsername);
+    setUnsavedChanges(true);
+  };
+
   return (
     <Box sx={{ p: 4, maxWidth: 600, mx: 'auto', mb: 4, pb: 4 }}>
       <Box sx={{ display: 'flex', alignItems: 'center', mb: 2 }}>
@@ -101,6 +112,9 @@ const Settings = () => {
             {...(username && { placeholder: username })}
             InputLabelProps={{ shrink: true }}
           />
+          <Button variant="outlined" onClick={generateUsername} sx={{ mt: 1 }}>
+            Generate Username
+          </Button>
         </FormControl>
       </Box>
 
@@ -144,7 +158,7 @@ const Settings = () => {
           <Grid item xs={12}>
             <Typography variant="h6">Easy</Typography>
           </Grid>
-          <Grid item xs={12} sm={6}>
+          <Grid item xs={12} sm={6} md={6}>
             <Card elevation={3} sx={{ backgroundColor: '#e0f7fa' }}>
               <CardContent>
                 <Typography variant="subtitle2" align="center">Chapter Range</Typography>
@@ -152,7 +166,7 @@ const Settings = () => {
               </CardContent>
             </Card>
           </Grid>
-          <Grid item xs={12} sm={6}>
+          <Grid item xs={12} sm={6} md={6}>
             <Card elevation={3} sx={{ backgroundColor: '#ffecb3' }}>
               <CardContent>
                 <Typography variant="subtitle2" align="center">Verse Range</Typography>
@@ -160,7 +174,7 @@ const Settings = () => {
               </CardContent>
             </Card>
           </Grid>
-          <Grid item xs={12} sm={6}>
+          <Grid item xs={12} sm={6} md={6}>
             <Card elevation={3} sx={{ backgroundColor: '#c8e6c9' }}>
               <CardContent>
                 <Typography variant="subtitle2" align="center">Liahona Power</Typography>
@@ -168,7 +182,7 @@ const Settings = () => {
               </CardContent>
             </Card>
           </Grid>
-          <Grid item xs={12} sm={6}>
+          <Grid item xs={12} sm={6} md={6}>
             <Card elevation={3} sx={{ backgroundColor: '#ffccbc' }}>
               <CardContent>
                 <Typography variant="subtitle2" align="center">Skips</Typography>
@@ -181,7 +195,7 @@ const Settings = () => {
           <Grid item xs={12}>
             <Typography variant="h6">Medium</Typography>
           </Grid>
-          <Grid item xs={12} sm={6}>
+          <Grid item xs={12} sm={6} md={6}>
             <Card elevation={3} sx={{ backgroundColor: '#e0f7fa' }}>
               <CardContent>
                 <Typography variant="subtitle2" align="center">Chapter Range</Typography>
@@ -189,7 +203,7 @@ const Settings = () => {
               </CardContent>
             </Card>
           </Grid>
-          <Grid item xs={12} sm={6}>
+          <Grid item xs={12} sm={6} md={6}>
             <Card elevation={3} sx={{ backgroundColor: '#ffecb3' }}>
               <CardContent>
                 <Typography variant="subtitle2" align="center">Verse Range</Typography>
@@ -197,7 +211,7 @@ const Settings = () => {
               </CardContent>
             </Card>
           </Grid>
-          <Grid item xs={12} sm={6}>
+          <Grid item xs={12} sm={6} md={6}>
             <Card elevation={3} sx={{ backgroundColor: '#c8e6c9' }}>
               <CardContent>
                 <Typography variant="subtitle2" align="center">Liahona Power</Typography>
@@ -205,7 +219,7 @@ const Settings = () => {
               </CardContent>
             </Card>
           </Grid>
-          <Grid item xs={12} sm={6}>
+          <Grid item xs={12} sm={6} md={6}>
             <Card elevation={3} sx={{ backgroundColor: '#ffccbc' }}>
               <CardContent>
                 <Typography variant="subtitle2" align="center">Skips</Typography>
@@ -218,7 +232,7 @@ const Settings = () => {
           <Grid item xs={12}>
             <Typography variant="h6">Hard</Typography>
           </Grid>
-          <Grid item xs={12} sm={6}>
+          <Grid item xs={12} sm={6} md={6}>
             <Card elevation={3} sx={{ backgroundColor: '#e0f7fa' }}>
               <CardContent>
                 <Typography variant="subtitle2" align="center">Chapter Range</Typography>
@@ -226,7 +240,7 @@ const Settings = () => {
               </CardContent>
             </Card>
           </Grid>
-          <Grid item xs={12} sm={6}>
+          <Grid item xs={12} sm={6} md={6}>
             <Card elevation={3} sx={{ backgroundColor: '#ffecb3' }}>
               <CardContent>
                 <Typography variant="subtitle2" align="center">Verse Range</Typography>
@@ -234,7 +248,7 @@ const Settings = () => {
               </CardContent>
             </Card>
           </Grid>
-          <Grid item xs={12} sm={6}>
+          <Grid item xs={12} sm={6} md={6}>
             <Card elevation={3} sx={{ backgroundColor: '#c8e6c9' }}>
               <CardContent>
                 <Typography variant="subtitle2" align="center">Liahona Power</Typography>
@@ -242,7 +256,7 @@ const Settings = () => {
               </CardContent>
             </Card>
           </Grid>
-          <Grid item xs={12} sm={6}>
+          <Grid item xs={12} sm={6} md={6}>
             <Card elevation={3} sx={{ backgroundColor: '#ffccbc' }}>
               <CardContent>
                 <Typography variant="subtitle2" align="center">Skips</Typography>

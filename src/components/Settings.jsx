@@ -286,8 +286,8 @@ const Settings = () => {
             placeholder="Enter your feedback here"
           />
         </FormControl>
-        <Box sx={{ display: 'flex', justifyContent: 'center', mb: 4 }}>
-          <Button variant="contained" color="primary" onClick={submitFeedback}>
+        <Box sx={{ display: 'flex', mb: 4 }}>
+          <Button variant="contained" sx={{ mb: 4 }} color="primary" onClick={submitFeedback}>
             Submit Feedback
           </Button>
         </Box>

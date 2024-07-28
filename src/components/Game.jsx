@@ -610,11 +610,16 @@ function Game({ difficulty, category, endGame, usedVerses, username }) {
     );
   };
 
+  const capitalizeFirstLetter = (string) => {
+    return string.charAt(0).toUpperCase() + string.slice(1).toLowerCase();
+  };
+
   return (
     <div className='centered-element'>
       <div className="game-container">
         <div className="header">
           <h2 className="score">Score: {score}</h2>
+          <h2 className='score'>{capitalizeFirstLetter(savedDifficulty)}</h2>
           <h2 className="lives">Lives: {lives}</h2>
         </div>
         <div className="guess-box">

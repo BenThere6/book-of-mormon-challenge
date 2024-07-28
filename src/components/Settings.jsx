@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { Button, TextField, Select, MenuItem, FormControl, InputLabel, Typography, Box, Paper, Dialog, DialogActions, DialogContent, DialogContentText, DialogTitle, Card, CardContent, Grid, IconButton } from '@mui/material';
 import { useNavigate } from 'react-router-dom';
 import ArrowBackIcon from '@mui/icons-material/ArrowBack';
-import { uniqueNamesGenerator, adjectives, animals } from 'unique-names-generator';
+import { uniqueNamesGenerator, adjectives, colors, animals, names, starWars} from 'unique-names-generator';
 import getDifficultySettings from '../assets/js/difficultySettings';
 import '../assets/css/Settings.css';
 
@@ -83,11 +83,12 @@ const Settings = () => {
 
   const generateUsername = () => {
     const randomUsername = uniqueNamesGenerator({
-      dictionaries: [adjectives, animals],
+      dictionaries: [[...adjectives, ...colors], [...animals]],
       separator: '',
       style: 'capital',
     });
-    setUsername(randomUsername);
+    setUsername(''); // Clear the text box
+    setUsername(randomUsername); // Set the new username
     setUnsavedChanges(true);
   };
 
@@ -111,7 +112,7 @@ const Settings = () => {
             label="Username"
             onChange={handleChange(setUsername)}
             variant="outlined"
-            {...(username && { placeholder: username })}
+            value={username}
             InputLabelProps={{ shrink: true }}
           />
         </FormControl>

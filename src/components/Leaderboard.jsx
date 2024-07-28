@@ -137,7 +137,7 @@ const Leaderboard = () => {
           ))}
         </ol>
         <div className="play-again">
-          <Button variant="contained" onClick={handlePlayAgain}>Play Again</Button>
+          <Button variant="contained" onClick={handlePlayAgain}>Home</Button>
         </div>
       </div>
     </div>

@@ -1,7 +1,11 @@
 import React, { useEffect, useState } from 'react';
-import IconButton from '@mui/material/IconButton';
-import ArrowBack from '@mui/icons-material/ArrowBack';
 import { useNavigate } from 'react-router-dom';
+import IconButton from '@mui/material/IconButton';
+import ArrowBackIcon from '@mui/icons-material/ArrowBack';
+import Typography from '@mui/material/Typography';
+import Paper from '@mui/material/Paper';
+import Box from '@mui/material/Box';
+import Container from '@mui/material/Container';
 import ScrollIndicatorContainer from './ScrollIndicatorContainer';
 import '../assets/css/VerseHistory.css';
 
@@ -28,37 +32,35 @@ const VerseHistory = () => {
     const reversedVerseHistory = getReversedVerseHistory(verseHistory);
 
     return (
-        <div className="verse-history-container">
-            <div className='back-container'>
-                <IconButton className="back-button" onClick={() => navigate(-1)}>
-                    <ArrowBack />
+        <Container maxWidth="md" sx={{ backgroundColor: 'white', p: 2, borderRadius: 1 }}>
+            <Box sx={{ display: 'flex', alignItems: 'center', mb: 2 }}>
+                <IconButton onClick={() => navigate(-1)}>
+                    <ArrowBackIcon />
                 </IconButton>
-            </div>
-            <h2>Verse History</h2>
+                <Typography variant="h4" sx={{ ml: 2 }}>Verse History</Typography>
+            </Box>
             <ScrollIndicatorContainer>
                 <div className='history-content-container'>
                     {Object.keys(reversedVerseHistory).map(date => (
-                        <div key={date} className="date-section">
-                            <h3>{date}</h3>
+                        <Box key={date} sx={{ mb: 4 }}>
+                            <Typography variant="h5" sx={{ mb: 2, maxWidth: '80%', mx: 'auto' }}>{date}</Typography>
                             {Object.keys(reversedVerseHistory[date])
                                 .sort((a, b) => b - a)
                                 .map(gameID => (
-                                    <div key={gameID} className="game-section">
-                                        <h4>Game # {gameID}</h4>
-                                        <ul>
+                                    <Paper key={gameID} elevation={3} className="game-section" sx={{ p: 2, mb: 2, maxWidth: '80%', mx: 'auto', textAlign: 'center' }}>
+                                        <Typography variant="h6" sx={{ mb: 1 }}>Game #{gameID}</Typography>
                                             {[...reversedVerseHistory[date][gameID]].reverse().map((verseData, index) => (
-                                                <li key={index} className={verseData.isCorrect === null ? '' : (verseData.isCorrect ? 'correct' : 'incorrect')}>
+                                                <div key={index} className={verseData.isCorrect === null ? '' : (verseData.isCorrect ? 'correct' : 'incorrect')}>
                                                     {verseData.verse}
-                                                </li>
+                                                </div>
                                             ))}
-                                        </ul>
-                                    </div>
+                                    </Paper>
                                 ))}
-                        </div>
+                        </Box>
                     ))}
                 </div>
             </ScrollIndicatorContainer>
-        </div>
+        </Container>
     );
 };
 

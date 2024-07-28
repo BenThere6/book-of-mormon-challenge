@@ -50,6 +50,13 @@ const UPDATES = [
             'Added settings page'
         ]
     },
+    {
+        version: '1.11.0',
+        date: 'July 27, 2024',
+        messages: [
+            'Added \'Generate Username\' feature'
+        ]
+    },
 ];
 
 export default UPDATES;  

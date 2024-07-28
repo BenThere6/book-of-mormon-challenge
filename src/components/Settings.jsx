@@ -113,13 +113,15 @@ const Settings = () => {
             label="Username"
             onChange={handleChange(setUsername)}
             variant="outlined"
-            value={username}
+            {...(username && { placeholder: username })}
             InputLabelProps={{ shrink: true }}
           />
-          <Button variant="outlined" onClick={generateUsername} sx={{ mt: 1 }}>
+        </FormControl>
+        <Box sx={{ display: 'flex', justifyContent: 'center', mt: 1 }}>
+          <Button variant="outlined" onClick={generateUsername}>
             Generate Username
           </Button>
-        </FormControl>
+        </Box>
       </Box>
 
       <Box sx={{ mb: 2 }}>
@@ -140,7 +142,7 @@ const Settings = () => {
         </FormControl>
       </Box>
 
-      <Box sx={{ display: 'flex', gap: 2, mb: 4 }}>
+      <Box sx={{ display: 'flex', justifyContent: 'center', gap: 2, mb: 4 }}>
         <Button variant="contained" color="primary" onClick={saveSettings}>
           Save Settings
         </Button>
@@ -286,9 +288,11 @@ const Settings = () => {
             placeholder="Enter your feedback here"
           />
         </FormControl>
-        <Button sx={{ mb: 4 }} variant="contained" color="primary" onClick={submitFeedback}>
-          Submit Feedback
-        </Button>
+        <Box sx={{ display: 'flex', justifyContent: 'center', mb: 4 }}>
+          <Button variant="contained" color="primary" onClick={submitFeedback}>
+            Submit Feedback
+          </Button>
+        </Box>
       </Box>
 
       <Dialog

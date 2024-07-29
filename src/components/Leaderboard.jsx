@@ -7,7 +7,6 @@ import Radio from '@mui/material/Radio';
 import RadioGroup from '@mui/material/RadioGroup';
 import FormControlLabel from '@mui/material/FormControlLabel';
 import FormControl from '@mui/material/FormControl';
-import FormLabel from '@mui/material/FormLabel';
 import Grid from '@mui/material/Grid';
 
 const apiurl = 'https://bens-api-dd63362f50db.herokuapp.com/leaderboard/';
@@ -130,26 +129,42 @@ const Leaderboard = () => {
         flexDirection: 'column',
         justifyContent: 'center',
         alignItems: 'center',
-        height: '100vh',
+        minHeight: '100vh',
         width: '100vw',
-        backgroundImage: `url('/background-images/leaderboard-image.jpg')`,
-        backgroundSize: 'cover',
-        backgroundPosition: 'center',
-        backgroundRepeat: 'no-repeat',
+        overflow: 'hidden',
+        position: 'relative',
         fontFamily: 'EB Garamond, serif',
         fontSize: '20px'
       }}
     >
-      <Container sx={{
-        textAlign: 'center',
-        padding: 4,
-        borderRadius: 2,
-        maxWidth: '600px',
-        display: 'flex',
-        flexDirection: 'column',
-        justifyContent: 'center',
-        alignItems: 'center'
-      }}>
+      <Box
+        sx={{
+          position: 'fixed',
+          top: 0,
+          left: 0,
+          width: '100%',
+          height: '100%',
+          backgroundImage: `url('/background-images/leaderboard-image.jpg')`,
+          backgroundSize: 'cover',
+          backgroundPosition: 'center',
+          zIndex: -1
+        }}
+      />
+      <Container
+        sx={{
+          textAlign: 'center',
+          padding: 4,
+          borderRadius: 2,
+          maxWidth: '600px',
+          display: 'flex',
+          flexDirection: 'column',
+          justifyContent: 'center',
+          alignItems: 'center',
+          minHeight: '100vh',
+          overflowY: 'auto',
+          marginTop: '20px', // Added margin to prevent content from being hidden
+        }}
+      >
         {!fromStartScreen && <Box sx={{ textAlign: 'center', mb: 2 }}><Box className='user-score'>{score}</Box></Box>}
         
         <FormControl component="fieldset" sx={{ mb: 2, width: '70%', backgroundColor: 'rgba(0, 0, 0, 0.5)', borderRadius: 5, padding: 2 }}>

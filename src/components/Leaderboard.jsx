@@ -1,11 +1,14 @@
 import React, { useState, useEffect, useRef } from 'react';
 import { useLocation, useNavigate } from 'react-router-dom';
-import '../assets/css/Leaderboard.css';
+import Box from '@mui/material/Box';
+import Container from '@mui/material/Container';
 import Button from '@mui/material/Button';
-import Select from '@mui/material/Select';
-import MenuItem from '@mui/material/MenuItem';
+import Radio from '@mui/material/Radio';
+import RadioGroup from '@mui/material/RadioGroup';
+import FormControlLabel from '@mui/material/FormControlLabel';
 import FormControl from '@mui/material/FormControl';
-import InputLabel from '@mui/material/InputLabel';
+import FormLabel from '@mui/material/FormLabel';
+import Grid from '@mui/material/Grid';
 
 const apiurl = 'https://bens-api-dd63362f50db.herokuapp.com/leaderboard/';
 
@@ -28,7 +31,7 @@ const Leaderboard = () => {
     const storedUsername = localStorage.getItem('username');
     if (storedUsername && !isScoreSubmitted && !isSubmittingRef.current) {
       setUsername(storedUsername);
-      isSubmittingRef.current = true; // Set flag to indicate score submission is in progress
+      isSubmittingRef.current = true;
       submitScore(storedUsername, score);
     }
     fetchLeaderboard();
@@ -60,7 +63,7 @@ const Leaderboard = () => {
 
     if (latestGameID !== null && gameIDs[latestGameID] === true) {
       console.log(`Score for game ID ${latestGameID} already submitted.`);
-      isSubmittingRef.current = false; // Reset flag if score is already submitted
+      isSubmittingRef.current = false;
       return;
     }
 
@@ -81,7 +84,7 @@ const Leaderboard = () => {
         console.log('Score saved, response:', data);
 
         setIsScoreSubmitted(true);
-        isSubmittingRef.current = false; // Reset flag after submission
+        isSubmittingRef.current = false;
 
         if (latestGameID !== null) {
           gameIDs[latestGameID] = true;
@@ -92,14 +95,14 @@ const Leaderboard = () => {
       })
       .catch((error) => {
         console.error('Error saving score:', error);
-        isSubmittingRef.current = false; // Reset flag on error
+        isSubmittingRef.current = false;
       });
   };
 
   const handlePlayAgain = () => {
     setUsername('');
     setIsScoreSubmitted(false);
-    navigate('/'); // Navigate to the start screen
+    navigate('/');
   };
 
   const findUserRank = (data) => {
@@ -121,34 +124,80 @@ const Leaderboard = () => {
   };
 
   return (
-    <div className="centered-element">
-      <div className="leaderboard">
-        {!fromStartScreen && <div className='center'><div className='user-score'>{score}</div></div>}
-        <h2 className='leaderboard-title'>Leaderboard</h2>
+    <Box
+      sx={{
+        display: 'flex',
+        flexDirection: 'column',
+        justifyContent: 'center',
+        alignItems: 'center',
+        height: '100vh',
+        width: '100vw',
+        backgroundImage: `url('/background-images/leaderboard-image.jpg')`,
+        backgroundSize: 'cover',
+        backgroundPosition: 'center',
+        backgroundRepeat: 'no-repeat',
+        fontFamily: 'EB Garamond, serif',
+        fontSize: '20px'
+      }}
+    >
+      <Container sx={{
+        textAlign: 'center',
+        padding: 4,
+        borderRadius: 2,
+        maxWidth: '600px',
+        display: 'flex',
+        flexDirection: 'column',
+        justifyContent: 'center',
+        alignItems: 'center'
+      }}>
+        {!fromStartScreen && <Box sx={{ textAlign: 'center', mb: 2 }}><Box className='user-score'>{score}</Box></Box>}
         
-        <FormControl variant="outlined" className="form-control">
-          <InputLabel>Difficulty</InputLabel>
-          <Select value={difficulty} onChange={e => setDifficulty(e.target.value)} label="Difficulty">
-            <MenuItem value="easy">Easy</MenuItem>
-            <MenuItem value="medium">Medium</MenuItem>
-            <MenuItem value="hard">Hard</MenuItem>
-          </Select>
+        <FormControl component="fieldset" sx={{ mb: 2, width: '70%', backgroundColor: 'rgba(0, 0, 0, 0.5)', borderRadius: 5, padding: 2 }}>
+          <RadioGroup
+            row
+            aria-label="difficulty"
+            name="difficulty"
+            value={difficulty}
+            onChange={e => setDifficulty(e.target.value)}
+            sx={{
+              '& .MuiFormControlLabel-label': {
+                color: 'white',
+              },
+              '& .MuiSvgIcon-root': {
+                color: 'white',
+              },
+              justifyContent: 'space-around',
+              width: '100%'
+            }}
+          >
+            <FormControlLabel value="easy" control={<Radio />} label="Easy" />
+            <FormControlLabel value="medium" control={<Radio />} label="Medium" />
+            <FormControlLabel value="hard" control={<Radio />} label="Hard" />
+          </RadioGroup>
         </FormControl>
 
-        <ol className='leaderboard-items-container'>
+        <Box component="ol" sx={{ padding: 0, width: '100%' }}>
           {leaderboard.map((entry, index) => (
-            <li key={index} className={isUserInTopTen(entry) ? 'highlighted' : ''}>
-              <span className="rank">{index + 1}.</span>
-              <span className="username">{entry.username}</span>
-              <span className="score">{entry.score}</span>
-            </li>
+            <Box component="li" key={index} sx={{ listStyle: 'none', padding: 2, color: 'white', marginBottom: .5, backgroundColor: 'rgba(0, 0, 0, 0.5)', borderRadius: 2 }}>
+              <Grid container alignItems="center">
+                <Grid item xs={2}>
+                  <span className="rank">{index + 1}.</span>
+                </Grid>
+                <Grid item xs={6} sx={{ textAlign: 'left' }}>
+                  <span className="username">{entry.username}</span>
+                </Grid>
+                <Grid item xs={4} sx={{ textAlign: 'right' }}>
+                  <span className="score">{entry.score}</span>
+                </Grid>
+              </Grid>
+            </Box>
           ))}
-        </ol>
+        </Box>
         <div className="play-again">
           <Button variant="contained" onClick={handlePlayAgain}>Home</Button>
         </div>
-      </div>
-    </div>
+      </Container>
+    </Box>
   );
 }
 

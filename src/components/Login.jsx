@@ -45,6 +45,10 @@ const Login = () => {
     }
   };
 
+  const handleHome = () => {
+    navigate('/');
+  };
+
   return (
     <div className="centered-element">
       <div className="login-container">
@@ -71,9 +75,12 @@ const Login = () => {
               required
             />
             {error && <p className="error-message">{error}</p>}
-            <div className="submit-button">
+            <div className="button-group">
               <Button variant="contained" color="primary" type="submit">
                 Login
+              </Button>
+              <Button variant="outlined" color="secondary" onClick={handleHome} sx={{ ml: 2 }}>
+                Home
               </Button>
             </div>
           </form>

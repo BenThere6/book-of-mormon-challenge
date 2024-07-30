@@ -37,23 +37,11 @@ const UPDATES = [
         ]
     },
     {
-        version: '1.9.0',
-        date: 'July 27, 2024',
-        messages: [
-            'Added skips'
-        ]
-    },
-    {
-        version: '1.10.0',
-        date: 'July 27, 2024',
-        messages: [
-            'Added settings page'
-        ]
-    },
-    {
         version: '1.11.0',
         date: 'July 27, 2024',
         messages: [
+            'Added skips',
+            'Added settings page',
             'Added \'Generate Username\' feature'
         ]
     },

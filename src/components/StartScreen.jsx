@@ -15,7 +15,7 @@ import DevelopmentModal from './DevelopmentModal';
 import UPDATES from '../assets/js/updates';
 import getDifficultySettings from '../assets/js/difficultySettings';
 
-const DEVELOPMENT_MESSAGE = 'This application is currently under development. You might encounter bugs, design flaws, or areas that could be improved. If you notice any issues or have suggestions for enhancements, please click the feedback button at the bottom of the settings page to share your thoughts.';
+const DEVELOPMENT_MESSAGE = 'This application is currently under development. You might encounter bugs, design flaws, or areas that could be improved. If you notice any issues or have suggestions for enhancements, please submit it in feedback found at the bottom of the settings page.';
 
 function StartScreen({ startGame }) {
   const [showDevelopmentModal, setShowDevelopmentModal] = useState(false);

@@ -161,37 +161,99 @@ const Leaderboard = () => {
           justifyContent: 'center',
           alignItems: 'center',
           minHeight: '100vh',
-          overflowY: 'auto',
+          overflowY: 'hidden',
           marginTop: '20px', // Added margin to prevent content from being hidden
         }}
       >
-        {!fromStartScreen && <Box sx={{ textAlign: 'center', mb: 2 }}><Box className='user-score'>{score}</Box></Box>}
-        
-        <FormControl component="fieldset" sx={{ mb: 2, width: '70%', backgroundColor: 'rgba(0, 0, 0, 0.5)', borderRadius: 5, padding: 2 }}>
-          <RadioGroup
-            row
-            aria-label="difficulty"
-            name="difficulty"
-            value={difficulty}
-            onChange={e => setDifficulty(e.target.value)}
-            sx={{
-              '& .MuiFormControlLabel-label': {
+        <Box
+          sx={{
+            display: 'flex',
+            alignItems: 'center',
+            mb: 2,
+            width: '100%',
+            position: 'sticky', // Make the element sticky
+            top: 0, // Stick to the top of the container
+            zIndex: 1, // Ensure it stays above other content
+            borderRadius: 2, // Maintain the border radius
+            paddingBottom: 1,
+            boxSizing: 'border-box', // Ensure padding and border are included in the height
+            '@media (max-width: 550px)': {
+              flexDirection: 'row', // Keep elements in a row on smaller screens
+              alignItems: 'center',
+              justifyContent: 'space-between', // Space between elements on smaller screens
+              width: '100%',
+            }
+          }}
+        >
+          {!fromStartScreen && (
+            <Box 
+              sx={{ 
+                textAlign: 'center', 
+                backgroundColor: 'rgba(0, 0, 0, 0.5)', 
+                borderRadius: 5, 
+                padding: 2,
+                height: '100%',
+                fontSize: '2rem',
                 color: 'white',
-              },
-              '& .MuiSvgIcon-root': {
-                color: 'white',
-              },
-              justifyContent: 'space-around',
-              width: '100%'
-            }}
-          >
-            <FormControlLabel value="easy" control={<Radio />} label="Easy" />
-            <FormControlLabel value="medium" control={<Radio />} label="Medium" />
-            <FormControlLabel value="hard" control={<Radio />} label="Hard" />
-          </RadioGroup>
-        </FormControl>
+                mr: 2, // Add some margin to the right
+                flex: '1 1 auto', // Ensure it takes up only necessary space
+                whiteSpace: 'nowrap', // Ensure the score doesn't wrap
+                boxSizing: 'border-box', // Ensure padding and border are included in the height
+                display: 'flex', // Ensure the element stays flex on smaller screens
+                justifyContent: 'center', // Center content horizontally
+                alignItems: 'center', // Center content vertically
+                '@media (max-width: 550px)': {
+                  fontSize: '3rem', // Double the font size on smaller screens
+                  textAlign: 'center', // Center text
+                  mr: 2, // Remove right margin
+                  mb: 0, // Remove bottom margin
+                }
+              }}
+            >
+              <Box className='user-score' sx={{ width: 'auto' }}>{score}</Box>
+            </Box>
+          )}
 
-        <Box component="ol" sx={{ padding: 0, width: '100%' }}>
+          <FormControl component="fieldset" sx={{ width: '70%', backgroundColor: 'rgba(0, 0, 0, 0.5)', borderRadius: 5, padding: 2, boxSizing: 'border-box', '@media (max-width: 550px)': { width: 'auto', flex: '1 1 30%' } }}>
+            <RadioGroup
+              row
+              aria-label="difficulty"
+              name="difficulty"
+              value={difficulty}
+              onChange={e => setDifficulty(e.target.value)}
+              sx={{
+                '& .MuiFormControlLabel-label': {
+                  color: 'white',
+                },
+                '& .MuiSvgIcon-root': {
+                  color: 'white',
+                },
+                justifyContent: 'space-around',
+                width: '100%',
+                boxSizing: 'border-box', // Ensure padding and border are included in the height
+                '@media (max-width: 550px)': {
+                  flexDirection: 'column', // Stack radio buttons vertically on smaller screens
+                  alignItems: 'flex-start', // Align items to the left
+                }
+              }}
+            >
+              <FormControlLabel value="easy" control={<Radio />} label="Easy" />
+              <FormControlLabel value="medium" control={<Radio />} label="Medium" />
+              <FormControlLabel value="hard" control={<Radio />} label="Hard" />
+            </RadioGroup>
+          </FormControl>
+        </Box>
+
+        <Box 
+          component="ol" 
+          sx={{ 
+            padding: 0, 
+            width: '100%', 
+            marginTop: 0,
+            maxHeight: '70vh',
+            overflowY: 'auto',
+          }}
+        >
           {leaderboard.map((entry, index) => (
             <Box 
               component="li" 

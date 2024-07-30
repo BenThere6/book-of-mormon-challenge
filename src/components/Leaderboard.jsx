@@ -193,7 +193,19 @@ const Leaderboard = () => {
 
         <Box component="ol" sx={{ padding: 0, width: '100%' }}>
           {leaderboard.map((entry, index) => (
-            <Box component="li" key={index} sx={{ listStyle: 'none', padding: 2, color: 'white', marginBottom: .5, backgroundColor: 'rgba(0, 0, 0, 0.5)', borderRadius: 2 }}>
+            <Box 
+              component="li" 
+              key={index} 
+              sx={{ 
+                listStyle: 'none', 
+                padding: 2, 
+                color: 'white', 
+                marginBottom: .5, 
+                backgroundColor: 'rgba(0, 0, 0, 0.5)', 
+                borderRadius: 2, 
+                border: isUserInTopTen(entry) ? '2px solid white' : 'none'
+              }}
+            >
               <Grid container alignItems="center">
                 <Grid item xs={2}>
                   <span className="rank">{index + 1}.</span>

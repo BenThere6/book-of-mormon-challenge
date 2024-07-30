@@ -8,6 +8,7 @@ import RadioGroup from '@mui/material/RadioGroup';
 import FormControlLabel from '@mui/material/FormControlLabel';
 import FormControl from '@mui/material/FormControl';
 import Grid from '@mui/material/Grid';
+import '../assets/css/Leaderboard.css';
 
 const apiurl = 'https://bens-api-dd63362f50db.herokuapp.com/leaderboard/';
 
@@ -246,6 +247,7 @@ const Leaderboard = () => {
 
         <Box 
           component="ol" 
+          className='scroll-shadow'
           sx={{ 
             padding: 0, 
             width: '100%', 

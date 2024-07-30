@@ -16,7 +16,7 @@ const Leaderboard = () => {
   const navigate = useNavigate();
   const score = location.state?.score || 0;
   const fromStartScreen = location.state?.fromStartScreen || false;
-  const initialDifficulty = location.state?.difficulty || 'hard';
+  const initialDifficulty = location.state?.difficulty || localStorage.getItem('latestDifficulty') || 'medium';
   const initialCategory = 'all-verses';
   const [leaderboard, setLeaderboard] = useState([]);
   const [username, setUsername] = useState('');

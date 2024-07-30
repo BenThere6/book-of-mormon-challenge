@@ -2,9 +2,13 @@ import React, { useState, useEffect } from 'react';
 import { Button, TextField, Select, MenuItem, FormControl, InputLabel, Typography, Box, Paper, Dialog, DialogActions, DialogContent, DialogContentText, DialogTitle, Card, CardContent, Grid, IconButton } from '@mui/material';
 import { useNavigate } from 'react-router-dom';
 import ArrowBackIcon from '@mui/icons-material/ArrowBack';
-import { uniqueNamesGenerator, adjectives, colors, animals, names, starWars} from 'unique-names-generator';
+import { uniqueNamesGenerator, adjectives, colors, animals } from 'unique-names-generator';
 import getDifficultySettings from '../assets/js/difficultySettings';
 import '../assets/css/Settings.css';
+
+const inappropriateWords = ['gay', 'sexual', 'inappropriate1', 'inappropriate2']; // Add more inappropriate words as needed
+
+const customAdjectives = adjectives.filter(word => !inappropriateWords.includes(word));
 
 const Settings = () => {
   const [username, setUsername] = useState('');
@@ -22,7 +26,6 @@ const Settings = () => {
       setUsername(savedUsername);
     }
     if (savedDifficulty) {
-      // Capitalize the first letter to match the dropdown options
       const capitalizedDifficulty = savedDifficulty.charAt(0).toUpperCase() + savedDifficulty.slice(1).toLowerCase();
       setDifficulty(capitalizedDifficulty);
     }
@@ -34,7 +37,6 @@ const Settings = () => {
   };
 
   const saveSettings = () => {
-    // Save settings to local storage or backend
     localStorage.setItem('username', username);
     localStorage.setItem('gameDifficulty', difficulty.toLowerCase());
     alert('Settings saved!');
@@ -83,12 +85,12 @@ const Settings = () => {
 
   const generateUsername = () => {
     const randomUsername = uniqueNamesGenerator({
-      dictionaries: [[...adjectives, ...colors], [...animals]],
+      dictionaries: [customAdjectives, animals],
       separator: '',
       style: 'capital',
     });
-    setUsername(''); // Clear the text box
-    setUsername(randomUsername); // Set the new username
+    setUsername('');
+    setUsername(randomUsername);
     setUnsavedChanges(true);
   };
 

@@ -57,6 +57,13 @@ const UPDATES = [
             'Added \'Generate Username\' feature'
         ]
     },
+    {
+        version: '1.11.1',
+        date: 'July 29, 2024',
+        messages: [
+            'Fixed Liahona bug that occasionally disabled the correct book'
+        ]
+    },
 ];
 
 export default UPDATES;  

@@ -144,17 +144,9 @@ function Game({ difficulty, category, endGame, usedVerses, username }) {
     const guess = { book: selectedBook, chapter: selectedChapter, verse: selectedVerse };
     const guessAccuracy = calculateAccuracy(guess, currentVerse);
 
-    const lastSpaceIndex = currentVerse.lastIndexOf(' ');
-    const refSplit = currentVerse.split(' ');
-    let correctBook;
-    if (refSplit[0][0] === '1' || refSplit[0][0] === '2' || refSplit[0][0] === '3' || refSplit[0][0] === '4') {
-      correctBook = refSplit[0] + ' ' + refSplit[1];
-    } else {
-      correctBook = refSplit[0];
-    }
-    const correctChapterVerse = currentVerse.substring(lastSpaceIndex + 1);
-    const [correctChapterStr] = correctChapterVerse.split(':');
-    const correctChapter = parseInt(correctChapterStr, 10);
+    const correctBook = extractBookFromVerse(currentVerse);
+    const correctChapterVerse = extractChapterVerseFromVerse(currentVerse);
+    const correctChapter = parseInt(correctChapterVerse.split(':')[0], 10);
     const chapterDifference = Math.abs(parseInt(guess.chapter, 10) - correctChapter);
 
     const { chapterRange } = difficultySettings || {};
@@ -213,24 +205,20 @@ function Game({ difficulty, category, endGame, usedVerses, username }) {
     }
 
     const firstVerseEntry = verseList[0];
-    const lastSpaceIndex = firstVerseEntry.lastIndexOf(' ');
-    const correctBook = firstVerseEntry.substring(0, lastSpaceIndex);
-    const correctChapterVerse = firstVerseEntry.substring(lastSpaceIndex + 1);
-    const [correctChapterStr] = correctChapterVerse.split(':');
+    const correctBook = extractBookFromVerse(firstVerseEntry);
+    const correctChapterVerse = extractChapterVerseFromVerse(firstVerseEntry);
 
     let bestAccuracy = 0;
     let chapterDifference;
     let verseDifference;
 
     verseList.forEach((verseEntry) => {
-      const [correctChapterStr, correctVerseNumStr] = verseEntry.split(':');
-      const refList = correctChapterStr.split(' ');
-      const correctChapter = refList[refList.length - 1];
+      const [correctChapterStr, correctVerseNumStr] = correctChapterVerse.split(':');
+      const correctChapter = parseInt(correctChapterStr, 10);
       verseDifference = Math.abs(parseInt(guess.verse, 10) - parseInt(correctVerseNumStr, 10));
       chapterDifference = Math.abs(parseInt(guess.chapter, 10) - correctChapter);
 
       if (guess.book === correctBook) {
-        console.log(difficulty);
         const { multiplier, chapterRange, verseRange } = difficultySettings || {};
 
         let accuracy = 0;
@@ -261,6 +249,22 @@ function Game({ difficulty, category, endGame, usedVerses, username }) {
       }
     });
     return bestAccuracy;
+  };
+
+  const extractBookFromVerse = (verse) => {
+    const refSplit = verse.split(' ');
+    if (refSplit[0][0] >= '1' && refSplit[0][0] <= '4') {
+      return refSplit.slice(0, 2).join(' ');
+    } else if (refSplit.length > 2 && refSplit[2].includes(':')) {
+      return refSplit.slice(0, 2).join(' ');
+    } else {
+      return refSplit[0];
+    }
+  };
+
+  const extractChapterVerseFromVerse = (verse) => {
+    const refSplit = verse.split(' ');
+    return refSplit[refSplit.length - 1];
   };
 
   const handleUseBomb = () => {
@@ -306,7 +310,7 @@ function Game({ difficulty, category, endGame, usedVerses, username }) {
         return false;
     }
 
-    return availableOptions.length >= 6;
+    return availableOptions.length >= 1;
   };
 
   const canUseSkip = () => {
@@ -335,13 +339,20 @@ function Game({ difficulty, category, endGame, usedVerses, username }) {
   };
 
   const disableIncorrectBooks = () => {
-    const correctBook = currentVerse.split(' ')[0];
+    const correctBook = extractBookFromVerse(currentVerse);
     const allBooks = Object.keys(verseCounts);
-    const removeCount = Math.ceil((allBooks.length - 1) * (difficultySettings.removePercentage / 100));
-    const booksToDisable = getRandomItems(
-      allBooks.filter((book) => book !== correctBook && !disabledBooks.includes(book)),
-      removeCount
-    );
+    const filteredBooks = allBooks.filter((book) => book !== correctBook && !disabledBooks.includes(book));
+
+    // Ensure we do not disable the correct book
+    if (filteredBooks.length <= 0) return;
+
+    const removeCount = Math.ceil((filteredBooks.length) * (difficultySettings.removePercentage / 100));
+    let booksToDisable = getRandomItems(filteredBooks, removeCount);
+
+    // Re-check and remove correct book if mistakenly included
+    while (booksToDisable.includes(correctBook)) {
+      booksToDisable = getRandomItems(filteredBooks, removeCount);
+    }
 
     setDisabledBooks(disabledBooks.concat(booksToDisable));
   };
@@ -350,26 +361,40 @@ function Game({ difficulty, category, endGame, usedVerses, username }) {
     const correctChapter = parseInt(currentVerse.split(':')[0].split(' ')[1]);
     const chapterCount = verseCounts[selectedBook].length;
     const allChapters = Array.from({ length: chapterCount }, (_, index) => index + 1);
-    const removeCount = Math.ceil((allChapters.length - 1) * (difficultySettings.removePercentage / 100));
-    const chaptersToDisable = getRandomItems(
-      allChapters.filter((chapter) => chapter !== correctChapter && !disabledChapters.includes(chapter)),
-      removeCount
-    );
+    const filteredChapters = allChapters.filter((chapter) => chapter !== correctChapter && !disabledChapters.includes(chapter));
 
-    setDisabledChapters(chaptersToDisable);
+    // Ensure we do not disable the correct chapter
+    if (filteredChapters.length <= 0) return;
+
+    const removeCount = Math.ceil((filteredChapters.length) * (difficultySettings.removePercentage / 100));
+    let chaptersToDisable = getRandomItems(filteredChapters, removeCount);
+
+    // Re-check and remove correct chapter if mistakenly included
+    while (chaptersToDisable.includes(correctChapter)) {
+      chaptersToDisable = getRandomItems(filteredChapters, removeCount);
+    }
+
+    setDisabledChapters(disabledChapters.concat(chaptersToDisable));
   };
 
   const disableIncorrectVerses = () => {
     const correctVerse = parseInt(currentVerse.split(':')[1]);
     const verseCount = verseCounts[selectedBook][selectedChapter - 1];
     const allVerses = Array.from({ length: verseCount }, (_, index) => index + 1);
-    const removeCount = Math.ceil((allVerses.length - 1) * (difficultySettings.removePercentage / 100));
-    const versesToDisable = getRandomItems(
-      allVerses.filter((verse) => verse !== correctVerse && !disabledVerses.includes(verse)),
-      removeCount
-    );
+    const filteredVerses = allVerses.filter((verse) => verse !== correctVerse && !disabledVerses.includes(verse));
 
-    setDisabledVerses(versesToDisable);
+    // Ensure we do not disable the correct verse
+    if (filteredVerses.length <= 0) return;
+
+    const removeCount = Math.ceil((filteredVerses.length) * (difficultySettings.removePercentage / 100));
+    let versesToDisable = getRandomItems(filteredVerses, removeCount);
+
+    // Re-check and remove correct verse if mistakenly included
+    while (versesToDisable.includes(correctVerse)) {
+      versesToDisable = getRandomItems(filteredVerses, removeCount);
+    }
+
+    setDisabledVerses(disabledVerses.concat(versesToDisable));
   };
 
   const renderBooks = () => (

@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { Button, TextField, Select, MenuItem, FormControl, InputLabel, Typography, Box, Paper, Dialog, DialogActions, DialogContent, DialogContentText, DialogTitle, Card, CardContent, Grid, IconButton } from '@mui/material';
+import { Button, TextField, Select, MenuItem, FormControl, InputLabel, Typography, Box, Paper, Dialog, DialogActions, DialogContent, DialogContentText, DialogTitle, Card, CardContent, Grid, IconButton, Snackbar, Slide } from '@mui/material';
 import { useNavigate } from 'react-router-dom';
 import ArrowBackIcon from '@mui/icons-material/ArrowBack';
 import { uniqueNamesGenerator, adjectives, animals } from 'unique-names-generator';
@@ -16,6 +16,8 @@ const Settings = () => {
   const [feedback, setFeedback] = useState('');
   const [unsavedChanges, setUnsavedChanges] = useState(false);
   const [open, setOpen] = useState(false);
+  const [snackbarOpen, setSnackbarOpen] = useState(false);
+  const [transition, setTransition] = useState(undefined);
 
   const navigate = useNavigate();
 
@@ -39,7 +41,8 @@ const Settings = () => {
   const saveSettings = () => {
     localStorage.setItem('username', username);
     localStorage.setItem('gameDifficulty', difficulty.toLowerCase());
-    alert('Settings saved!');
+    setTransition(() => TransitionDown);
+    setSnackbarOpen(true);
     setUnsavedChanges(false);
   };
 
@@ -92,6 +95,21 @@ const Settings = () => {
     });
     setUsername(randomUsername);
     setUnsavedChanges(true);
+  };
+
+  const handleSnackbarClose = (event, reason) => {
+    if (reason === 'clickaway') {
+      return;
+    }
+    setSnackbarOpen(false);
+  };
+
+  const TransitionDown = (props) => {
+    return <Slide {...props} direction="down" />;
+  };
+
+  const TransitionUp = (props) => {
+    return <Slide {...props} direction="up" />;
   };
 
   return (
@@ -387,6 +405,22 @@ const Settings = () => {
             </Button>
           </DialogActions>
         </Dialog>
+
+        <Snackbar
+          open={snackbarOpen}
+          onClose={handleSnackbarClose}
+          message="Settings saved!"
+          autoHideDuration={5000}
+          anchorOrigin={{ vertical: 'top', horizontal: 'center' }}
+          TransitionComponent={transition}
+          ContentProps={{
+            sx: {
+              backgroundColor: 'green',
+              color: 'white',
+              fontWeight: 'bold',
+            },
+          }}
+        />
       </Box>
     </Box>
   );

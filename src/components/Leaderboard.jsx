@@ -18,7 +18,7 @@ const Leaderboard = () => {
   const score = location.state?.score || 0;
   const initialDifficulty = location.state?.difficulty || localStorage.getItem('latestDifficulty') || 'medium';
   const initialCategory = 'all-verses';
-  const [leaderboard, setLeaderboard] = useState([]);
+  const [leaderboard, setLeaderboard] = useState(null); // Changed initial state to null
   const [username, setUsername] = useState('');
   const [userRank, setUserRank] = useState(null);
   const [difficulty, setDifficulty] = useState(initialDifficulty);
@@ -123,6 +123,8 @@ const Leaderboard = () => {
   };
 
   const storedGameScore = parseInt(localStorage.getItem('gameScore')) || 0;
+
+  const placeholderEntries = Array(10).fill(null); // Adjust the number of placeholders as needed
 
   return (
     <Box
@@ -274,33 +276,63 @@ const Leaderboard = () => {
             overflowY: 'auto',
           }}
         >
-          {leaderboard.map((entry, index) => (
-            <Box
-              component="li"
-              key={index}
-              sx={{
-                listStyle: 'none',
-                padding: 2,
-                color: 'white',
-                marginBottom: .5,
-                backgroundColor: 'rgba(0, 0, 0, 0.5)',
-                borderRadius: 2,
-                border: isUserInTopTen(entry) ? '2px solid white' : 'none'
-              }}
-            >
-              <Grid container alignItems="center">
-                <Grid item xs={2}>
-                  <span className="rank">{index + 1}.</span>
+          {leaderboard ? (
+            leaderboard.map((entry, index) => (
+              <Box
+                component="li"
+                key={index}
+                sx={{
+                  listStyle: 'none',
+                  padding: 2,
+                  color: 'white',
+                  marginBottom: .5,
+                  backgroundColor: 'rgba(0, 0, 0, 0.5)',
+                  borderRadius: 2,
+                  border: isUserInTopTen(entry) ? '2px solid white' : 'none'
+                }}
+              >
+                <Grid container alignItems="center">
+                  <Grid item xs={2}>
+                    <span className="rank">{index + 1}.</span>
+                  </Grid>
+                  <Grid item xs={6} sx={{ textAlign: 'left' }}>
+                    <span className="username">{entry.username}</span>
+                  </Grid>
+                  <Grid item xs={4} sx={{ textAlign: 'right' }}>
+                    <span className="score">{entry.score.toLocaleString()}</span>
+                  </Grid>
                 </Grid>
-                <Grid item xs={6} sx={{ textAlign: 'left' }}>
-                  <span className="username">{entry.username}</span>
+              </Box>
+            ))
+          ) : (
+            placeholderEntries.map((_, index) => (
+              <Box
+                component="li"
+                key={index}
+                sx={{
+                  listStyle: 'none',
+                  padding: 2,
+                  color: 'white',
+                  marginBottom: .5,
+                  backgroundColor: 'rgba(0, 0, 0, 0.5)',
+                  borderRadius: 2,
+                  border: 'none'
+                }}
+              >
+                <Grid container alignItems="center">
+                  <Grid item xs={2}>
+                    <span className="rank">{index + 1}.</span>
+                  </Grid>
+                  <Grid item xs={6} sx={{ textAlign: 'left' }}>
+                    <span className="username"></span>
+                  </Grid>
+                  <Grid item xs={4} sx={{ textAlign: 'right' }}>
+                    <span className="score"></span>
+                  </Grid>
                 </Grid>
-                <Grid item xs={4} sx={{ textAlign: 'right' }}>
-                  <span className="score">{entry.score.toLocaleString()}</span>
-                </Grid>
-              </Grid>
-            </Box>
-          ))}
+              </Box>
+            ))
+          )}
         </Box>
         {/* Play Again Button */}
         <div className="play-again">

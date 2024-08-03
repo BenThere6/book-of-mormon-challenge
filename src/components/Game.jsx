@@ -620,9 +620,9 @@ function Game({ difficulty, category, endGame, usedVerses, username }) {
     const versesArray = verseText.split('\n\n');
 
     return (
-      <div style={{ color: 'white', textAlign: 'left', marginBottom: '20px' }}>
+      <div className='verse-text-container' style={{ color: 'white', textAlign: 'left', marginBottom: '20px' }}>
         {versesArray.map((verse, index) => (
-          <p key={index} style={{ marginTop: '5px' }}>{verse}</p>
+          <p className='verse-text' key={index} style={{ marginTop: '5px' }}>{verse}</p>
         ))}
       </div>
     );
@@ -633,7 +633,7 @@ function Game({ difficulty, category, endGame, usedVerses, username }) {
   };
 
   return (
-    <div className='centered-element'>
+    <div className='game-page'>
       <div id='game-container'>
         <div style={{
           display: 'flex',

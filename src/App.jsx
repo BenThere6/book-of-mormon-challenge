@@ -1,11 +1,8 @@
-// src/components/App.jsx
-
 import React, { useState } from 'react';
 import { BrowserRouter as Router, Routes, Route, useNavigate } from 'react-router-dom';
 import StartScreen from './components/StartScreen';
 import Game from './components/Game';
 import Leaderboard from './components/Leaderboard';
-import UsernameEntry from './components/Username';
 import Feedback from './components/Feedback'; // Import the Feedback component
 import Admin from './components/Admin'; // Import the Admin component
 import Login from './components/Login'; // Import the Login component
@@ -44,7 +41,6 @@ function App() {
         <Route path="/" element={<StartScreen startGame={startGame} />} />
         <Route path="/game" element={<Game difficulty={difficulty} category={category} endGame={endGame} usedVerses={usedVerses} username={username} />} />
         <Route path="/leaderboard" element={<Leaderboard score={score} difficulty={difficulty} category={category} onStartScreen={handleStartScreen} />} />
-        <Route path="/username" element={<UsernameEntry startGame={startGame} setUsername={setUsername} />} />
         <Route path="/feedback" element={<Feedback username={username} />} />
         <Route path="/login" element={<Login />} />
         <Route path="/admin" element={<PrivateRoute element={Admin} />} />

@@ -352,7 +352,7 @@ const Settings = () => {
             />
           </FormControl>
           <Box sx={{ display: 'flex' }}>
-            <Button variant="contained" color="primary" onClick={submitFeedback}>
+            <Button variant="outlined" sx={{ color: 'white', borderColor: 'white' }} onClick={submitFeedback}>
               Submit Feedback
             </Button>
           </Box>

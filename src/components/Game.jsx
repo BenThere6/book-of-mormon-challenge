@@ -644,9 +644,9 @@ function Game({ difficulty, category, endGame, usedVerses, username }) {
           justifyContent: 'space-between',
           paddingTop: '5px'
         }}>
-          <h2 style={{ fontSize: '24px', color: '#fff', margin: '0' }}>Score: {score}</h2>
-          <h2 style={{ fontSize: '24px', color: '#fff', margin: '0' }}>{capitalizeFirstLetter(savedDifficulty)}</h2>
-          <h2 style={{ fontSize: '24px', color: '#fff', margin: '0' }}>Lives: {lives}</h2>
+          <h2 id='score-text' style={{ fontSize: '24px', color: '#fff', margin: '0' }}>{score}</h2>
+          <h2 id='difficulty-text' style={{ fontSize: '24px', color: '#fff', margin: '0' }}>{capitalizeFirstLetter(savedDifficulty)}</h2>
+          <h2 id='lives-text' style={{ fontSize: '24px', color: '#fff', margin: '0' }}>{lives}</h2>
         </div>
         <div style={{
           border: '1px solid #ccc',

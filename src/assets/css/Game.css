@@ -88,6 +88,14 @@
     color: white;
 }
 
+#score-text {
+    padding-left: 10px;
+}
+
+#lives-text {
+    padding-right: 10px;
+}
+
 .selection-section {
     display: flex;
     flex-direction: column;

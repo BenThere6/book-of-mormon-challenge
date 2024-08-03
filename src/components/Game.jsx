@@ -439,7 +439,7 @@ function Game({ difficulty, category, endGame, usedVerses, username }) {
           </div>
         </div>
       </div>
-      <h3>Book</h3>
+      <h3 className='step-title'>Book</h3>
       <ScrollIndicatorContainer>
         <div className='options-container'>
           {Object.keys(verseCounts).map((book) => (
@@ -511,7 +511,7 @@ function Game({ difficulty, category, endGame, usedVerses, username }) {
             </div>
           </div>
         </div>
-        <h3>Chapter</h3>
+        <h3 className='step-title'>Chapter</h3>
         <ScrollIndicatorContainer>
           <div className='options-container'>
             {chapters.map((chapter) => (
@@ -586,7 +586,7 @@ function Game({ difficulty, category, endGame, usedVerses, username }) {
             </div>
           </div>
         </div>
-        <h3>Verse</h3>
+        <h3 className='step-title'>Verse</h3>
         <ScrollIndicatorContainer>
           <div className='options-container'>
             {verses.map((verse) => (
@@ -630,7 +630,7 @@ function Game({ difficulty, category, endGame, usedVerses, username }) {
     const versesArray = verseText.split('\n\n');
 
     return (
-      <div style={{ textAlign: 'left', marginBottom: '20px' }}>
+      <div style={{ color: 'white', textAlign: 'left', marginBottom: '20px' }}>
         {versesArray.map((verse, index) => (
           <p key={index} style={{ marginTop: '5px' }}>{verse}</p>
         ))}
@@ -683,7 +683,7 @@ function Game({ difficulty, category, endGame, usedVerses, username }) {
           <p style={{
             fontSize: '30px',
             fontFamily: 'Trebuchet MS, Lucida Sans Unicode, Lucida Grande, Lucida Sans, Arial, sans-serif',
-            color: 'brown',
+            color: 'white',
             margin: '0'
           }}>
             {selectedBook} {selectedChapter && (selectedVerse ? ` ${selectedChapter}:${selectedVerse}` : selectedChapter)}

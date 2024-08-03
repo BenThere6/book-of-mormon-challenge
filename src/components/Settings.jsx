@@ -106,7 +106,7 @@ const Settings = () => {
         position: 'relative',
         fontFamily: 'EB Garamond, serif',
         fontSize: '20px',
-        paddingBottom: '20px', // Add padding bottom to allow scrolling
+        boxSizing: 'border-box'
       }}
     >
       <Box

@@ -161,6 +161,7 @@ function Game({ difficulty, category, endGame, usedVerses, username }) {
     } else {
       if (guessAccuracy > 0) {
         newScore += guessAccuracy;
+        newScore = Math.round(newScore); // Round the new score
         setScore(newScore);
         isCorrect = true;
       }
@@ -250,7 +251,7 @@ function Game({ difficulty, category, endGame, usedVerses, username }) {
         bestAccuracy /= 10;
       }
     });
-    return bestAccuracy;
+    return Math.round(bestAccuracy); // Round the accuracy score
   };
 
   const extractBookFromVerse = (verse) => {

@@ -38,24 +38,77 @@ const VerseHistory = () => {
     const reversedVerseHistory = getReversedVerseHistory(verseHistory);
 
     return (
-        <Container maxWidth="md" sx={{ backgroundColor: 'white', p: 2, borderRadius: 1 }}>
-            <Box sx={{ display: 'flex', alignItems: 'center', mb: 2 }}>
-                <IconButton onClick={() => navigate(-1)}>
-                    <ArrowBackIcon />
-                </IconButton>
-                <Typography variant="h4" sx={{ ml: 2 }}>Verse History</Typography>
-            </Box>
-            <ScrollIndicatorContainer>
+        <Box
+            sx={{
+                display: 'flex',
+                flexDirection: 'column',
+                justifyContent: 'center',
+                alignItems: 'center',
+                minHeight: '100vh',
+                width: '100vw',
+                overflow: 'hidden',
+                position: 'relative',
+                fontFamily: 'EB Garamond, serif',
+                fontSize: '20px'
+            }}
+        >
+            {/* Background Image Box */}
+            <Box
+                sx={{
+                    position: 'fixed',
+                    top: 0,
+                    left: 0,
+                    width: '100%',
+                    height: '100%',
+                    backgroundImage: `url('/background-images/history-image.jpg')`,
+                    backgroundSize: 'cover',
+                    backgroundPosition: 'center',
+                    zIndex: -1,
+                    '&::after': {
+                        content: '""',
+                        position: 'absolute',
+                        top: 0,
+                        left: 0,
+                        width: '100%',
+                        height: '100%',
+                        backgroundColor: 'rgba(0, 0, 0, 0.1)',
+                        mixBlendMode: 'darken',
+                    },
+                }}
+            />
+            {/* Main Container */}
+            <Container
+                sx={{
+                    textAlign: 'center',
+                    padding: 4,
+                    borderRadius: 2,
+                    maxWidth: '600px',
+                    display: 'flex',
+                    flexDirection: 'column',
+                    justifyContent: 'center',
+                    alignItems: 'center',
+                    minHeight: '100vh',
+                    overflowY: 'hidden',
+                    backgroundColor: 'rgba(0, 0, 0, 0.5)',
+                }}
+            >
+                {/* Header Box */}
+                <Box sx={{ display: 'flex', alignItems: 'center', mb: 2 }}>
+                    <IconButton onClick={() => navigate(-1)}>
+                        <ArrowBackIcon style={{ color: 'white' }} />
+                    </IconButton>
+                    <Typography variant="h4" sx={{ ml: 2, color: 'white' }}>Verse History</Typography>
+                </Box>
                 <div className='history-content-container'>
                     {Object.keys(reversedVerseHistory).map(date => (
                         <Box key={date} sx={{ mb: 4, textAlign: 'left', maxWidth: '80%', mx: 'auto' }}>
-                            <Typography variant="h5" sx={{ mb: 2, color: '#3f51b5', fontWeight: 'bold' }}>
+                            <Typography variant="h5" sx={{ mb: 2, color: 'white', fontWeight: 'bold' }}>
                                 {formatDate(date)}
                             </Typography>
                             {Object.keys(reversedVerseHistory[date])
                                 .sort((a, b) => b - a)
                                 .map(gameID => (
-                                    <Paper key={gameID} elevation={3} className="game-section" sx={{ p: 2, mb: 2, textAlign: 'center' }}>
+                                    <Paper key={gameID} elevation={3} className="game-section" sx={{ p: 2, mb: 2, textAlign: 'center', backgroundColor: 'rgba(0, 0, 0, 0.7)', color: 'white' }}>
                                         <Typography variant="h6" sx={{ mb: 1 }}>Game #{gameID}</Typography>
                                         {[...reversedVerseHistory[date][gameID]].reverse().map((verseData, index) => (
                                             <div key={index} className={verseData.isCorrect === null ? '' : (verseData.isCorrect ? 'correct' : 'incorrect')}>
@@ -67,8 +120,8 @@ const VerseHistory = () => {
                         </Box>
                     ))}
                 </div>
-            </ScrollIndicatorContainer>
-        </Container>
+            </Container>
+        </Box>
     );
 };
 

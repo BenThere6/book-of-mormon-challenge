@@ -11,7 +11,7 @@ import DialogTitle from '@mui/material/DialogTitle';
 import IconButton from '@mui/material/IconButton';
 import ArrowBack from '@mui/icons-material/ArrowBack';
 import KeyboardTab from '@mui/icons-material/KeyboardTab';
-import LiahonaIcon from '/liahona_icon.png';
+import ExploreOutlinedIcon from '@mui/icons-material/ExploreOutlined';
 import { useNavigate } from 'react-router-dom';
 import '../assets/css/Game.css';
 import ScrollIndicatorContainer from './ScrollIndicatorContainer';
@@ -405,7 +405,7 @@ function Game({ difficulty, category, endGame, usedVerses, username }) {
       <div className='icons-container'>
         <div className='back-container'>
           <IconButton className="back-button" onClick={() => navigate(-1)}>
-            <ArrowBack />
+            <ArrowBack sx={{ color: 'white' }} />
           </IconButton>
         </div>
         <div className='powerups-container'>
@@ -414,10 +414,9 @@ function Game({ difficulty, category, endGame, usedVerses, username }) {
               onClick={handleUseBomb}
               disabled={!canUseBomb()}
               className={!canUseBomb() ? 'bomb-button-disabled' : ''}
-              color="primary"
               aria-label="use bomb"
             >
-              <img src={LiahonaIcon} alt="liahona" style={{ width: 24, height: 24 }} />
+              <ExploreOutlinedIcon sx={{ color: canUseBomb() ? 'white' : 'gray' }} />
             </IconButton>
             <div id='bomb-count-container'>
               <span id='bomb-count'>{bombs}</span>
@@ -428,10 +427,9 @@ function Game({ difficulty, category, endGame, usedVerses, username }) {
               onClick={handleUseSkip}
               disabled={!canUseSkip()}
               className={!canUseSkip() ? 'skip-button-disabled' : ''}
-              color="black"
               aria-label="use skip"
             >
-              <KeyboardTab />
+              <KeyboardTab sx={{ color: canUseSkip() ? 'white' : 'gray' }} />
             </IconButton>
             <div id='skip-count-container'>
               <span id='skip-count'>{skips}</span>
@@ -448,6 +446,7 @@ function Game({ difficulty, category, endGame, usedVerses, username }) {
               key={book}
               onClick={() => handleBookSelection(book)}
               disabled={disabledBooks.includes(book)}
+              sx={{ color: 'white', borderColor: 'white' }}
             >
               {book}
             </Button>
@@ -477,7 +476,7 @@ function Game({ difficulty, category, endGame, usedVerses, username }) {
         <div className='icons-container'>
           <div className='back-container'>
             <IconButton className="back-button" onClick={() => handleBack('book')}>
-              <ArrowBack />
+              <ArrowBack sx={{ color: 'white' }} />
             </IconButton>
           </div>
           <div className='powerups-container'>
@@ -486,10 +485,9 @@ function Game({ difficulty, category, endGame, usedVerses, username }) {
                 onClick={handleUseBomb}
                 disabled={!canUseBomb()}
                 className={!canUseBomb() ? 'bomb-button-disabled' : ''}
-                color="primary"
                 aria-label="use bomb"
               >
-                <img src={LiahonaIcon} alt="liahona" style={{ width: 24, height: 24 }} />
+                <ExploreOutlinedIcon sx={{ color: canUseBomb() ? 'white' : 'gray' }} />
               </IconButton>
               <div id='bomb-count-container'>
                 <span id='bomb-count'>{bombs}</span>
@@ -500,10 +498,9 @@ function Game({ difficulty, category, endGame, usedVerses, username }) {
                 onClick={handleUseSkip}
                 disabled={!canUseSkip()}
                 className={!canUseSkip() ? 'skip-button-disabled' : ''}
-                color="black"
                 aria-label="use skip"
               >
-                <KeyboardTab />
+                <KeyboardTab sx={{ color: canUseSkip() ? 'white' : 'gray' }} />
               </IconButton>
               <div id='skip-count-container'>
                 <span id='skip-count'>{skips}</span>
@@ -520,6 +517,7 @@ function Game({ difficulty, category, endGame, usedVerses, username }) {
                 key={chapter}
                 onClick={() => handleChapterSelection(chapter)}
                 disabled={disabledChapters.includes(chapter)}
+                sx={{ color: 'white', borderColor: 'white' }}
               >
                 {chapter}
               </Button>
@@ -552,7 +550,7 @@ function Game({ difficulty, category, endGame, usedVerses, username }) {
         <div className='icons-container'>
           <div className='back-container'>
             <IconButton className="back-button" onClick={() => handleBack('chapter')}>
-              <ArrowBack />
+              <ArrowBack sx={{ color: 'white' }} />
             </IconButton>
           </div>
           <div className='powerups-container'>
@@ -561,10 +559,9 @@ function Game({ difficulty, category, endGame, usedVerses, username }) {
                 onClick={handleUseBomb}
                 disabled={!canUseBomb()}
                 className={!canUseBomb() ? 'bomb-button-disabled' : ''}
-                color="primary"
                 aria-label="use bomb"
               >
-                <img src={LiahonaIcon} alt="liahona" style={{ width: 24, height: 24 }} />
+                <ExploreOutlinedIcon sx={{ color: canUseBomb() ? 'white' : 'gray' }} />
               </IconButton>
               <div id='bomb-count-container'>
                 <span id='bomb-count'>{bombs}</span>
@@ -575,10 +572,9 @@ function Game({ difficulty, category, endGame, usedVerses, username }) {
                 onClick={handleUseSkip}
                 disabled={!canUseSkip()}
                 className={!canUseSkip() ? 'skip-button-disabled' : ''}
-                color="black"
                 aria-label="use skip"
               >
-                <KeyboardTab />
+                <KeyboardTab sx={{ color: canUseSkip() ? 'white' : 'gray' }} />
               </IconButton>
               <div id='skip-count-container'>
                 <span id='skip-count'>{skips}</span>
@@ -595,6 +591,7 @@ function Game({ difficulty, category, endGame, usedVerses, username }) {
                 key={verse}
                 onClick={() => handleVerseSelection(verse)}
                 disabled={disabledVerses.includes(verse)}
+                sx={{ color: 'white', borderColor: 'white' }}
               >
                 {verse}
               </Button>

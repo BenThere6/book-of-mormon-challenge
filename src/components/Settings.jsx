@@ -81,6 +81,7 @@ const Settings = () => {
       console.error('Error submitting feedback:', error);
       alert('An error occurred. Please try again.');
     }
+    setUnsavedChanges(false);
   };
 
   const generateUsername = () => {

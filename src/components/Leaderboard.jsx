@@ -16,7 +16,6 @@ const Leaderboard = () => {
   const location = useLocation();
   const navigate = useNavigate();
   const score = location.state?.score || 0;
-  const fromStartScreen = location.state?.fromStartScreen || false;
   const initialDifficulty = location.state?.difficulty || localStorage.getItem('latestDifficulty') || 'medium';
   const initialCategory = 'all-verses';
   const [leaderboard, setLeaderboard] = useState([]);
@@ -123,6 +122,8 @@ const Leaderboard = () => {
     );
   };
 
+  const storedGameScore = parseInt(localStorage.getItem('gameScore')) || 0;
+
   return (
     <Box
       sx={{
@@ -138,6 +139,7 @@ const Leaderboard = () => {
         fontSize: '20px'
       }}
     >
+      {/* Background Image Box */}
       <Box
         sx={{
           position: 'fixed',
@@ -146,11 +148,13 @@ const Leaderboard = () => {
           width: '100%',
           height: '100%',
           backgroundImage: `url('/background-images/leaderboard-image.jpg')`,
+          filter: 'opacity(0.5)',
           backgroundSize: 'cover',
           backgroundPosition: 'center',
           zIndex: -1
         }}
       />
+      {/* Main Container */}
       <Container
         sx={{
           textAlign: 'center',
@@ -163,30 +167,32 @@ const Leaderboard = () => {
           alignItems: 'center',
           minHeight: '100vh',
           overflowY: 'hidden',
-          marginTop: '20px', // Added margin to prevent content from being hidden
+          marginTop: '20px',
         }}
       >
+        {/* Header Box */}
         <Box
           sx={{
             display: 'flex',
             alignItems: 'center',
             mb: 2,
             width: '100%',
-            position: 'sticky', // Make the element sticky
-            top: 0, // Stick to the top of the container
-            zIndex: 1, // Ensure it stays above other content
-            borderRadius: 2, // Maintain the border radius
+            position: 'sticky',
+            top: 0,
+            zIndex: 1,
+            borderRadius: 2,
             paddingBottom: 1,
-            boxSizing: 'border-box', // Ensure padding and border are included in the height
+            boxSizing: 'border-box',
             '@media (max-width: 550px)': {
-              flexDirection: 'row', // Keep elements in a row on smaller screens
+              flexDirection: 'row',
               alignItems: 'center',
-              justifyContent: 'space-between', // Space between elements on smaller screens
+              justifyContent: 'space-between',
               width: '100%',
             }
           }}
         >
-          {!fromStartScreen && (
+          {/* Score Display */}
+          {
             <Box 
               sx={{ 
                 textAlign: 'center', 
@@ -196,25 +202,26 @@ const Leaderboard = () => {
                 height: '100%',
                 fontSize: '2rem',
                 color: 'white',
-                mr: 2, // Add some margin to the right
-                flex: '1 1 auto', // Ensure it takes up only necessary space
-                whiteSpace: 'nowrap', // Ensure the score doesn't wrap
-                boxSizing: 'border-box', // Ensure padding and border are included in the height
-                display: 'flex', // Ensure the element stays flex on smaller screens
-                justifyContent: 'center', // Center content horizontally
-                alignItems: 'center', // Center content vertically
+                mr: 2,
+                flex: '1 1 auto',
+                whiteSpace: 'nowrap',
+                boxSizing: 'border-box',
+                display: 'flex',
+                justifyContent: 'center',
+                alignItems: 'center',
                 '@media (max-width: 550px)': {
-                  fontSize: '3rem', // Double the font size on smaller screens
-                  textAlign: 'center', // Center text
-                  mr: 2, // Remove right margin
-                  mb: 0, // Remove bottom margin
+                  fontSize: '3rem',
+                  textAlign: 'center',
+                  mr: 2,
+                  mb: 0,
                 }
               }}
             >
-              <Box className='user-score' sx={{ width: 'auto' }}>{score}</Box>
+              <Box className='user-score' sx={{ width: 'auto' }}>{storedGameScore}</Box>
             </Box>
-          )}
+          }
 
+          {/* Difficulty Selection */}
           <FormControl component="fieldset" sx={{ width: '70%', backgroundColor: 'rgba(0, 0, 0, 0.5)', borderRadius: 5, padding: 2, boxSizing: 'border-box', '@media (max-width: 550px)': { width: 'auto', flex: '1 1 30%' } }}>
             <RadioGroup
               row
@@ -231,13 +238,14 @@ const Leaderboard = () => {
                 },
                 justifyContent: 'space-around',
                 width: '100%',
-                boxSizing: 'border-box', // Ensure padding and border are included in the height
+                boxSizing: 'border-box',
                 '@media (max-width: 550px)': {
-                  flexDirection: 'column', // Stack radio buttons vertically on smaller screens
-                  alignItems: 'flex-start', // Align items to the left
+                  flexDirection: 'column',
+                  alignItems: 'flex-start',
                 }
               }}
             >
+              {/* Difficulty Options */}
               <FormControlLabel value="easy" control={<Radio />} label="Easy" />
               <FormControlLabel value="medium" control={<Radio />} label="Medium" />
               <FormControlLabel value="hard" control={<Radio />} label="Hard" />
@@ -245,6 +253,7 @@ const Leaderboard = () => {
           </FormControl>
         </Box>
 
+        {/* Leaderboard List */}
         <Box 
           component="ol" 
           className='scroll-shadow'
@@ -284,6 +293,7 @@ const Leaderboard = () => {
             </Box>
           ))}
         </Box>
+        {/* Play Again Button */}
         <div className="play-again">
           <Button variant="contained" onClick={handlePlayAgain}>Home</Button>
         </div>

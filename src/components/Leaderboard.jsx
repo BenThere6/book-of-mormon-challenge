@@ -148,10 +148,19 @@ const Leaderboard = () => {
           width: '100%',
           height: '100%',
           backgroundImage: `url('/background-images/leaderboard-image.jpg')`,
-          filter: 'opacity(0.5)',
           backgroundSize: 'cover',
           backgroundPosition: 'center',
-          zIndex: -1
+          zIndex: -1,
+          '&::after': {
+            content: '""',
+            position: 'absolute',
+            top: 0,
+            left: 0,
+            width: '100%',
+            height: '100%',
+            backgroundColor: 'rgba(0, 0, 0, 0.5)', // Adjust the opacity as needed
+            mixBlendMode: 'darken',
+          },
         }}
       />
       {/* Main Container */}
@@ -193,11 +202,11 @@ const Leaderboard = () => {
         >
           {/* Score Display */}
           {
-            <Box 
-              sx={{ 
-                textAlign: 'center', 
-                backgroundColor: 'rgba(0, 0, 0, 0.5)', 
-                borderRadius: 5, 
+            <Box
+              sx={{
+                textAlign: 'center',
+                backgroundColor: 'rgba(0, 0, 0, 0.5)',
+                borderRadius: 5,
                 padding: 2,
                 height: '100%',
                 fontSize: '2rem',
@@ -254,28 +263,28 @@ const Leaderboard = () => {
         </Box>
 
         {/* Leaderboard List */}
-        <Box 
-          component="ol" 
+        <Box
+          component="ol"
           className='scroll-shadow'
-          sx={{ 
-            padding: 0, 
-            width: '100%', 
+          sx={{
+            padding: 0,
+            width: '100%',
             marginTop: 0,
             maxHeight: '70vh',
             overflowY: 'auto',
           }}
         >
           {leaderboard.map((entry, index) => (
-            <Box 
-              component="li" 
-              key={index} 
-              sx={{ 
-                listStyle: 'none', 
-                padding: 2, 
-                color: 'white', 
-                marginBottom: .5, 
-                backgroundColor: 'rgba(0, 0, 0, 0.5)', 
-                borderRadius: 2, 
+            <Box
+              component="li"
+              key={index}
+              sx={{
+                listStyle: 'none',
+                padding: 2,
+                color: 'white',
+                marginBottom: .5,
+                backgroundColor: 'rgba(0, 0, 0, 0.5)',
+                borderRadius: 2,
                 border: isUserInTopTen(entry) ? '2px solid white' : 'none'
               }}
             >
@@ -295,7 +304,7 @@ const Leaderboard = () => {
         </Box>
         {/* Play Again Button */}
         <div className="play-again">
-          <Button variant="contained" onClick={handlePlayAgain}>Home</Button>
+          <Button variant="outlined" sx={{ color: 'white', borderColor: 'white' }} onClick={handlePlayAgain}>Home</Button>
         </div>
       </Container>
     </Box>

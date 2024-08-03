@@ -93,7 +93,10 @@
 }
 
 #lives-text {
-    padding-right: 10px;
+    font-family: 'EB Garamond';
+    font-size: 24px;
+    font-weight: 200;
+    padding-right: 2px;
 }
 
 .selection-section {

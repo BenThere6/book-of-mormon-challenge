@@ -12,6 +12,7 @@ import IconButton from '@mui/material/IconButton';
 import ArrowBack from '@mui/icons-material/ArrowBack';
 import KeyboardTab from '@mui/icons-material/KeyboardTab';
 import ExploreOutlinedIcon from '@mui/icons-material/ExploreOutlined';
+import FavoriteBorderOutlinedIcon from '@mui/icons-material/FavoriteBorderOutlined';
 import { useNavigate } from 'react-router-dom';
 import '../assets/css/Game.css';
 
@@ -646,7 +647,10 @@ function Game({ difficulty, category, endGame, usedVerses, username }) {
         }}>
           <h2 id='score-text' style={{ fontSize: '24px', color: '#fff', margin: '0' }}>{score}</h2>
           <h2 id='difficulty-text' style={{ fontSize: '24px', color: '#fff', margin: '0' }}>{capitalizeFirstLetter(savedDifficulty)}</h2>
-          <h2 id='lives-text' style={{ fontSize: '24px', color: '#fff', margin: '0' }}>{lives}</h2>
+          <div style={{ display: 'flex', alignItems: 'center', color: '#fff' }}>
+            <span id='lives-text'>{lives}</span>
+            <FavoriteBorderOutlinedIcon sx={{ marginRight: '5px' }} />
+          </div>
         </div>
         <div style={{
           border: '1px solid #ccc',

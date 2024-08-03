@@ -226,7 +226,7 @@ const Leaderboard = () => {
                 }
               }}
             >
-              <Box className='user-score' sx={{ width: 'auto' }}>{storedGameScore}</Box>
+              <Box className='user-score' sx={{ width: 'auto' }}>{storedGameScore.toLocaleString()}</Box>
             </Box>
           }
 
@@ -296,7 +296,7 @@ const Leaderboard = () => {
                   <span className="username">{entry.username}</span>
                 </Grid>
                 <Grid item xs={4} sx={{ textAlign: 'right' }}>
-                  <span className="score">{entry.score}</span>
+                  <span className="score">{entry.score.toLocaleString()}</span>
                 </Grid>
               </Grid>
             </Box>

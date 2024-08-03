@@ -1,22 +1,3 @@
-.game-container {
-    max-width: 800px;
-    max-height: 800px;
-    height: 100%;
-    margin: 0 auto;
-    padding-left: 20px;
-    padding-right: 20px;
-    background-color: #f0f0f0;
-    border: 1px solid #ccc;
-    border-radius: 8px;
-    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
-    font-family: 'Roboto', sans-serif;
-    text-align: center;
-    display: flex;
-    flex-direction: column;
-    box-sizing: border-box;
-    overflow-y: hidden;
-}
-
 p {
     margin-top: 5px;
 }
@@ -25,29 +6,20 @@ h3 {
     padding-top: 10px;
 }
 
-.game-container h2 {
-    font-size: 24px;
-    color: #333;
-}
-
 .verse-text {
-    /* margin-bottom: 20px; */
     text-align: left;
 }
 
 .selection-section {
-    /* margin-bottom: 20px; */
     flex-grow: 1;
     display: flex;
     flex-direction: column;
     overflow: hidden;
-    /* Ensures that overflow content is hidden */
 }
 
 .options-container {
     flex-grow: 1;
     overflow-y: auto;
-    /* padding-right: 10px; */
 }
 
 .selection-section h3 {
@@ -55,37 +27,9 @@ h3 {
     font-size: 18px;
 }
 
-.button-group {
-    display: flex;
-    flex-wrap: wrap;
-    justify-content: center;
-    margin-top: 10px;
-}
-
 .submit-button {
     margin-top: 10px;
     margin-bottom: 10px;
-}
-
-.header {
-    display: flex;
-    justify-content: space-between;
-    padding-top: 5px;
-    /* position: sticky; */
-    top: 5px;
-}
-
-.score {
-    margin: 0;
-}
-
-.lives {
-    margin: 0;
-}
-
-.bombs {
-    margin: 0;
-    padding-left: 15px;
 }
 
 .bomb-container {
@@ -128,27 +72,6 @@ h3 {
     padding: 2px 5px;
     font-size: 10px;
     font-weight: bold;
-}
-
-.guess-box {
-    border: 1px solid #ccc;
-    margin-top: 5px;
-    min-height: 40px;
-    border-radius: 15px;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    /* position: sticky; */
-    top: 50px;
-    background-color: #f0f0f0;
-    z-index: 1000;
-}
-
-.guess-text {
-    font-size: 30px;
-    font-family: 'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande', 'Lucida Sans', Arial, sans-serif;
-    color: brown;
-    margin: 0;
 }
 
 .back-button {

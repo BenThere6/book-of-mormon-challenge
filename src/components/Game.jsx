@@ -644,14 +644,50 @@ function Game({ difficulty, category, endGame, usedVerses, username }) {
 
   return (
     <div className='centered-element'>
-      <div className="game-container">
-        <div className="header">
-          <h2 className="score">Score: {score}</h2>
-          <h2 className='score'>{capitalizeFirstLetter(savedDifficulty)}</h2>
-          <h2 className="lives">Lives: {lives}</h2>
+      <div className="game-container" style={{
+        maxWidth: '800px',
+        maxHeight: '800px',
+        height: '100%',
+        margin: '0 auto',
+        paddingLeft: '20px',
+        paddingRight: '20px',
+        backgroundColor: '#f0f0f0',
+        border: '1px solid #ccc',
+        borderRadius: '8px',
+        boxShadow: '0 0 10px rgba(0, 0, 0, 0.1)',
+        fontFamily: 'Roboto, sans-serif',
+        textAlign: 'center',
+        display: 'flex',
+        flexDirection: 'column',
+        boxSizing: 'border-box',
+        overflowY: 'hidden',
+      }}>
+        <div className="header" style={{
+          display: 'flex',
+          justifyContent: 'space-between',
+          paddingTop: '5px',
+        }}>
+          <h2 className="score" style={{ fontSize: '24px', color: '#333', margin: 0 }}>Score: {score}</h2>
+          <h2 className="score" style={{ fontSize: '24px', color: '#333', margin: 0 }}>{capitalizeFirstLetter(savedDifficulty)}</h2>
+          <h2 className="lives" style={{ fontSize: '24px', color: '#333', margin: 0 }}>Lives: {lives}</h2>
         </div>
-        <div className="guess-box">
-          <p className='guess-text'>
+        <div className="guess-box" style={{
+          border: '1px solid #ccc',
+          marginTop: '5px',
+          minHeight: '40px',
+          borderRadius: '15px',
+          display: 'flex',
+          justifyContent: 'center',
+          alignItems: 'center',
+          backgroundColor: '#f0f0f0',
+          zIndex: 1000,
+        }}>
+          <p className="guess-text" style={{
+            fontSize: '30px',
+            fontFamily: "'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande', 'Lucida Sans', Arial, sans-serif",
+            color: 'brown',
+            margin: 0,
+          }}>
             {selectedBook} {selectedChapter && (selectedVerse ? ` ${selectedChapter}:${selectedVerse}` : selectedChapter)}
           </p>
         </div>

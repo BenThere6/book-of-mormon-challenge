@@ -593,9 +593,13 @@ function Game({ difficulty, category, endGame, usedVerses, username }) {
         </div>
         <div className="submit-button">
           <Button
-            variant="contained"
+            variant="outlined"
             disabled={!isSubmitEnabled}
             onClick={handleSubmit}
+            sx={{
+              color: 'white',
+              borderColor: 'white'
+            }}
           >
             Submit Guess
           </Button>
@@ -693,7 +697,7 @@ function Game({ difficulty, category, endGame, usedVerses, username }) {
         </Dialog>
       </div>
     </div>
-  );  
+  );
 }
 
 export default Game;

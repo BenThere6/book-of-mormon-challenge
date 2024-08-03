@@ -89,7 +89,6 @@ const Settings = () => {
       separator: '',
       style: 'capital',
     });
-    setUsername('');
     setUsername(randomUsername);
     setUnsavedChanges(true);
   };
@@ -107,7 +106,7 @@ const Settings = () => {
         position: 'relative',
         fontFamily: 'EB Garamond, serif',
         fontSize: '20px',
-        paddingBottom: '20px' // Add padding bottom to allow scrolling
+        paddingBottom: '20px', // Add padding bottom to allow scrolling
       }}
     >
       <Box
@@ -124,7 +123,22 @@ const Settings = () => {
           filter: 'brightness(0.7)', // To make the image more subtle
         }}
       />
-      <Box sx={{ p: 4, maxWidth: 600, mx: 'auto', mb: 4, pb: 4, zIndex: 1, overflowY: 'auto', backgroundColor: 'rgba(0, 0, 0, 0.5)', borderRadius: 2 }}>
+      <Box
+        sx={{
+          p: 4,
+          maxWidth: 600,
+          mx: 'auto',
+          mb: 0,
+          pb: 0,
+          zIndex: 1,
+          overflowY: 'auto',
+          backgroundColor: 'rgba(0, 0, 0, 0.5)',
+          borderRadius: 2,
+          minHeight: '100vh',
+          pt: 8, // Add padding top to avoid cutting off the top content
+          boxSizing: 'border-box'
+        }}
+      >
         <Box sx={{ display: 'flex', alignItems: 'center', mb: 2 }}>
           <IconButton onClick={handleCancel}>
             <ArrowBackIcon style={{ color: 'white' }} />
@@ -186,7 +200,7 @@ const Settings = () => {
         </Box>
 
         <Box sx={{ display: 'flex', gap: 2, mb: 4 }}>
-          <Button variant="contained" color="primary" onClick={saveSettings} disabled={!unsavedChanges}>
+          <Button variant="outlined" onClick={saveSettings} sx={{ color: 'white', borderColor: 'white' }} disabled={!unsavedChanges}>
             Save Settings
           </Button>
         </Box>
@@ -322,7 +336,6 @@ const Settings = () => {
           </Typography>
           <FormControl fullWidth sx={{ mb: 2 }}>
             <TextField
-              label="Your Feedback"
               multiline
               rows={4}
               value={feedback}
@@ -338,8 +351,8 @@ const Settings = () => {
               sx={{ '.MuiOutlinedInput-root': { '& fieldset': { borderColor: 'white' }, '&:hover fieldset': { borderColor: 'white' }, '&.Mui-focused fieldset': { borderColor: 'white' } } }}
             />
           </FormControl>
-          <Box sx={{ display: 'flex', mb: 4 }}>
-            <Button variant="contained" sx={{ mb: 4 }} color="primary" onClick={submitFeedback}>
+          <Box sx={{ display: 'flex' }}>
+            <Button variant="contained" color="primary" onClick={submitFeedback}>
               Submit Feedback
             </Button>
           </Box>
@@ -350,6 +363,13 @@ const Settings = () => {
           onClose={() => handleClose(false)}
           aria-labelledby="alert-dialog-title"
           aria-describedby="alert-dialog-description"
+          PaperProps={{
+            style: {
+              backgroundColor: 'rgba(0, 0, 0, 0.85)',
+              color: 'white',
+              border: '1px solid white', // Add white border
+            },
+          }}
         >
           <DialogTitle id="alert-dialog-title" sx={{ color: 'white' }}>Unsaved Changes</DialogTitle>
           <DialogContent>
@@ -358,10 +378,10 @@ const Settings = () => {
             </DialogContentText>
           </DialogContent>
           <DialogActions>
-            <Button onClick={() => handleClose(false)} color="primary">
+            <Button onClick={() => handleClose(false)} sx={{ color: 'white' }}>
               No
             </Button>
-            <Button onClick={() => handleClose(true)} color="primary" autoFocus>
+            <Button onClick={() => handleClose(true)} sx={{ color: 'white' }} autoFocus>
               Yes
             </Button>
           </DialogActions>

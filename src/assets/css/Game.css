@@ -1,5 +1,8 @@
 #game-container {
     height: 100vh;
+    padding-left: 5px;
+    padding-right: 5px;
+    background-color: rgba(0,0,0,.5);
 }
 
 .icons-container {

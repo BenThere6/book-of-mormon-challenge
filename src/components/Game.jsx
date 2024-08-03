@@ -634,23 +634,7 @@ function Game({ difficulty, category, endGame, usedVerses, username }) {
 
   return (
     <div className='centered-element'>
-      <div id='game-container' style={{
-        maxWidth: '800px',
-        maxHeight: '800px',
-        height: '100%',
-        margin: '0 auto',
-        paddingLeft: '20px',
-        paddingRight: '20px',
-        backgroundColor: 'rgba(0, 0, 0, 0.5)',
-        borderRadius: '8px',
-        boxShadow: '0 0 10px rgba(0, 0, 0, 0.1)',
-        fontFamily: 'Roboto, sans-serif',
-        textAlign: 'center',
-        display: 'flex',
-        flexDirection: 'column',
-        boxSizing: 'border-box',
-        overflowY: 'hidden'
-      }}>
+      <div id='game-container'>
         <div style={{
           display: 'flex',
           justifyContent: 'space-between',
@@ -709,7 +693,7 @@ function Game({ difficulty, category, endGame, usedVerses, username }) {
         </Dialog>
       </div>
     </div>
-  );
+  );  
 }
 
 export default Game;

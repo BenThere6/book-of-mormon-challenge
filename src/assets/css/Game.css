@@ -1,35 +1,12 @@
-p {
-    margin-top: 5px;
-}
-
-h3 {
-    padding-top: 10px;
-}
-
-.verse-text {
-    text-align: left;
-}
-
-.selection-section {
-    flex-grow: 1;
+.icons-container {
+    position: absolute;
+    width: calc(100% - 40px);
     display: flex;
-    flex-direction: column;
-    overflow: hidden;
+    justify-content: space-between;
 }
 
-.options-container {
-    flex-grow: 1;
-    overflow-y: auto;
-}
-
-.selection-section h3 {
-    margin-top: 0;
-    font-size: 18px;
-}
-
-.submit-button {
-    margin-top: 10px;
-    margin-bottom: 10px;
+.powerups-container {
+    display: flex;
 }
 
 .bomb-container {
@@ -48,17 +25,6 @@ h3 {
 
 .skip-button-disabled .skip-icon {
     color: gray;
-}
-
-.icons-container {
-    position: absolute;
-    width: calc(100% - 40px);
-    display: flex;
-    justify-content: space-between;
-}
-
-.powerups-container {
-    display: flex;
 }
 
 #bomb-count-container, #skip-count-container {
@@ -85,8 +51,12 @@ h3 {
     align-items: center;
 }
 
-@media (max-width: 768px) {
-    .game-container {
-        border: none;
-    }
+.centered-element {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 100vh;
+    background-image: url('/background-images/alma-the-younger.jpg');
+    background-size: cover;
+    background-position: center;
 }

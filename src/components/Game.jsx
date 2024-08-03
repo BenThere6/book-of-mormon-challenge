@@ -14,7 +14,6 @@ import KeyboardTab from '@mui/icons-material/KeyboardTab';
 import ExploreOutlinedIcon from '@mui/icons-material/ExploreOutlined';
 import { useNavigate } from 'react-router-dom';
 import '../assets/css/Game.css';
-import ScrollIndicatorContainer from './ScrollIndicatorContainer';
 
 let countNewVerses = 0;
 
@@ -438,21 +437,19 @@ function Game({ difficulty, category, endGame, usedVerses, username }) {
         </div>
       </div>
       <h3 className='step-title'>Book</h3>
-      <ScrollIndicatorContainer>
-        <div className='options-container'>
-          {Object.keys(verseCounts).map((book) => (
-            <Button
-              variant="outlined"
-              key={book}
-              onClick={() => handleBookSelection(book)}
-              disabled={disabledBooks.includes(book)}
-              sx={{ color: 'white', borderColor: 'white' }}
-            >
-              {book}
-            </Button>
-          ))}
-        </div>
-      </ScrollIndicatorContainer>
+      <div className='options-container' style={{ overflowY: 'auto' }}>
+        {Object.keys(verseCounts).map((book) => (
+          <Button
+            variant="outlined"
+            key={book}
+            onClick={() => handleBookSelection(book)}
+            disabled={disabledBooks.includes(book)}
+            sx={{ color: 'white', borderColor: 'white' }}
+          >
+            {book}
+          </Button>
+        ))}
+      </div>
       <div className="submit-button">
         <Button
           variant="contained"
@@ -509,21 +506,19 @@ function Game({ difficulty, category, endGame, usedVerses, username }) {
           </div>
         </div>
         <h3 className='step-title'>Chapter</h3>
-        <ScrollIndicatorContainer>
-          <div className='options-container'>
-            {chapters.map((chapter) => (
-              <Button
-                variant="outlined"
-                key={chapter}
-                onClick={() => handleChapterSelection(chapter)}
-                disabled={disabledChapters.includes(chapter)}
-                sx={{ color: 'white', borderColor: 'white' }}
-              >
-                {chapter}
-              </Button>
-            ))}
-          </div>
-        </ScrollIndicatorContainer>
+        <div className='options-container' style={{ overflowY: 'auto' }}>
+          {chapters.map((chapter) => (
+            <Button
+              variant="outlined"
+              key={chapter}
+              onClick={() => handleChapterSelection(chapter)}
+              disabled={disabledChapters.includes(chapter)}
+              sx={{ color: 'white', borderColor: 'white' }}
+            >
+              {chapter}
+            </Button>
+          ))}
+        </div>
         <div className="submit-button">
           <Button
             variant="contained"
@@ -583,21 +578,19 @@ function Game({ difficulty, category, endGame, usedVerses, username }) {
           </div>
         </div>
         <h3 className='step-title'>Verse</h3>
-        <ScrollIndicatorContainer>
-          <div className='options-container'>
-            {verses.map((verse) => (
-              <Button
-                variant="outlined"
-                key={verse}
-                onClick={() => handleVerseSelection(verse)}
-                disabled={disabledVerses.includes(verse)}
-                sx={{ color: 'white', borderColor: 'white' }}
-              >
-                {verse}
-              </Button>
-            ))}
-          </div>
-        </ScrollIndicatorContainer>
+        <div className='options-container' style={{ overflowY: 'auto' }}>
+          {verses.map((verse) => (
+            <Button
+              variant="outlined"
+              key={verse}
+              onClick={() => handleVerseSelection(verse)}
+              disabled={disabledVerses.includes(verse)}
+              sx={{ color: 'white', borderColor: 'white' }}
+            >
+              {verse}
+            </Button>
+          ))}
+        </div>
         <div className="submit-button">
           <Button
             variant="contained"
@@ -641,7 +634,7 @@ function Game({ difficulty, category, endGame, usedVerses, username }) {
 
   return (
     <div className='centered-element'>
-      <div style={{
+      <div id='game-container' style={{
         maxWidth: '800px',
         maxHeight: '800px',
         height: '100%',

@@ -1,3 +1,7 @@
+#game-container {
+    height: 100vh;
+}
+
 .icons-container {
     position: absolute;
     width: calc(100% - 40px);
@@ -27,7 +31,8 @@
     color: gray;
 }
 
-#bomb-count-container, #skip-count-container {
+#bomb-count-container,
+#skip-count-container {
     position: absolute;
     bottom: 7px;
     right: 10px;
@@ -63,4 +68,24 @@
 
 .step-title {
     color: white;
+}
+
+.selection-section {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.options-container {
+    max-height: 60vh;
+    width: 100%;
+    overflow-y: auto;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
+    justify-content: center;
+}
+
+.submit-button {
+    margin-top: 10px;
 }

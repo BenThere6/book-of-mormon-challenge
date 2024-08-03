@@ -143,43 +143,45 @@ function Game({ difficulty, category, endGame, usedVerses, username }) {
   const handleSubmit = () => {
     const guess = { book: selectedBook, chapter: selectedChapter, verse: selectedVerse };
     const guessAccuracy = calculateAccuracy(guess, currentVerse);
-
+  
     const correctBook = extractBookFromVerse(currentVerse);
     const correctChapterVerse = extractChapterVerseFromVerse(currentVerse);
     const correctChapter = parseInt(correctChapterVerse.split(':')[0], 10);
     const chapterDifference = Math.abs(parseInt(guess.chapter, 10) - correctChapter);
-
+  
     const { chapterRange } = difficultySettings || {};
-
+  
     let newScore = score;
     let isCorrect = false;
-
+  
     if (guessAccuracy > 0) {
       newScore += guessAccuracy;
       setScore(newScore);
       isCorrect = true;
     }
-
+  
+    let lifeLost = false;
+  
     if (chapterDifference > chapterRange || guess.book !== correctBook) {
-      isCorrect = false;
+      lifeLost = true;
     }
-
+  
     setModalContent({
       guess,
       correctVerse: currentVerse,
       pointsEarned: guessAccuracy,
-      lifeLost: !isCorrect,
+      lifeLost,
     });
-
+  
     setShowModal(true);
-
+  
     saveVerseToHistory(currentVerse, isCorrect);
-
-    if (!isCorrect) {
+  
+    if (lifeLost) {
       setLives((prevLives) => prevLives - 1);
     }
   };
-
+  
   const handleCloseModal = () => {
     if (lives === 0) {
       endGame(score);
@@ -195,7 +197,7 @@ function Game({ difficulty, category, endGame, usedVerses, username }) {
       setDisabledVerses([]);
     }
   };
-
+  
   const calculateAccuracy = (guess, verseToCheck) => {
     let verseList;
     if (verseToCheck.includes(', ')) {

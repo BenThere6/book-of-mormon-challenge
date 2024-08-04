@@ -443,6 +443,7 @@ function Game({ difficulty, category, endGame, usedVerses, username }) {
             onClick={() => handleBookSelection(book)}
             disabled={disabledBooks.includes(book)}
             sx={{ color: 'white', borderColor: 'white' }}
+            className="option-button"
           >
             {book}
           </Button>
@@ -512,6 +513,7 @@ function Game({ difficulty, category, endGame, usedVerses, username }) {
               onClick={() => handleChapterSelection(chapter)}
               disabled={disabledChapters.includes(chapter)}
               sx={{ color: 'white', borderColor: 'white' }}
+              className="option-button"
             >
               {chapter}
             </Button>
@@ -584,6 +586,7 @@ function Game({ difficulty, category, endGame, usedVerses, username }) {
               onClick={() => handleVerseSelection(verse)}
               disabled={disabledVerses.includes(verse)}
               sx={{ color: 'white', borderColor: 'white' }}
+              className="option-button"
             >
               {verse}
             </Button>

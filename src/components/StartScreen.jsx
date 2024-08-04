@@ -26,17 +26,23 @@ function StartScreen({ startGame }) {
   const storedDifficulty = localStorage.getItem('gameDifficulty') || 'medium';
   const storedSeenUpdates = JSON.parse(localStorage.getItem('seenUpdates')) || [];
   const storedDevelopmentNotice = localStorage.getItem('developmentNotice');
+  const storedInitialVersion = localStorage.getItem('initialVersion');
+
+  const currentVersion = UPDATES[UPDATES.length - 1].version;
 
   const handleViewHistory = () => {
     navigate('/history');
   };
 
-  const accumulateUpdates = (seenUpdates) => {
+  const accumulateUpdates = (seenUpdates, initialVersion) => {
     let updatesToShow = [];
+    let showAll = !initialVersion;
 
     for (let update of UPDATES) {
-      if (!seenUpdates.includes(update.version)) {
-        updatesToShow.push(update);
+      if (showAll || update.version > initialVersion) {
+        if (!seenUpdates.includes(update.version)) {
+          updatesToShow.push(update);
+        }
       }
     }
 
@@ -44,7 +50,11 @@ function StartScreen({ startGame }) {
   };
 
   useEffect(() => {
-    const updates = accumulateUpdates(storedSeenUpdates);
+    if (!storedInitialVersion) {
+      localStorage.setItem('initialVersion', currentVersion);
+    }
+
+    const updates = accumulateUpdates(storedSeenUpdates, storedInitialVersion);
     if (updates.length > 0) {
       setUpdatesToShow(updates);
       setIsUpdateModalOpen(true);
@@ -52,7 +62,7 @@ function StartScreen({ startGame }) {
     if (!storedDevelopmentNotice) {
       setShowDevelopmentModal(true);
     }
-  }, []);
+  }, [storedSeenUpdates, storedInitialVersion, currentVersion, storedDevelopmentNotice]);
 
   const handleDevelopmentModalClose = () => {
     setShowDevelopmentModal(false);
@@ -94,8 +104,8 @@ function StartScreen({ startGame }) {
   };
 
   const handleAdmin = () => {
-    navigate('/admin')
-  }
+    navigate('/admin');
+  };
 
   const handleNoUsernameModalClose = () => {
     setIsNoUsernameModalOpen(false);

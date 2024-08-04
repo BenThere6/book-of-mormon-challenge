@@ -12,6 +12,22 @@
     margin-top: 5px;
     border-radius: 15px;
     background-color: rgba(0, 0, 0, .5);
+    max-height: calc(100vh - 510px);
+    overflow-y: auto;
+}
+
+.options-container {
+    max-height: calc(100vh - 425px);
+    width: 100%;
+    overflow-y: auto;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
+    justify-content: center;
+    padding-top: 10px;
+    padding-bottom: 10px;
+    border-top: 1px white solid;
+    border-bottom: 1px white solid;
 }
 
 .verse-text {
@@ -103,20 +119,6 @@
     display: flex;
     flex-direction: column;
     align-items: center;
-}
-
-.options-container {
-    max-height: calc(100vh - 425px);
-    width: 100%;
-    overflow-y: auto;
-    display: flex;
-    flex-wrap: wrap;
-    gap: 10px;
-    justify-content: center;
-    padding-top: 10px;
-    padding-bottom: 10px;
-    border-top: 1px white solid;
-    border-bottom: 1px white solid;
 }
 
 .submit-button {

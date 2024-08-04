@@ -8,7 +8,8 @@
   status = 200
 
 [[redirects]]
-  from = "https://lehislegacy.netlify.app/*"
+  from = "/*"
   to = "https://lehislegacy.com/:splat"
   status = 301
   force = true
+  conditions = { Host = ["lehislegacy.netlify.app"] }

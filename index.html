@@ -27,6 +27,13 @@
   </head>
   <body>
     <div id="root"></div>
+    <div id="pwa-install-prompt" style="display: none;">
+      <div id="pwa-modal">
+        <p>Install Lehi's Legacy for a better experience.</p>
+        <button id="install-pwa">Install</button>
+        <button id="close-pwa-prompt">Close</button>
+      </div>
+    </div>
     <script type="module" src="/src/main.jsx"></script>
     <script>
       if ('serviceWorker' in navigator) {
@@ -37,6 +44,82 @@
             console.log('ServiceWorker registration failed: ', error);
           });
       }
+
+      // PWA installation prompt handling
+      let deferredPrompt;
+      const pwaInstallPrompt = document.getElementById('pwa-install-prompt');
+      const installButton = document.getElementById('install-pwa');
+      const closeButton = document.getElementById('close-pwa-prompt');
+
+      window.addEventListener('beforeinstallprompt', (e) => {
+        e.preventDefault();
+        deferredPrompt = e;
+        pwaInstallPrompt.style.display = 'block';
+      });
+
+      installButton.addEventListener('click', async () => {
+        if (deferredPrompt) {
+          deferredPrompt.prompt();
+          const { outcome } = await deferredPrompt.userChoice;
+          if (outcome === 'accepted') {
+            console.log('PWA setup accepted');
+          } else {
+            console.log('PWA setup rejected');
+          }
+          deferredPrompt = null;
+        }
+        pwaInstallPrompt.style.display = 'none';
+      });
+
+      closeButton.addEventListener('click', () => {
+        pwaInstallPrompt.style.display = 'none';
+      });
+
+      // iOS install prompt
+      function isIos() {
+        const userAgent = window.navigator.userAgent.toLowerCase();
+        return /iphone|ipad|ipod/.test(userAgent);
+      }
+
+      function isInStandaloneMode() {
+        return (window.matchMedia('(display-mode: standalone)').matches) || (window.navigator.standalone);
+      }
+
+      if (isIos() && !isInStandaloneMode()) {
+        pwaInstallPrompt.style.display = 'block';
+        installButton.style.display = 'none';
+        const modalContent = document.getElementById('pwa-modal');
+        modalContent.innerHTML = `
+          <p>Install Lehi's Legacy for a better experience.</p>
+          <p>Tap the share button, then 'Add to Home Screen'.</p>
+          <button id="close-pwa-prompt">Close</button>
+        `;
+        document.getElementById('close-pwa-prompt').addEventListener('click', () => {
+          pwaInstallPrompt.style.display = 'none';
+        });
+      }
     </script>
+    <style>
+      #pwa-install-prompt {
+        position: fixed;
+        top: 0;
+        left: 0;
+        right: 0;
+        bottom: 0;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        background-color: rgba(0, 0, 0, 0.8);
+      }
+      #pwa-modal {
+        background: #fff;
+        padding: 20px;
+        border-radius: 10px;
+        text-align: center;
+      }
+      #pwa-modal button {
+        margin-top: 10px;
+      }
+    </style>
   </body>
 </html>

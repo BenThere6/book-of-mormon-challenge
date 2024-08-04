@@ -26,7 +26,7 @@ function StartScreen({ startGame }) {
   const storedDifficulty = localStorage.getItem('gameDifficulty') || 'medium';
   const storedSeenUpdates = JSON.parse(localStorage.getItem('seenUpdates')) || [];
   const storedDevelopmentNotice = localStorage.getItem('developmentNotice');
-  const storedInitialVersion = localStorage.getItem('initialVersion');
+  const previouslyVisited = localStorage.getItem('previouslyVisited');
 
   const currentVersion = UPDATES[UPDATES.length - 1].version;
 
@@ -34,15 +34,12 @@ function StartScreen({ startGame }) {
     navigate('/history');
   };
 
-  const accumulateUpdates = (seenUpdates, initialVersion) => {
+  const accumulateUpdates = (seenUpdates) => {
     let updatesToShow = [];
-    let showAll = !initialVersion;
 
     for (let update of UPDATES) {
-      if (showAll || update.version > initialVersion) {
-        if (!seenUpdates.includes(update.version)) {
-          updatesToShow.push(update);
-        }
+      if (!seenUpdates.includes(update.version)) {
+        updatesToShow.push(update);
       }
     }
 
@@ -50,19 +47,20 @@ function StartScreen({ startGame }) {
   };
 
   useEffect(() => {
-    if (!storedInitialVersion) {
-      localStorage.setItem('initialVersion', currentVersion);
-    }
-
-    const updates = accumulateUpdates(storedSeenUpdates, storedInitialVersion);
-    if (updates.length > 0) {
-      setUpdatesToShow(updates);
-      setIsUpdateModalOpen(true);
+    if (!previouslyVisited) {
+      localStorage.setItem('previouslyVisited', 'true');
+      localStorage.setItem('seenUpdates', JSON.stringify(UPDATES.map(update => update.version)));
+    } else {
+      const updates = accumulateUpdates(storedSeenUpdates);
+      if (updates.length > 0) {
+        setUpdatesToShow(updates);
+        setIsUpdateModalOpen(true);
+      }
     }
     if (!storedDevelopmentNotice) {
       setShowDevelopmentModal(true);
     }
-  }, [storedSeenUpdates, storedInitialVersion, currentVersion, storedDevelopmentNotice]);
+  }, [storedSeenUpdates, previouslyVisited, storedDevelopmentNotice]);
 
   const handleDevelopmentModalClose = () => {
     setShowDevelopmentModal(false);

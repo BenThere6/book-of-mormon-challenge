@@ -52,6 +52,13 @@ const UPDATES = [
             'Fixed Liahona bug that occasionally disabled the correct book'
         ]
     },
+    {
+        version: '1.12.0',
+        date: 'August 3, 2024',
+        messages: [
+            'App can now be downloaded as PWA'
+        ]
+    },
 ];
 
 export default UPDATES;  

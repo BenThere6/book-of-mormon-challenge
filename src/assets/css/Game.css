@@ -123,12 +123,9 @@
     margin-top: 10px;
 }
 
-/* Remove hover effect on mobile devices */
-@media (hover: none) and (pointer: coarse) {
+@media (max-width: 770px) {
     .options-container button:hover {
-        background-color: initial;
-        /* or whatever the default background is */
-        color: initial;
-        /* or whatever the default color is */
+        border-color: white;
+        color: white;
     }
 }

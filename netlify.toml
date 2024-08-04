@@ -6,3 +6,9 @@
   from = "/*"
   to = "/index.html"
   status = 200
+
+[[redirects]]
+  from = "https://lehislegacy.netlify.app/*"
+  to = "https://lehislegacy.com/:splat"
+  status = 301
+  force = true

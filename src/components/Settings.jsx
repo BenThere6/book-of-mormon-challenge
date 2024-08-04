@@ -229,7 +229,7 @@ const Settings = () => {
             How to Play
           </Typography>
           <Typography variant="body2" paragraph>
-            The goal is to identify the reference (book, chapter, and verse) of the provided scripture. To avoid losing a life, the user must guess the correct book and be within the specified chapter range. Points are awarded based on the proximity to the correct chapter and verse.
+            The goal is to identify the book of the provided scripture, and be within the chapter range (see below). Points are awarded based on the proximity to the correct chapter and verse.
           </Typography>
           <Typography variant="body2" paragraph>
             Players have access to Liahonas and Skips as power-ups during the game. Each difficulty level grants 3 Liahonas and a varying number of Skips. Skips allow players to bypass a scripture without losing a life or earning points. Liahonas remove a percentage of incorrect options.

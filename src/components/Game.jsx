@@ -16,6 +16,15 @@ import FavoriteBorderOutlinedIcon from '@mui/icons-material/FavoriteBorderOutlin
 import { useNavigate } from 'react-router-dom';
 import '../assets/css/Game.css';
 
+const imageUrls = [
+  'background-images/alma-baptizing.jpg',
+  'background-images/alma-the-younger.jpg',
+  'background-images/ammon.jpg',
+  'background-images/brother-of-jared.jpg',
+  'background-images/christ-in-america.jpg',
+  'background-images/king-benjamin.jpg',
+];
+
 let countNewVerses = 0;
 
 function Game({ difficulty, category, endGame, usedVerses, username }) {
@@ -40,6 +49,7 @@ function Game({ difficulty, category, endGame, usedVerses, username }) {
   const [disabledBooks, setDisabledBooks] = useState([]);
   const [disabledChapters, setDisabledChapters] = useState([]);
   const [disabledVerses, setDisabledVerses] = useState([]);
+  const [backgroundImage, setBackgroundImage] = useState(getRandomImage());
   const navigate = useNavigate();
 
   useEffect(() => {
@@ -65,6 +75,11 @@ function Game({ difficulty, category, endGame, usedVerses, username }) {
       window.removeEventListener('popstate', handlePopState);
     };
   }, [navigate, score, lives, bombs, skips, currentVerse, savedDifficulty]);
+
+  function getRandomImage() {
+    const randomIndex = Math.floor(Math.random() * imageUrls.length);
+    return imageUrls[randomIndex];
+  }
 
   function getRandomVerse(needNewVerse) {
     countNewVerses += 1;
@@ -638,7 +653,7 @@ function Game({ difficulty, category, endGame, usedVerses, username }) {
   };
 
   return (
-    <div className='game-page'>
+    <div className='game-page' style={{ backgroundImage: `url(${backgroundImage})`, backgroundSize: 'cover' }}>
       <div id='game-container'>
         <div style={{
           display: 'flex',

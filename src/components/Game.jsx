@@ -255,14 +255,11 @@ function Game({ difficulty, category, endGame, usedVerses, username }) {
   };
 
   const extractBookFromVerse = (verse) => {
-    const refSplit = verse.split(' ');
-    if (refSplit[0][0] >= '1' && refSplit[0][0] <= '4') {
-      return refSplit.slice(0, 2).join(' ');
-    } else if (refSplit.length > 2 && refSplit[2].includes(':')) {
-      return refSplit.slice(0, 2).join(' ');
-    } else {
-      return refSplit[0];
+    const bookMatch = verse.match(/^[1-4]?\s?[a-zA-Z]+(\s[a-zA-Z]+)*/);
+    if (bookMatch) {
+      return bookMatch[0];
     }
+    return '';
   };
 
   const extractChapterVerseFromVerse = (verse) => {

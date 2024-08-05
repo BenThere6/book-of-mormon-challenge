@@ -14,6 +14,7 @@ import KeyboardTab from '@mui/icons-material/KeyboardTab';
 import ExploreOutlinedIcon from '@mui/icons-material/ExploreOutlined';
 import FavoriteBorderOutlinedIcon from '@mui/icons-material/FavoriteBorderOutlined';
 import { useNavigate } from 'react-router-dom';
+import { useMediaQuery } from '@mui/material';
 import '../assets/css/Game.css';
 
 const imageUrls = [
@@ -51,6 +52,7 @@ function Game({ difficulty, category, endGame, usedVerses, username }) {
   const [disabledChapters, setDisabledChapters] = useState([]);
   const [disabledVerses, setDisabledVerses] = useState([]);
   const [backgroundImage, setBackgroundImage] = useState(getRandomImage());
+  const isMobile = useMediaQuery('(hover: none)');
   const navigate = useNavigate();
 
   useEffect(() => {
@@ -426,22 +428,33 @@ function Game({ difficulty, category, endGame, usedVerses, username }) {
     setDisabledVerses(disabledVerses.concat(versesToDisable));
   };
 
-  const renderBooks = () => (
-    <div className='options-container' style={{ overflowY: 'auto' }}>
-      {Object.keys(verseCounts).map((book) => (
-        <Button
-          variant='outlined'
-          key={book}
-          onClick={() => handleBookSelection(book)}
-          disabled={disabledBooks.includes(book)}
-          sx={{ color: 'white', borderColor: 'white' }}
-          className='option-button'
-        >
-          {book}
-        </Button>
-      ))}
-    </div>
-  );
+  const renderBooks = () => {
+    return (
+      <div className='options-container' style={{ overflowY: 'auto' }}>
+        {Object.keys(verseCounts).map((book) => (
+          <Button
+            variant='outlined'
+            key={book}
+            onClick={() => handleBookSelection(book)}
+            disabled={disabledBooks.includes(book)}
+            sx={{
+              color: 'white',
+              borderColor: 'white',
+              ...(isMobile && {
+                '&:hover': {
+                  backgroundColor: 'initial', // reset to initial or desired color
+                  color: 'initial',
+                },
+              }),
+            }}
+            className='option-button'
+          >
+            {book}
+          </Button>
+        ))}
+      </div>
+    );
+  };
 
   const renderChapters = () => {
     if (!selectedBook) return null;

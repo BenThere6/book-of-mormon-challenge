@@ -205,7 +205,6 @@
 @media (hover: none) {
     .MuiButton-root:hover {
         background-color: initial;
-        /* reset to initial or desired color */
         color: initial;
     }
 }

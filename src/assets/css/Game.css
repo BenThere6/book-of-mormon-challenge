@@ -2,7 +2,7 @@
 
 * {
     font-family: 'EB Garamond', serif;
-    font-size: 16px;
+    font-size: 18px;
 }
 
 #game-container {
@@ -16,18 +16,18 @@
     justify-content: space-between;
 }
 
-.header {
+.game-content {
     display: flex;
-    justify-content: space-around;
-    align-items: center;
-    padding-top: 5px;
+    flex-direction: column;
+    flex-grow: 1;
+    justify-content: start;
 }
 
-.score-difficulty {
+.header {
     display: flex;
-    justify-content: space-around;
+    justify-content: space-between;
     align-items: center;
-    width: 100%;
+    padding-top: 5px;
 }
 
 .lives {
@@ -36,7 +36,7 @@
     color: #fff;
 }
 
-.user-guess {
+#guess-container {
     border: 1px solid #ccc;
     margin-top: 5px;
     min-height: 40px;
@@ -45,6 +45,13 @@
     justify-content: center;
     align-items: center;
     background-color: rgba(0, 0, 0, 0.5);
+    box-sizing: border-box;
+}
+
+#guess-container p {
+    margin: 0;
+    font-size: 23px;
+    color: white;
 }
 
 .verse-text-container {
@@ -68,6 +75,7 @@
     display: flex;
     align-items: center;
     color: white;
+    font-size: 35px;
 }
 
 .powerups-container {
@@ -137,23 +145,24 @@
 #score-text {
     padding-left: 10px;
     color: white;
+    font-size: 30px;
 }
 
 #difficulty-text {
     color: white;
+    font-size: 30px;
 }
 
 #lives-text {
     font-family: 'EB Garamond', serif;
-    font-size: 24px;
+    font-size: 30px;
     font-weight: 200;
     padding-right: 2px;
     color: white;
 }
 
 .options-container {
-    flex-grow: 1;
-    max-height: calc(100vh - 425px);
+    max-height: calc(100vh - 380px);
     width: 100%;
     overflow-y: auto;
     display: flex;

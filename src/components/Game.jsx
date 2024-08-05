@@ -423,21 +423,19 @@ function Game({ difficulty, category, endGame, usedVerses, username }) {
   };
 
   const renderBooks = () => (
-    <div className="selection-section">
-      <div className='options-container' style={{ overflowY: 'auto' }}>
-        {Object.keys(verseCounts).map((book) => (
-          <Button
-            variant="outlined"
-            key={book}
-            onClick={() => handleBookSelection(book)}
-            disabled={disabledBooks.includes(book)}
-            sx={{ color: 'white', borderColor: 'white' }}
-            className="option-button"
-          >
-            {book}
-          </Button>
-        ))}
-      </div>
+    <div className='options-container' style={{ overflowY: 'auto' }}>
+      {Object.keys(verseCounts).map((book) => (
+        <Button
+          variant='outlined'
+          key={book}
+          onClick={() => handleBookSelection(book)}
+          disabled={disabledBooks.includes(book)}
+          sx={{ color: 'white', borderColor: 'white' }}
+          className='option-button'
+        >
+          {book}
+        </Button>
+      ))}
     </div>
   );
 
@@ -448,21 +446,19 @@ function Game({ difficulty, category, endGame, usedVerses, username }) {
     const chapters = Array.from({ length: chapterCount }, (_, index) => index + 1);
 
     return (
-      <div className="selection-section">
-        <div className='options-container' style={{ overflowY: 'auto' }}>
-          {chapters.map((chapter) => (
-            <Button
-              variant="outlined"
-              key={chapter}
-              onClick={() => handleChapterSelection(chapter)}
-              disabled={disabledChapters.includes(chapter)}
-              sx={{ color: 'white', borderColor: 'white' }}
-              className="option-button"
-            >
-              {chapter}
-            </Button>
-          ))}
-        </div>
+      <div className='options-container' style={{ overflowY: 'auto' }}>
+        {chapters.map((chapter) => (
+          <Button
+            variant='outlined'
+            key={chapter}
+            onClick={() => handleChapterSelection(chapter)}
+            disabled={disabledChapters.includes(chapter)}
+            sx={{ color: 'white', borderColor: 'white' }}
+            className='option-button'
+          >
+            {chapter}
+          </Button>
+        ))}
       </div>
     );
   };
@@ -476,21 +472,19 @@ function Game({ difficulty, category, endGame, usedVerses, username }) {
     const isSubmitEnabled = currentStep === 'verse' && selectedVerse !== '';
 
     return (
-      <div className="selection-section">
-        <div className='options-container' style={{ overflowY: 'auto' }}>
-          {verses.map((verse) => (
-            <Button
-              variant="outlined"
-              key={verse}
-              onClick={() => handleVerseSelection(verse)}
-              disabled={disabledVerses.includes(verse)}
-              sx={{ color: 'white', borderColor: 'white' }}
-              className="option-button"
-            >
-              {verse}
-            </Button>
-          ))}
-        </div>
+      <div className='options-container' style={{ overflowY: 'auto' }}>
+        {verses.map((verse) => (
+          <Button
+            variant='outlined'
+            key={verse}
+            onClick={() => handleVerseSelection(verse)}
+            disabled={disabledVerses.includes(verse)}
+            sx={{ color: 'white', borderColor: 'white' }}
+            className='option-button'
+          >
+            {verse}
+          </Button>
+        ))}
       </div>
     );
   };
@@ -513,7 +507,9 @@ function Game({ difficulty, category, endGame, usedVerses, username }) {
     return (
       <div className='verse-text-container'>
         {versesArray.map((verse, index) => (
-          <p className='verse-text' key={index}>{verse}</p>
+          <p className='verse-text' key={index}>
+            {verse}
+          </p>
         ))}
       </div>
     );
@@ -526,65 +522,63 @@ function Game({ difficulty, category, endGame, usedVerses, username }) {
   return (
     <div className='game-page' style={{ backgroundImage: `url(${backgroundImage})`, backgroundSize: 'cover' }}>
       <div id='game-container'>
-        <div className='header'>
-          <div id='score-text'>{score}</div>
-          <div id='difficulty-text'>{capitalizeFirstLetter(savedDifficulty)}</div>
-          <div id='lives-container'>
-            <span id='lives-text'>{lives}</span>
-            <FavoriteBorderOutlinedIcon sx={{ color: 'white', marginRight: '5px' }} />
-          </div>
-        </div>
-        <div id='guess-container'>
-          <p>{selectedBook} {selectedChapter && (selectedVerse ? ` ${selectedChapter}:${selectedVerse}` : selectedChapter)}</p>
-        </div>
-        {getCurrentVerseText()}
-        <div className='icons-container'>
-          <div className='back-container'>
-            <IconButton className="back-button" onClick={handleBack}>
-              <ArrowBack sx={{ color: 'white' }} />
-            </IconButton>
-          </div>
-          <div className='step-name'>
-            {currentStep.charAt(0).toUpperCase() + currentStep.slice(1)}
-          </div>
-          <div className='powerups-container'>
-            <div className='bomb-container'>
-              <IconButton
-                onClick={handleUseBomb}
-                disabled={!canUseBomb()}
-                className={!canUseBomb() ? 'bomb-button-disabled' : ''}
-                aria-label="use bomb"
-              >
-                <ExploreOutlinedIcon sx={{ color: canUseBomb() ? 'white' : 'gray' }} />
-              </IconButton>
-              <div id='bomb-count-container'>
-                <span id='bomb-count'>{bombs}</span>
-              </div>
-            </div>
-            <div className='skip-container'>
-              <IconButton
-                onClick={handleUseSkip}
-                disabled={!canUseSkip()}
-                className={!canUseSkip() ? 'skip-button-disabled' : ''}
-                aria-label="use skip"
-              >
-                <KeyboardTab sx={{ color: canUseSkip() ? 'white' : 'gray' }} />
-              </IconButton>
-              <div id='skip-count-container'>
-                <span id='skip-count'>{skips}</span>
-              </div>
+        <div className='game-content'>
+          <div className='header'>
+            <div id='score-text'>{score}</div>
+            <div id='difficulty-text'>{capitalizeFirstLetter(savedDifficulty)}</div>
+            <div id='lives-container'>
+              <span id='lives-text'>{lives}</span>
+              <FavoriteBorderOutlinedIcon sx={{ color: 'white', marginRight: '5px' }} />
             </div>
           </div>
+          <div id='guess-container'>
+            <p>{selectedBook} {selectedChapter && (selectedVerse ? ` ${selectedChapter}:${selectedVerse}` : selectedChapter)}</p>
+          </div>
+          {getCurrentVerseText()}
+          <div className='icons-container'>
+            <div className='back-container'>
+              <IconButton className='back-button' onClick={handleBack}>
+                <ArrowBack sx={{ color: 'white' }} />
+              </IconButton>
+            </div>
+            <div className='step-name'>
+              {currentStep.charAt(0).toUpperCase() + currentStep.slice(1)}
+            </div>
+            <div className='powerups-container'>
+              <div className='bomb-container'>
+                <IconButton
+                  onClick={handleUseBomb}
+                  disabled={!canUseBomb()}
+                  className={!canUseBomb() ? 'bomb-button-disabled' : ''}
+                  aria-label='use bomb'
+                >
+                  <ExploreOutlinedIcon sx={{ color: canUseBomb() ? 'white' : 'gray' }} />
+                </IconButton>
+                <div id='bomb-count-container'>
+                  <span id='bomb-count'>{bombs}</span>
+                </div>
+              </div>
+              <div className='skip-container'>
+                <IconButton
+                  onClick={handleUseSkip}
+                  disabled={!canUseSkip()}
+                  className={!canUseSkip() ? 'skip-button-disabled' : ''}
+                  aria-label='use skip'
+                >
+                  <KeyboardTab sx={{ color: canUseSkip() ? 'white' : 'gray' }} />
+                </IconButton>
+                <div id='skip-count-container'>
+                  <span id='skip-count'>{skips}</span>
+                </div>
+              </div>
+            </div>
+          </div>
+          {currentStep === 'book' && renderBooks()}
+          {currentStep === 'chapter' && renderChapters()}
+          {currentStep === 'verse' && renderVerses()}
         </div>
-        {currentStep === 'book' && renderBooks()}
-        {currentStep === 'chapter' && renderChapters()}
-        {currentStep === 'verse' && renderVerses()}
-        <div className="submit-button">
-          <Button
-            variant="contained"
-            disabled={currentStep !== 'verse'}
-            onClick={handleSubmit}
-          >
+        <div className='submit-button'>
+          <Button variant='contained' disabled={currentStep !== 'verse'} onClick={handleSubmit}>
             Submit Guess
           </Button>
         </div>
@@ -607,7 +601,7 @@ function Game({ difficulty, category, endGame, usedVerses, username }) {
             )}
           </DialogContent>
           <DialogActions>
-            <Button onClick={handleCloseModal} color="primary">
+            <Button onClick={handleCloseModal} color='primary'>
               Okay
             </Button>
           </DialogActions>
@@ -620,10 +614,10 @@ function Game({ difficulty, category, endGame, usedVerses, username }) {
             </DialogContentText>
           </DialogContent>
           <DialogActions>
-            <Button onClick={handleCancelBack} color="primary">
+            <Button onClick={handleCancelBack} color='primary'>
               Cancel
             </Button>
-            <Button onClick={handleConfirmBack} color="primary" autoFocus>
+            <Button onClick={handleConfirmBack} color='primary' autoFocus>
               Confirm
             </Button>
           </DialogActions>

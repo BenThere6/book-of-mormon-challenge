@@ -1,14 +1,15 @@
 import React, { useState } from 'react';
-import { BrowserRouter as Router, Routes, Route, useNavigate } from 'react-router-dom';
+import { BrowserRouter as Router, Routes, Route, useLocation, useNavigate } from 'react-router-dom';
 import StartScreen from './components/StartScreen';
 import Game from './components/Game';
 import Leaderboard from './components/Leaderboard';
-import Feedback from './components/Feedback'; // Import the Feedback component
-import Admin from './components/Admin'; // Import the Admin component
-import Login from './components/Login'; // Import the Login component
-import PrivateRoute from './components/PrivateRoute'; // Import the PrivateRoute component
+import Feedback from './components/Feedback';
+import Admin from './components/Admin';
+import Login from './components/Login';
+import PrivateRoute from './components/PrivateRoute';
 import VerseHistory from './components/VerseHistory';
 import Settings from './components/Settings';
+import PwaPrompt from './components/PwaPrompt';
 import './assets/css/style.css';
 
 function App() {
@@ -16,7 +17,9 @@ function App() {
   const [category, setCategory] = useState('all-verses'); // Default to 'all-verses'
   const [score, setScore] = useState(0);
   const [username, setUsername] = useState(''); // State for username
+  const [isPwaPromptVisible, setPwaPromptVisible] = useState(true); // State for PWA prompt visibility
   const navigate = useNavigate();
+  const location = useLocation();
   let usedVerses = [];
 
   const startGame = (gameID, selectedDifficulty, selectedCategory) => {
@@ -35,6 +38,10 @@ function App() {
     navigate('/');
   };
 
+  const handlePwaPromptClose = () => {
+    setPwaPromptVisible(false);
+  };
+
   return (
     <div className="app">
       <Routes>
@@ -47,6 +54,7 @@ function App() {
         <Route path="/history" element={<VerseHistory />} />
         <Route path="/settings" element={<Settings />} />
       </Routes>
+      {location.pathname === '/' && <PwaPrompt isVisible={isPwaPromptVisible} onClose={handlePwaPromptClose} />}
     </div>
   );
 }

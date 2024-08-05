@@ -239,6 +239,18 @@ function Game({ difficulty, category, endGame, usedVerses, username }) {
     }
   };
 
+  const handleSkipModalClose = () => {
+    setShowModal(false);
+    setCurrentVerse(getRandomVerse(true));
+    setSelectedBook('');
+    setSelectedChapter('');
+    setSelectedVerse('');
+    setCurrentStep('book');
+    setDisabledBooks([]);
+    setDisabledChapters([]);
+    setDisabledVerses([]);
+  };
+
   const calculateAccuracy = (guess, verseToCheck) => {
     let verseList;
     if (verseToCheck.includes(', ')) {
@@ -320,14 +332,10 @@ function Game({ difficulty, category, endGame, usedVerses, username }) {
       setSkips(skips - 1);
       localStorage.setItem('gameSkips', skips - 1);
       saveVerseToHistory(currentVerse, null);
-      setCurrentVerse(getRandomVerse(true));
-      setSelectedBook('');
-      setSelectedChapter('');
-      setSelectedVerse('');
-      setCurrentStep('book');
-      setDisabledBooks([]);
-      setDisabledChapters([]);
-      setDisabledVerses([]);
+      setModalContent({
+        skippedVerse: currentVerse
+      });
+      setShowModal(true);
     }
   };
 
@@ -628,26 +636,36 @@ function Game({ difficulty, category, endGame, usedVerses, username }) {
             Submit Guess
           </Button>
         </div>
-        <Dialog open={showModal} onClose={handleCloseModal}>
-          <DialogTitle>Guess Results</DialogTitle>
+        <Dialog open={showModal} onClose={modalContent.skippedVerse ? handleSkipModalClose : handleCloseModal}>
+          <DialogTitle>{modalContent.skippedVerse ? "Verse Skipped" : "Guess Results"}</DialogTitle>
           <DialogContent>
-            <DialogContentText>
-              Your Guess: {modalContent.guess && `${modalContent.guess.book} ${modalContent.guess.chapter}:${modalContent.guess.verse}`}
-            </DialogContentText>
-            <DialogContentText>
-              Correct Verse: {modalContent.correctVerse}
-            </DialogContentText>
-            <DialogContentText>
-              Points Earned: {modalContent.pointsEarned}
-            </DialogContentText>
-            {modalContent.lifeLost && (
-              <DialogContentText>
-                You lost a life!
-              </DialogContentText>
+            {modalContent.skippedVerse ? (
+              <>
+                <DialogContentText>
+                  {modalContent.skippedVerse}
+                </DialogContentText>
+              </>
+            ) : (
+              <>
+                <DialogContentText>
+                  Your Guess: {modalContent.guess && `${modalContent.guess.book} ${modalContent.guess.chapter}:${modalContent.guess.verse}`}
+                </DialogContentText>
+                <DialogContentText>
+                  Correct Verse: {modalContent.correctVerse}
+                </DialogContentText>
+                <DialogContentText>
+                  Points Earned: {modalContent.pointsEarned}
+                </DialogContentText>
+                {modalContent.lifeLost && (
+                  <DialogContentText>
+                    You lost a life!
+                  </DialogContentText>
+                )}
+              </>
             )}
           </DialogContent>
           <DialogActions>
-            <Button onClick={handleCloseModal} color='primary'>
+            <Button onClick={modalContent.skippedVerse ? handleSkipModalClose : handleCloseModal} color='primary'>
               Okay
             </Button>
           </DialogActions>

@@ -12,10 +12,12 @@ import UpdateModal from './UpdateModal';
 import DevelopmentModal from './DevelopmentModal';
 import UPDATES from '../assets/js/updates';
 import getDifficultySettings from '../assets/js/difficultySettings';
+import { useTheme } from '@mui/material';
 
 const DEVELOPMENT_MESSAGE = 'This application is currently under development. You might encounter bugs, design flaws, or areas that could be improved. If you notice any issues or have suggestions for enhancements, please submit it in feedback found at the bottom of the settings page.';
 
 function StartScreen({ startGame }) {
+  const theme = useTheme();
   const [showDevelopmentModal, setShowDevelopmentModal] = useState(false);
   const [isUpdateModalOpen, setIsUpdateModalOpen] = useState(false);
   const [updatesToShow, setUpdatesToShow] = useState([]);
@@ -168,11 +170,13 @@ function StartScreen({ startGame }) {
         }}>
           <Button variant="contained" onClick={handleStart} sx={{
             mt: 4, 
-            '&:hover': {
-              backgroundColor: 'initial',
-              color: 'white',
-              borderColor: 'white'
-            }
+            [theme.breakpoints.down('md')]: {
+              '&:hover': {
+                // backgroundColor: 'initial',
+                color: 'white',
+                borderColor: 'white',
+              },
+            },
           }}>Start Game</Button>
           <Button
             variant="outlined"

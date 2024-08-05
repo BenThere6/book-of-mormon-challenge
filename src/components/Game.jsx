@@ -462,12 +462,6 @@ function Game({ difficulty, category, endGame, usedVerses, username }) {
               },
               color: 'white',
               borderColor: 'white',
-              ...(isMobile && {
-                '&:hover': {
-                  backgroundColor: 'initial', // reset to initial or desired color
-                  color: 'initial',
-                },
-              }),
             }}
             className='option-button'
           >

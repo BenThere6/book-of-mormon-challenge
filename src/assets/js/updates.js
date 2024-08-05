@@ -59,6 +59,13 @@ const UPDATES = [
             'App can now be downloaded as PWA'
         ]
     },
+    {
+        version: '1.12.1',
+        date: 'August 4, 2024',
+        messages: [
+            'Skip modal now informs user of the reference of a skipped scripture.'
+        ]
+    },
 ];
 
 export default UPDATES;  

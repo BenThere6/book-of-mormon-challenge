@@ -138,7 +138,7 @@ function Game({ difficulty, category, endGame, usedVerses, username }) {
       setSelectedChapter('');
       setSelectedVerse('');
       setCurrentStep('chapter');
-    }, 250); // 1/4 second delay
+    }, 500); // 1/4 second delay
   }
 
   function handleChapterSelection(chapter) {
@@ -146,13 +146,13 @@ function Game({ difficulty, category, endGame, usedVerses, username }) {
       setSelectedChapter(chapter);
       setSelectedVerse('');
       setCurrentStep('verse');
-    }, 250); // 1/4 second delay
+    }, 500); // 1/4 second delay
   }
 
   function handleVerseSelection(verse) {
     setTimeout(() => {
       setSelectedVerse(verse);
-    }, 250); // 1/4 second delay
+    }, 500); // 1/4 second delay
   }
 
   function handleBack() {

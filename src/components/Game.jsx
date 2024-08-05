@@ -24,6 +24,9 @@ const imageUrls = [
   'background-images/brother-of-jared.jpg',
   'background-images/christ-in-america.jpg',
   'background-images/king-benjamin.jpg',
+  'background-images/mound-battle.jpg',
+  'background-images/stripling-warriors.jpg',
+  'background-images/nephi-on-ship.jpg',
 ];
 
 let countNewVerses = 0;

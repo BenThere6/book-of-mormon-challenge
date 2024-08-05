@@ -9,7 +9,10 @@ const BACKGROUND_IMAGES = [
   'background-images/leaderboard-image.jpg',
   'background-images/settings-image.jpg',
   'background-images/history-image.jpg',
-  'title-image.jpg'
+  'title-image.jpg',
+  'background-images/mound-battle.jpg',
+  'background-images/stripling-warriors.jpg',
+  'background-images/nephi-on-ship.jpg',
 ];
 
 self.addEventListener('install', (event) => {

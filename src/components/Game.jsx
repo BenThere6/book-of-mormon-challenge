@@ -447,6 +447,11 @@ function Game({ difficulty, category, endGame, usedVerses, username }) {
             onClick={() => handleBookSelection(book)}
             disabled={disabledBooks.includes(book)}
             sx={{
+              '&:hover': {
+                backgroundColor: 'initial',
+                color: 'white',
+                borderColor: 'white'
+              },
               color: 'white',
               borderColor: 'white',
               ...(isMobile && {
@@ -479,7 +484,13 @@ function Game({ difficulty, category, endGame, usedVerses, username }) {
             key={chapter}
             onClick={() => handleChapterSelection(chapter)}
             disabled={disabledChapters.includes(chapter)}
-            sx={{ color: 'white', borderColor: 'white' }}
+            sx={{
+              color: 'white', borderColor: 'white', '&:hover': {
+                backgroundColor: 'initial',
+                color: 'white',
+                borderColor: 'white'
+              }
+            }}
             className='option-button'
           >
             {chapter}
@@ -505,7 +516,13 @@ function Game({ difficulty, category, endGame, usedVerses, username }) {
             key={verse}
             onClick={() => handleVerseSelection(verse)}
             disabled={disabledVerses.includes(verse)}
-            sx={{ color: 'white', borderColor: 'white' }}
+            sx={{
+              color: 'white', borderColor: 'white', '&:hover': {
+                backgroundColor: 'initial',
+                color: 'white',
+                borderColor: 'white'
+              }
+            }}
             className='option-button'
           >
             {verse}
@@ -607,7 +624,7 @@ function Game({ difficulty, category, endGame, usedVerses, username }) {
           {currentStep === 'verse' && renderVerses()}
         </div>
         <div className='submit-button'>
-          <Button variant='outlined' disabled={currentStep !== 'verse'} sx={{ borderColor:'white', color:'white' }} onClick={handleSubmit}>
+          <Button variant='outlined' disabled={currentStep !== 'verse'} sx={{ borderColor: 'white', color: 'white' }} onClick={handleSubmit}>
             Submit Guess
           </Button>
         </div>

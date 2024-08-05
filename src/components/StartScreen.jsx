@@ -166,7 +166,14 @@ function StartScreen({ startGame }) {
           alignItems: 'center',
           gap: .5
         }}>
-          <Button variant="contained" onClick={handleStart} sx={{ mt: 4 }}>Start Game</Button>
+          <Button variant="contained" onClick={handleStart} sx={{
+            mt: 4, 
+            '&:hover': {
+              backgroundColor: 'initial',
+              color: 'white',
+              borderColor: 'white'
+            }
+          }}>Start Game</Button>
           <Button
             variant="outlined"
             onClick={handleViewLeaderboard}

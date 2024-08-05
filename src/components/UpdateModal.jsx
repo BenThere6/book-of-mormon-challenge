@@ -11,17 +11,11 @@ const UpdateModal = ({ open, onClose, updates }) => {
 
   useEffect(() => {
     const checkStandalone = () => {
-      const isStandaloneMode = window.matchMedia('(display-mode: standalone)').matches || navigator.standalone;
+      const isStandaloneMode = window.matchMedia('(display-mode: standalone)').matches || window.navigator.standalone;
       setIsStandalone(isStandaloneMode);
     };
 
     checkStandalone();
-
-    window.addEventListener('resize', checkStandalone);
-
-    return () => {
-      window.removeEventListener('resize', checkStandalone);
-    };
   }, []);
 
   if (isStandalone) {

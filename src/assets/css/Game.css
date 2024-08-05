@@ -60,6 +60,7 @@
 .step-name {
     display: flex;
     align-items: center;
+    color: white;
 }
 
 .powerups-container {
@@ -118,6 +119,11 @@
 
 #score-text {
     padding-left: 10px;
+    color: white;
+}
+
+#difficulty-text {
+    color: white;
 }
 
 #lives-text {
@@ -144,6 +150,7 @@
 
 .verse-text {
     margin: 5px;
+    color: white;
 }
 
 .submit-button {

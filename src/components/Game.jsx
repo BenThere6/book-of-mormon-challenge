@@ -151,8 +151,12 @@ function Game({ difficulty, category, endGame, usedVerses, username }) {
     if (currentStep === 'book') {
       setShowConfirmation(true);
     } else if (currentStep === 'chapter') {
+      setSelectedChapter('');
+      setSelectedVerse('');
       setCurrentStep('book');
     } else if (currentStep === 'verse') {
+      setSelectedChapter('');
+      setSelectedVerse('');
       setCurrentStep('chapter');
     }
   }
@@ -532,8 +536,10 @@ function Game({ difficulty, category, endGame, usedVerses, username }) {
             </div>
           </div>
           <div id='guess-container'>
-            <p>{selectedBook} {selectedChapter && (selectedVerse ? ` ${selectedChapter}:${selectedVerse}` : selectedChapter)}</p>
-            {!selectedBook && <p className="placeholder">(Your guess will be here)</p>}
+            <p>
+              {selectedBook} {selectedChapter && (selectedVerse ? `${selectedChapter}:${selectedVerse}` : selectedChapter)}
+              {!selectedBook && <span className="placeholder">(Your guess here)</span>}
+            </p>
           </div>
           {getCurrentVerseText()}
           <div className='icons-container'>

@@ -585,7 +585,7 @@ function Game({ difficulty, category, endGame, usedVerses, username }) {
           {currentStep === 'verse' && renderVerses()}
         </div>
         <div className='submit-button'>
-          <Button variant='contained' disabled={currentStep !== 'verse'} onClick={handleSubmit}>
+          <Button variant='outlined' disabled={currentStep !== 'verse'} sx={{ borderColor:'white', color:'white' }} onClick={handleSubmit}>
             Submit Guess
           </Button>
         </div>

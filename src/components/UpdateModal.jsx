@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import Dialog from '@mui/material/Dialog';
 import DialogActions from '@mui/material/DialogActions';
 import DialogContent from '@mui/material/DialogContent';
@@ -7,6 +7,27 @@ import Button from '@mui/material/Button';
 import ScrollIndicatorContainer from './ScrollIndicatorContainer';
 
 const UpdateModal = ({ open, onClose, updates }) => {
+  const [isStandalone, setIsStandalone] = useState(false);
+
+  useEffect(() => {
+    const checkStandalone = () => {
+      const isStandaloneMode = window.matchMedia('(display-mode: standalone)').matches || navigator.standalone;
+      setIsStandalone(isStandaloneMode);
+    };
+
+    checkStandalone();
+
+    window.addEventListener('resize', checkStandalone);
+
+    return () => {
+      window.removeEventListener('resize', checkStandalone);
+    };
+  }, []);
+
+  if (isStandalone) {
+    return null; // Do not render the modal if in PWA standalone mode
+  }
+
   return (
     <Dialog open={open} onClose={onClose} maxWidth="md" fullWidth>
       <DialogTitle>Updates</DialogTitle>

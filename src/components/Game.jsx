@@ -533,6 +533,7 @@ function Game({ difficulty, category, endGame, usedVerses, username }) {
           </div>
           <div id='guess-container'>
             <p>{selectedBook} {selectedChapter && (selectedVerse ? ` ${selectedChapter}:${selectedVerse}` : selectedChapter)}</p>
+            {!selectedBook && <p className="placeholder">(Your guess will be here)</p>}
           </div>
           {getCurrentVerseText()}
           <div className='icons-container'>

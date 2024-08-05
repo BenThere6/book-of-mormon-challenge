@@ -146,13 +146,16 @@ function Game({ difficulty, category, endGame, usedVerses, username }) {
     setSelectedVerse(verse);
   }
 
-  function handleBack(step) {
+  function handleBack() {
     setSelectedVerse('');
     setSelectedChapter('');
-    if (step === 'book') {
-      setSelectedBook('');
+    if (currentStep === 'book') {
+      navigate('/');
+    } else if (currentStep === 'chapter') {
+      setCurrentStep('book');
+    } else if (currentStep === 'verse') {
+      setCurrentStep('chapter');
     }
-    setCurrentStep(step);
   }
 
   const handleSubmit = () => {
@@ -414,42 +417,6 @@ function Game({ difficulty, category, endGame, usedVerses, username }) {
 
   const renderBooks = () => (
     <div className="selection-section">
-      <div className='icons-container'>
-        <div className='back-container'>
-          <IconButton className="back-button" onClick={() => navigate(-1)}>
-            <ArrowBack sx={{ color: 'white' }} />
-          </IconButton>
-        </div>
-        <div className='powerups-container'>
-          <div className='bomb-container'>
-            <IconButton
-              onClick={handleUseBomb}
-              disabled={!canUseBomb()}
-              className={!canUseBomb() ? 'bomb-button-disabled' : ''}
-              aria-label="use bomb"
-            >
-              <ExploreOutlinedIcon sx={{ color: canUseBomb() ? 'white' : 'gray' }} />
-            </IconButton>
-            <div id='bomb-count-container'>
-              <span id='bomb-count'>{bombs}</span>
-            </div>
-          </div>
-          <div className='skip-container'>
-            <IconButton
-              onClick={handleUseSkip}
-              disabled={!canUseSkip()}
-              className={!canUseSkip() ? 'skip-button-disabled' : ''}
-              aria-label="use skip"
-            >
-              <KeyboardTab sx={{ color: canUseSkip() ? 'white' : 'gray' }} />
-            </IconButton>
-            <div id='skip-count-container'>
-              <span id='skip-count'>{skips}</span>
-            </div>
-          </div>
-        </div>
-      </div>
-      <h3 className='step-title'>Book</h3>
       <div className='options-container' style={{ overflowY: 'auto' }}>
         {Object.keys(verseCounts).map((book) => (
           <Button
@@ -464,15 +431,6 @@ function Game({ difficulty, category, endGame, usedVerses, username }) {
           </Button>
         ))}
       </div>
-      <div className="submit-button">
-        <Button
-          variant="contained"
-          disabled={currentStep !== 'verse'}
-          onClick={handleSubmit}
-        >
-          Submit Guess
-        </Button>
-      </div>
     </div>
   );
 
@@ -484,42 +442,6 @@ function Game({ difficulty, category, endGame, usedVerses, username }) {
 
     return (
       <div className="selection-section">
-        <div className='icons-container'>
-          <div className='back-container'>
-            <IconButton className="back-button" onClick={() => handleBack('book')}>
-              <ArrowBack sx={{ color: 'white' }} />
-            </IconButton>
-          </div>
-          <div className='powerups-container'>
-            <div className='bomb-container'>
-              <IconButton
-                onClick={handleUseBomb}
-                disabled={!canUseBomb()}
-                className={!canUseBomb() ? 'bomb-button-disabled' : ''}
-                aria-label="use bomb"
-              >
-                <ExploreOutlinedIcon sx={{ color: canUseBomb() ? 'white' : 'gray' }} />
-              </IconButton>
-              <div id='bomb-count-container'>
-                <span id='bomb-count'>{bombs}</span>
-              </div>
-            </div>
-            <div className='skip-container'>
-              <IconButton
-                onClick={handleUseSkip}
-                disabled={!canUseSkip()}
-                className={!canUseSkip() ? 'skip-button-disabled' : ''}
-                aria-label="use skip"
-              >
-                <KeyboardTab sx={{ color: canUseSkip() ? 'white' : 'gray' }} />
-              </IconButton>
-              <div id='skip-count-container'>
-                <span id='skip-count'>{skips}</span>
-              </div>
-            </div>
-          </div>
-        </div>
-        <h3 className='step-title'>Chapter</h3>
         <div className='options-container' style={{ overflowY: 'auto' }}>
           {chapters.map((chapter) => (
             <Button
@@ -533,15 +455,6 @@ function Game({ difficulty, category, endGame, usedVerses, username }) {
               {chapter}
             </Button>
           ))}
-        </div>
-        <div className="submit-button">
-          <Button
-            variant="contained"
-            disabled={currentStep !== 'verse'}
-            onClick={handleSubmit}
-          >
-            Submit Guess
-          </Button>
         </div>
       </div>
     );
@@ -557,42 +470,6 @@ function Game({ difficulty, category, endGame, usedVerses, username }) {
 
     return (
       <div className="selection-section">
-        <div className='icons-container'>
-          <div className='back-container'>
-            <IconButton className="back-button" onClick={() => handleBack('chapter')}>
-              <ArrowBack sx={{ color: 'white' }} />
-            </IconButton>
-          </div>
-          <div className='powerups-container'>
-            <div className='bomb-container'>
-              <IconButton
-                onClick={handleUseBomb}
-                disabled={!canUseBomb()}
-                className={!canUseBomb() ? 'bomb-button-disabled' : ''}
-                aria-label="use bomb"
-              >
-                <ExploreOutlinedIcon sx={{ color: canUseBomb() ? 'white' : 'gray' }} />
-              </IconButton>
-              <div id='bomb-count-container'>
-                <span id='bomb-count'>{bombs}</span>
-              </div>
-            </div>
-            <div className='skip-container'>
-              <IconButton
-                onClick={handleUseSkip}
-                disabled={!canUseSkip()}
-                className={!canUseSkip() ? 'skip-button-disabled' : ''}
-                aria-label="use skip"
-              >
-                <KeyboardTab sx={{ color: canUseSkip() ? 'white' : 'gray' }} />
-              </IconButton>
-              <div id='skip-count-container'>
-                <span id='skip-count'>{skips}</span>
-              </div>
-            </div>
-          </div>
-        </div>
-        <h3 className='step-title'>Verse</h3>
         <div className='options-container' style={{ overflowY: 'auto' }}>
           {verses.map((verse) => (
             <Button
@@ -606,19 +483,6 @@ function Game({ difficulty, category, endGame, usedVerses, username }) {
               {verse}
             </Button>
           ))}
-        </div>
-        <div className="submit-button">
-          <Button
-            variant="outlined"
-            disabled={!isSubmitEnabled}
-            onClick={handleSubmit}
-            sx={{
-              color: 'white',
-              borderColor: 'white'
-            }}
-          >
-            Submit Guess
-          </Button>
         </div>
       </div>
     );
@@ -640,9 +504,9 @@ function Game({ difficulty, category, endGame, usedVerses, username }) {
     const versesArray = verseText.split('\n\n');
 
     return (
-      <div className='verse-text-container' style={{ color: 'white', textAlign: 'left', marginBottom: '20px' }}>
+      <div className='verse-text-container'>
         {versesArray.map((verse, index) => (
-          <p className='verse-text' key={index} style={{ marginTop: '5px' }}>{verse}</p>
+          <p className='verse-text' key={index}>{verse}</p>
         ))}
       </div>
     );
@@ -655,41 +519,68 @@ function Game({ difficulty, category, endGame, usedVerses, username }) {
   return (
     <div className='game-page' style={{ backgroundImage: `url(${backgroundImage})`, backgroundSize: 'cover' }}>
       <div id='game-container'>
-        <div style={{
-          display: 'flex',
-          justifyContent: 'space-between',
-          paddingTop: '5px'
-        }}>
-          <h2 id='score-text' style={{ fontSize: '24px', color: '#fff', margin: '0' }}>{score}</h2>
-          <h2 id='difficulty-text' style={{ fontSize: '24px', color: '#fff', margin: '0' }}>{capitalizeFirstLetter(savedDifficulty)}</h2>
-          <div style={{ display: 'flex', alignItems: 'center', color: '#fff' }}>
+        <div className='header'>
+          <div id='score-text'>{score}</div>
+          <div id='difficulty-text'>{capitalizeFirstLetter(savedDifficulty)}</div>
+          <div id='lives-container'>
             <span id='lives-text'>{lives}</span>
-            <FavoriteBorderOutlinedIcon sx={{ marginRight: '5px' }} />
+            <FavoriteBorderOutlinedIcon sx={{ color: 'white', marginRight: '5px' }} />
           </div>
         </div>
-        <div style={{
-          border: '1px solid #ccc',
-          marginTop: '5px',
-          minHeight: '40px',
-          borderRadius: '15px',
-          display: 'flex',
-          justifyContent: 'center',
-          alignItems: 'center',
-          backgroundColor: 'rgba(0, 0, 0, 0.5)'
-        }}>
-          <p style={{
-            fontSize: '30px',
-            fontFamily: 'Trebuchet MS, Lucida Sans Unicode, Lucida Grande, Lucida Sans, Arial, sans-serif',
-            color: 'white',
-            margin: '0'
-          }}>
-            {selectedBook} {selectedChapter && (selectedVerse ? ` ${selectedChapter}:${selectedVerse}` : selectedChapter)}
-          </p>
+        <div id='guess-container'>
+          <p>{selectedBook} {selectedChapter && (selectedVerse ? ` ${selectedChapter}:${selectedVerse}` : selectedChapter)}</p>
         </div>
         {getCurrentVerseText()}
+        <div className='icons-container'>
+          <div className='back-container'>
+            <IconButton className="back-button" onClick={handleBack}>
+              <ArrowBack sx={{ color: 'white' }} />
+            </IconButton>
+          </div>
+          <div className='step-name'>
+            {currentStep.charAt(0).toUpperCase() + currentStep.slice(1)}
+          </div>
+          <div className='powerups-container'>
+            <div className='bomb-container'>
+              <IconButton
+                onClick={handleUseBomb}
+                disabled={!canUseBomb()}
+                className={!canUseBomb() ? 'bomb-button-disabled' : ''}
+                aria-label="use bomb"
+              >
+                <ExploreOutlinedIcon sx={{ color: canUseBomb() ? 'white' : 'gray' }} />
+              </IconButton>
+              <div id='bomb-count-container'>
+                <span id='bomb-count'>{bombs}</span>
+              </div>
+            </div>
+            <div className='skip-container'>
+              <IconButton
+                onClick={handleUseSkip}
+                disabled={!canUseSkip()}
+                className={!canUseSkip() ? 'skip-button-disabled' : ''}
+                aria-label="use skip"
+              >
+                <KeyboardTab sx={{ color: canUseSkip() ? 'white' : 'gray' }} />
+              </IconButton>
+              <div id='skip-count-container'>
+                <span id='skip-count'>{skips}</span>
+              </div>
+            </div>
+          </div>
+        </div>
         {currentStep === 'book' && renderBooks()}
         {currentStep === 'chapter' && renderChapters()}
         {currentStep === 'verse' && renderVerses()}
+        <div className="submit-button">
+          <Button
+            variant="contained"
+            disabled={currentStep !== 'verse'}
+            onClick={handleSubmit}
+          >
+            Submit Guess
+          </Button>
+        </div>
         <Dialog open={showModal} onClose={handleCloseModal}>
           <DialogTitle>Guess Results</DialogTitle>
           <DialogContent>

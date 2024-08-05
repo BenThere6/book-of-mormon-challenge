@@ -46,11 +46,11 @@ function Game({ difficulty, category, endGame, usedVerses, username }) {
   const [currentStep, setCurrentStep] = useState('book');
   const [showModal, setShowModal] = useState(false);
   const [modalContent, setModalContent] = useState({});
+  const [showConfirmation, setShowConfirmation] = useState(false);
   const [disabledBooks, setDisabledBooks] = useState([]);
   const [disabledChapters, setDisabledChapters] = useState([]);
   const [disabledVerses, setDisabledVerses] = useState([]);
   const [backgroundImage, setBackgroundImage] = useState(getRandomImage());
-  const [showConfirmation, setShowConfirmation] = useState(false);
   const navigate = useNavigate();
 
   useEffect(() => {
@@ -158,7 +158,6 @@ function Game({ difficulty, category, endGame, usedVerses, username }) {
   }
 
   const handleConfirmBack = () => {
-    setShowConfirmation(false);
     navigate('/');
   };
 
@@ -614,7 +613,7 @@ function Game({ difficulty, category, endGame, usedVerses, username }) {
           </DialogActions>
         </Dialog>
         <Dialog open={showConfirmation} onClose={handleCancelBack}>
-          <DialogTitle>Confirm Navigation</DialogTitle>
+          <DialogTitle>Confirmation</DialogTitle>
           <DialogContent>
             <DialogContentText>
               Are you sure you want to go back? Your game progress will be lost.
@@ -624,8 +623,8 @@ function Game({ difficulty, category, endGame, usedVerses, username }) {
             <Button onClick={handleCancelBack} color="primary">
               Cancel
             </Button>
-            <Button onClick={handleConfirmBack} color="primary">
-              Yes, Go Back
+            <Button onClick={handleConfirmBack} color="primary" autoFocus>
+              Confirm
             </Button>
           </DialogActions>
         </Dialog>

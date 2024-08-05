@@ -133,20 +133,26 @@ function Game({ difficulty, category, endGame, usedVerses, username }) {
   }
 
   function handleBookSelection(book) {
-    setSelectedBook(book);
-    setSelectedChapter('');
-    setSelectedVerse('');
-    setCurrentStep('chapter');
+    setTimeout(() => {
+      setSelectedBook(book);
+      setSelectedChapter('');
+      setSelectedVerse('');
+      setCurrentStep('chapter');
+    }, 250); // 1/4 second delay
   }
 
   function handleChapterSelection(chapter) {
-    setSelectedChapter(chapter);
-    setSelectedVerse('');
-    setCurrentStep('verse');
+    setTimeout(() => {
+      setSelectedChapter(chapter);
+      setSelectedVerse('');
+      setCurrentStep('verse');
+    }, 250); // 1/4 second delay
   }
 
   function handleVerseSelection(verse) {
-    setSelectedVerse(verse);
+    setTimeout(() => {
+      setSelectedVerse(verse);
+    }, 250); // 1/4 second delay
   }
 
   function handleBack() {

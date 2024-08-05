@@ -77,24 +77,26 @@ function StartScreen({ startGame }) {
       return;
     }
 
-    const difficultySettings = getDifficultySettings(storedDifficulty);
-    localStorage.setItem('gameScore', 0);
-    localStorage.setItem('gameLives', 3);
-    localStorage.setItem('gameDifficulty', storedDifficulty);
-    localStorage.setItem('gameBombs', difficultySettings?.bombCount || 3);
-    localStorage.setItem('gameSkips', difficultySettings?.skipCount || 3);
-    localStorage.setItem('gameCurrentVerse', '');
+    setTimeout(() => {
+      const difficultySettings = getDifficultySettings(storedDifficulty);
+      localStorage.setItem('gameScore', 0);
+      localStorage.setItem('gameLives', 3);
+      localStorage.setItem('gameDifficulty', storedDifficulty);
+      localStorage.setItem('gameBombs', difficultySettings?.bombCount || 3);
+      localStorage.setItem('gameSkips', difficultySettings?.skipCount || 3);
+      localStorage.setItem('gameCurrentVerse', '');
 
-    let gameIDs = JSON.parse(localStorage.getItem('gameIDs')) || {};
-    const newGameID = Object.keys(gameIDs).length > 0 ? Math.max(...Object.keys(gameIDs)) + 1 : 1;
-    gameIDs[newGameID] = false;
+      let gameIDs = JSON.parse(localStorage.getItem('gameIDs')) || {};
+      const newGameID = Object.keys(gameIDs).length > 0 ? Math.max(...Object.keys(gameIDs)) + 1 : 1;
+      gameIDs[newGameID] = false;
 
-    localStorage.setItem('gameIDs', JSON.stringify(gameIDs));
-    localStorage.setItem('currentGameID', newGameID);
+      localStorage.setItem('gameIDs', JSON.stringify(gameIDs));
+      localStorage.setItem('currentGameID', newGameID);
 
-    const category = 'all-verses';
+      const category = 'all-verses';
 
-    startGame(newGameID, storedDifficulty, category);
+      startGame(newGameID, storedDifficulty, category);
+    }, 250); // 1/4 second delay
   };
 
   const handleViewLeaderboard = () => {

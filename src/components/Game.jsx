@@ -139,7 +139,7 @@ function Game({ difficulty, category, endGame, usedVerses, username }) {
       setSelectedVerse('');
       setCurrentStep('chapter');
       document.activeElement.blur(); // remove focus from the button
-    }, 500); // 1/2 second delay
+    }, 100); // 1/2 second delay
   }
 
   function handleChapterSelection(chapter) {
@@ -148,14 +148,14 @@ function Game({ difficulty, category, endGame, usedVerses, username }) {
       setSelectedVerse('');
       setCurrentStep('verse');
       document.activeElement.blur(); // remove focus from the button
-    }, 500); // 1/2 second delay
+    }, 100); // 1/2 second delay
   }
 
   function handleVerseSelection(verse) {
     setTimeout(() => {
       setSelectedVerse(verse);
       document.activeElement.blur(); // remove focus from the button
-    }, 500); // 1/2 second delay
+    }, 100); // 1/2 second delay
   }
 
   function handleBack() {

@@ -50,6 +50,7 @@ function Game({ difficulty, category, endGame, usedVerses, username }) {
   const [disabledChapters, setDisabledChapters] = useState([]);
   const [disabledVerses, setDisabledVerses] = useState([]);
   const [backgroundImage, setBackgroundImage] = useState(getRandomImage());
+  const [showConfirmation, setShowConfirmation] = useState(false);
   const navigate = useNavigate();
 
   useEffect(() => {
@@ -147,16 +148,23 @@ function Game({ difficulty, category, endGame, usedVerses, username }) {
   }
 
   function handleBack() {
-    setSelectedVerse('');
-    setSelectedChapter('');
     if (currentStep === 'book') {
-      navigate('/');
+      setShowConfirmation(true);
     } else if (currentStep === 'chapter') {
       setCurrentStep('book');
     } else if (currentStep === 'verse') {
       setCurrentStep('chapter');
     }
   }
+
+  const handleConfirmBack = () => {
+    setShowConfirmation(false);
+    navigate('/');
+  };
+
+  const handleCancelBack = () => {
+    setShowConfirmation(false);
+  };
 
   const handleSubmit = () => {
     const guess = { book: selectedBook, chapter: selectedChapter, verse: selectedVerse };
@@ -602,6 +610,22 @@ function Game({ difficulty, category, endGame, usedVerses, username }) {
           <DialogActions>
             <Button onClick={handleCloseModal} color="primary">
               Okay
+            </Button>
+          </DialogActions>
+        </Dialog>
+        <Dialog open={showConfirmation} onClose={handleCancelBack}>
+          <DialogTitle>Confirm Navigation</DialogTitle>
+          <DialogContent>
+            <DialogContentText>
+              Are you sure you want to go back? Your game progress will be lost.
+            </DialogContentText>
+          </DialogContent>
+          <DialogActions>
+            <Button onClick={handleCancelBack} color="primary">
+              Cancel
+            </Button>
+            <Button onClick={handleConfirmBack} color="primary">
+              Yes, Go Back
             </Button>
           </DialogActions>
         </Dialog>

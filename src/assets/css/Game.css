@@ -131,6 +131,7 @@
     font-size: 24px;
     font-weight: 200;
     padding-right: 2px;
+    color: white;
 }
 
 .options-container {
@@ -155,6 +156,18 @@
 
 .submit-button {
     margin-top: 10px;
+}
+
+#guess-container {
+    border: 1px solid #ccc;
+    margin-top: 5px;
+    min-height: 40px;
+    border-radius: 15px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background-color: rgba(0, 0, 0, 0.5);
+    color: white;
 }
 
 @media (max-width: 770px) {

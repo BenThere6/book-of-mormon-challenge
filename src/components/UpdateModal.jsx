@@ -16,6 +16,11 @@ const UpdateModal = ({ open, onClose, updates }) => {
     };
 
     checkStandalone();
+    window.addEventListener('resize', checkStandalone);
+
+    return () => {
+      window.removeEventListener('resize', checkStandalone);
+    };
   }, []);
 
   if (isStandalone) {

@@ -33,7 +33,11 @@ const PwaPrompt = ({ isVisible, onClose }) => {
     }
   };
 
-  if (isIos && !isInStandaloneMode) {
+  if (isInStandaloneMode) {
+    return null; // Do not render the modal if in standalone mode
+  }
+
+  if (isIos) {
     return isVisible ? (
       <div id="pwa-install-prompt">
         <div id="pwa-modal">

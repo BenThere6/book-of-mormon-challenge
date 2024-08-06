@@ -43,9 +43,18 @@ const PwaPrompt = ({ isVisible, onClose }) => {
         <div id="pwa-modal">
           <h3>Install Lehi's Legacy for a better experience.</h3>
           <div id="ios-instructions">
-            <img id="step-1" src="/pwa-how-to/step-1.jpeg" alt="Step 1" />
-            <img id="step-2" src="/pwa-how-to/step-2.jpeg" alt="Step 2" />
-            <img id="step-3" src="/pwa-how-to/step-3.jpeg" alt="Step 3" />
+            <div className="image-container">
+              <img id="step-1" src="/pwa-how-to/step-1.jpeg" alt="Step 1" />
+              <div className="circle" id="circle-1"></div>
+            </div>
+            <div className="image-container">
+              <img id="step-2" src="/pwa-how-to/step-2.jpeg" alt="Step 2" />
+              <div className="circle" id="circle-2"></div>
+            </div>
+            <div className="image-container">
+              <img id="step-3" src="/pwa-how-to/step-3.jpeg" alt="Step 3" />
+              <div className="circle" id="circle-3"></div>
+            </div>
           </div>
           <button id="close-pwa-prompt" onClick={onClose}>Close</button>
         </div>

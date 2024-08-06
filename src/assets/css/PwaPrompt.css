@@ -8,12 +8,11 @@
     justify-content: center;
     align-items: center;
     background-color: rgba(0, 0, 0, 0.8);
-    /* overflow-y: auto; */
 }
 
 #pwa-modal {
     background: #fff;
-    /* padding: 20px; */
+    padding: 20px;
     border-radius: 10px;
     text-align: center;
 }
@@ -21,12 +20,10 @@
 #pwa-modal button {
     margin-top: 10px;
     margin-right: 10px;
-    /* Add space between buttons */
 }
 
 #pwa-modal button:last-child {
     margin-right: 0;
-    /* Remove margin for the last button */
 }
 
 #ios-instructions {
@@ -37,7 +34,14 @@
     margin-top: 10px;
 }
 
-#step-1, #step-2 {
+.image-container {
+    position: relative;
+    display: inline-block;
+}
+
+#step-1,
+#step-2,
+#step-3 {
     height: 250px;
 }
 
@@ -48,4 +52,33 @@
 #step-3 {
     height: 208px;
     margin-top: 10px;
+}
+
+.circle {
+    position: absolute;
+    border: 3px solid red;
+    border-radius: 50%;
+}
+
+#circle-1 {
+    top: 89%;
+    left: 35.7%;
+    width: 25px;
+    height: 25px;
+}
+
+#circle-2 {
+    top: 59%;
+    left: 0;
+    width: 100%;
+    height: 29px;
+    border-radius: 8px;
+    box-sizing: border-box;
+}
+
+#circle-3 {
+    top: 16%;
+    left: 82%;
+    width: 50px;
+    height: 50px;
 }

@@ -41,7 +41,7 @@ const PwaPrompt = ({ isVisible, onClose }) => {
     return isVisible ? (
       <div id="pwa-install-prompt">
         <div id="pwa-modal">
-          <h3>Install Lehi's Legacy for a better experience.</h3>
+          <p>Install Lehi's Legacy for a better experience.</p>
           <div id="ios-instructions">
             <div className="image-container">
               <img id="step-1" src="/pwa-how-to/step-1.jpeg" alt="Step 1" />

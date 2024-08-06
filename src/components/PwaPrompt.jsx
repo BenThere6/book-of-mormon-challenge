@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from 'react';
+import Button from '@mui/material/Button';
 import '../assets/css/PwaPrompt.css';
 
 const PwaPrompt = ({ isVisible, onClose }) => {
@@ -56,7 +57,7 @@ const PwaPrompt = ({ isVisible, onClose }) => {
               <div className="circle" id="circle-3"></div>
             </div>
           </div>
-          <button id="close-pwa-prompt" onClick={onClose}>Close</button>
+          <Button id="close-pwa-prompt" onClick={onClose} variant="contained" color="primary">Close</Button>
         </div>
       </div>
     ) : null;
@@ -66,8 +67,8 @@ const PwaPrompt = ({ isVisible, onClose }) => {
     <div id="pwa-install-prompt">
       <div id="pwa-modal">
         <p>Install Lehi's Legacy for a better experience.</p>
-        <button id="install-pwa" onClick={handleInstallClick}>Install</button>
-        <button id="close-pwa-prompt" onClick={onClose}>Close</button>
+        <Button id="install-pwa" onClick={handleInstallClick} variant="contained" color="primary">Install</Button>
+        <Button id="close-pwa-prompt" onClick={onClose} variant="contained" color="primary">Close</Button>
       </div>
     </div>
   ) : null;

@@ -511,8 +511,6 @@ function Game({ difficulty, category, endGame, usedVerses, username }) {
     const verseCount = verseCounts[selectedBook][selectedChapter - 1];
     const verses = Array.from({ length: verseCount }, (_, index) => index + 1);
 
-    const isSubmitEnabled = currentStep === 'verse' && selectedVerse !== '';
-
     return (
       <div className='options-container' style={{ overflowY: 'auto' }}>
         {verses.map((verse) => (
@@ -566,6 +564,8 @@ function Game({ difficulty, category, endGame, usedVerses, username }) {
   const capitalizeFirstLetter = (string) => {
     return string.charAt(0).toUpperCase() + string.slice(1).toLowerCase();
   };
+
+  const isSubmitEnabled = currentStep === 'verse' && selectedVerse !== '';
 
   return (
     <div className='game-page' style={{ backgroundImage: `url(${backgroundImage})`, backgroundSize: 'cover' }}>
@@ -629,7 +629,7 @@ function Game({ difficulty, category, endGame, usedVerses, username }) {
           {currentStep === 'verse' && renderVerses()}
         </div>
         <div className='submit-button'>
-          <Button variant='outlined' disabled={currentStep !== 'verse'} sx={{ borderColor: 'white', color: 'white' }} onClick={handleSubmit}>
+          <Button variant='outlined' disabled={!isSubmitEnabled} sx={{ borderColor: 'white', color: 'white' }} onClick={handleSubmit}>
             Submit Guess
           </Button>
         </div>

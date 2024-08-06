@@ -8,11 +8,12 @@
     justify-content: center;
     align-items: center;
     background-color: rgba(0, 0, 0, 0.8);
+    /* overflow-y: auto; */
 }
 
 #pwa-modal {
     background: #fff;
-    padding: 20px;
+    /* padding: 20px; */
     border-radius: 10px;
     text-align: center;
 }
@@ -26,4 +27,25 @@
 #pwa-modal button:last-child {
     margin-right: 0;
     /* Remove margin for the last button */
+}
+
+#ios-instructions {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    justify-content: center;
+    margin-top: 10px;
+}
+
+#step-1, #step-2 {
+    height: 250px;
+}
+
+#step-1 {
+    margin-right: 10px;
+}
+
+#step-3 {
+    height: 208px;
+    margin-top: 10px;
 }

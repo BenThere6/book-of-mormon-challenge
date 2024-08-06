@@ -41,8 +41,12 @@ const PwaPrompt = ({ isVisible, onClose }) => {
     return isVisible ? (
       <div id="pwa-install-prompt">
         <div id="pwa-modal">
-          <p>Install Lehi's Legacy for a better experience.</p>
-          <p>Tap the share button, then 'Add to Home Screen'.</p>
+          <h3>Install Lehi's Legacy for a better experience.</h3>
+          <div id="ios-instructions">
+            <img id="step-1" src="/pwa-how-to/step-1.jpeg" alt="Step 1" />
+            <img id="step-2" src="/pwa-how-to/step-2.jpeg" alt="Step 2" />
+            <img id="step-3" src="/pwa-how-to/step-3.jpeg" alt="Step 3" />
+          </div>
           <button id="close-pwa-prompt" onClick={onClose}>Close</button>
         </div>
       </div>

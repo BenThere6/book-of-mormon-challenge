@@ -58,21 +58,21 @@ const Leaderboard = () => {
       isSubmittingRef.current = false;
       return;
     }
-
+  
     const storedGameIDs = localStorage.getItem('gameIDs');
     let gameIDs = storedGameIDs ? JSON.parse(storedGameIDs) : {};
-
+  
     const latestGameID = Object.keys(gameIDs).length > 0 ? Math.max(...Object.keys(gameIDs)) : null;
     console.log('latest game id: ' + latestGameID);
-
+  
     if (latestGameID !== null && gameIDs[latestGameID] === true) {
       console.log(`Score for game ID ${latestGameID} already submitted.`);
       isSubmittingRef.current = false;
       return;
     }
-
+  
     console.log('Submitting score:', { username, score, difficulty, category });
-
+  
     fetch(`${apiurl}${difficulty}/${category}`, {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
@@ -86,15 +86,15 @@ const Leaderboard = () => {
       })
       .then((data) => {
         console.log('Score saved, response:', data);
-
+  
         setIsScoreSubmitted(true);
         isSubmittingRef.current = false;
-
+  
         if (latestGameID !== null) {
           gameIDs[latestGameID] = true;
           localStorage.setItem('gameIDs', JSON.stringify(gameIDs));
         }
-
+  
         fetchLeaderboard();
       })
       .catch((error) => {
@@ -102,7 +102,7 @@ const Leaderboard = () => {
         isSubmittingRef.current = false;
       });
   };
-
+  
   const handlePlayAgain = () => {
     setUsername('');
     setIsScoreSubmitted(false);

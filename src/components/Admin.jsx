@@ -136,26 +136,28 @@ const Admin = () => {
             <Tab label="Home" component={Link} sx={{ '&.Mui-selected': { color: 'white' } }} to="/" />
           </Tabs>
         </AppBar>
-        <Box display="flex" justifyContent="space-between" marginTop={2}>
-          <FormControl style={{ minWidth: 120 }}>
-            <InputLabel>Difficulty</InputLabel>
-            <Select value={filterDifficulty} onChange={(e) => setFilterDifficulty(e.target.value)}>
-              <MenuItem value=""><em>None</em></MenuItem>
-              <MenuItem value="easy">Easy</MenuItem>
-              <MenuItem value="medium">Medium</MenuItem>
-              <MenuItem value="hard">Hard</MenuItem>
-            </Select>
-          </FormControl>
-          <FormControl style={{ minWidth: 120 }}>
-            <InputLabel>Username</InputLabel>
-            <Select value={filterUsername} onChange={(e) => setFilterUsername(e.target.value)}>
-              <MenuItem value=""><em>None</em></MenuItem>
-              {uniqueUsernames.map((username, index) => (
-                <MenuItem key={index} value={username}>{username}</MenuItem>
-              ))}
-            </Select>
-          </FormControl>
-        </Box>
+        {selectedTab === 2 && (
+          <Box display="flex" justifyContent="space-between" marginTop={2}>
+            <FormControl style={{ minWidth: 120 }}>
+              <InputLabel>Difficulty</InputLabel>
+              <Select value={filterDifficulty} onChange={(e) => setFilterDifficulty(e.target.value)}>
+                <MenuItem value=""><em>None</em></MenuItem>
+                <MenuItem value="easy">Easy</MenuItem>
+                <MenuItem value="medium">Medium</MenuItem>
+                <MenuItem value="hard">Hard</MenuItem>
+              </Select>
+            </FormControl>
+            <FormControl style={{ minWidth: 120 }}>
+              <InputLabel>Username</InputLabel>
+              <Select value={filterUsername} onChange={(e) => setFilterUsername(e.target.value)}>
+                <MenuItem value=""><em>None</em></MenuItem>
+                {uniqueUsernames.map((username, index) => (
+                  <MenuItem key={index} value={username}>{username}</MenuItem>
+                ))}
+              </Select>
+            </FormControl>
+          </Box>
+        )}
       </Box>
       <Box sx={{ flex: '1 1 auto', overflowY: 'auto' }}>
         <TabPanel value={selectedTab} index={0}>

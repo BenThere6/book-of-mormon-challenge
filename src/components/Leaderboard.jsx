@@ -19,13 +19,15 @@ const Leaderboard = () => {
   const score = location.state?.score || 0;
   const initialDifficulty = location.state?.difficulty || localStorage.getItem('gameDifficulty') || 'medium';
   const initialCategory = 'all-verses';
-  const [leaderboard, setLeaderboard] = useState(null); // Changed initial state to null
+  const [leaderboard, setLeaderboard] = useState(null);
   const [username, setUsername] = useState('');
   const [userRank, setUserRank] = useState(null);
   const [difficulty, setDifficulty] = useState(initialDifficulty);
   const [category, setCategory] = useState(initialCategory);
   const [isScoreSubmitted, setIsScoreSubmitted] = useState(false);
   const isSubmittingRef = useRef(false);
+  const leaderboardRef = useRef(null);
+  const entryRefs = useRef([]);
 
   useEffect(() => {
     const storedUsername = localStorage.getItem('username');
@@ -36,6 +38,15 @@ const Leaderboard = () => {
     }
     fetchLeaderboard();
   }, [isScoreSubmitted, score, difficulty, category]);
+
+  useEffect(() => {
+    if (userRank && leaderboardRef.current) {
+      const userEntry = entryRefs.current[userRank - 1];
+      if (userEntry) {
+        userEntry.scrollIntoView({ behavior: 'smooth', block: 'center' });
+      }
+    }
+  }, [leaderboard, userRank]);
 
   const fetchLeaderboard = () => {
     fetch(`${apiurl}${difficulty}/${category}`)
@@ -59,21 +70,21 @@ const Leaderboard = () => {
       isSubmittingRef.current = false;
       return;
     }
-  
+
     const storedGameIDs = localStorage.getItem('gameIDs');
     let gameIDs = storedGameIDs ? JSON.parse(storedGameIDs) : {};
-  
+
     const latestGameID = Object.keys(gameIDs).length > 0 ? Math.max(...Object.keys(gameIDs)) : null;
     console.log('latest game id: ' + latestGameID);
-  
+
     if (latestGameID !== null && gameIDs[latestGameID] === true) {
       console.log(`Score for game ID ${latestGameID} already submitted.`);
       isSubmittingRef.current = false;
       return;
     }
-  
+
     console.log('Submitting score:', { username, score, difficulty, category });
-  
+
     fetch(`${apiurl}${difficulty}/${category}`, {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
@@ -87,15 +98,15 @@ const Leaderboard = () => {
       })
       .then((data) => {
         console.log('Score saved, response:', data);
-  
+
         setIsScoreSubmitted(true);
         isSubmittingRef.current = false;
-  
+
         if (latestGameID !== null) {
           gameIDs[latestGameID] = true;
           localStorage.setItem('gameIDs', JSON.stringify(gameIDs));
         }
-  
+
         fetchLeaderboard();
       })
       .catch((error) => {
@@ -103,7 +114,7 @@ const Leaderboard = () => {
         isSubmittingRef.current = false;
       });
   };
-  
+
   const handlePlayAgain = () => {
     setUsername('');
     setIsScoreSubmitted(false);
@@ -130,7 +141,7 @@ const Leaderboard = () => {
 
   const storedGameScore = parseInt(localStorage.getItem('gameScore')) || 0;
 
-  const placeholderEntries = Array(10).fill(null); // Adjust the number of placeholders as needed
+  const placeholderEntries = Array(10).fill(null);
 
   return (
     <Box
@@ -147,7 +158,6 @@ const Leaderboard = () => {
         fontSize: '20px'
       }}
     >
-      {/* Background Image Box */}
       <Box
         sx={{
           position: 'fixed',
@@ -166,12 +176,11 @@ const Leaderboard = () => {
             left: 0,
             width: '100%',
             height: '100%',
-            backgroundColor: 'rgba(0, 0, 0, 0.5)', // Adjust the opacity as needed
+            backgroundColor: 'rgba(0, 0, 0, 0.5)',
             mixBlendMode: 'darken',
           },
         }}
       />
-      {/* Main Container */}
       <Container
         sx={{
           textAlign: 'center',
@@ -187,7 +196,6 @@ const Leaderboard = () => {
           marginTop: '20px',
         }}
       >
-        {/* Header Box */}
         <Box
           sx={{
             display: 'flex',
@@ -208,7 +216,6 @@ const Leaderboard = () => {
             }
           }}
         >
-          {/* Score Display */}
           {
             <Box
               sx={{
@@ -238,7 +245,6 @@ const Leaderboard = () => {
             </Box>
           }
 
-          {/* Difficulty Selection */}
           <FormControl component="fieldset" sx={{ width: '70%', backgroundColor: 'rgba(0, 0, 0, 0.5)', borderRadius: 5, padding: 2, boxSizing: 'border-box', '@media (max-width: 550px)': { width: 'auto', flex: '1 1 30%' } }}>
             <RadioGroup
               row
@@ -262,7 +268,6 @@ const Leaderboard = () => {
                 }
               }}
             >
-              {/* Difficulty Options */}
               <FormControlLabel value="easy" control={<Radio />} label="Easy" />
               <FormControlLabel value="medium" control={<Radio />} label="Medium" />
               <FormControlLabel value="hard" control={<Radio />} label="Hard" />
@@ -270,10 +275,10 @@ const Leaderboard = () => {
           </FormControl>
         </Box>
 
-        {/* Leaderboard List */}
         <Box
           component="ol"
           className='scroll-shadow'
+          ref={leaderboardRef}
           sx={{
             padding: 0,
             width: '100%',
@@ -287,6 +292,7 @@ const Leaderboard = () => {
               <Box
                 component="li"
                 key={index}
+                ref={(el) => (entryRefs.current[index] = el)}
                 sx={{
                   listStyle: 'none',
                   padding: 2,
@@ -340,7 +346,6 @@ const Leaderboard = () => {
             ))
           )}
         </Box>
-        {/* Play Again Button */}
         <div className="play-again">
           <Button variant="outlined" sx={{ color: 'white', borderColor: 'white' }} onClick={handlePlayAgain}>Home</Button>
         </div>

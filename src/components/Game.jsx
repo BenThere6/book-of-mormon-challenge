@@ -586,6 +586,9 @@ function Game({ difficulty, category, endGame, usedVerses, username }) {
             </p>
           </div>
           {getCurrentVerseText()}
+          <div className='goal-container'>
+            Get correct book and within {difficultySettings.chapterRange} of correct chapter.
+          </div>
           <div className='icons-container'>
             <div className='back-container'>
               <IconButton className='back-button' onClick={handleBack}>

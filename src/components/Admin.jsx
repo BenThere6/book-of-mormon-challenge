@@ -124,7 +124,12 @@ const Admin = () => {
           Admin Dashboard
         </Typography>
         <AppBar position="static">
-          <Tabs value={selectedTab} onChange={handleTabChange} aria-label="admin tabs">
+          <Tabs 
+            value={selectedTab} 
+            onChange={handleTabChange} 
+            aria-label="admin tabs" 
+            sx={{ '& .MuiTab-root': { minWidth: 'auto', padding: '0 8px', fontSize: '0.875rem' }, '& .MuiTabs-flexContainer': { gap: '3px' } }}
+          >
             <Tab label="Analytics" sx={{ '&.Mui-selected': { color: 'white' } }} />
             <Tab label="Feedback" sx={{ '&.Mui-selected': { color: 'white' } }} />
             <Tab label="Scores" sx={{ '&.Mui-selected': { color: 'white' } }} />

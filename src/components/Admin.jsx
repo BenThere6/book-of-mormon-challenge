@@ -116,9 +116,6 @@ const Admin = () => {
       </Typography>
       <Box display="flex" justifyContent="center" marginBottom={2}>
         <Link to="/" style={{ textDecoration: 'none' }}>
-          {/* <Typography variant="h6" color="primary">
-            Home
-          </Typography> */}
         </Link>
       </Box>
       <AppBar position="static">

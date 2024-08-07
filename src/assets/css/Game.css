@@ -79,7 +79,10 @@
     display: flex;
     align-items: center;
     color: white;
-    padding-left: 46px;
+    /* padding-left: 46px; */
+    position: absolute;
+    left: 50%;
+    transform: translate(-50%);
     font-size: 35px;
 }
 
@@ -148,16 +151,19 @@
 }
 
 #score-text {
-    padding-left: 10px;
+    padding-left: 5px;
     color: white;
     font-size: 30px;
-    margin-left: 8px;
-    margin-right: 14px;
+    /* margin-left: 8px;
+    margin-right: 14px; */
 }
 
 #difficulty-text {
     color: white;
     font-size: 30px;
+    position: absolute;
+    left: 50%;
+    transform: translate(-50%);
 }
 
 #lives-text {

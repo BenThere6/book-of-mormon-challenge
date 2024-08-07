@@ -116,9 +116,9 @@ const Admin = () => {
       </Typography>
       <Box display="flex" justifyContent="center" marginBottom={2}>
         <Link to="/" style={{ textDecoration: 'none' }}>
-          <Typography variant="h6" color="primary">
+          {/* <Typography variant="h6" color="primary">
             Home
-          </Typography>
+          </Typography> */}
         </Link>
       </Box>
       <AppBar position="static">
@@ -126,6 +126,7 @@ const Admin = () => {
           <Tab label="Analytics" sx={{ '&.Mui-selected': { color: 'white' } }} />
           <Tab label="Feedback" sx={{ '&.Mui-selected': { color: 'white' } }} />
           <Tab label="Scores" sx={{ '&.Mui-selected': { color: 'white' } }} />
+          <Tab label="Home" component={Link} sx={{ '&.Mui-selected': { color: 'white' } }} to="/" />
         </Tabs>
       </AppBar>
       <TabPanel value={selectedTab} index={0}>

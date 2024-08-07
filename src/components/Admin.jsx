@@ -14,6 +14,8 @@ const Admin = () => {
   const [openDialog, setOpenDialog] = useState(false);
   const [itemToDelete, setItemToDelete] = useState(null);
   const [deleteType, setDeleteType] = useState('');
+  const [filterUsername, setFilterUsername] = useState('');
+  const [filterDifficulty, setFilterDifficulty] = useState('');
   const navigate = useNavigate();
 
   useEffect(() => {
@@ -105,37 +107,62 @@ const Admin = () => {
     setDeleteType('');
   };
 
+  const uniqueUsernames = [...new Set(scores.map((item) => item.username))];
+
+  const filteredScores = scores
+    .filter((item) => (filterUsername ? item.username.includes(filterUsername) : true))
+    .filter((item) => (filterDifficulty ? item.difficulty === filterDifficulty : true));
+
   if (isLoading) {
     return <Typography>Loading...</Typography>;
   }
 
   return (
-    <Container maxWidth={false} sx={{ width: '100%', padding: 0, boxSizing: 'border-box' }}>
-      <Typography variant="h4" component="div" gutterBottom>
-        Admin Dashboard
-      </Typography>
-      <Box display="flex" justifyContent="center" marginBottom={2}>
-        <Link to="/" style={{ textDecoration: 'none' }}>
-        </Link>
+    <Container maxWidth={false} sx={{ display: 'flex', flexDirection: 'column', height: '100vh', padding: 0, boxSizing: 'border-box' }}>
+      <Box sx={{ flex: '0 0 auto', padding: '16px' }}>
+        <Typography variant="h4" component="div" gutterBottom>
+          Admin Dashboard
+        </Typography>
+        <AppBar position="static">
+          <Tabs value={selectedTab} onChange={handleTabChange} aria-label="admin tabs">
+            <Tab label="Analytics" sx={{ '&.Mui-selected': { color: 'white' } }} />
+            <Tab label="Feedback" sx={{ '&.Mui-selected': { color: 'white' } }} />
+            <Tab label="Scores" sx={{ '&.Mui-selected': { color: 'white' } }} />
+            <Tab label="Home" component={Link} sx={{ '&.Mui-selected': { color: 'white' } }} to="/" />
+          </Tabs>
+        </AppBar>
+        <Box display="flex" justifyContent="space-between" marginTop={2}>
+          <FormControl style={{ minWidth: 120 }}>
+            <InputLabel>Difficulty</InputLabel>
+            <Select value={filterDifficulty} onChange={(e) => setFilterDifficulty(e.target.value)}>
+              <MenuItem value=""><em>None</em></MenuItem>
+              <MenuItem value="easy">Easy</MenuItem>
+              <MenuItem value="medium">Medium</MenuItem>
+              <MenuItem value="hard">Hard</MenuItem>
+            </Select>
+          </FormControl>
+          <FormControl style={{ minWidth: 120 }}>
+            <InputLabel>Username</InputLabel>
+            <Select value={filterUsername} onChange={(e) => setFilterUsername(e.target.value)}>
+              <MenuItem value=""><em>None</em></MenuItem>
+              {uniqueUsernames.map((username, index) => (
+                <MenuItem key={index} value={username}>{username}</MenuItem>
+              ))}
+            </Select>
+          </FormControl>
+        </Box>
       </Box>
-      <AppBar position="static">
-        <Tabs value={selectedTab} onChange={handleTabChange} aria-label="admin tabs">
-          <Tab label="Analytics" sx={{ '&.Mui-selected': { color: 'white' } }} />
-          <Tab label="Feedback" sx={{ '&.Mui-selected': { color: 'white' } }} />
-          <Tab label="Scores" sx={{ '&.Mui-selected': { color: 'white' } }} />
-          <Tab label="Home" component={Link} sx={{ '&.Mui-selected': { color: 'white' } }} to="/" />
-        </Tabs>
-      </AppBar>
-      <TabPanel value={selectedTab} index={0}>
-        <Analytics uniqueUsers={uniqueUsers} />
-      </TabPanel>
-      <TabPanel value={selectedTab} index={1}>
-        <Feedback feedback={feedback} onDeleteClick={handleDeleteClick} />
-      </TabPanel>
-      <TabPanel value={selectedTab} index={2}>
-        <Scores scores={scores} onDeleteClick={handleDeleteClick} />
-      </TabPanel>
-
+      <Box sx={{ flex: '1 1 auto', overflowY: 'auto' }}>
+        <TabPanel value={selectedTab} index={0}>
+          <Analytics uniqueUsers={uniqueUsers} />
+        </TabPanel>
+        <TabPanel value={selectedTab} index={1}>
+          <Feedback feedback={feedback} onDeleteClick={handleDeleteClick} />
+        </TabPanel>
+        <TabPanel value={selectedTab} index={2}>
+          <Scores scores={filteredScores} onDeleteClick={handleDeleteClick} />
+        </TabPanel>
+      </Box>
       <Dialog
         open={openDialog}
         onClose={handleDialogClose}
@@ -197,58 +224,10 @@ const Feedback = ({ feedback, onDeleteClick }) => (
 );
 
 const Scores = ({ scores, onDeleteClick }) => {
-  const [filterUsername, setFilterUsername] = useState('');
-  const [filterDifficulty, setFilterDifficulty] = useState('');
-  const [sortOrder, setSortOrder] = useState({ field: 'score', order: 'desc' });
-
-  const handleSortChange = (field) => {
-    setSortOrder((prevState) => ({
-      field,
-      order: prevState.order === 'asc' ? 'desc' : 'asc'
-    }));
-  };
-
-  const uniqueUsernames = [...new Set(scores.map((item) => item.username))];
-
-  const filteredScores = scores
-    .filter((item) => (filterUsername ? item.username.includes(filterUsername) : true))
-    .filter((item) => (filterDifficulty ? item.difficulty === filterDifficulty : true))
-    .sort((a, b) => {
-      if (sortOrder.order === 'asc') {
-        return a[sortOrder.field] > b[sortOrder.field] ? 1 : -1;
-      }
-      return a[sortOrder.field] < b[sortOrder.field] ? 1 : -1;
-    });
-
   return (
-    <Paper elevation={3} style={{ padding: '16px', maxHeight: '50vh', overflowY: 'auto' }}>
+    <Paper elevation={3} style={{ padding: '16px', maxHeight: '100%', overflowY: 'auto' }}>
       <Typography variant="h6">Scores</Typography>
-      <Box display="flex" justifyContent="space-between" marginBottom={2}>
-        <FormControl style={{ minWidth: 120 }}>
-          <InputLabel>Difficulty</InputLabel>
-          <Select value={filterDifficulty} onChange={(e) => setFilterDifficulty(e.target.value)}>
-            <MenuItem value=""><em>None</em></MenuItem>
-            <MenuItem value="easy">Easy</MenuItem>
-            <MenuItem value="medium">Medium</MenuItem>
-            <MenuItem value="hard">Hard</MenuItem>
-          </Select>
-        </FormControl>
-        <FormControl style={{ minWidth: 120 }}>
-          <InputLabel>Username</InputLabel>
-          <Select value={filterUsername} onChange={(e) => setFilterUsername(e.target.value)}>
-            <MenuItem value=""><em>None</em></MenuItem>
-            {uniqueUsernames.map((username, index) => (
-              <MenuItem key={index} value={username}>{username}</MenuItem>
-            ))}
-          </Select>
-        </FormControl>
-      </Box>
-      <Box display="flex" justifyContent="space-between" marginBottom={2}>
-        <Button onClick={() => handleSortChange('username')}>Sort by Username</Button>
-        <Button onClick={() => handleSortChange('score')}>Sort by Score</Button>
-        <Button onClick={() => handleSortChange('difficulty')}>Sort by Difficulty</Button>
-      </Box>
-      {filteredScores.map((item, index) => (
+      {scores.map((item, index) => (
         <Box key={index} marginBottom={2} padding={2} border={1} borderRadius={4} borderColor="grey.300" display="flex" justifyContent="space-between">
           <Box>
             <Typography><strong>User:</strong> {item.username}</Typography>

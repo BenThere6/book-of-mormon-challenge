@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { useNavigate, Link } from 'react-router-dom';
-import { AppBar, Tabs, Tab, Box, Typography, Container, Paper, IconButton, Dialog, DialogActions, DialogContent, DialogContentText, DialogTitle, Button } from '@mui/material';
+import { AppBar, Tabs, Tab, Box, Typography, Container, Paper, IconButton, Dialog, DialogActions, DialogContent, DialogContentText, DialogTitle, Button, MenuItem, Select, InputLabel, FormControl } from '@mui/material';
 import DeleteIcon from '@mui/icons-material/Delete';
 
 const apiurl = 'https://bens-api-dd63362f50db.herokuapp.com/admin/';
@@ -111,7 +111,7 @@ const Admin = () => {
 
   return (
     <Container maxWidth={false} sx={{ width: '100%', padding: 0, boxSizing: 'border-box' }}>
-      <Typography variant="h2" component="div" gutterBottom>
+      <Typography variant="h4" component="div" gutterBottom>
         Admin Dashboard
       </Typography>
       <Box display="flex" justifyContent="center" marginBottom={2}>
@@ -198,23 +198,73 @@ const Feedback = ({ feedback, onDeleteClick }) => (
   </Paper>
 );
 
-const Scores = ({ scores, onDeleteClick }) => (
-  <Paper elevation={3} style={{ padding: '16px', maxHeight: '50vh', overflowY: 'auto' }}>
-    <Typography variant="h6">Scores</Typography>
-    {scores.map((item, index) => (
-      <Box key={index} marginBottom={2} padding={2} border={1} borderRadius={4} borderColor="grey.300" display="flex" justifyContent="space-between">
-        <Box>
-          <Typography><strong>User:</strong> {item.username}</Typography>
-          <Typography><strong>Score:</strong> {item.score}</Typography>
-          <Typography><strong>Difficulty:</strong> {item.difficulty}</Typography>
-          <Typography><strong>Date:</strong> {new Date(item.created_at).toLocaleString()}</Typography>
-        </Box>
-        <IconButton onClick={() => onDeleteClick(item.id, 'score')}>
-          <DeleteIcon />
-        </IconButton>
+const Scores = ({ scores, onDeleteClick }) => {
+  const [filterUsername, setFilterUsername] = useState('');
+  const [filterDifficulty, setFilterDifficulty] = useState('');
+  const [sortOrder, setSortOrder] = useState({ field: 'score', order: 'desc' });
+
+  const handleSortChange = (field) => {
+    setSortOrder((prevState) => ({
+      field,
+      order: prevState.order === 'asc' ? 'desc' : 'asc'
+    }));
+  };
+
+  const uniqueUsernames = [...new Set(scores.map((item) => item.username))];
+
+  const filteredScores = scores
+    .filter((item) => (filterUsername ? item.username.includes(filterUsername) : true))
+    .filter((item) => (filterDifficulty ? item.difficulty === filterDifficulty : true))
+    .sort((a, b) => {
+      if (sortOrder.order === 'asc') {
+        return a[sortOrder.field] > b[sortOrder.field] ? 1 : -1;
+      }
+      return a[sortOrder.field] < b[sortOrder.field] ? 1 : -1;
+    });
+
+  return (
+    <Paper elevation={3} style={{ padding: '16px', maxHeight: '50vh', overflowY: 'auto' }}>
+      <Typography variant="h6">Scores</Typography>
+      <Box display="flex" justifyContent="space-between" marginBottom={2}>
+        <FormControl style={{ minWidth: 120 }}>
+          <InputLabel>Difficulty</InputLabel>
+          <Select value={filterDifficulty} onChange={(e) => setFilterDifficulty(e.target.value)}>
+            <MenuItem value=""><em>None</em></MenuItem>
+            <MenuItem value="easy">Easy</MenuItem>
+            <MenuItem value="medium">Medium</MenuItem>
+            <MenuItem value="hard">Hard</MenuItem>
+          </Select>
+        </FormControl>
+        <FormControl style={{ minWidth: 120 }}>
+          <InputLabel>Username</InputLabel>
+          <Select value={filterUsername} onChange={(e) => setFilterUsername(e.target.value)}>
+            <MenuItem value=""><em>None</em></MenuItem>
+            {uniqueUsernames.map((username, index) => (
+              <MenuItem key={index} value={username}>{username}</MenuItem>
+            ))}
+          </Select>
+        </FormControl>
       </Box>
-    ))}
-  </Paper>
-);
+      <Box display="flex" justifyContent="space-between" marginBottom={2}>
+        <Button onClick={() => handleSortChange('username')}>Sort by Username</Button>
+        <Button onClick={() => handleSortChange('score')}>Sort by Score</Button>
+        <Button onClick={() => handleSortChange('difficulty')}>Sort by Difficulty</Button>
+      </Box>
+      {filteredScores.map((item, index) => (
+        <Box key={index} marginBottom={2} padding={2} border={1} borderRadius={4} borderColor="grey.300" display="flex" justifyContent="space-between">
+          <Box>
+            <Typography><strong>User:</strong> {item.username}</Typography>
+            <Typography><strong>Score:</strong> {item.score}</Typography>
+            <Typography><strong>Difficulty:</strong> {item.difficulty}</Typography>
+            <Typography><strong>Date:</strong> {new Date(item.created_at).toLocaleString()}</Typography>
+          </Box>
+          <IconButton onClick={() => onDeleteClick(item.id, 'score')}>
+            <DeleteIcon />
+          </IconButton>
+        </Box>
+      ))}
+    </Paper>
+  );
+};
 
 export default Admin;

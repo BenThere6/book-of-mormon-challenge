@@ -66,6 +66,16 @@ const UPDATES = [
             'Skip modal now informs user of the reference of a skipped scripture.'
         ]
     },
+    // {
+    //     version: '1.13.0',
+    //     date: 'August 7, 2024',
+    //     messages: [
+    //         'Fixed Liahona bug.',
+    //         'Added automatic scroll to score on leaderboard',
+    //         'Fixed game display bugs.',
+    //         'Display goal in game.'
+    //     ]
+    // },
 ];
 
 export default UPDATES;  

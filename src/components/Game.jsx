@@ -322,6 +322,22 @@ function Game({ difficulty, category, endGame, usedVerses, username }) {
     return refSplit[refSplit.length - 1];
   };
 
+  const parseChapterFromVerse = (verse) => {
+    const verseParts = verse.split(':');
+    if (verseParts.length < 2) {
+      throw new Error('Unexpected verse format: ' + verse);
+    }
+  
+    const chapterPart = verseParts[0].split(' ');
+    const chapter = parseInt(chapterPart[chapterPart.length - 1]);
+    
+    if (isNaN(chapter)) {
+      throw new Error('Parsed chapter is NaN: ' + verse);
+    }
+  
+    return chapter;
+  };  
+
   const handleUseBomb = () => {
     if (canUseBomb()) {
       setBombs(bombs - 1);
@@ -409,25 +425,32 @@ function Game({ difficulty, category, endGame, usedVerses, username }) {
   };
 
   const disableIncorrectChapters = () => {
-    const correctChapter = parseInt(currentVerse.split(':')[0].split(' ')[1]);
+    let correctChapter;
+  
+    try {
+      correctChapter = parseChapterFromVerse(currentVerse);
+    } catch (error) {
+      console.error(error.message);
+      return;
+    }
+  
     const chapterCount = verseCounts[selectedBook].length;
     const allChapters = Array.from({ length: chapterCount }, (_, index) => index + 1);
     const filteredChapters = allChapters.filter((chapter) => chapter !== correctChapter && !disabledChapters.includes(chapter));
-
-    // Ensure we do not disable the correct chapter
+  
     if (filteredChapters.length <= 0) return;
-
-    const removeCount = Math.ceil((filteredChapters.length) * (difficultySettings.removePercentage / 100));
+  
+    const removeCount = Math.ceil(filteredChapters.length * (difficultySettings.removePercentage / 100));
     let chaptersToDisable = getRandomItems(filteredChapters, removeCount);
-
-    // Re-check and remove correct chapter if mistakenly included
+  
+    console.log('correct chapter:', correctChapter);
     while (chaptersToDisable.includes(correctChapter)) {
       chaptersToDisable = getRandomItems(filteredChapters, removeCount);
     }
-
+  
     setDisabledChapters(disabledChapters.concat(chaptersToDisable));
   };
-
+  
   const disableIncorrectVerses = () => {
     const correctVerse = parseInt(currentVerse.split(':')[1]);
     const verseCount = verseCounts[selectedBook][selectedChapter - 1];

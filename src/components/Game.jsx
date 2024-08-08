@@ -43,7 +43,7 @@ function Game({ difficulty, category, endGame, usedVerses, username }) {
   const [lives, setLives] = useState(savedLives);
   const [bombs, setBombs] = useState(savedBombs);
   const [skips, setSkips] = useState(savedSkips);
-  const [notification, setNotification] = useState({ show: false, message: '' });
+  const [notification, setNotification] = useState({ show: false, message: '', timerId: null, visible: false });
   const [currentVerse, setCurrentVerse] = useState(localStorage.getItem('gameCurrentVerse') || getRandomVerse());
   const [selectedBook, setSelectedBook] = useState('');
   const [selectedChapter, setSelectedChapter] = useState('');
@@ -56,7 +56,6 @@ function Game({ difficulty, category, endGame, usedVerses, username }) {
   const [disabledChapters, setDisabledChapters] = useState([]);
   const [disabledVerses, setDisabledVerses] = useState([]);
   const [backgroundImage, setBackgroundImage] = useState(getRandomImage());
-  const isMobile = useMediaQuery('(hover: none)');
   const navigate = useNavigate();
 
   useEffect(() => {
@@ -84,19 +83,24 @@ function Game({ difficulty, category, endGame, usedVerses, username }) {
   }, [navigate, score, lives, bombs, skips, currentVerse, savedDifficulty]);
 
   const showNotification = (message) => {
-    if (message) {
-      setNotification({ show: true, message });
-      setTimeout(() => {
-        setNotification({ show: false, message: '' });
-      }, 5000); // Hide notification after 5 seconds
+    // Clear existing timer if present
+    if (notification.timerId) {
+      clearTimeout(notification.timerId);
     }
+  
+    // Set new notification state and timer
+    const timerId = setTimeout(() => {
+      setNotification((prev) => ({ ...prev, show: false, timerId: null, visible: false }));
+    }, 5000);
+  
+    setNotification({ show: true, message, timerId, visible: true });
   };
   
-  const Notification = ({ show, message }) => (
-    <div className={`notification ${show && message ? 'show' : ''}`}>
+  const Notification = ({ show, message, visible }) => (
+    <div className={`notification ${show && visible ? 'show' : ''}`}>
       {message}
     </div>
-  );
+  );  
   
   function getRandomImage() {
     const randomIndex = Math.floor(Math.random() * imageUrls.length);
@@ -177,7 +181,10 @@ function Game({ difficulty, category, endGame, usedVerses, username }) {
     }, 100); // 1/2 second delay
   }
 
-  function handleBack() {
+  const handleBack = () => {
+    // Hide the notification when the back button is clicked
+    setNotification((prev) => ({ ...prev, visible: false }));
+  
     if (currentStep === 'book') {
       setShowConfirmation(true);
     } else if (currentStep === 'chapter') {
@@ -189,8 +196,8 @@ function Game({ difficulty, category, endGame, usedVerses, username }) {
       setSelectedVerse('');
       setCurrentStep('chapter');
     }
-  }
-
+  };
+  
   const handleConfirmBack = () => {
     navigate('/');
   };
@@ -372,8 +379,8 @@ function Game({ difficulty, category, endGame, usedVerses, username }) {
         applyBombEffect();
       }
     }
-  };  
-
+  };
+  
   const handleUseSkip = () => {
     if (canUseSkip()) {
       setSkips(skips - 1);
@@ -620,7 +627,7 @@ function Game({ difficulty, category, endGame, usedVerses, username }) {
 
   return (
     <div className='game-page' style={{ backgroundImage: `url(${backgroundImage})`, backgroundSize: 'cover' }}>
-      <Notification show={notification.show} message={notification.message} />
+      <Notification show={notification.show} message={notification.message} visible={notification.visible} />
       <div id='game-container'>
         <div className='game-content'>
           <div className='header'>

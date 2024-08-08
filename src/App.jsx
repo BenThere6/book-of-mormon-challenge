@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { BrowserRouter as Router, Routes, Route, useLocation, useNavigate } from 'react-router-dom';
 import StartScreen from './components/StartScreen';
 import Game from './components/Game';
@@ -14,13 +14,28 @@ import './assets/css/style.css';
 
 function App() {
   const [difficulty, setDifficulty] = useState(null);
-  const [category, setCategory] = useState('all-verses'); // Default to 'all-verses'
+  const [category, setCategory] = useState('all-verses');
   const [score, setScore] = useState(0);
-  const [username, setUsername] = useState(''); // State for username
-  const [isPwaPromptVisible, setPwaPromptVisible] = useState(true); // State for PWA prompt visibility
+  const [username, setUsername] = useState('');
+  const [isPwaPromptVisible, setPwaPromptVisible] = useState(true);
   const navigate = useNavigate();
   const location = useLocation();
   let usedVerses = [];
+
+  useEffect(() => {
+    const token = localStorage.getItem('token') || sessionStorage.getItem('token');
+    const tokenExpiration = localStorage.getItem('tokenExpiration') || sessionStorage.getItem('tokenExpiration');
+
+    if (token && tokenExpiration) {
+      const currentTime = new Date().getTime();
+      if (currentTime > tokenExpiration) {
+        localStorage.removeItem('token');
+        localStorage.removeItem('tokenExpiration');
+        sessionStorage.removeItem('token');
+        sessionStorage.removeItem('tokenExpiration');
+      }
+    }
+  }, []);
 
   const startGame = (gameID, selectedDifficulty, selectedCategory) => {
     setDifficulty(selectedDifficulty);
@@ -30,7 +45,7 @@ function App() {
 
   const endGame = (finalScore) => {
     setScore(finalScore);
-    localStorage.setItem('latestDifficulty', difficulty)
+    localStorage.setItem('latestDifficulty', difficulty);
     navigate('/leaderboard', { state: { score: finalScore, difficulty, category, username } });
   };
 

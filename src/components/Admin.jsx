@@ -124,17 +124,23 @@ const Admin = () => {
           Admin Dashboard
         </Typography>
         <AppBar position="static">
-          <Tabs 
-            value={selectedTab} 
-            onChange={handleTabChange} 
-            aria-label="admin tabs" 
-            sx={{ '& .MuiTab-root': { minWidth: 'auto', padding: '0 8px', fontSize: '0.875rem' }, '& .MuiTabs-flexContainer': { gap: '3px' } }}
-          >
-            <Tab label="Analytics" sx={{ '&.Mui-selected': { color: 'white' } }} />
-            <Tab label="Feedback" sx={{ '&.Mui-selected': { color: 'white' } }} />
-            <Tab label="Scores" sx={{ '&.Mui-selected': { color: 'white' } }} />
-            <Tab label="Home" component={Link} sx={{ '&.Mui-selected': { color: 'white' } }} to="/" />
-          </Tabs>
+          <Box sx={{ display: 'flex', alignItems: 'center' }}>
+            <Tabs 
+              value={selectedTab} 
+              onChange={handleTabChange} 
+              aria-label="admin tabs"
+              variant="scrollable"
+              scrollButtons="auto"
+              sx={{ '& .MuiTab-root': { minWidth: 'auto', padding: '0 8px', fontSize: '0.875rem' }, '& .MuiTabs-flexContainer': { gap: '3px' }, flexGrow: 1 }}
+            >
+              <Tab label="Analytics" sx={{ '&.Mui-selected': { color: 'white' } }} />
+              <Tab label="Feedback" sx={{ '&.Mui-selected': { color: 'white' } }} />
+              <Tab label="Scores" sx={{ '&.Mui-selected': { color: 'white' } }} />
+              <Tab label="Home" component={Link} sx={{ '&.Mui-selected': { color: 'white' } }} to="/" />
+              <Button color="inherit" onClick={handleLogout} sx={{ whiteSpace: 'nowrap' }}>Logout</Button>
+            </Tabs>
+            
+          </Box>
         </AppBar>
         {selectedTab === 2 && (
           <Box display="flex" justifyContent="space-between" marginTop={2}>

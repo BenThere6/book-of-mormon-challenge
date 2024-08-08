@@ -5,6 +5,7 @@
 }
 
 #game-container {
+    max-height: 800px;
     height: 100vh;
     padding-left: 5px;
     padding-right: 5px;
@@ -254,5 +255,11 @@
     .MuiButton-root:hover {
         background-color: initial;
         color: initial;
+    }
+}
+
+@media (min-width: 1024px) {
+    #game-container {
+        border-radius: 10px;
     }
 }

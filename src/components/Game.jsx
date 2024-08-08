@@ -43,6 +43,7 @@ function Game({ difficulty, category, endGame, usedVerses, username }) {
   const [lives, setLives] = useState(savedLives);
   const [bombs, setBombs] = useState(savedBombs);
   const [skips, setSkips] = useState(savedSkips);
+  const [notification, setNotification] = useState({ show: false, message: '' });
   const [currentVerse, setCurrentVerse] = useState(localStorage.getItem('gameCurrentVerse') || getRandomVerse());
   const [selectedBook, setSelectedBook] = useState('');
   const [selectedChapter, setSelectedChapter] = useState('');
@@ -82,6 +83,21 @@ function Game({ difficulty, category, endGame, usedVerses, username }) {
     };
   }, [navigate, score, lives, bombs, skips, currentVerse, savedDifficulty]);
 
+  const showNotification = (message) => {
+    if (message) {
+      setNotification({ show: true, message });
+      setTimeout(() => {
+        setNotification({ show: false, message: '' });
+      }, 5000); // Hide notification after 5 seconds
+    }
+  };
+  
+  const Notification = ({ show, message }) => (
+    <div className={`notification ${show && message ? 'show' : ''}`}>
+      {message}
+    </div>
+  );
+  
   function getRandomImage() {
     const randomIndex = Math.floor(Math.random() * imageUrls.length);
     return imageUrls[randomIndex];
@@ -342,9 +358,21 @@ function Game({ difficulty, category, endGame, usedVerses, username }) {
     if (canUseBomb()) {
       setBombs(bombs - 1);
       localStorage.setItem('gameBombs', bombs - 1);
-      applyBombEffect();
+  
+      const correctBook = extractBookFromVerse(currentVerse);
+      const correctChapter = parseChapterFromVerse(currentVerse);
+  
+      if (currentStep === 'chapter' && selectedBook !== correctBook) {
+        showNotification('You are in the wrong book!');
+        applyBombEffect();
+      } else if (currentStep === 'verse' && (selectedBook !== correctBook || selectedChapter !== correctChapter.toString())) {
+        showNotification('You are in the wrong chapter or book!');
+        applyBombEffect();
+      } else {
+        applyBombEffect();
+      }
     }
-  };
+  };  
 
   const handleUseSkip = () => {
     if (canUseSkip()) {
@@ -592,6 +620,7 @@ function Game({ difficulty, category, endGame, usedVerses, username }) {
 
   return (
     <div className='game-page' style={{ backgroundImage: `url(${backgroundImage})`, backgroundSize: 'cover' }}>
+      <Notification show={notification.show} message={notification.message} />
       <div id='game-container'>
         <div className='game-content'>
           <div className='header'>

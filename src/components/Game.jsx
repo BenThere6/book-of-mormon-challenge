@@ -335,11 +335,11 @@ function Game({ difficulty, category, endGame, usedVerses, username }) {
   const extractBookFromVerse = (verse) => {
     const bookMatch = verse.match(/^[1-4]?\s?[a-zA-Z]+(\s[a-zA-Z]+)*/);
     if (bookMatch) {
-      return bookMatch[0];
+      return bookMatch[0].trim();
     }
     return '';
   };
-
+  
   const extractChapterVerseFromVerse = (verse) => {
     const refSplit = verse.split(' ');
     return refSplit[refSplit.length - 1];
@@ -372,12 +372,13 @@ function Game({ difficulty, category, endGame, usedVerses, username }) {
       if (currentStep === 'chapter' && selectedBook !== correctBook) {
         showNotification('You are in the wrong book!');
         applyBombEffect();
-      } else if (currentStep === 'verse' && (selectedBook !== correctBook || selectedChapter !== correctChapter.toString())) {
+      } else if (currentStep === 'verse' && (selectedBook !== correctBook || selectedChapter !== correctChapter)) {
+        console.log(':'+selectedBook + correctBook+':')
+        console.log(':'+selectedChapter + correctChapter+':')
         showNotification('You are in the wrong chapter or book!');
         applyBombEffect();
-      } else {
-        applyBombEffect();
       }
+      applyBombEffect();
     }
   };
   
@@ -420,6 +421,16 @@ function Game({ difficulty, category, endGame, usedVerses, username }) {
   };
 
   const applyBombEffect = () => {
+    // const correctBook = extractBookFromVerse(currentVerse);
+    // const correctChapter = parseChapterFromVerse(currentVerse);
+  
+    // if ((currentStep === 'chapter' && selectedBook !== correctBook) ||
+    //     (currentStep === 'verse' && (selectedBook !== correctBook || selectedChapter !== correctChapter.toString()))) {
+    //   showNotification('You are in the wrong chapter or book!');
+    // } else {
+    //   setNotification((prev) => ({ ...prev, visible: false }));
+    // }
+  
     switch (currentStep) {
       case 'book':
         disableIncorrectBooks();
@@ -434,7 +445,7 @@ function Game({ difficulty, category, endGame, usedVerses, username }) {
         break;
     }
   };
-
+  
   const getRandomItems = (items, count) => {
     const shuffled = items.sort(() => 0.5 - Math.random());
     return shuffled.slice(0, count);

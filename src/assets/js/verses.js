@@ -6605,4 +6605,152 @@ const verses = {
   "Moroni 10:34": "And now I bid unto all, farewell. I soon go to rest in the paradise of God, until my spirit and body shall again reunite, and I am brought forth triumphant through the air, to meet you before the pleasing bar of the great Jehovah, the Eternal Judge of both quick and dead. Amen."
 };
 
-export default verses;
+const keywords = {
+  easy: {
+    people: [
+      "Nephi", "Lehi", "Alma", "Mosiah", "Ammon", "King Benjamin", "Samuel", 
+      "Moroni", "Helaman", "Mormon", "Abinadi", "Amulek", "Enos", 
+      "Jacob", "Joseph", "Laman", "Lemuel", "Zoram", 
+      "Sariah", "Ishmael", "Abraham", "Isaac", "Jacob"
+    ],
+    places: [
+      "Zarahemla", "Bountiful", "Nephi", "Cumorah", "Jerusalem", 
+      "Land of Nephi", "Land of Zarahemla", "Land of Bountiful", 
+      "Land of Desolation", "Land of Jershon", "Land of Ishmael"
+    ],
+    doctrinalConcepts: [
+      "Faith", "Repentance", "Salvation", "Prayer", "Scriptures", 
+      "Holy Ghost", "Baptism", "Jesus Christ", "Heavenly Father", 
+      "Resurrection", "Plan of Salvation", "Eternal Life"
+    ],
+    eventsAndNarratives: [
+      "Liahona", "Tree of Life", "Alma the Younger", "First Vision", 
+      "Crossing the Sea", "Departure from Jerusalem", "Nephi's Vision", 
+      "Building the Ship", "Journey to the Promised Land"
+    ]
+  },
+  medium: {
+    people: [
+      "Zeniff", "Noah", "Limhi", "Gideon", "Shiblon", "Coriantumr", "Teancum", 
+      "Zenos", "Zenock", "Sherem", "Corianton", "Shiblom", "Antipus", 
+      "Gid", "Morianton", "Pahoran", "Pacumeni", "Paanchi", "Cumenihah", 
+      "Giddianhi", "Giddonah", "Zemnarihah", "Aminadab", "Ammoron", 
+      "Akish", "Gadianton", "Kishkumen", "Tubaloth", "Zeezrom", "Amalickiah", 
+      "Amaleki", "Cohor", "Ether", "Omer", "Moron", "Lib", "Shiz", "Nehor", 
+      "Omni", "Chemish", "Abinadom", "Amaron", "Gidgiddoni", 
+      "Hagoth", "Nephihah", "Zarahemla", "Moronihah", "Lamoni", "Ammonihah", 
+      "Gideon", "Zemariah", "Morianton", "Lehonti"
+    ],
+    groups: [
+      "Nephites", "Lamanites", "Zoramites", "Ammonites", "Gadianton robbers", 
+      "Robbers", "Jaredites", "Mulekites", "Stripling Warriors", 
+      "Sons of Mosiah", "People of Ammon", "People of Zarahemla"
+    ],
+    places: [
+      "Desolation", "Sidon", "Gideon", "Manti", "Jershon", 
+      "Antionum", "Ammonihah", "Hill Cumorah", "Shilom", 
+      "Land of Ishmael", "Waters of Sebus", "Land of Helam"
+    ],
+    doctrinalConcepts: [
+      "Atonement", "Covenant", "Resurrection", "Redemption", "Grace", 
+      "Mercy", "Obedience", "Prophets", "Priesthood", "Sacrifice", 
+      "Judgment", "Endure to the End", "Holy Spirit", "Revelation"
+    ],
+    eventsAndNarratives: [
+      "Captain Moroni", "Title of Liberty", "Stripling warriors", "War chapters", 
+      "Building of the temple", "Journey to the promised land", "Words of Isaiah", 
+      "Conversion of Alma", "Samuel the Lamanite", "Preaching of Ammon", 
+      "Destruction of Ammonihah", "Battle of Cumorah", "Visions of the Brother of Jared"
+    ]
+  },
+  hard: {
+    people: [
+      "Shemlon", "Shez", "Shelem", "Aminadi", "Amnor", "Cumen", 
+      "Ezrom", "Himni", "Mathoni", "Josh", "Nahum", "Shem", 
+      "Timothy", "Jonas", "Aha", "Luram", "Shared", "Gilgah", 
+      "Corihor", "Mahah", "Antionah", "Lachoneus", "Lehor", 
+      "Amgid", "Abinadom", "Amaron", "Gadianton", "Gidgiddoni", 
+      "Shiblon", "Paanchi", "Morianton", "Nephihah", "Moronihah", 
+      "Tubaloth", "Coriantumr", "Gidgiddoni"
+    ],
+    groups: [
+      "Zoramites", "Gadianton robbers", "Mulekites", "Amalekites", 
+      "Amalickiahites", "King-men", "Secret Combinations", 
+      "Lamanites", "Nephites", "Gadianton Band", "People of Morianton"
+    ],
+    places: [
+      "Antionum", "Ammonihah", "Moriancumer", "Lehi-Nephi", "Shilom", 
+      "Ishmael", "Waters of Mormon", "Hill Rameumptom", "Wilderness", 
+      "Red Sea", "Valley of Lemuel", "Land of Promise", "Land of Cumorah", 
+      "City of Zarahemla", "Land of Gideon", "Land of Nephi", "Land of Desolation"
+    ],
+    doctrinalConcepts: [
+      "Justice", "Charity", "Priesthood", "Commandments", "Plan of Salvation", 
+      "Endure to the end", "Tree of Life", "Iron Rod", "Straight and narrow path", 
+      "Holy Ghost", "Eternal life", "Judgment day", "Agency", "Second Coming", 
+      "Sacrifice", "Free will", "Prophecy", "Atonement", "Repentance", 
+      "Grace", "Works", "Faith", "Salvation", "Justification", "Sanctification"
+    ],
+    eventsAndNarratives: [
+      "Destruction of the wicked", "Departure from Jerusalem", 
+      "Plates of brass", "Samuel the Lamanite", 
+      "The ministry of Alma", "Sermon of King Benjamin", 
+      "Building of the ship", "Crossing the sea", "Establishing peace", 
+      "Nephi's vision", "Priestcraft", "War between Nephites and Lamanites", 
+      "Destruction of the Nephites", "Restoration of the Gospel", 
+      "Apostasy", "Signs of the Savior's Birth", "Signs of the Savior's Death"
+    ]
+  }
+};
+
+function filterVerses(verses, keywords) {
+  const filteredVerses = {};
+
+  const allKeywords = [
+    ...keywords.people,
+    ...keywords.places,
+    ...(keywords.groups || []),  // Groups only included in medium and hard
+    ...(keywords.doctrinalConcepts || []),
+    ...(keywords.eventsAndNarratives || []),
+  ];
+
+  for (const [reference, verse] of Object.entries(verses)) {
+    for (const keyword of allKeywords) {
+      if (verse.toLowerCase().includes(keyword.toLowerCase())) {
+        filteredVerses[reference] = verse;
+        break; // Stop searching after the first match
+      }
+    }
+  }
+  
+  return filteredVerses;
+}
+
+// Merging keywords for medium (easy + medium) and hard (easy + medium + hard)
+const mediumKeywords = {
+  people: [...keywords.easy.people, ...keywords.medium.people],
+  groups: [...(keywords.easy.groups || []), ...keywords.medium.groups],
+  places: [...keywords.easy.places, ...keywords.medium.places],
+  doctrinalConcepts: [...keywords.easy.doctrinalConcepts, ...keywords.medium.doctrinalConcepts],
+  eventsAndNarratives: [...keywords.easy.eventsAndNarratives, ...keywords.medium.eventsAndNarratives],
+};
+
+const hardKeywords = {
+  people: [...mediumKeywords.people, ...keywords.hard.people],
+  groups: [...mediumKeywords.groups, ...keywords.hard.groups],
+  places: [...mediumKeywords.places, ...keywords.hard.places],
+  doctrinalConcepts: [...mediumKeywords.doctrinalConcepts, ...keywords.hard.doctrinalConcepts],
+  eventsAndNarratives: [...mediumKeywords.eventsAndNarratives, ...keywords.hard.eventsAndNarratives],
+};
+
+// Filtering verses based on merged keywords
+const easyVerses = filterVerses(verses, keywords.easy);
+const mediumVerses = { ...easyVerses, ...filterVerses(verses, mediumKeywords) };
+const hardVerses = { ...mediumVerses, ...filterVerses(verses, hardKeywords) };
+
+console.log(`Total verses: ${Object.keys(verses).length}`);
+console.log(`Easy verses: ${Object.keys(easyVerses).length}`);
+console.log(`Medium verses (including Easy): ${Object.keys(mediumVerses).length}`);
+console.log(`Hard verses (including Easy and Medium): ${Object.keys(hardVerses).length}`);
+
+export { easyVerses, mediumVerses, hardVerses };

@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import verses from '../assets/js/verses';
+import { easyVerses, mediumVerses, hardVerses } from '../assets/js/verses';
 import verseCounts from '../assets/js/verseCounts';
 import getDifficultySettings from '../assets/js/difficultySettings';
 import Button from '@mui/material/Button';
@@ -109,33 +109,36 @@ function Game({ difficulty, category, endGame, usedVerses, username }) {
 
   function getRandomVerse(needNewVerse) {
     countNewVerses += 1;
-
+  
     let verseKeys;
-
-    if (category === 'scripture-mastery') {
-      verseKeys = Object.keys(scriptureMasteryVerses);
-    } else {
-      verseKeys = Object.keys(verses);
+  
+    // Choose the correct verse set based on difficulty
+    if (difficulty === 'easy') {
+      verseKeys = Object.keys(easyVerses);
+    } else if (difficulty === 'medium') {
+      verseKeys = Object.keys(mediumVerses);
+    } else if (difficulty === 'hard') {
+      verseKeys = Object.keys(hardVerses);
     }
-
+  
     if (usedVerses.length >= 25 && category === 'scripture-mastery') {
       endGame(score);
       return null;
     }
-
+  
     let randomKey = verseKeys[Math.floor(Math.random() * verseKeys.length)];
-
+  
     while (usedVerses.includes(randomKey)) {
       randomKey = verseKeys[Math.floor(Math.random() * verseKeys.length)];
     }
-
+  
     if (needNewVerse || countNewVerses === 2) {
       usedVerses.push(randomKey);
     }
-
+  
     return randomKey;
   }
-
+  
   function saveVerseToHistory(verse, isCorrect) {
     const date = new Date().toISOString().split('T')[0];
     const gameID = JSON.parse(localStorage.getItem('currentGameID'));
@@ -604,21 +607,28 @@ function Game({ difficulty, category, endGame, usedVerses, username }) {
     );
   };
 
-  const getCurrentVerseText = () => {
+  function getCurrentVerseText() {
     let verseText;
+  
     if (category === 'scripture-mastery') {
       verseText = scriptureMasteryVerses[currentVerse];
     } else {
-      verseText = verses[currentVerse];
+      if (difficulty === 'easy') {
+        verseText = easyVerses[currentVerse];
+      } else if (difficulty === 'medium') {
+        verseText = mediumVerses[currentVerse];
+      } else if (difficulty === 'hard') {
+        verseText = hardVerses[currentVerse];
+      }
     }
-
+  
     if (!verseText) {
       console.log(`Verse Not Found for key: ${currentVerse}`);
       return 'Verse Not Found';
     }
-
+  
     const versesArray = verseText.split('\n\n');
-
+  
     return (
       <div className='verse-text-container'>
         {versesArray.map((verse, index) => (
@@ -628,8 +638,8 @@ function Game({ difficulty, category, endGame, usedVerses, username }) {
         ))}
       </div>
     );
-  };
-
+  }
+  
   const capitalizeFirstLetter = (string) => {
     return string.charAt(0).toUpperCase() + string.slice(1).toLowerCase();
   };

@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { easyVerses, mediumVerses, hardVerses } from '../assets/js/verses';
+import { easyVerses, mediumVerses, hardVerses, extremeVerses } from '../assets/js/verses';
 import verseCounts from '../assets/js/verseCounts';
 import getDifficultySettings from '../assets/js/difficultySettings';
 import Button from '@mui/material/Button';

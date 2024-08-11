@@ -6748,9 +6748,18 @@ const easyVerses = filterVerses(verses, keywords.easy);
 const mediumVerses = { ...easyVerses, ...filterVerses(verses, mediumKeywords) };
 const hardVerses = { ...mediumVerses, ...filterVerses(verses, hardKeywords) };
 
+// Create the extreme difficulty, which is every verse not in hardVerses
+const extremeVerses = {};
+for (const [reference, verse] of Object.entries(verses)) {
+  if (!hardVerses.hasOwnProperty(reference)) {
+    extremeVerses[reference] = verse;
+  }
+}
+
 console.log(`Total verses: ${Object.keys(verses).length}`);
 console.log(`Easy verses: ${Object.keys(easyVerses).length}`);
 console.log(`Medium verses (including Easy): ${Object.keys(mediumVerses).length}`);
 console.log(`Hard verses (including Easy and Medium): ${Object.keys(hardVerses).length}`);
+console.log(`Extreme verses: ${Object.keys(extremeVerses).length}`);
 
-export { easyVerses, mediumVerses, hardVerses };
+export { easyVerses, mediumVerses, hardVerses, extremeVerses };

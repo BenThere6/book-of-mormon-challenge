@@ -6608,10 +6608,10 @@ const verses = {
 const keywords = {
   easy: {
     people: [
-      "Nephi", "Lehi", "Alma", "Mosiah", "Ammon", "King Benjamin", "Samuel", 
-      "Moroni", "Helaman", "Mormon", "Abinadi", "Amulek", "Enos", 
-      "Jacob", "Joseph", "Laman", "Lemuel", "Zoram", 
-      "Sariah", "Ishmael", "Abraham", "Isaac", "Jacob"
+      "Nephi ", "Lehi ", "Alma ", "Mosiah ", "Ammon ", "King Benjamin", "Samuel", 
+      "Moroni ", "Helaman ", "Mormon ", "Abinadi ", "Amulek ", "Enos ", 
+      "Jacob ", "Joseph ", "Laman ", "Lemuel ", "Zoram ", 
+      "Sariah ", "Ishmael ", "Abraham ", "Isaac ", "Jacob "
     ],
     places: [
       "Zarahemla", "Bountiful", "Nephi", "Cumorah", "Jerusalem", 

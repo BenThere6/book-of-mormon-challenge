@@ -53,7 +53,7 @@ const PwaPrompt = ({ isVisible, onClose }) => {
   const renderIosInstructions = () => (
     <div id="ios-instructions" style={{ textAlign: 'left', position: 'relative', paddingBottom: '50px' }}>
       <p>To install this app on your iOS device:</p>
-      <p>1. Tap the <img src={shareIcon} alt="Share icon" style={{ verticalAlign: 'middle', width: '20px' }} /> icon in your browser.</p>
+      <p>1. Tap the <img src={shareIcon} alt="Share icon" style={{ verticalAlign: 'middle', width: '20px' }} />icon in your browser.</p>
       <p>2. Select "Add to Home Screen".</p>
       <div className="ios-instructions-footer">
         <Button id="close-ios-instructions" onClick={onClose} variant="contained" color="primary">Close</Button>

@@ -7,6 +7,7 @@ const PwaPrompt = ({ isVisible, onClose }) => {
   const [isIos, setIsIos] = useState(false);
   const [isInStandaloneMode, setIsInStandaloneMode] = useState(false);
   const [showIosInstructions, setShowIosInstructions] = useState(false);
+  const [shareIcon, setShareIcon] = useState('/default-share-icon.png'); // Default share icon
 
   useEffect(() => {
     const handleBeforeInstallPrompt = (e) => {
@@ -17,6 +18,15 @@ const PwaPrompt = ({ isVisible, onClose }) => {
     const userAgent = window.navigator.userAgent.toLowerCase();
     setIsIos(/iphone|ipad|ipod/.test(userAgent));
     setIsInStandaloneMode((window.navigator.standalone) || window.matchMedia('(display-mode: standalone)').matches);
+
+    // Set the share icon based on the browser
+    if (/iphone|ipad|ipod/.test(userAgent)) {
+      setShareIcon('/ios-share-icon.png');
+    } else if (userAgent.includes('android')) {
+      setShareIcon('/android-share-icon.png');
+    } else {
+      setShareIcon('/default-share-icon.png');
+    }
 
     window.addEventListener('beforeinstallprompt', handleBeforeInstallPrompt);
 
@@ -39,9 +49,9 @@ const PwaPrompt = ({ isVisible, onClose }) => {
   };
 
   const renderIosInstructions = () => (
-    <div id="ios-instructions">
+    <div id="ios-instructions" style={{ textAlign: 'left' }}>
       <p>To install this app on your iOS device:</p>
-      <p>1. Tap the <img src="/ios-share-icon.png" alt="Share icon" style={{ verticalAlign: 'middle' }} /> icon.</p>
+      <p>1. Tap the <img src={shareIcon} alt="Share icon" style={{ verticalAlign: 'middle', width: '20px' }} />icon in your browser.</p>
       <p>2. Select "Add to Home Screen".</p>
       <Button id="close-ios-instructions" onClick={onClose} variant="contained" color="primary">Close</Button>
     </div>

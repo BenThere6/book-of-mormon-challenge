@@ -66,17 +66,18 @@ const UPDATES = [
             'Skip modal now informs user of the reference of a skipped scripture.'
         ]
     },
-    // {
-    //     version: '1.13.0',
-    //     date: 'August 7, 2024',
-    //     messages: [
-    //         'Fixed Liahona bug removing correct chapter.',
-    //         'Liahona now tells user if they\'re in the wrong book or chapter.',
-    //         'Added automatic scroll to score on leaderboard',
-    //         'Fixed game display bugs.',
-    //         'Display goal in game.',
-    //     ]
-    // },
+    {
+        version: '1.13.0',
+        date: 'August 11, 2024',
+        messages: [
+            'Fixed Liahona bug removing correct chapter.',
+            'Liahona now tells user if they\'re in the wrong book or chapter.',
+            'Added automatic scroll to score on leaderboard',
+            'Fixed game display bugs.',
+            'Display goal in game.',
+            'Filter verses for each difficulty.'
+        ]
+    },
 ];
 
-export default UPDATES;  
+export default UPDATES;

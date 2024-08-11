@@ -23,10 +23,6 @@ const UpdateModal = ({ open, onClose, updates }) => {
     };
   }, []);
 
-  if (isStandalone) {
-    return null; // Do not render the modal if in PWA standalone mode
-  }
-
   return (
     <Dialog open={open} onClose={onClose} maxWidth="md" fullWidth>
       <DialogTitle>Updates</DialogTitle>

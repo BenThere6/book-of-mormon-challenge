@@ -67,7 +67,7 @@ const UPDATES = [
         ]
     },
     {
-        version: '1.14.0',
+        version: '1.14.1',
         date: 'August 11, 2024',
         messages: [
             'Fixed Liahona bug removing correct chapter.',

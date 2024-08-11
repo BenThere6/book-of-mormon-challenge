@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import { easyVerses, mediumVerses, hardVerses, extremeVerses } from '../assets/js/verses';
 import verseCounts from '../assets/js/verseCounts';
 import getDifficultySettings from '../assets/js/difficultySettings';
@@ -32,6 +32,7 @@ const imageUrls = [
 let countNewVerses = 0;
 
 function Game({ difficulty, category, endGame, usedVerses, username }) {
+  const verseTextContainerRef = useRef(null);
   const savedDifficulty = localStorage.getItem('gameDifficulty') || difficulty;
   const difficultySettings = getDifficultySettings(savedDifficulty);
   const savedScore = localStorage.getItem('gameScore') ? parseInt(localStorage.getItem('gameScore')) : 0;
@@ -76,6 +77,10 @@ function Game({ difficulty, category, endGame, usedVerses, username }) {
 
     history.pushState(null, document.title, location.href);
     window.addEventListener('popstate', handlePopState);
+
+    if (verseTextContainerRef.current) {
+      verseTextContainerRef.current.scrollTo(0, 0);
+    }
 
     return () => {
       window.removeEventListener('popstate', handlePopState);
@@ -630,7 +635,7 @@ function Game({ difficulty, category, endGame, usedVerses, username }) {
     const versesArray = verseText.split('\n\n');
   
     return (
-      <div className='verse-text-container'>
+      <div className='verse-text-container' ref={verseTextContainerRef}>
         {versesArray.map((verse, index) => (
           <p className='verse-text' key={index}>
             {verse}

@@ -78,6 +78,13 @@ const UPDATES = [
             'Filter verses for each difficulty.'
         ]
     },
+    {
+        version: '1.14.2',
+        date: 'August 11, 2024',
+        messages: [
+            'Fix verse scroll bug.'
+        ]
+    },
 ];
 
 export default UPDATES;

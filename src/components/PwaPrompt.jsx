@@ -8,6 +8,7 @@ const PwaPrompt = ({ isVisible, onClose }) => {
   const [isInStandaloneMode, setIsInStandaloneMode] = useState(false);
   const [showIosInstructions, setShowIosInstructions] = useState(false);
   const [shareIcon, setShareIcon] = useState('/default-share-icon.png'); // Default share icon
+  const [showInstallText, setShowInstallText] = useState(true); // New state to control visibility of the text
 
   useEffect(() => {
     const handleBeforeInstallPrompt = (e) => {
@@ -39,6 +40,7 @@ const PwaPrompt = ({ isVisible, onClose }) => {
     if (isIos) {
       // Show iOS installation instructions
       setShowIosInstructions(true);
+      setShowInstallText(false); // Hide the text when showing iOS instructions
     } else if (deferredPrompt) {
       deferredPrompt.prompt();
       const { outcome } = await deferredPrompt.userChoice;
@@ -49,14 +51,16 @@ const PwaPrompt = ({ isVisible, onClose }) => {
   };
 
   const renderIosInstructions = () => (
-    <div id="ios-instructions" style={{ textAlign: 'left' }}>
+    <div id="ios-instructions" style={{ textAlign: 'left', position: 'relative', paddingBottom: '50px' }}>
       <p>To install this app on your iOS device:</p>
-      <p>1. Tap the <img src={shareIcon} alt="Share icon" style={{ verticalAlign: 'middle', width: '20px' }} />icon in your browser.</p>
+      <p>1. Tap the <img src={shareIcon} alt="Share icon" style={{ verticalAlign: 'middle', width: '20px' }} /> icon in your browser.</p>
       <p>2. Select "Add to Home Screen".</p>
-      <Button id="close-ios-instructions" onClick={onClose} variant="contained" color="primary">Close</Button>
+      <div className="ios-instructions-footer">
+        <Button id="close-ios-instructions" onClick={onClose} variant="contained" color="primary">Close</Button>
+      </div>
     </div>
   );
-
+  
   if (isInStandaloneMode) {
     return null; // Do not render the modal if in standalone mode
   }
@@ -64,7 +68,7 @@ const PwaPrompt = ({ isVisible, onClose }) => {
   return isVisible ? (
     <div id="pwa-install-prompt">
       <div id="pwa-modal">
-        <p>Install Lehi's Legacy for a better experience.</p>
+        {showInstallText && <p>Install Lehi's Legacy for a better experience.</p>}
         {!showIosInstructions ? (
           <>
             <Button id="install-pwa" onClick={handleInstallClick} variant="contained" color="primary">Install</Button>

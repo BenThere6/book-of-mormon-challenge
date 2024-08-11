@@ -84,10 +84,22 @@
     height: 50px;
 }
 
+
+Copy code
 #ios-instructions {
-    margin-top: 10px;
-    text-align: left;
+  text-align: left;
+  position: relative;
+  padding-bottom: 50px; /* Ensure space for the button */
 }
+
+.ios-instructions-footer {
+  position: absolute;
+  bottom: 0;
+  width: 100%;
+  text-align: center;
+  padding-bottom: 10px;
+}
+
 
 #ios-instructions p {
     display: block;

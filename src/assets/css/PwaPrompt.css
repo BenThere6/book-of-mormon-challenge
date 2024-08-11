@@ -83,3 +83,19 @@
     width: 50px;
     height: 50px;
 }
+
+#ios-instructions {
+    margin-top: 10px;
+    text-align: left;
+}
+
+#ios-instructions p {
+    margin-bottom: 15px;
+    font-size: 16px;
+}
+
+#ios-instructions img {
+    height: 20px;
+    width: 20px;
+    margin-right: 5px;
+}

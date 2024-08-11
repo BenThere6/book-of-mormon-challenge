@@ -6,6 +6,7 @@ const PwaPrompt = ({ isVisible, onClose }) => {
   const [deferredPrompt, setDeferredPrompt] = useState(null);
   const [isIos, setIsIos] = useState(false);
   const [isInStandaloneMode, setIsInStandaloneMode] = useState(false);
+  const [showIosInstructions, setShowIosInstructions] = useState(false);
 
   useEffect(() => {
     const handleBeforeInstallPrompt = (e) => {
@@ -25,7 +26,10 @@ const PwaPrompt = ({ isVisible, onClose }) => {
   }, []);
 
   const handleInstallClick = async () => {
-    if (deferredPrompt) {
+    if (isIos) {
+      // Show iOS installation instructions
+      setShowIosInstructions(true);
+    } else if (deferredPrompt) {
       deferredPrompt.prompt();
       const { outcome } = await deferredPrompt.userChoice;
       console.log(`User response to the install prompt: ${outcome}`);
@@ -34,41 +38,29 @@ const PwaPrompt = ({ isVisible, onClose }) => {
     }
   };
 
+  const renderIosInstructions = () => (
+    <div id="ios-instructions">
+      <p>To install this app on your iOS device:</p>
+      <p>1. Tap the <img src="/ios-share-icon.png" alt="Share icon" style={{ verticalAlign: 'middle' }} /> icon.</p>
+      <p>2. Select "Add to Home Screen".</p>
+      <Button id="close-ios-instructions" onClick={onClose} variant="contained" color="primary">Close</Button>
+    </div>
+  );
+
   if (isInStandaloneMode) {
     return null; // Do not render the modal if in standalone mode
-  }
-
-  if (isIos) {
-    return isVisible ? (
-      <div id="pwa-install-prompt">
-        <div id="pwa-modal">
-          <p>Install Lehi's Legacy for a better experience.</p>
-          <div id="ios-instructions">
-            <div className="image-container">
-              <img id="step-1" src="/pwa-how-to/step-1.jpeg" alt="Step 1" />
-              <div className="circle" id="circle-1"></div>
-            </div>
-            <div className="image-container">
-              <img id="step-2" src="/pwa-how-to/step-2.jpeg" alt="Step 2" />
-              <div className="circle" id="circle-2"></div>
-            </div>
-            <div className="image-container">
-              <img id="step-3" src="/pwa-how-to/step-3.jpeg" alt="Step 3" />
-              <div className="circle" id="circle-3"></div>
-            </div>
-          </div>
-          <Button id="close-pwa-prompt" onClick={onClose} variant="contained" color="primary">Close</Button>
-        </div>
-      </div>
-    ) : null;
   }
 
   return isVisible ? (
     <div id="pwa-install-prompt">
       <div id="pwa-modal">
         <p>Install Lehi's Legacy for a better experience.</p>
-        <Button id="install-pwa" onClick={handleInstallClick} variant="contained" color="primary">Install</Button>
-        <Button id="close-pwa-prompt" onClick={onClose} variant="contained" color="primary">Close</Button>
+        {!showIosInstructions ? (
+          <>
+            <Button id="install-pwa" onClick={handleInstallClick} variant="contained" color="primary">Install</Button>
+            <Button id="close-pwa-prompt" onClick={onClose} variant="contained" color="primary">Close</Button>
+          </>
+        ) : renderIosInstructions()}
       </div>
     </div>
   ) : null;

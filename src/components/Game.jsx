@@ -355,10 +355,11 @@ function Game({ difficulty, category, endGame, usedVerses, username }) {
         }
   
         // Factor in the remaining time on the timer
-        const timeMultiplier = 0.1; // Adjust this value as needed
+        const timeMultiplier = 203; // Adjust this value as needed
         const timeBonus = timer * timeMultiplier;
   
         accuracy += timeBonus;
+        console.log(accuracy)
   
         if (accuracy > bestAccuracy) {
           bestAccuracy = accuracy;

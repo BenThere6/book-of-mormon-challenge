@@ -6711,10 +6711,10 @@ for (const [reference, verse] of Object.entries(verses)) {
   }
 }
 
-console.log(`Total verses: ${Object.keys(verses).length}`);
-console.log(`Easy verses: ${Object.keys(easyVerses).length}`);
-console.log(`Medium verses (including Easy): ${Object.keys(mediumVerses).length}`);
-console.log(`Hard verses (including Easy and Medium): ${Object.keys(hardVerses).length}`);
-console.log(`Extreme verses: ${Object.keys(extremeVerses).length}`);
+// console.log(`Total verses: ${Object.keys(verses).length}`);
+// console.log(`Easy verses: ${Object.keys(easyVerses).length}`);
+// console.log(`Medium verses (including Easy): ${Object.keys(mediumVerses).length}`);
+// console.log(`Hard verses (including Easy and Medium): ${Object.keys(hardVerses).length}`);
+// console.log(`Extreme verses: ${Object.keys(extremeVerses).length}`);
 
 export { easyVerses, mediumVerses, hardVerses, extremeVerses };

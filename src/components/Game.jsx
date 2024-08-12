@@ -94,13 +94,19 @@ function Game({ difficulty, category, endGame, usedVerses, username }) {
   }, [navigate, score, lives, bombs, skips, currentVerse, savedDifficulty]);
 
   useEffect(() => {
-    if (timer > 0 && !isSubmitting && !isSkipModalOpen) { // Pause the timer if the skip modal is open
+    if (timer > 0 && !isSubmitting && !isSkipModalOpen) {
       const timerId = setTimeout(() => setTimer(timer - 1), 1000);
-      return () => clearTimeout(timerId); // Clean up the timer on unmount or re-render
+      return () => clearTimeout(timerId);
     } else if (timer === 0) {
       handleSubmit(); // Auto-submit when the timer reaches zero
     }
   }, [timer, isSubmitting, isSkipModalOpen]);
+  
+  // Reset the timer whenever the verse changes
+  useEffect(() => {
+    setTimer(difficultySettings.timer);
+    setIsSubmitting(false); // Ensure submitting flag is reset
+  }, [currentVerse, difficultySettings.timer]);  
 
   const showNotification = (message) => {
     // Clear existing timer if present

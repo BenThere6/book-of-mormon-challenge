@@ -342,7 +342,7 @@ function Game({ difficulty, category, endGame, usedVerses, username }) {
       if (guess.book === correctBook) {
         const { multiplier, chapterRange, verseRange } = difficultySettings || {};
         let accuracy = 0;
-        let extraMultiplier = 20;
+        let extraMultiplier = 30;
 
         if (verseDifference === 0) {
           accuracy += 100 * multiplier;

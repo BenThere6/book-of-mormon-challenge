@@ -111,29 +111,29 @@ function Game({ difficulty, category, endGame, usedVerses, username }) {
     if (notification.timerId) {
       clearTimeout(notification.timerId);
     }
-  
+
     // Show the notification
     setNotification({ show: true, message, timerId: null });
-  
+
     // Set a timer to hide the notification after 5 seconds
     const timerId = setTimeout(() => {
       setNotification({ show: false, message: '', timerId: null });
     }, 5000);
-  
+
     // Save the timer ID to state
     setNotification((prev) => ({ ...prev, timerId }));
-  };  
+  };
 
   const Notification = ({ show, message }) => {
     if (!show) return null;
-  
+
     return (
       <div className="notification">
         {message}
       </div>
     );
   };
-  
+
   function getRandomImage() {
     const randomIndex = Math.floor(Math.random() * imageUrls.length);
     return imageUrls[randomIndex];
@@ -324,30 +324,30 @@ function Game({ difficulty, category, endGame, usedVerses, username }) {
     } else {
       verseList = [verseToCheck];
     }
-  
+
     const firstVerseEntry = verseList[0];
     const correctBook = extractBookFromVerse(firstVerseEntry);
     const correctChapterVerse = extractChapterVerseFromVerse(firstVerseEntry);
-  
+
     let bestAccuracy = 0;
     let chapterDifference;
     let verseDifference;
-  
+
     verseList.forEach((verseEntry) => {
       const [correctChapterStr, correctVerseNumStr] = correctChapterVerse.split(':');
       const correctChapter = parseInt(correctChapterStr, 10);
       verseDifference = Math.abs(parseInt(guess.verse, 10) - parseInt(correctVerseNumStr, 10));
       chapterDifference = Math.abs(parseInt(guess.chapter, 10) - correctChapter);
-  
+
       if (guess.book === correctBook) {
         const { multiplier, chapterRange, verseRange } = difficultySettings || {};
         let accuracy = 0;
         let extraMultiplier = 20;
-  
+
         if (verseDifference === 0) {
           accuracy += 100 * multiplier;
         }
-  
+
         if (chapterDifference === 0) {
           accuracy += 50 * multiplier * (extraMultiplier + 5);
           if (verseDifference === 0) {
@@ -361,24 +361,38 @@ function Game({ difficulty, category, endGame, usedVerses, username }) {
             accuracy += 15 * multiplier * (extraMultiplier - verseDifference);
           }
         }
-  
-        // Factor in the remaining time on the timer
-        const timeMultiplier = 203; // Adjust this value as needed
+
+        // Adjust time multiplier based on difficulty
+        let timeMultiplier;
+        switch (difficulty) {
+          case 'easy':
+            timeMultiplier = 26;
+            break;
+          case 'medium':
+            timeMultiplier = 107;
+            break;
+          case 'hard':
+            timeMultiplier = 203; // This is the current value for hard
+            break;
+          default:
+            timeMultiplier = 25;
+        }
+
         const timeBonus = timer * timeMultiplier;
-  
+
         accuracy += timeBonus;
         console.log(accuracy)
-  
+
         if (accuracy > bestAccuracy) {
           bestAccuracy = accuracy;
         }
         bestAccuracy /= 10;
       }
     });
-  
+
     return Math.round(bestAccuracy); // Round the accuracy score
   };
-  
+
   const extractBookFromVerse = (verse) => {
     const bookMatch = verse.match(/^[1-4]?\s?[a-zA-Z]+(\s[a-zA-Z]+)*/);
     if (bookMatch) {

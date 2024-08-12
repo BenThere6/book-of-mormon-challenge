@@ -93,6 +93,13 @@ const UPDATES = [
             'Added timer bonus to points.'
         ]
     },
+    {
+        version: '2.0.1',
+        date: 'August 12, 2024',
+        messages: [
+            'Fix skip bug not resetting timer.'
+        ]
+    },
 ];
 
 export default UPDATES;

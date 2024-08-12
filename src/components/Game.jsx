@@ -46,6 +46,7 @@ function Game({ difficulty, category, endGame, usedVerses, username }) {
   const [lives, setLives] = useState(savedLives);
   const [bombs, setBombs] = useState(savedBombs);
   const [skips, setSkips] = useState(savedSkips);
+  const [isSkipModalOpen, setIsSkipModalOpen] = useState(false);
   const [timer, setTimer] = useState(difficultySettings.timer);
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [notification, setNotification] = useState({ show: false, message: '', timerId: null, visible: false });
@@ -93,18 +94,13 @@ function Game({ difficulty, category, endGame, usedVerses, username }) {
   }, [navigate, score, lives, bombs, skips, currentVerse, savedDifficulty]);
 
   useEffect(() => {
-    if (timer > 0 && !isSubmitting) { // Only continue countdown if not submitting
+    if (timer > 0 && !isSubmitting && !isSkipModalOpen) { // Pause the timer if the skip modal is open
       const timerId = setTimeout(() => setTimer(timer - 1), 1000);
       return () => clearTimeout(timerId); // Clean up the timer on unmount or re-render
     } else if (timer === 0) {
       handleSubmit(); // Auto-submit when the timer reaches zero
     }
-  }, [timer, isSubmitting]);
-
-  useEffect(() => {
-    setTimer(difficultySettings.timer);
-    setIsSubmitting(false); // Reset submission flag when a new verse is loaded
-  }, [currentVerse, difficultySettings.timer]);
+  }, [timer, isSubmitting, isSkipModalOpen]);
 
   const showNotification = (message) => {
     // Clear existing timer if present
@@ -306,6 +302,7 @@ function Game({ difficulty, category, endGame, usedVerses, username }) {
 
   const handleSkipModalClose = () => {
     setShowModal(false);
+    setIsSkipModalOpen(false); // Set skip modal open state to false
     setCurrentVerse(getRandomVerse(true));
     setSelectedBook('');
     setSelectedChapter('');
@@ -314,7 +311,7 @@ function Game({ difficulty, category, endGame, usedVerses, username }) {
     setDisabledBooks([]);
     setDisabledChapters([]);
     setDisabledVerses([]);
-    setTimer(difficultySettings.timer); // Reset timer here
+    setTimer(difficultySettings.timer); // Reset the timer here
   };
 
   const calculateAccuracy = (guess, verseToCheck) => {
@@ -448,6 +445,7 @@ function Game({ difficulty, category, endGame, usedVerses, username }) {
       setSkips(skips - 1);
       localStorage.setItem('gameSkips', skips - 1);
       saveVerseToHistory(currentVerse, null);
+      setIsSkipModalOpen(true); // Set skip modal open state to true
       setModalContent({
         skippedVerse: currentVerse
       });

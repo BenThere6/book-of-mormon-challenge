@@ -111,21 +111,29 @@ function Game({ difficulty, category, endGame, usedVerses, username }) {
     if (notification.timerId) {
       clearTimeout(notification.timerId);
     }
-
-    // Set new notification state and timer
+  
+    // Show the notification
+    setNotification({ show: true, message, timerId: null });
+  
+    // Set a timer to hide the notification after 5 seconds
     const timerId = setTimeout(() => {
-      setNotification((prev) => ({ ...prev, show: false, timerId: null, visible: false }));
+      setNotification({ show: false, message: '', timerId: null });
     }, 5000);
+  
+    // Save the timer ID to state
+    setNotification((prev) => ({ ...prev, timerId }));
+  };  
 
-    setNotification({ show: true, message, timerId, visible: true });
+  const Notification = ({ show, message }) => {
+    if (!show) return null;
+  
+    return (
+      <div className="notification">
+        {message}
+      </div>
+    );
   };
-
-  const Notification = ({ show, message, visible }) => (
-    <div className={`notification ${show && visible ? 'show' : ''}`}>
-      {message}
-    </div>
-  );
-
+  
   function getRandomImage() {
     const randomIndex = Math.floor(Math.random() * imageUrls.length);
     return imageUrls[randomIndex];
@@ -684,7 +692,7 @@ function Game({ difficulty, category, endGame, usedVerses, username }) {
 
   return (
     <div className='game-page' style={{ backgroundImage: `url(${backgroundImage})`, backgroundSize: 'cover' }}>
-      <Notification show={notification.show} message={notification.message} visible={notification.visible} />
+      <Notification show={notification.show} message={notification.message} />
       <div id='game-container'>
         <div className='game-content'>
           <div className='header'>

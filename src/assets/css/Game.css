@@ -245,40 +245,41 @@
 
 .notification {
     position: fixed;
-    top: -50px;
+    top: 0px;
     left: 50%;
     transform: translateX(-50%);
-    background-color: #ff6961;
+    background-color: #ff696192;
     color: white;
     padding: 10px 20px;
     border-radius: 5px;
     white-space: nowrap;
     z-index: 1000;
-    transition: top 0.3s ease-in-out;
-  }
-  
-  .notification.show {
+}
+
+.notification.show {
     animation: slideDown 0.3s forwards, slideUp 0.3s 4.7s forwards;
-  }
-  
-  @keyframes slideDown {
+}
+
+@keyframes slideDown {
     from {
-      top: -50px;
+        top: -50px;
     }
+
     to {
-      top: 20px;
+        top: 20px;
     }
-  }
-  
-  @keyframes slideUp {
+}
+
+@keyframes slideUp {
     from {
-      top: 20px;
+        top: 20px;
     }
+
     to {
-      top: -50px;
+        top: -50px;
     }
-  }
-  
+}
+
 @media (hover: none) {
     .MuiButton-root:hover {
         background-color: initial;

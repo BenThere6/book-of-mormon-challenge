@@ -85,6 +85,14 @@ const UPDATES = [
             'Fix verse scroll bug.'
         ]
     },
+    {
+        version: '2.0.0',
+        date: 'August 11, 2024',
+        messages: [
+            'Added timer.',
+            'Added timer bonus to points.'
+        ]
+    },
 ];
 
 export default UPDATES;

@@ -49,20 +49,27 @@ function StartScreen({ startGame }) {
   };
 
   useEffect(() => {
-    if (!previouslyVisited) {
-      localStorage.setItem('previouslyVisited', 'true');
-      localStorage.setItem('seenUpdates', JSON.stringify(UPDATES.map(update => update.version)));
-    } else {
-      const updates = accumulateUpdates(storedSeenUpdates);
-      if (updates.length > 0) {
-        setUpdatesToShow(updates);
-        setIsUpdateModalOpen(true);
+    const checkForUpdates = () => {
+      if (!previouslyVisited) {
+        localStorage.setItem('previouslyVisited', 'true');
+        localStorage.setItem('seenUpdates', JSON.stringify(UPDATES.map(update => update.version)));
+      } else {
+        const updates = accumulateUpdates(storedSeenUpdates);
+        if (updates.length > 0) {
+          setUpdatesToShow(updates);
+          setIsUpdateModalOpen(true);
+        }
       }
-    }
-    if (!storedDevelopmentNotice) {
-      setShowDevelopmentModal(true);
-    }
-  }, [storedSeenUpdates, previouslyVisited, storedDevelopmentNotice]);
+  
+      if (!storedDevelopmentNotice) {
+        setShowDevelopmentModal(true);
+      }
+    };
+  
+    checkForUpdates();
+  
+    // Dependency array is empty to ensure the effect only runs once when the component mounts
+  }, []);   
 
   const handleDevelopmentModalClose = () => {
     setShowDevelopmentModal(false);

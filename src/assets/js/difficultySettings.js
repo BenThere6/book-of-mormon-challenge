@@ -8,7 +8,7 @@ const getDifficultySettings = (difficulty) => {
         bombCount: 3, 
         skipCount: 3,
         removePercentage: 70,
-        timer: 45
+        timer: 60
       };
     case 'medium':
       return { 
@@ -28,7 +28,7 @@ const getDifficultySettings = (difficulty) => {
         bombCount: 3, 
         skipCount: 1,
         removePercentage: 50,
-        timer: 15
+        timer: 20
       };
     default:
       console.log('Invalid difficulty level: ' + difficulty);

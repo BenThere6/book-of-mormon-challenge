@@ -280,7 +280,7 @@ function Game({ difficulty, category, endGame, usedVerses, username }) {
   };
 
   const handleCloseModal = () => {
-    if (lives === 0) {
+    if (lives < 1) {
       endGame(score);
     } else {
       setShowModal(false);

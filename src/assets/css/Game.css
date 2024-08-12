@@ -74,7 +74,7 @@
     background-color: rgba(0, 0, 0, 0.5);
     box-sizing: border-box;
     color: white;
-    padding-left: 5px;
+    /* padding-left: 5px; */
 }
 
 #guess-container .placeholder {
@@ -181,11 +181,16 @@
 }
 
 #timer-text {
-    color: white;
+    color: black;
     font-size: 30px;
     position: absolute;
     left: 50%;
     transform: translate(-50%);
+    background-color: rgba(255, 255, 255, 0.659);
+    border-radius: 5px;
+    padding: 0 5px 2px 5px;
+    width: 100px;
+    text-align: center;
 }
 
 #lives-text {

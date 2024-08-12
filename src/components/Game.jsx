@@ -674,7 +674,7 @@ function Game({ difficulty, category, endGame, usedVerses, username }) {
             </div>
             <div id='difficulty-container'>
               {capitalizeFirstLetter(savedDifficulty)}
-              <HelpOutlineIcon sx={{ marginLeft: '0px', color: 'white', cursor: 'pointer', height: 15, paddingTop: .2 }} />
+              {/* <HelpOutlineIcon sx={{ marginLeft: '0px', color: 'white', cursor: 'pointer', height: 15, paddingTop: .2 }} /> */}
             </div>
           </div>
 

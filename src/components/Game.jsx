@@ -34,6 +34,7 @@ let countNewVerses = 0;
 
 function Game({ difficulty, category, endGame, usedVerses, username }) {
   const verseTextContainerRef = useRef(null);
+  const timerRef = useRef(null);
   const savedDifficulty = localStorage.getItem('gameDifficulty') || difficulty;
   const difficultySettings = getDifficultySettings(savedDifficulty);
   const savedScore = localStorage.getItem('gameScore') ? parseInt(localStorage.getItem('gameScore')) : 0;
@@ -45,6 +46,8 @@ function Game({ difficulty, category, endGame, usedVerses, username }) {
   const [lives, setLives] = useState(savedLives);
   const [bombs, setBombs] = useState(savedBombs);
   const [skips, setSkips] = useState(savedSkips);
+  const [timer, setTimer] = useState(difficultySettings.timer);
+  const [isSubmitting, setIsSubmitting] = useState(false);
   const [notification, setNotification] = useState({ show: false, message: '', timerId: null, visible: false });
   const [currentVerse, setCurrentVerse] = useState(localStorage.getItem('gameCurrentVerse') || getRandomVerse());
   const [selectedBook, setSelectedBook] = useState('');
@@ -79,6 +82,7 @@ function Game({ difficulty, category, endGame, usedVerses, username }) {
     history.pushState(null, document.title, location.href);
     window.addEventListener('popstate', handlePopState);
 
+    // Reset scroll position when a new verse is loaded
     if (verseTextContainerRef.current) {
       verseTextContainerRef.current.scrollTo(0, 0);
     }
@@ -87,6 +91,20 @@ function Game({ difficulty, category, endGame, usedVerses, username }) {
       window.removeEventListener('popstate', handlePopState);
     };
   }, [navigate, score, lives, bombs, skips, currentVerse, savedDifficulty]);
+
+  useEffect(() => {
+    if (timer > 0 && !isSubmitting) { // Only continue countdown if not submitting
+      const timerId = setTimeout(() => setTimer(timer - 1), 1000);
+      return () => clearTimeout(timerId); // Clean up the timer on unmount or re-render
+    } else if (timer === 0) {
+      handleSubmit(); // Auto-submit when the timer reaches zero
+    }
+  }, [timer, isSubmitting]);
+
+  useEffect(() => {
+    setTimer(difficultySettings.timer);
+    setIsSubmitting(false); // Reset submission flag when a new verse is loaded
+  }, [currentVerse, difficultySettings.timer]);
 
   const showNotification = (message) => {
     // Clear existing timer if present
@@ -216,6 +234,8 @@ function Game({ difficulty, category, endGame, usedVerses, username }) {
   };
 
   const handleSubmit = () => {
+    if (isSubmitting) return;
+    setIsSubmitting(true);
     const guess = { book: selectedBook, chapter: selectedChapter, verse: selectedVerse };
     const guessAccuracy = calculateAccuracy(guess, currentVerse);
 
@@ -271,9 +291,10 @@ function Game({ difficulty, category, endGame, usedVerses, username }) {
       setDisabledBooks([]);
       setDisabledChapters([]);
       setDisabledVerses([]);
+      setTimer(difficultySettings.timer); // Reset timer here
     }
   };
-
+  
   const handleSkipModalClose = () => {
     setShowModal(false);
     setCurrentVerse(getRandomVerse(true));
@@ -284,7 +305,8 @@ function Game({ difficulty, category, endGame, usedVerses, username }) {
     setDisabledBooks([]);
     setDisabledChapters([]);
     setDisabledVerses([]);
-  };
+    setTimer(difficultySettings.timer); // Reset timer here
+  };  
 
   const calculateAccuracy = (guess, verseToCheck) => {
     let verseList;
@@ -659,7 +681,7 @@ function Game({ difficulty, category, endGame, usedVerses, username }) {
         <div className='game-content'>
           <div className='header'>
             <div id='score-text'>{score}</div>
-            <div id='timer-text'>30</div>
+            <div id='timer-text'>{timer}</div>
             <div id='lives-container'>
               <span id='lives-text'>{lives}</span>
               <FavoriteBorderOutlinedIcon sx={{ color: 'white', marginRight: '5px' }} />

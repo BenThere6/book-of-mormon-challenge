@@ -659,7 +659,7 @@ function Game({ difficulty, category, endGame, usedVerses, username }) {
         <div className='game-content'>
           <div className='header'>
             <div id='score-text'>{score}</div>
-            <div id='timer-text'>(Timer)</div>
+            <div id='timer-text'>30</div>
             <div id='lives-container'>
               <span id='lives-text'>{lives}</span>
               <FavoriteBorderOutlinedIcon sx={{ color: 'white', marginRight: '5px' }} />

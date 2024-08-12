@@ -13,6 +13,7 @@ import ArrowBack from '@mui/icons-material/ArrowBack';
 import KeyboardTab from '@mui/icons-material/KeyboardTab';
 import ExploreOutlinedIcon from '@mui/icons-material/ExploreOutlined';
 import FavoriteBorderOutlinedIcon from '@mui/icons-material/FavoriteBorderOutlined';
+import HelpOutlineIcon from '@mui/icons-material/HelpOutline';
 import { useNavigate } from 'react-router-dom';
 import { useMediaQuery } from '@mui/material';
 import '../assets/css/Game.css';
@@ -92,21 +93,21 @@ function Game({ difficulty, category, endGame, usedVerses, username }) {
     if (notification.timerId) {
       clearTimeout(notification.timerId);
     }
-  
+
     // Set new notification state and timer
     const timerId = setTimeout(() => {
       setNotification((prev) => ({ ...prev, show: false, timerId: null, visible: false }));
     }, 5000);
-  
+
     setNotification({ show: true, message, timerId, visible: true });
   };
-  
+
   const Notification = ({ show, message, visible }) => (
     <div className={`notification ${show && visible ? 'show' : ''}`}>
       {message}
     </div>
-  );  
-  
+  );
+
   function getRandomImage() {
     const randomIndex = Math.floor(Math.random() * imageUrls.length);
     return imageUrls[randomIndex];
@@ -114,9 +115,9 @@ function Game({ difficulty, category, endGame, usedVerses, username }) {
 
   function getRandomVerse(needNewVerse) {
     countNewVerses += 1;
-  
+
     let verseKeys;
-  
+
     // Choose the correct verse set based on difficulty
     if (difficulty === 'easy') {
       verseKeys = Object.keys(easyVerses);
@@ -125,25 +126,25 @@ function Game({ difficulty, category, endGame, usedVerses, username }) {
     } else if (difficulty === 'hard') {
       verseKeys = Object.keys(hardVerses);
     }
-  
+
     if (usedVerses.length >= 25 && category === 'scripture-mastery') {
       endGame(score);
       return null;
     }
-  
+
     let randomKey = verseKeys[Math.floor(Math.random() * verseKeys.length)];
-  
+
     while (usedVerses.includes(randomKey)) {
       randomKey = verseKeys[Math.floor(Math.random() * verseKeys.length)];
     }
-  
+
     if (needNewVerse || countNewVerses === 2) {
       usedVerses.push(randomKey);
     }
-  
+
     return randomKey;
   }
-  
+
   function saveVerseToHistory(verse, isCorrect) {
     const date = new Date().toISOString().split('T')[0];
     const gameID = JSON.parse(localStorage.getItem('currentGameID'));
@@ -192,7 +193,7 @@ function Game({ difficulty, category, endGame, usedVerses, username }) {
   const handleBack = () => {
     // Hide the notification when the back button is clicked
     setNotification((prev) => ({ ...prev, visible: false }));
-  
+
     if (currentStep === 'book') {
       setShowConfirmation(true);
     } else if (currentStep === 'chapter') {
@@ -205,7 +206,7 @@ function Game({ difficulty, category, endGame, usedVerses, username }) {
       setCurrentStep('chapter');
     }
   };
-  
+
   const handleConfirmBack = () => {
     navigate('/');
   };
@@ -347,7 +348,7 @@ function Game({ difficulty, category, endGame, usedVerses, username }) {
     }
     return '';
   };
-  
+
   const extractChapterVerseFromVerse = (verse) => {
     const refSplit = verse.split(' ');
     return refSplit[refSplit.length - 1];
@@ -358,38 +359,38 @@ function Game({ difficulty, category, endGame, usedVerses, username }) {
     if (verseParts.length < 2) {
       throw new Error('Unexpected verse format: ' + verse);
     }
-  
+
     const chapterPart = verseParts[0].split(' ');
     const chapter = parseInt(chapterPart[chapterPart.length - 1]);
-    
+
     if (isNaN(chapter)) {
       throw new Error('Parsed chapter is NaN: ' + verse);
     }
-  
+
     return chapter;
-  };  
+  };
 
   const handleUseBomb = () => {
     if (canUseBomb()) {
       setBombs(bombs - 1);
       localStorage.setItem('gameBombs', bombs - 1);
-  
+
       const correctBook = extractBookFromVerse(currentVerse);
       const correctChapter = parseChapterFromVerse(currentVerse);
-  
+
       if (currentStep === 'chapter' && selectedBook !== correctBook) {
         showNotification('You are in the wrong book!');
         applyBombEffect();
       } else if (currentStep === 'verse' && (selectedBook !== correctBook || selectedChapter !== correctChapter)) {
-        console.log(':'+selectedBook + correctBook+':')
-        console.log(':'+selectedChapter + correctChapter+':')
+        console.log(':' + selectedBook + correctBook + ':')
+        console.log(':' + selectedChapter + correctChapter + ':')
         showNotification('You are in the wrong chapter or book!');
         applyBombEffect();
       }
       applyBombEffect();
     }
   };
-  
+
   const handleUseSkip = () => {
     if (canUseSkip()) {
       setSkips(skips - 1);
@@ -431,14 +432,14 @@ function Game({ difficulty, category, endGame, usedVerses, username }) {
   const applyBombEffect = () => {
     // const correctBook = extractBookFromVerse(currentVerse);
     // const correctChapter = parseChapterFromVerse(currentVerse);
-  
+
     // if ((currentStep === 'chapter' && selectedBook !== correctBook) ||
     //     (currentStep === 'verse' && (selectedBook !== correctBook || selectedChapter !== correctChapter.toString()))) {
     //   showNotification('You are in the wrong chapter or book!');
     // } else {
     //   setNotification((prev) => ({ ...prev, visible: false }));
     // }
-  
+
     switch (currentStep) {
       case 'book':
         disableIncorrectBooks();
@@ -453,7 +454,7 @@ function Game({ difficulty, category, endGame, usedVerses, username }) {
         break;
     }
   };
-  
+
   const getRandomItems = (items, count) => {
     const shuffled = items.sort(() => 0.5 - Math.random());
     return shuffled.slice(0, count);
@@ -480,31 +481,31 @@ function Game({ difficulty, category, endGame, usedVerses, username }) {
 
   const disableIncorrectChapters = () => {
     let correctChapter;
-  
+
     try {
       correctChapter = parseChapterFromVerse(currentVerse);
     } catch (error) {
       console.error(error.message);
       return;
     }
-  
+
     const chapterCount = verseCounts[selectedBook].length;
     const allChapters = Array.from({ length: chapterCount }, (_, index) => index + 1);
     const filteredChapters = allChapters.filter((chapter) => chapter !== correctChapter && !disabledChapters.includes(chapter));
-  
+
     if (filteredChapters.length <= 0) return;
-  
+
     const removeCount = Math.ceil(filteredChapters.length * (difficultySettings.removePercentage / 100));
     let chaptersToDisable = getRandomItems(filteredChapters, removeCount);
-  
+
     console.log('correct chapter:', correctChapter);
     while (chaptersToDisable.includes(correctChapter)) {
       chaptersToDisable = getRandomItems(filteredChapters, removeCount);
     }
-  
+
     setDisabledChapters(disabledChapters.concat(chaptersToDisable));
   };
-  
+
   const disableIncorrectVerses = () => {
     const correctVerse = parseInt(currentVerse.split(':')[1]);
     const verseCount = verseCounts[selectedBook][selectedChapter - 1];
@@ -614,7 +615,7 @@ function Game({ difficulty, category, endGame, usedVerses, username }) {
 
   function getCurrentVerseText() {
     let verseText;
-  
+
     if (category === 'scripture-mastery') {
       verseText = scriptureMasteryVerses[currentVerse];
     } else {
@@ -626,14 +627,14 @@ function Game({ difficulty, category, endGame, usedVerses, username }) {
         verseText = hardVerses[currentVerse];
       }
     }
-  
+
     if (!verseText) {
       console.log(`Verse Not Found for key: ${currentVerse}`);
       return 'Verse Not Found';
     }
-  
+
     const versesArray = verseText.split('\n\n');
-  
+
     return (
       <div className='verse-text-container' ref={verseTextContainerRef}>
         {versesArray.map((verse, index) => (
@@ -644,7 +645,7 @@ function Game({ difficulty, category, endGame, usedVerses, username }) {
       </div>
     );
   }
-  
+
   const capitalizeFirstLetter = (string) => {
     return string.charAt(0).toUpperCase() + string.slice(1).toLowerCase();
   };
@@ -658,22 +659,26 @@ function Game({ difficulty, category, endGame, usedVerses, username }) {
         <div className='game-content'>
           <div className='header'>
             <div id='score-text'>{score}</div>
-            <div id='difficulty-text'>{capitalizeFirstLetter(savedDifficulty)}</div>
+            <div id='timer-text'>(Timer)</div>
             <div id='lives-container'>
               <span id='lives-text'>{lives}</span>
               <FavoriteBorderOutlinedIcon sx={{ color: 'white', marginRight: '5px' }} />
             </div>
           </div>
-          <div id='guess-container'>
-            <p>
-              {selectedBook} {selectedChapter && (selectedVerse ? `${selectedChapter}:${selectedVerse}` : selectedChapter)}
-              {!selectedBook && <span className="placeholder">(Your guess here)</span>}
-            </p>
+          <div id='guess-difficulty-container'>
+            <div id='guess-container'>
+              <p>
+                {selectedBook} {selectedChapter && (selectedVerse ? `${selectedChapter}:${selectedVerse}` : selectedChapter)}
+                {!selectedBook && <span className="placeholder">(Your guess here)</span>}
+              </p>
+            </div>
+            <div id='difficulty-container'>
+              {capitalizeFirstLetter(savedDifficulty)}
+              <HelpOutlineIcon sx={{ marginLeft: '0px', color: 'white', cursor: 'pointer', height: 15, paddingTop: .2 }} />
+            </div>
           </div>
+
           {getCurrentVerseText()}
-          <div className='goal-container'>
-            Get correct book and within {difficultySettings.chapterRange} of correct chapter.
-          </div>
           <div className='icons-container'>
             <div className='back-container'>
               <IconButton className='back-button' onClick={handleBack}>
@@ -712,15 +717,20 @@ function Game({ difficulty, category, endGame, usedVerses, username }) {
               </div>
             </div>
           </div>
+          <div className='goal-container'>
+            Get correct book and within {difficultySettings.chapterRange} of correct chapter.
+          </div>
           {currentStep === 'book' && renderBooks()}
           {currentStep === 'chapter' && renderChapters()}
           {currentStep === 'verse' && renderVerses()}
+
+          <div className='submit-button'>
+            <Button variant='outlined' disabled={!isSubmitEnabled} sx={{ borderColor: 'white', color: 'white' }} onClick={handleSubmit}>
+              Submit Guess
+            </Button>
+          </div>
         </div>
-        <div className='submit-button'>
-          <Button variant='outlined' disabled={!isSubmitEnabled} sx={{ borderColor: 'white', color: 'white' }} onClick={handleSubmit}>
-            Submit Guess
-          </Button>
-        </div>
+
         <Dialog open={showModal} onClose={modalContent.skippedVerse ? handleSkipModalClose : handleCloseModal}>
           <DialogTitle>{modalContent.skippedVerse ? "Verse Skipped" : "Guess Results"}</DialogTitle>
           <DialogContent>
@@ -755,6 +765,7 @@ function Game({ difficulty, category, endGame, usedVerses, username }) {
             </Button>
           </DialogActions>
         </Dialog>
+
         <Dialog open={showConfirmation} onClose={handleCancelBack}>
           <DialogTitle>Confirmation</DialogTitle>
           <DialogContent>

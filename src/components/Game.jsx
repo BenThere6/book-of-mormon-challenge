@@ -236,6 +236,7 @@ function Game({ difficulty, category, endGame, usedVerses, username }) {
   const handleSubmit = () => {
     if (isSubmitting) return;
     setIsSubmitting(true);
+
     const guess = { book: selectedBook, chapter: selectedChapter, verse: selectedVerse };
     const guessAccuracy = calculateAccuracy(guess, currentVerse);
 
@@ -248,10 +249,10 @@ function Game({ difficulty, category, endGame, usedVerses, username }) {
 
     let newScore = score;
     let isCorrect = false;
-
     let lifeLost = false;
 
-    if (chapterDifference > chapterRange || guess.book !== correctBook) {
+    // Check if both chapter and verse have been selected
+    if (!selectedChapter || !selectedVerse || chapterDifference > chapterRange || guess.book !== correctBook) {
       lifeLost = true;
     } else {
       if (guessAccuracy > 0) {
@@ -294,7 +295,7 @@ function Game({ difficulty, category, endGame, usedVerses, username }) {
       setTimer(difficultySettings.timer); // Reset timer here
     }
   };
-  
+
   const handleSkipModalClose = () => {
     setShowModal(false);
     setCurrentVerse(getRandomVerse(true));
@@ -306,7 +307,7 @@ function Game({ difficulty, category, endGame, usedVerses, username }) {
     setDisabledChapters([]);
     setDisabledVerses([]);
     setTimer(difficultySettings.timer); // Reset timer here
-  };  
+  };
 
   const calculateAccuracy = (guess, verseToCheck) => {
     let verseList;
@@ -315,31 +316,30 @@ function Game({ difficulty, category, endGame, usedVerses, username }) {
     } else {
       verseList = [verseToCheck];
     }
-
+  
     const firstVerseEntry = verseList[0];
     const correctBook = extractBookFromVerse(firstVerseEntry);
     const correctChapterVerse = extractChapterVerseFromVerse(firstVerseEntry);
-
+  
     let bestAccuracy = 0;
     let chapterDifference;
     let verseDifference;
-
+  
     verseList.forEach((verseEntry) => {
       const [correctChapterStr, correctVerseNumStr] = correctChapterVerse.split(':');
       const correctChapter = parseInt(correctChapterStr, 10);
       verseDifference = Math.abs(parseInt(guess.verse, 10) - parseInt(correctVerseNumStr, 10));
       chapterDifference = Math.abs(parseInt(guess.chapter, 10) - correctChapter);
-
+  
       if (guess.book === correctBook) {
         const { multiplier, chapterRange, verseRange } = difficultySettings || {};
-
         let accuracy = 0;
         let extraMultiplier = 20;
-
+  
         if (verseDifference === 0) {
           accuracy += 100 * multiplier;
         }
-
+  
         if (chapterDifference === 0) {
           accuracy += 50 * multiplier * (extraMultiplier + 5);
           if (verseDifference === 0) {
@@ -353,16 +353,23 @@ function Game({ difficulty, category, endGame, usedVerses, username }) {
             accuracy += 15 * multiplier * (extraMultiplier - verseDifference);
           }
         }
-
+  
+        // Factor in the remaining time on the timer
+        const timeMultiplier = 0.1; // Adjust this value as needed
+        const timeBonus = timer * timeMultiplier;
+  
+        accuracy += timeBonus;
+  
         if (accuracy > bestAccuracy) {
           bestAccuracy = accuracy;
         }
         bestAccuracy /= 10;
       }
     });
+  
     return Math.round(bestAccuracy); // Round the accuracy score
   };
-
+  
   const extractBookFromVerse = (verse) => {
     const bookMatch = verse.match(/^[1-4]?\s?[a-zA-Z]+(\s[a-zA-Z]+)*/);
     if (bookMatch) {
@@ -765,7 +772,8 @@ function Game({ difficulty, category, endGame, usedVerses, username }) {
             ) : (
               <>
                 <DialogContentText>
-                  Your Guess: {modalContent.guess && `${modalContent.guess.book} ${modalContent.guess.chapter}:${modalContent.guess.verse}`}
+                  Your Guess: {modalContent.guess && `${modalContent.guess.book} ${modalContent.guess.chapter}`}
+                  {modalContent.guess?.verse && `:${modalContent.guess.verse}`}
                 </DialogContentText>
                 <DialogContentText>
                   Correct Verse: {modalContent.correctVerse}

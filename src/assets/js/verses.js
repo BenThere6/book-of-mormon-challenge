@@ -6608,38 +6608,25 @@ const verses = {
 const keywords = {
   easy: {
     people: [
-      "Nephi ", "Lehi ", "Alma ", "Mosiah ", "Ammon ", "King Benjamin", "Samuel", 
-      "Moroni ", "Helaman ", "Mormon ", "Abinadi ", "Amulek ", "Enos ", 
-      "Jacob ", "Joseph ", "Laman ", "Lemuel ", "Zoram ", 
-      "Sariah ", "Ishmael ", "Abraham ", "Isaac ", "Jacob "
+      "Nephi", "Lehi", "Alma", "Mosiah", "Ammon", "Benjamin", "King Benjamin", "Samuel", 
+      "Moroni", "Helaman", "Mormon", "Abinadi", "Amulek", "Enos", 
+      "Jacob", "Joseph", "Laman", "Lemuel", "Zoram", 
+      "Sariah", "Ishmael", "Jared", "Lamoni"
     ],
     places: [
       "Zarahemla", "Bountiful", "Nephi", "Cumorah", "Jerusalem", 
       "Land of Nephi", "Land of Zarahemla", "Land of Bountiful", 
       "Land of Desolation", "Land of Jershon", "Land of Ishmael"
     ],
-    doctrinalConcepts: [
-      "Faith", "Repentance", "Salvation", "Prayer", "Scriptures", 
-      "Holy Ghost", "Baptism", "Jesus Christ", "Heavenly Father", 
-      "Resurrection", "Plan of Salvation", "Eternal Life"
-    ],
-    eventsAndNarratives: [
-      "Liahona", "Tree of Life", "Alma the Younger", "First Vision", 
-      "Crossing the Sea", "Departure from Jerusalem", "Nephi's Vision", 
-      "Building the Ship", "Journey to the Promised Land"
-    ]
   },
   medium: {
     people: [
-      "Zeniff", "Noah", "Limhi", "Gideon", "Shiblon", "Coriantumr", "Teancum", 
-      "Zenos", "Zenock", "Sherem", "Corianton", "Shiblom", "Antipus", 
-      "Gid", "Morianton", "Pahoran", "Pacumeni", "Paanchi", "Cumenihah", 
-      "Giddianhi", "Giddonah", "Zemnarihah", "Aminadab", "Ammoron", 
-      "Akish", "Gadianton", "Kishkumen", "Tubaloth", "Zeezrom", "Amalickiah", 
-      "Amaleki", "Cohor", "Ether", "Omer", "Moron", "Lib", "Shiz", "Nehor", 
-      "Omni", "Chemish", "Abinadom", "Amaron", "Gidgiddoni", 
-      "Hagoth", "Nephihah", "Zarahemla", "Moronihah", "Lamoni", "Ammonihah", 
-      "Gideon", "Zemariah", "Morianton", "Lehonti"
+      "Zeniff", "Noah", "Gideon", "Shiblon", "Coriantumr", "Teancum", 
+      "Zenos", "Zenock", "Sherem", "Corianton", "Antipus", "Gid", 
+      "Morianton", "Pahoran", "Pacumeni", "Paanchi", "Giddianhi", 
+      "Giddonah", "Zeezrom", "Amalickiah", "Cohor", "Ether", "Omer", 
+      "Shiz", "Nehor", "Hagoth", "Nephihah", "Shiblon", "Corihor", 
+      "Akish", "Gadianton", "Kishkumen", "Limhi", "Ammoron"
     ],
     groups: [
       "Nephites", "Lamanites", "Zoramites", "Ammonites", "Gadianton robbers", 
@@ -6651,27 +6638,15 @@ const keywords = {
       "Antionum", "Ammonihah", "Hill Cumorah", "Shilom", 
       "Land of Ishmael", "Waters of Sebus", "Land of Helam"
     ],
-    doctrinalConcepts: [
-      "Atonement", "Covenant", "Resurrection", "Redemption", "Grace", 
-      "Mercy", "Obedience", "Prophets", "Priesthood", "Sacrifice", 
-      "Judgment", "Endure to the End", "Holy Spirit", "Revelation"
-    ],
-    eventsAndNarratives: [
-      "Captain Moroni", "Title of Liberty", "Stripling warriors", "War chapters", 
-      "Building of the temple", "Journey to the promised land", "Words of Isaiah", 
-      "Conversion of Alma", "Samuel the Lamanite", "Preaching of Ammon", 
-      "Destruction of Ammonihah", "Battle of Cumorah", "Visions of the Brother of Jared"
-    ]
   },
   hard: {
     people: [
       "Shemlon", "Shez", "Shelem", "Aminadi", "Amnor", "Cumen", 
       "Ezrom", "Himni", "Mathoni", "Josh", "Nahum", "Shem", 
       "Timothy", "Jonas", "Aha", "Luram", "Shared", "Gilgah", 
-      "Corihor", "Mahah", "Antionah", "Lachoneus", "Lehor", 
-      "Amgid", "Abinadom", "Amaron", "Gadianton", "Gidgiddoni", 
-      "Shiblon", "Paanchi", "Morianton", "Nephihah", "Moronihah", 
-      "Tubaloth", "Coriantumr", "Gidgiddoni"
+      "Mahah", "Antionah", "Lachoneus", "Lehor", "Amgid", 
+      "Abinadom", "Amaron", "Gidgiddoni", "Morianton (Jaredite)", 
+      "Tubaloth", "Coriantum", "Amgid", "Gimgimno"
     ],
     groups: [
       "Zoramites", "Gadianton robbers", "Mulekites", "Amalekites", 
@@ -6684,22 +6659,6 @@ const keywords = {
       "Red Sea", "Valley of Lemuel", "Land of Promise", "Land of Cumorah", 
       "City of Zarahemla", "Land of Gideon", "Land of Nephi", "Land of Desolation"
     ],
-    doctrinalConcepts: [
-      "Justice", "Charity", "Priesthood", "Commandments", "Plan of Salvation", 
-      "Endure to the end", "Tree of Life", "Iron Rod", "Straight and narrow path", 
-      "Holy Ghost", "Eternal life", "Judgment day", "Agency", "Second Coming", 
-      "Sacrifice", "Free will", "Prophecy", "Atonement", "Repentance", 
-      "Grace", "Works", "Faith", "Salvation", "Justification", "Sanctification"
-    ],
-    eventsAndNarratives: [
-      "Destruction of the wicked", "Departure from Jerusalem", 
-      "Plates of brass", "Samuel the Lamanite", 
-      "The ministry of Alma", "Sermon of King Benjamin", 
-      "Building of the ship", "Crossing the sea", "Establishing peace", 
-      "Nephi's vision", "Priestcraft", "War between Nephites and Lamanites", 
-      "Destruction of the Nephites", "Restoration of the Gospel", 
-      "Apostasy", "Signs of the Savior's Birth", "Signs of the Savior's Death"
-    ]
   }
 };
 
@@ -6731,16 +6690,12 @@ const mediumKeywords = {
   people: [...keywords.easy.people, ...keywords.medium.people],
   groups: [...(keywords.easy.groups || []), ...keywords.medium.groups],
   places: [...keywords.easy.places, ...keywords.medium.places],
-  doctrinalConcepts: [...keywords.easy.doctrinalConcepts, ...keywords.medium.doctrinalConcepts],
-  eventsAndNarratives: [...keywords.easy.eventsAndNarratives, ...keywords.medium.eventsAndNarratives],
 };
 
 const hardKeywords = {
   people: [...mediumKeywords.people, ...keywords.hard.people],
   groups: [...mediumKeywords.groups, ...keywords.hard.groups],
   places: [...mediumKeywords.places, ...keywords.hard.places],
-  doctrinalConcepts: [...mediumKeywords.doctrinalConcepts, ...keywords.hard.doctrinalConcepts],
-  eventsAndNarratives: [...mediumKeywords.eventsAndNarratives, ...keywords.hard.eventsAndNarratives],
 };
 
 // Filtering verses based on merged keywords

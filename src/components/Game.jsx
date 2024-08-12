@@ -375,7 +375,7 @@ function Game({ difficulty, category, endGame, usedVerses, username }) {
             timeMultiplier = 107;
             break;
           case 'hard':
-            timeMultiplier = 203; // This is the current value for hard
+            timeMultiplier = 357;
             break;
           default:
             timeMultiplier = 25;

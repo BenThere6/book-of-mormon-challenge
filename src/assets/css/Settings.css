@@ -6,6 +6,27 @@
     width: 100%;
 }
 
+#settings-container {
+    padding: 20px;
+}
+
+#settings-header {
+    position: sticky;
+    top: 5px;
+    background-color: black;
+    display: flex;
+    justify-content: space-between;
+    padding: 8px 5px 8px 5px;
+    border-radius: 10px;
+    z-index: 3;
+    border: white 1px solid;
+}
+
+#snack-bar div {
+    justify-content: center;
+    max-width: 150px;
+}
+
 @media (max-width: 600px) {
     .grid-container {
         display: flex !important;

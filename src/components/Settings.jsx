@@ -143,6 +143,7 @@ const Settings = () => {
         }}
       />
       <Box
+        id='settings-container'
         sx={{
           p: 4,
           maxWidth: 600,
@@ -158,13 +159,16 @@ const Settings = () => {
           boxSizing: 'border-box'
         }}
       >
-        <Box sx={{ display: 'flex', alignItems: 'center', mb: 2 }}>
+        <Box id='settings-header' sx={{ display: 'flex', alignItems: 'center', mb: 2 }}>
           <IconButton onClick={handleCancel}>
             <ArrowBackIcon style={{ color: 'white' }} />
           </IconButton>
           <Typography variant="h4" gutterBottom sx={{ mb: 0, color: 'white' }}>
             Settings
           </Typography>
+          <Button variant="outlined" onClick={saveSettings} sx={{ color: 'white', borderColor: 'white' }} disabled={!unsavedChanges}>
+            Save
+          </Button>
         </Box>
 
         <Box sx={{ mb: 2 }}>
@@ -219,9 +223,7 @@ const Settings = () => {
         </Box>
 
         <Box sx={{ display: 'flex', gap: 2, mb: 4 }}>
-          <Button variant="outlined" onClick={saveSettings} sx={{ color: 'white', borderColor: 'white' }} disabled={!unsavedChanges}>
-            Save Settings
-          </Button>
+          
         </Box>
 
         <Paper elevation={3} sx={{ p: 2, mt: 2, backgroundColor: 'rgba(0, 0, 0, 0.5)', color: 'white' }}>
@@ -407,10 +409,11 @@ const Settings = () => {
         </Dialog>
 
         <Snackbar
+          id='snack-bar'
           open={snackbarOpen}
           onClose={handleSnackbarClose}
           message="Settings saved!"
-          autoHideDuration={5000}
+          autoHideDuration={2200}
           anchorOrigin={{ vertical: 'top', horizontal: 'center' }}
           TransitionComponent={transition}
           ContentProps={{

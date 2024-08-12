@@ -255,16 +255,16 @@ function Game({ difficulty, category, endGame, usedVerses, username }) {
     let isCorrect = false;
     let lifeLost = false;
 
-    // Check if both chapter and verse have been selected
-    if (!selectedChapter || !selectedVerse || chapterDifference > chapterRange || guess.book !== correctBook) {
-      lifeLost = true;
-    } else {
+    if (guess.book === correctBook && chapterDifference <= chapterRange) {
+      // Award points for correct book and chapter within range
       if (guessAccuracy > 0) {
         newScore += guessAccuracy;
         newScore = Math.round(newScore); // Round the new score
         setScore(newScore);
         isCorrect = true;
       }
+    } else {
+      lifeLost = true; // Only lose life if book and chapter are incorrect
     }
 
     setModalContent({

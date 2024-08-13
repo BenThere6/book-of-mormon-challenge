@@ -722,6 +722,16 @@ function Game({ difficulty, category, endGame, usedVerses, username }) {
     return string.charAt(0).toUpperCase() + string.slice(1).toLowerCase();
   };
 
+  function openVerseLink(verse) {
+    const book = extractBookFromVerse(verse).toLowerCase().replace(/ /g, '-');
+    const chapterVerse = extractChapterVerseFromVerse(verse);
+    const [chapter, verseNumber] = chapterVerse.split(':');
+
+    const url = `https://www.churchofjesuschrist.org/study/scriptures/bofm/${book}/${chapter}?lang=eng#p${verseNumber}`;
+
+    window.open(url, '_blank');
+  }
+
   const isSubmitEnabled = currentStep === 'verse' && selectedVerse !== '';
 
   return (
@@ -837,8 +847,20 @@ function Game({ difficulty, category, endGame, usedVerses, username }) {
               </>
             )}
           </DialogContent>
-          <DialogActions>
-            <Button onClick={modalContent.skippedVerse ? handleSkipModalClose : handleCloseModal} color='primary'>
+          <DialogActions style={{ justifyContent: 'center' }}>
+            {!modalContent.skippedVerse && (
+              <Button
+                onClick={() => openVerseLink(modalContent.correctVerse)}
+                color='primary'
+              >
+                Open Verse
+              </Button>
+            )}
+            <Button
+              variant='contained'
+              onClick={modalContent.skippedVerse ? handleSkipModalClose : handleCloseModal}
+              color='primary'
+            >
               Okay
             </Button>
           </DialogActions>

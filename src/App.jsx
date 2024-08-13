@@ -67,7 +67,7 @@ function App() {
         <Route path="/login" element={<Login />} />
         <Route path="/admin" element={<PrivateRoute element={Admin} />} />
         <Route path="/history" element={<VerseHistory />} />
-        <Route path="/settings" element={<Settings />} />
+        <Route path="/settings" element={<Settings startGame={startGame} />} />
       </Routes>
       {location.pathname === '/' && <PwaPrompt isVisible={isPwaPromptVisible} onClose={handlePwaPromptClose} />}
     </div>

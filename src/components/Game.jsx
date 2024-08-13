@@ -180,7 +180,7 @@ function Game({ difficulty, category, endGame, usedVerses, username }) {
       console.error("Failed to generate a valid verse key.");
       return null;
     }
-    
+
     return randomKey;
   }
 

@@ -10,7 +10,7 @@ const inappropriateWords = ['gay', 'sexual', 'inappropriate1', 'inappropriate2']
 
 const customAdjectives = adjectives.filter(word => !inappropriateWords.includes(word));
 
-const Settings = () => {
+const Settings = ({ startGame }) => {
   const [username, setUsername] = useState('');
   const [difficulty, setDifficulty] = useState('Medium');
   const [feedback, setFeedback] = useState('');
@@ -115,7 +115,7 @@ const Settings = () => {
         const category = 'all-verses';
 
         // Navigate to game page with proper state
-        navigate('/game', { state: { gameID: newGameID, difficulty: difficulty.toLowerCase(), category } });
+        startGame(newGameID, difficulty.toLowerCase(), category);
     }, 0); // No delay
 };
 

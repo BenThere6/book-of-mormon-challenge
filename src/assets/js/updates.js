@@ -104,7 +104,8 @@ const UPDATES = [
         version: '2.1.0',
         date: 'August 13, 2024',
         messages: [
-            'Added button to open served verse.'
+            'Added button to open served verse.',
+            'Styled results modal.'
         ]
     },
 ];

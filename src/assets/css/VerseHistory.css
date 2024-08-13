@@ -6,6 +6,11 @@
     color: red;
 }
 
+.exact-guess {
+    color: #FFD700;
+    font-weight: bold;
+}
+
 .history-content-container {
     min-width: 300px;
     overflow-y: auto;

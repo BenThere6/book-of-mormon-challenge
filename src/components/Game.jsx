@@ -186,8 +186,8 @@ function Game({ difficulty, category, endGame, usedVerses, username }) {
     return randomKey;
   }
 
-  function saveVerseToHistory(verse, isCorrect) {
-    const localDate = new Date().toLocaleDateString('en-US', { timeZone: 'America/Denver' }); // Adjust to the desired timezone
+  const saveVerseToHistory = (verse, isCorrect) => {
+    const localDate = new Date().toLocaleDateString('en-US', { timeZone: 'America/Denver' });
     const gameID = JSON.parse(localStorage.getItem('currentGameID'));
     const verseHistory = JSON.parse(localStorage.getItem('verseHistory')) || {};
 
@@ -199,10 +199,12 @@ function Game({ difficulty, category, endGame, usedVerses, username }) {
       verseHistory[localDate][gameID] = [];
     }
 
-    verseHistory[localDate][gameID].push({ verse, isCorrect });
+    const exactGuess = isCorrect && verse === `${selectedBook} ${selectedChapter}:${selectedVerse}`;
+
+    verseHistory[localDate][gameID].push({ verse, isCorrect, exactGuess });
 
     localStorage.setItem('verseHistory', JSON.stringify(verseHistory));
-  }
+  };
 
   function handleBookSelection(book) {
     setTimeout(() => {
@@ -273,17 +275,21 @@ function Game({ difficulty, category, endGame, usedVerses, username }) {
     let isCorrect = false;
     let lifeLost = false;
     let reasonForLifeLost = '';
+    let exactGuess = false;
 
     if (guess.book === correctBook && chapterDifference <= chapterRange) {
-      // Award points for correct book and chapter within range
       if (guessAccuracy > 0) {
         newScore += guessAccuracy;
-        newScore = Math.round(newScore); // Round the new score
+        newScore = Math.round(newScore);
         setScore(newScore);
         isCorrect = true;
       }
+      // Check for exact guess
+      if (guess.book === correctBook && guess.chapter == correctChapter && guess.verse == correctChapterVerse.split(':')[1]) {
+        exactGuess = true;
+      }
     } else {
-      lifeLost = true; // Only lose life if book and chapter are incorrect
+      lifeLost = true;
 
       if (guess.book !== correctBook) {
         reasonForLifeLost = `You were in the wrong book. You guessed ${guess.book}, but the correct book was ${correctBook}.`;
@@ -297,11 +303,11 @@ function Game({ difficulty, category, endGame, usedVerses, username }) {
       correctVerse: currentVerse,
       pointsEarned: lifeLost ? 0 : guessAccuracy,
       lifeLost,
-      reasonForLifeLost,  // Add this to the modal content
+      reasonForLifeLost,
+      exactGuess, // Add the exactGuess flag here
     });
 
     setShowModal(true);
-
     saveVerseToHistory(currentVerse, isCorrect);
 
     if (lifeLost) {
@@ -322,7 +328,7 @@ function Game({ difficulty, category, endGame, usedVerses, username }) {
       setDisabledBooks([]);
       setDisabledChapters([]);
       setDisabledVerses([]);
-      setTimer(difficultySettings.timer); // Reset timer here
+      setTimer(difficultySettings.timer);
     }
   };
 
@@ -390,7 +396,6 @@ function Game({ difficulty, category, endGame, usedVerses, username }) {
           }
         }
 
-        // Adjust time multiplier based on difficulty
         let timeMultiplier;
         switch (difficulty) {
           case 'easy':
@@ -409,7 +414,6 @@ function Game({ difficulty, category, endGame, usedVerses, username }) {
         const timeBonus = timer * timeMultiplier;
 
         accuracy += timeBonus;
-        console.log(accuracy)
 
         if (accuracy > bestAccuracy) {
           bestAccuracy = accuracy;
@@ -418,7 +422,7 @@ function Game({ difficulty, category, endGame, usedVerses, username }) {
       }
     });
 
-    return Math.round(bestAccuracy); // Round the accuracy score
+    return Math.round(bestAccuracy);
   };
 
   const extractBookFromVerse = (verse) => {
@@ -852,9 +856,8 @@ function Game({ difficulty, category, endGame, usedVerses, username }) {
           onClose={modalContent.skippedVerse ? handleSkipModalClose : handleCloseModal}
           sx={{
             '& .MuiPaper-root': {
-              backgroundColor: modalContent.skippedVerse
-                ? '#FFFFFF' // White if verse was skipped
-                : (modalContent.lifeLost ? '#FFCDD2' : '#C8E6C9'), // Light red if life lost, light green if not
+              backgroundColor: modalContent.exactGuess ? '#FFD700' : // Bright gold for exact guess
+                modalContent.skippedVerse ? '#FFFFFF' : (modalContent.lifeLost ? '#FFCDD2' : '#C8E6C9'), // Light red if life lost, light green if not
             },
           }}
         >
@@ -928,6 +931,12 @@ function Game({ difficulty, category, endGame, usedVerses, username }) {
                     </DialogContentText>
                   </>
                 )}
+
+                {modalContent.exactGuess && (
+                  <DialogContentText sx={{ textAlign: 'center', marginTop: '20px', color: 'black', fontWeight: 'bold' }}>
+                    EXACT VERSE!
+                  </DialogContentText>
+                )}
               </>
             )}
           </DialogContent>
@@ -947,7 +956,6 @@ function Game({ difficulty, category, endGame, usedVerses, username }) {
             </Button>
           </DialogActions>
         </Dialog>
-
         <Dialog open={showConfirmation} onClose={handleCancelBack}>
           <DialogTitle>Confirmation</DialogTitle>
           <DialogContent>

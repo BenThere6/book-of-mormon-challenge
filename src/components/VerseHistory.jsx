@@ -6,7 +6,6 @@ import Typography from '@mui/material/Typography';
 import Paper from '@mui/material/Paper';
 import Box from '@mui/material/Box';
 import Container from '@mui/material/Container';
-import ScrollIndicatorContainer from './ScrollIndicatorContainer';
 import '../assets/css/VerseHistory.css';
 
 const VerseHistory = () => {
@@ -34,7 +33,7 @@ const VerseHistory = () => {
         const options = { year: 'numeric', month: 'long', day: 'numeric' };
         return date.toLocaleDateString('en-US', options);
     };
-    
+
     const reversedVerseHistory = getReversedVerseHistory(verseHistory);
 
     return (
@@ -111,7 +110,10 @@ const VerseHistory = () => {
                                     <Paper key={gameID} elevation={3} className="game-section" sx={{ p: 2, mb: 2, textAlign: 'center', backgroundColor: 'rgba(0, 0, 0, 0.7)', color: 'white' }}>
                                         <Typography variant="h6" sx={{ mb: 1 }}>Game #{gameID}</Typography>
                                         {[...reversedVerseHistory[date][gameID]].reverse().map((verseData, index) => (
-                                            <div key={index} className={verseData.isCorrect === null ? '' : (verseData.isCorrect ? 'correct' : 'incorrect')}>
+                                            <div
+                                                key={index}
+                                                className={`${verseData.isCorrect === null ? '' : (verseData.isCorrect ? 'correct' : 'incorrect')} ${verseData.exactGuess ? 'exact-guess' : ''}`}
+                                            >
                                                 {verseData.verse}
                                             </div>
                                         ))}

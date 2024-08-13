@@ -723,14 +723,34 @@ function Game({ difficulty, category, endGame, usedVerses, username }) {
   };
 
   function openVerseLink(verse) {
-    const book = extractBookFromVerse(verse).toLowerCase().replace(/ /g, '-');
+    const bookToUrlPart = {
+      '1 Nephi': '1-ne',
+      '2 Nephi': '2-ne',
+      'Jacob': 'jacob',
+      'Enos': 'enos',
+      'Jarom': 'jarom',
+      'Omni': 'omni',
+      'Words of Mormon': 'w-of-m',
+      'Mosiah': 'mosiah',
+      'Alma': 'alma',
+      'Helaman': 'hel',
+      '3 Nephi': '3-ne',
+      '4 Nephi': '4-ne',
+      'Mormon': 'morm',
+      'Ether': 'ether',
+      'Moroni': 'moro'
+    };
+  
+    const book = extractBookFromVerse(verse);
     const chapterVerse = extractChapterVerseFromVerse(verse);
     const [chapter, verseNumber] = chapterVerse.split(':');
-
-    const url = `https://www.churchofjesuschrist.org/study/scriptures/bofm/${book}/${chapter}?lang=eng#p${verseNumber}`;
-
+  
+    const urlPart = bookToUrlPart[book] || book.toLowerCase().replace(/ /g, '-');
+  
+    const url = `https://www.churchofjesuschrist.org/study/scriptures/bofm/${urlPart}/${chapter}?lang=eng#p${verseNumber}`;
+  
     window.open(url, '_blank');
-  }
+  }  
 
   const isSubmitEnabled = currentStep === 'verse' && selectedVerse !== '';
 
@@ -848,6 +868,14 @@ function Game({ difficulty, category, endGame, usedVerses, username }) {
             )}
           </DialogContent>
           <DialogActions style={{ justifyContent: 'center' }}>
+            {modalContent.skippedVerse && (
+              <Button
+                onClick={() => openVerseLink(modalContent.skippedVerse)}
+                color='primary'
+              >
+                Open Verse
+              </Button>
+            )}
             {!modalContent.skippedVerse && (
               <Button
                 onClick={() => openVerseLink(modalContent.correctVerse)}

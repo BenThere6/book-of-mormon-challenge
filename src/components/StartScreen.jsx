@@ -15,7 +15,7 @@ import UPDATES from '../assets/js/updates';
 import getDifficultySettings from '../assets/js/difficultySettings';
 import { useTheme } from '@mui/material';
 
-const DEVELOPMENT_MESSAGE = 'This application is currently under development. You might encounter bugs, design flaws, or areas that could be improved. If you notice any issues or have suggestions for enhancements, please submit it in feedback found at the bottom of the settings page.';
+const DEVELOPMENT_MESSAGE = 'This application is currently under development. You might encounter bugs, design flaws, or areas that could be improved. If you notice any issues or have suggestions for enhancements, please submit it in feedback.';
 
 function StartScreen({ startGame }) {
   const theme = useTheme();

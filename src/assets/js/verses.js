@@ -1168,7 +1168,7 @@ const verses = {
   "2 Nephi 24:6": "He who smote the people in wrath with a continual stroke, he that ruled the nations in anger, is persecuted, and none hindereth.",
   "2 Nephi 24:7": "The whole earth is at rest, and is quiet; they break forth into singing.",
   "2 Nephi 24:8": "Yea, the fir trees rejoice at thee, and also the cedars of Lebanon, saying: Since thou art laid down no feller is come up against us.",
-  "2 Nephi 24:9": "Helamanl from beneath is moved for thee to meet thee at thy coming; it stirreth up the dead for thee, even all the chief ones of the earth; it hath raised up from their thrones all the kings of the nations.",
+  "2 Nephi 24:9": "Hell from beneath is moved for thee to meet thee at thy coming; it stirreth up the dead for thee, even all the chief ones of the earth; it hath raised up from their thrones all the kings of the nations.",
   "2 Nephi 24:10": "All they shall speak and say unto thee: Art thou also become weak as we? Art thou become like unto us?",
   "2 Nephi 24:11": "Thy pomp is brought down to the grave; the noise of thy viols is not heard; the worm is spread under thee, and the worms cover thee.",
   "2 Nephi 24:12": "How art thou fallen from heaven, O Lucifer, son of the morning! Art thou cut down to the ground, which did weaken the nations!",

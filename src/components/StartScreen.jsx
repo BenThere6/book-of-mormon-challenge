@@ -152,7 +152,7 @@ function StartScreen({ startGame }) {
         position: 'absolute',
         top: 5,
         right: 5,
-        backgroundColor: 'rgba(0, 0, 0, 0.6)',
+        backgroundColor: 'rgba(0, 0, 0, 0.8)',
         borderColor: 'rgba(0, 0, 0, 0.3)',
         color: 'white',
         '&:hover': {
@@ -193,7 +193,7 @@ function StartScreen({ startGame }) {
               variant="outlined"
               onClick={handleViewLeaderboard}
               sx={{
-                backgroundColor: 'rgba(0, 0, 0, 0.6)',
+                backgroundColor: 'rgba(0, 0, 0, 0.8)',
                 borderColor: 'rgba(0, 0, 0, 0.3)',
                 color: 'white',
                 width: '100%',
@@ -211,7 +211,7 @@ function StartScreen({ startGame }) {
               variant="outlined"
               onClick={handleViewHistory}
               sx={{
-                backgroundColor: 'rgba(0, 0, 0, 0.6)',
+                backgroundColor: 'rgba(0, 0, 0, 0.8)',
                 borderColor: 'rgba(0, 0, 0, 0.3)',
                 color: 'white',
                 width: '100%',
@@ -229,7 +229,7 @@ function StartScreen({ startGame }) {
               variant="outlined"
               onClick={handleSettingsClick}
               sx={{
-                backgroundColor: 'rgba(0, 0, 0, 0.6)',
+                backgroundColor: 'rgba(0, 0, 0, 0.8)',
                 borderColor: 'rgba(0, 0, 0, 0.3)',
                 color: 'white',
                 width: '100%',
@@ -247,7 +247,7 @@ function StartScreen({ startGame }) {
               variant="outlined"
               onClick={handleFeedbackClick}
               sx={{
-                backgroundColor: 'rgba(0, 0, 0, 0.6)',
+                backgroundColor: 'rgba(0, 0, 0, 0.8)',
                 borderColor: 'rgba(0, 0, 0, 0.3)',
                 color: 'white',
                 width: '100%',

@@ -6608,22 +6608,26 @@ const verses = {
 const keywords = {
   easy: [
     // People
-    "Nephi", "Lehi", "Alma", "Mosiah", "Ammon", "Benjamin", "King Benjamin", "Samuel", 
-    "Moroni", "Helaman", "Mormon", "Abinadi", "Amulek", "Enos", 
-    "Jacob", "Joseph", "Laman", "Lemuel", "Zoram", 
-    "Sariah", "Ishmael", "Jared", "Lamoni", "Laban", "Two thousand",
+    "Nephi ", "Lehi", "Alma", "Mosiah", "Ammon ", "Benjamin", "King Benjamin", "Samuel", 
+    "Moroni ", "Helaman", "Mormon ", "Abinadi ", "Amulek ", "Enos", 
+    "Jacob ", "Joseph ", "Laman ", "Lemuel ", "Zoram ", 
+    "Sariah", "Ishmael ", "Jared ", "Lamoni ", "Laban ", "Two thousand",
     
     // Places
-    "Zarahemla", "Bountiful", "Nephi", "Cumorah", "Jerusalem", 
-    "Land of Nephi", "Land of Zarahemla", "Land of Bountiful", 
-    "Land of Desolation", "Land of Jershon", "Land of Ishmael", 
-    "Hill Cumorah", "Fruit of my vineyard",
+    // "Zarahemla", "Bountiful", "Nephi", "Cumorah", "Jerusalem", 
+    // "Land of Nephi", "Land of Zarahemla", "Land of Bountiful", 
+    // "Land of Desolation", "Land of Ishmael", 
+    // "Hill Cumorah", "Fruit of my vineyard",
+    "Jershon",
 
     // Concepts and Others
-    "Jesus", "Christ", "God of miracles", "Repentance", "Righteous", 
-    "Kingdom of heaven", "Pride", "Eternal life", "Pray", "Seed", 
-    "Grow", "Tree of life", "Atonement", "Doctrine", "Bapti",
-    "Epistle", "Sheep", "Charity", "Consecrate", "Virgin"
+    "Jesus", "Christ", "God of miracles", "Righteous", 
+    "Pray",  
+    "Tree of life", "Atonement", "Doctrine", "Bapti",
+    "Epistle", "Sheep", "Charity", "Consecrate", "Virgin",
+
+    // "Repentance", "Pride", "Kingdom of heaven", "Eternal life", "Seed",
+    // "Grow",
   ],
   
   medium: [
@@ -6641,19 +6645,21 @@ const keywords = {
     "Sons of Mosiah", "People of Ammon", "People of Zarahemla",
     
     // Places
-    "Desolation", "Sidon", "Gideon", "Manti", "Jershon", 
-    "Antionum", "Ammonihah", "Shilom", 
-    "Land of Ishmael", "Waters of Sebus", "Land of Helam",
+    // "Desolation", "Sidon", "Gideon", "Manti", "Jershon", 
+    // "Antionum", "Ammonihah", "Shilom", 
+    // "Land of Ishmael", "Waters of Sebus", "Land of Helam",
 
     // Concepts and Others
     "Law of Moses", "Spirit of the Lord", "Murder", "Watery Grave", 
     "Pride", "The devil", "Justice", "Works", "Adam", 
-    "Holy Spirit", "Year", "Put to death", "Commandment", 
-    "Bondage", "Harden", "Satan", "Take up your cross", 
-    "Apostle", "Disciple", "Stain our swords", "Blotted out", 
+    "Year", "Put to death", 
+    "Harden", "Satan", "Take up your cross", 
+    "Disciple", "Stain our swords", "Blotted out", 
     "Church of God", "Show unto you another sign",
     "Angels ceased", "I know your thoughts", "Three days and three nights", 
     "Stand upon the top thereof", "Decree", "Preparatory state"
+
+    // "Holy Spirit", "Commandment", "Bondage", "Apostle", 
   ],
   
   hard: [
@@ -6666,15 +6672,17 @@ const keywords = {
     "Tubaloth", "Coriantum", "Amgid", "Gimgimno",
     
     // Groups
-    "Zoramites", "Gadianton robbers", "Mulekites", "Amalekites", 
+    "Zoramites", "Gadianton robbers", "robbers", "Mulekites", "Amalekites", 
     "Amalickiahites", "King-men", "Secret Combinations", 
     "Lamanites", "Nephites", "Gadianton Band", "People of Morianton",
     
     // Places
     "Antionum", "Ammonihah", "Moriancumer", "Lehi-Nephi", "Shilom", 
-    "Ishmael", "Waters of Mormon", "Hill Rameumptom", "Wilderness", 
-    "Red Sea", "Valley of Lemuel", "Land of Promise", "Land of Cumorah", 
+    "Ishmael", "Waters of Mormon", "Hill Rameumptom", 
+    "Red Sea", "Valley of Lemuel", "Land of Promise", 
     "City of Zarahemla", "Land of Gideon", "Land of Nephi", "Land of Desolation",
+
+    // "Wilderness", "Land of Cumorah", 
     
     // Concepts and Others
     "Amulon", "Serv", "Abominable church", "Doctrine", "Song", 

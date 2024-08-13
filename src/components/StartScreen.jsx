@@ -8,6 +8,7 @@ import DialogContentText from '@mui/material/DialogContentText';
 import DialogTitle from '@mui/material/DialogTitle';
 import Box from '@mui/material/Box';
 import Container from '@mui/material/Container';
+import Grid from '@mui/material/Grid';
 import UpdateModal from './UpdateModal';
 import DevelopmentModal from './DevelopmentModal';
 import UPDATES from '../assets/js/updates';
@@ -36,6 +37,10 @@ function StartScreen({ startGame }) {
     navigate('/history');
   };
 
+  const handleFeedbackClick = () => {
+    navigate('/settings', { state: { openFeedback: true } });
+  };
+
   const accumulateUpdates = (seenUpdates) => {
     let updatesToShow = [];
 
@@ -60,16 +65,16 @@ function StartScreen({ startGame }) {
           setIsUpdateModalOpen(true);
         }
       }
-  
+
       if (!storedDevelopmentNotice) {
         setShowDevelopmentModal(true);
       }
     };
-  
+
     checkForUpdates();
-  
+
     // Dependency array is empty to ensure the effect only runs once when the component mounts
-  }, []);   
+  }, []);
 
   const handleDevelopmentModalClose = () => {
     setShowDevelopmentModal(false);
@@ -159,78 +164,103 @@ function StartScreen({ startGame }) {
       </Box>
       <Container sx={{
         textAlign: 'center',
-        // backgroundColor: 'rgba(255, 255, 255, 0.8)',
         padding: 4,
         borderRadius: 2,
-        mt: '25vh',
+        mt: 'auto',
+        mb: 0,
         maxWidth: '600px',
         display: 'flex',
         flexDirection: 'column',
         justifyContent: 'flex-end',
-        height: '75vh'
+        alignItems: 'center',
+        flexGrow: 1,
       }}>
-        <Box sx={{
-          display: 'flex',
-          flexDirection: 'column',
-          alignItems: 'center',
-          gap: .5
-        }}>
-          <Button variant="contained" onClick={handleStart} sx={{
-            mt: 4, 
-            [theme.breakpoints.down('md')]: {
-              '&:hover': {
-                // backgroundColor: 'initial',
-                color: 'white',
-                borderColor: 'white',
-              },
+        <Button variant="contained" onClick={handleStart} sx={{
+          width: '100%',
+          mb: 1,
+          [theme.breakpoints.down('md')]: {
+            '&:hover': {
+              color: 'white',
+              borderColor: 'white',
             },
-          }}>Start Game</Button>
-          <Button
-            variant="outlined"
-            onClick={handleViewLeaderboard}
-            sx={{
-              backgroundColor: 'rgba(0, 0, 0, 0.6)',
-              borderColor: 'rgba(0, 0, 0, 0.3)',
-              color: 'white',
-              '&:hover': {
-                backgroundColor: 'rgba(0, 0, 0, 0.8)',
-                borderColor: 'rgba(0, 0, 0, 0.5)'
-              }
-            }}
-          >
-            Leaderboard
-          </Button>
-          <Button
-            variant="outlined"
-            onClick={handleViewHistory}
-            sx={{
-              backgroundColor: 'rgba(0, 0, 0, 0.6)',
-              borderColor: 'rgba(0, 0, 0, 0.3)',
-              color: 'white',
-              '&:hover': {
-                backgroundColor: 'rgba(0, 0, 0, 0.8)',
-                borderColor: 'rgba(0, 0, 0, 0.5)'
-              }
-            }}
-          >
-            History
-          </Button>
-          <Button
-            variant="outlined"
-            onClick={handleSettingsClick}
-            sx={{
-              backgroundColor: 'rgba(0, 0, 0, 0.6)',
-              borderColor: 'rgba(0, 0, 0, 0.3)',
-              color: 'white',
-              '&:hover': {
-                backgroundColor: 'rgba(0, 0, 0, 0.8)',
-                borderColor: 'rgba(0, 0, 0, 0.5)'
-              }
-            }}
-          >
-            Settings
-          </Button>
-        </Box>
+          },
+        }}>
+          Start Game
+        </Button>
+        <Grid container spacing={1} sx={{ width: '100%' }}>
+          <Grid item xs={6}>
+            <Button
+              variant="outlined"
+              onClick={handleViewLeaderboard}
+              sx={{
+                backgroundColor: 'rgba(0, 0, 0, 0.6)',
+                borderColor: 'rgba(0, 0, 0, 0.3)',
+                color: 'white',
+                width: '100%',
+                '&:hover': {
+                  backgroundColor: 'rgba(0, 0, 0, 0.8)',
+                  borderColor: 'rgba(0, 0, 0, 0.5)'
+                }
+              }}
+            >
+              Leaderboard
+            </Button>
+          </Grid>
+          <Grid item xs={6}>
+            <Button
+              variant="outlined"
+              onClick={handleViewHistory}
+              sx={{
+                backgroundColor: 'rgba(0, 0, 0, 0.6)',
+                borderColor: 'rgba(0, 0, 0, 0.3)',
+                color: 'white',
+                width: '100%',
+                '&:hover': {
+                  backgroundColor: 'rgba(0, 0, 0, 0.8)',
+                  borderColor: 'rgba(0, 0, 0, 0.5)'
+                }
+              }}
+            >
+              History
+            </Button>
+          </Grid>
+          <Grid item xs={6}>
+            <Button
+              variant="outlined"
+              onClick={handleSettingsClick}
+              sx={{
+                backgroundColor: 'rgba(0, 0, 0, 0.6)',
+                borderColor: 'rgba(0, 0, 0, 0.3)',
+                color: 'white',
+                width: '100%',
+                '&:hover': {
+                  backgroundColor: 'rgba(0, 0, 0, 0.8)',
+                  borderColor: 'rgba(0, 0, 0, 0.5)'
+                }
+              }}
+            >
+              Settings
+            </Button>
+          </Grid>
+          <Grid item xs={6}>
+            <Button
+              variant="outlined"
+              onClick={handleFeedbackClick}
+              sx={{
+                backgroundColor: 'rgba(0, 0, 0, 0.6)',
+                borderColor: 'rgba(0, 0, 0, 0.3)',
+                color: 'white',
+                width: '100%',
+                '&:hover': {
+                  backgroundColor: 'rgba(0, 0, 0, 0.8)',
+                  borderColor: 'rgba(0, 0, 0, 0.5)'
+                }
+              }}
+            >
+              Feedback
+            </Button>
+          </Grid>
+        </Grid>
       </Container>
       <DevelopmentModal
         open={showDevelopmentModal}

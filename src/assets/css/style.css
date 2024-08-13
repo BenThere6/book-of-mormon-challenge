@@ -68,3 +68,7 @@ body {
 .feedback-container {
     width: 95%;
 }
+
+.css-elyxnh-MuiContainer-root {
+    max-width: 600px !important;
+}

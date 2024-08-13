@@ -295,8 +295,8 @@ const Settings = () => {
             <Grid item xs={12} sm={6} className="grid-item">
               <Card elevation={3} sx={{ backgroundColor: '#ffecb3' }}>
                 <CardContent>
-                  <Typography variant="subtitle2" align="center">Verse Range</Typography>
-                  <Typography variant="h4" align="center">{getDifficultySettings('easy').verseRange}</Typography>
+                  <Typography variant="subtitle2" align="center">Timer (seconds)</Typography>
+                  <Typography variant="h4" align="center">{getDifficultySettings('easy').timer}</Typography>
                 </CardContent>
               </Card>
             </Grid>
@@ -332,8 +332,8 @@ const Settings = () => {
             <Grid item xs={12} sm={6} className="grid-item">
               <Card elevation={3} sx={{ backgroundColor: '#ffecb3' }}>
                 <CardContent>
-                  <Typography variant="subtitle2" align="center">Verse Range</Typography>
-                  <Typography variant="h4" align="center">{getDifficultySettings('medium').verseRange}</Typography>
+                  <Typography variant="subtitle2" align="center">Timer (seconds)</Typography>
+                  <Typography variant="h4" align="center">{getDifficultySettings('medium').timer}</Typography>
                 </CardContent>
               </Card>
             </Grid>
@@ -369,8 +369,8 @@ const Settings = () => {
             <Grid item xs={12} sm={6} className="grid-item">
               <Card elevation={3} sx={{ backgroundColor: '#ffecb3' }}>
                 <CardContent>
-                  <Typography variant="subtitle2" align="center">Verse Range</Typography>
-                  <Typography variant="h4" align="center">{getDifficultySettings('hard').verseRange}</Typography>
+                  <Typography variant="subtitle2" align="center">Timer (seconds)</Typography>
+                  <Typography variant="h4" align="center">{getDifficultySettings('hard').timer}</Typography>
                 </CardContent>
               </Card>
             </Grid>

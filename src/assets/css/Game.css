@@ -179,7 +179,6 @@
 }
 
 #timer-text {
-    color: black;
     font-size: 30px;
     position: absolute;
     left: 50%;
@@ -189,8 +188,28 @@
     padding: 0 5px 2px 5px;
     width: 70px;
     text-align: center;
-}
-
+    transition: font-size 0.3s ease-in-out, transform 0.3s ease-in-out;
+  }
+  
+  .timer-critical {
+    color: red;
+    font-size: 40px;
+    animation: shake 0.2s infinite;
+    transition: font-size 0.3s ease-in-out, transform 0.3s ease-in-out;
+  }
+  
+  @keyframes shake {
+    0%, 100% {
+      transform: translate(-50%, 0);
+    }
+    25% {
+      transform: translate(calc(-50% + 3px), 0);
+    }
+    75% {
+      transform: translate(calc(-50% - 3px), 0);
+    }
+  }
+  
 #lives-text {
     font-family: 'EB Garamond', serif;
     font-size: 30px;

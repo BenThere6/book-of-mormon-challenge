@@ -731,7 +731,12 @@ function Game({ difficulty, category, endGame, usedVerses, username }) {
         <div className='game-content'>
           <div className='header'>
             <div id='score-text'>{score}</div>
-            <div id='timer-text'>{timer}</div>
+            <div
+              id="timer-text"
+              className={timer < 6 ? 'timer-critical' : ''} // Add this class when timer is below 6
+            >
+              {timer}
+            </div>
             <div id='lives-container'>
               <span id='lives-text'>{lives}</span>
               <FavoriteBorderOutlinedIcon sx={{ color: 'white', marginRight: '5px' }} />

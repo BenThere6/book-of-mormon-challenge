@@ -66,11 +66,6 @@ const Leaderboard = () => {
   };
 
   const submitScore = (username, score) => {
-    // if (score === 0) {
-    //   isSubmittingRef.current = false;
-    //   return;
-    // }
-
     const storedGameIDs = localStorage.getItem('gameIDs');
     let gameIDs = storedGameIDs ? JSON.parse(storedGameIDs) : {};
 

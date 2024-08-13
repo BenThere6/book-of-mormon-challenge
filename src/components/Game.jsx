@@ -952,7 +952,7 @@ function Game({ difficulty, category, endGame, usedVerses, username }) {
               </Button>
             )}
             <Button variant='contained' onClick={modalContent.skippedVerse ? handleSkipModalClose : handleCloseModal} color='primary'>
-              Okay
+              Next
             </Button>
           </DialogActions>
         </Dialog>

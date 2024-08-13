@@ -176,8 +176,6 @@
     padding-left: 5px;
     color: white;
     font-size: 30px;
-    /* margin-left: 8px;
-    margin-right: 14px; */
 }
 
 #timer-text {
@@ -226,7 +224,6 @@
     justify-content: center;
     padding-top: 10px;
     padding-bottom: 10px;
-    /* border-top: 1px white solid; */
     border-bottom: 1px white solid;
 }
 
@@ -234,6 +231,7 @@
     margin: 5px;
     color: white;
     font-size: 18px;
+    user-select: none;
 }
 
 .submit-button {

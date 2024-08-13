@@ -735,6 +735,10 @@ function Game({ difficulty, category, endGame, usedVerses, username }) {
     return string.charAt(0).toUpperCase() + string.slice(1).toLowerCase();
   };
 
+  function isPWA() {
+    return window.matchMedia('(display-mode: standalone)').matches || window.navigator.standalone === true;
+  }  
+
   function openVerseLink(verse) {
     const bookToUrlPart = {
       '1 Nephi': '1-ne',
@@ -753,18 +757,23 @@ function Game({ difficulty, category, endGame, usedVerses, username }) {
       'Ether': 'ether',
       'Moroni': 'moro'
     };
-
+  
     const book = extractBookFromVerse(verse);
     const chapterVerse = extractChapterVerseFromVerse(verse);
     const [chapter, verseNumber] = chapterVerse.split(':');
-
+  
     const urlPart = bookToUrlPart[book] || book.toLowerCase().replace(/ /g, '-');
-
-    const url = `https://www.churchofjesuschrist.org/study/scriptures/bofm/${urlPart}/${chapter}?lang=eng#p${verseNumber}`;
-
+  
+    let url = `https://www.churchofjesuschrist.org/study/scriptures/bofm/${urlPart}/${chapter}?lang=eng#p${verseNumber}`;
+  
+    if (!isPWA()) {
+      // Add a fake query parameter to prevent Gospel Library from recognizing the link
+      url += "&browser=true";
+    }
+  
     window.open(url, '_blank');
   }
-
+  
   const isSubmitEnabled = currentStep === 'verse' && selectedVerse !== '';
 
   return (

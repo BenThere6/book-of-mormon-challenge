@@ -10,6 +10,10 @@
     padding: 20px;
 }
 
+#submit-feedback-container {
+    margin-bottom: 80px;
+}
+
 #settings-header {
     position: sticky;
     top: 5px;
@@ -25,6 +29,14 @@
 #snack-bar div {
     justify-content: center;
     max-width: 150px;
+}
+
+#settings-start-game-container {
+    box-sizing: border-box;
+}
+
+#save-button {
+    margin-right: 10px;
 }
 
 @media (max-width: 600px) {

@@ -143,9 +143,9 @@ function Game({ difficulty, category, endGame, usedVerses, username }) {
 
   function getRandomVerse(needNewVerse) {
     countNewVerses += 1;
-
-    let verseKeys;
-
+  
+    let verseKeys = [];
+  
     // Choose the correct verse set based on difficulty
     if (difficulty === 'easy') {
       verseKeys = Object.keys(easyVerses);
@@ -154,24 +154,30 @@ function Game({ difficulty, category, endGame, usedVerses, username }) {
     } else if (difficulty === 'hard') {
       verseKeys = Object.keys(hardVerses);
     }
-
+  
+    // Safety check to ensure verseKeys is not undefined or empty
+    if (!verseKeys || verseKeys.length === 0) {
+      console.error("Verse keys are undefined or empty. Please check the difficulty setting or the verse list.");
+      return null; // Or handle the error as appropriate for your application
+    }
+  
     if (usedVerses.length >= 25 && category === 'scripture-mastery') {
       endGame(score);
       return null;
     }
-
+  
     let randomKey = verseKeys[Math.floor(Math.random() * verseKeys.length)];
-
+  
     while (usedVerses.includes(randomKey)) {
       randomKey = verseKeys[Math.floor(Math.random() * verseKeys.length)];
     }
-
+  
     if (needNewVerse || countNewVerses === 2) {
       usedVerses.push(randomKey);
     }
-
+  
     return randomKey;
-  }
+  }  
 
   function saveVerseToHistory(verse, isCorrect) {
     const date = new Date().toISOString().split('T')[0];

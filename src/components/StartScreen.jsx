@@ -105,7 +105,7 @@ function StartScreen({ startGame }) {
       const category = 'all-verses';
 
       startGame(newGameID, storedDifficulty, category);
-    }, 250); // 1/4 second delay
+    }, 0); // No delay
   };
 
   const handleViewLeaderboard = () => {

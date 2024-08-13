@@ -18,6 +18,7 @@ const Settings = () => {
   const [open, setOpen] = useState(false);
   const [snackbarOpen, setSnackbarOpen] = useState(false);
   const [transition, setTransition] = useState(undefined);
+  const [isUsernameSaved, setIsUsernameSaved] = useState(false); // New state to track if username is saved
 
   const navigate = useNavigate();
 
@@ -26,6 +27,7 @@ const Settings = () => {
     const savedDifficulty = localStorage.getItem('gameDifficulty');
     if (savedUsername) {
       setUsername(savedUsername);
+      setIsUsernameSaved(true); // Set to true if username exists
     }
     if (savedDifficulty) {
       const capitalizedDifficulty = savedDifficulty.charAt(0).toUpperCase() + savedDifficulty.slice(1).toLowerCase();
@@ -44,6 +46,7 @@ const Settings = () => {
     setTransition(() => TransitionDown);
     setSnackbarOpen(true);
     setUnsavedChanges(false);
+    setIsUsernameSaved(true); // Update to true when settings are saved
   };
 
   const handleCancel = () => {
@@ -54,11 +57,45 @@ const Settings = () => {
     }
   };
 
-  const handleClose = (confirm) => {
+  const handleClose = (confirm, callback = null) => {
     setOpen(false);
     if (confirm) {
-      navigate('/');
+      if (callback) {
+        callback();
+      } else {
+        navigate('/');
+      }
     }
+  };
+
+  const handleSettingsStartGame = () => {
+    if (unsavedChanges) {
+      setOpen(true);
+    } else {
+      startGameProcess();
+    }
+  };
+
+  const startGameProcess = () => {
+    setTimeout(() => {
+      const difficultySettings = getDifficultySettings(difficulty.toLowerCase());
+      localStorage.setItem('gameScore', 0);
+      localStorage.setItem('gameLives', 3);
+      localStorage.setItem('gameDifficulty', difficulty.toLowerCase());
+      localStorage.setItem('gameBombs', difficultySettings?.bombCount || 3);
+      localStorage.setItem('gameSkips', difficultySettings?.skipCount || 3);
+      localStorage.setItem('gameCurrentVerse', '');
+
+      let gameIDs = JSON.parse(localStorage.getItem('gameIDs')) || {};
+      const newGameID = Object.keys(gameIDs).length > 0 ? Math.max(...Object.keys(gameIDs)) + 1 : 1;
+      gameIDs[newGameID] = false;
+
+      localStorage.setItem('gameIDs', JSON.stringify(gameIDs));
+      localStorage.setItem('currentGameID', newGameID);
+
+      const category = 'all-verses';
+      navigate('/game', { state: { gameID: newGameID, difficulty: difficulty.toLowerCase(), category } });
+    }, 0); // No delay
   };
 
   const submitFeedback = async () => {
@@ -106,10 +143,6 @@ const Settings = () => {
 
   const TransitionDown = (props) => {
     return <Slide {...props} direction="down" />;
-  };
-
-  const TransitionUp = (props) => {
-    return <Slide {...props} direction="up" />;
   };
 
   return (
@@ -166,7 +199,20 @@ const Settings = () => {
           <Typography variant="h4" gutterBottom sx={{ mb: 0, color: 'white' }}>
             Settings
           </Typography>
-          <Button variant="outlined" onClick={saveSettings} sx={{ color: 'white', borderColor: 'white' }} disabled={!unsavedChanges}>
+          <Button
+            id='save-button'
+            variant="outlined"
+            onClick={saveSettings}
+            sx={{
+              color: 'aqua',
+              borderColor: 'aqua',
+              '&.Mui-disabled': {
+                color: 'black',
+                borderColor: 'black',
+              },
+            }}
+            disabled={!unsavedChanges}
+          >
             Save
           </Button>
         </Box>
@@ -220,10 +266,6 @@ const Settings = () => {
               <MenuItem value="Hard">Hard</MenuItem>
             </Select>
           </FormControl>
-        </Box>
-
-        <Box sx={{ display: 'flex', gap: 2, mb: 4 }}>
-          
         </Box>
 
         <Paper elevation={3} sx={{ p: 2, mt: 2, backgroundColor: 'rgba(0, 0, 0, 0.5)', color: 'white' }}>
@@ -372,7 +414,7 @@ const Settings = () => {
               sx={{ '.MuiOutlinedInput-root': { '& fieldset': { borderColor: 'white' }, '&:hover fieldset': { borderColor: 'white' }, '&.Mui-focused fieldset': { borderColor: 'white' } } }}
             />
           </FormControl>
-          <Box sx={{ display: 'flex' }}>
+          <Box id='submit-feedback-container' sx={{ display: 'flex' }}>
             <Button variant="outlined" sx={{ color: 'white', borderColor: 'white' }} onClick={submitFeedback}>
               Submit Feedback
             </Button>
@@ -402,7 +444,7 @@ const Settings = () => {
             <Button onClick={() => handleClose(false)} sx={{ color: 'white' }}>
               No
             </Button>
-            <Button onClick={() => handleClose(true)} sx={{ color: 'white' }} autoFocus>
+            <Button onClick={() => handleClose(true, startGameProcess)} sx={{ color: 'white' }} autoFocus>
               Yes
             </Button>
           </DialogActions>
@@ -425,6 +467,33 @@ const Settings = () => {
           }}
         />
       </Box>
+
+      {/* Conditionally render the Start Game button */}
+      {isUsernameSaved && (
+        <Box
+          id='settings-start-game-container'
+          sx={{
+            position: 'fixed',
+            bottom: 0,
+            left: 0,
+            width: '100%',
+            backgroundColor: 'rgba(0, 0, 0, 0.85)',
+            zIndex: 2,
+            p: 2,
+            display: 'flex',
+            justifyContent: 'center',
+          }}
+        >
+          <Button
+            variant="contained"
+            color="primary"
+            onClick={handleSettingsStartGame}
+            sx={{ width: '50%', maxWidth: 400, fontSize: '1.2rem' }}
+          >
+            START GAME
+          </Button>
+        </Box>
+      )}
     </Box>
   );
 };

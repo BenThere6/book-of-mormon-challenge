@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { Button, TextField, Select, MenuItem, FormControl, InputLabel, Typography, Box, Paper, Dialog, DialogActions, DialogContent, DialogContentText, DialogTitle, Card, CardContent, Grid, IconButton, Snackbar, Slide } from '@mui/material';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, useLocation } from 'react-router-dom';
 import ArrowBackIcon from '@mui/icons-material/ArrowBack';
 import { uniqueNamesGenerator, adjectives, animals } from 'unique-names-generator';
 import getDifficultySettings from '../assets/js/difficultySettings';
@@ -21,6 +21,7 @@ const Settings = () => {
   const [isUsernameSaved, setIsUsernameSaved] = useState(false); // New state to track if username is saved
 
   const navigate = useNavigate();
+  const location = useLocation();
 
   useEffect(() => {
     const savedUsername = localStorage.getItem('username');
@@ -34,6 +35,14 @@ const Settings = () => {
       setDifficulty(capitalizedDifficulty);
     }
   }, []);
+
+  useEffect(() => {
+    // Check if the state is passed from the navigate function
+    if (location.state?.openFeedback) {
+      // Automatically focus on the feedback section or do whatever is needed
+      document.getElementById('submit-feedback-container').scrollIntoView();
+    }
+  }, [location.state]);
 
   const handleChange = (setter) => (event) => {
     setter(event.target.value);

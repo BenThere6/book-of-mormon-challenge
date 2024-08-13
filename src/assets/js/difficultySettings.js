@@ -22,7 +22,7 @@ const getDifficultySettings = (difficulty) => {
       };
     case 'hard':
       return { 
-        multiplier: 12, 
+        multiplier: 15, 
         chapterRange: 3, 
         verseRange: 8, 
         bombCount: 3, 

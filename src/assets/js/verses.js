@@ -6606,115 +6606,131 @@ const verses = {
 };
 
 const keywords = {
-  easy: {
-    people: [
-      "Nephi", "Lehi", "Alma", "Mosiah", "Ammon", "Benjamin", "King Benjamin", "Samuel", 
-      "Moroni", "Helaman", "Mormon", "Abinadi", "Amulek", "Enos", 
-      "Jacob", "Joseph", "Laman", "Lemuel", "Zoram", 
-      "Sariah", "Ishmael", "Jared", "Lamoni"
-    ],
-    places: [
-      "Zarahemla", "Bountiful", "Nephi", "Cumorah", "Jerusalem", 
-      "Land of Nephi", "Land of Zarahemla", "Land of Bountiful", 
-      "Land of Desolation", "Land of Jershon", "Land of Ishmael"
-    ],
-  },
-  medium: {
-    people: [
-      "Zeniff", "Noah", "Gideon", "Shiblon", "Coriantumr", "Teancum", 
-      "Zenos", "Zenock", "Sherem", "Corianton", "Antipus", "Gid", 
-      "Morianton", "Pahoran", "Pacumeni", "Paanchi", "Giddianhi", 
-      "Giddonah", "Zeezrom", "Amalickiah", "Cohor", "Ether", "Omer", 
-      "Shiz", "Nehor", "Hagoth", "Nephihah", "Shiblon", "Corihor", 
-      "Akish", "Gadianton", "Kishkumen", "Limhi", "Ammoron"
-    ],
-    groups: [
-      "Nephites", "Lamanites", "Zoramites", "Ammonites", "Gadianton robbers", 
-      "Robbers", "Jaredites", "Mulekites", "Stripling Warriors", 
-      "Sons of Mosiah", "People of Ammon", "People of Zarahemla"
-    ],
-    places: [
-      "Desolation", "Sidon", "Gideon", "Manti", "Jershon", 
-      "Antionum", "Ammonihah", "Hill Cumorah", "Shilom", 
-      "Land of Ishmael", "Waters of Sebus", "Land of Helam"
-    ],
-  },
-  hard: {
-    people: [
-      "Shemlon", "Shez", "Shelem", "Aminadi", "Amnor", "Cumen", 
-      "Ezrom", "Himni", "Mathoni", "Josh", "Nahum", "Shem", 
-      "Timothy", "Jonas", "Aha", "Luram", "Shared", "Gilgah", 
-      "Mahah", "Antionah", "Lachoneus", "Lehor", "Amgid", 
-      "Abinadom", "Amaron", "Gidgiddoni", "Morianton (Jaredite)", 
-      "Tubaloth", "Coriantum", "Amgid", "Gimgimno"
-    ],
-    groups: [
-      "Zoramites", "Gadianton robbers", "Mulekites", "Amalekites", 
-      "Amalickiahites", "King-men", "Secret Combinations", 
-      "Lamanites", "Nephites", "Gadianton Band", "People of Morianton"
-    ],
-    places: [
-      "Antionum", "Ammonihah", "Moriancumer", "Lehi-Nephi", "Shilom", 
-      "Ishmael", "Waters of Mormon", "Hill Rameumptom", "Wilderness", 
-      "Red Sea", "Valley of Lemuel", "Land of Promise", "Land of Cumorah", 
-      "City of Zarahemla", "Land of Gideon", "Land of Nephi", "Land of Desolation"
-    ],
-  }
+  easy: [
+    // People
+    "Nephi", "Lehi", "Alma", "Mosiah", "Ammon", "Benjamin", "King Benjamin", "Samuel", 
+    "Moroni", "Helaman", "Mormon", "Abinadi", "Amulek", "Enos", 
+    "Jacob", "Joseph", "Laman", "Lemuel", "Zoram", 
+    "Sariah", "Ishmael", "Jared", "Lamoni",
+    
+    // Places
+    "Zarahemla", "Bountiful", "Nephi", "Cumorah", "Jerusalem", 
+    "Land of Nephi", "Land of Zarahemla", "Land of Bountiful", 
+    "Land of Desolation", "Land of Jershon", "Land of Ishmael",
+    
+    // Concepts and Others
+    "Jesus", "Christ", "God of miracles", "Repentance", "Righteous", 
+    "Kingdom of heaven", "Pride", "Eternal life", "Pray", "Seed", 
+    "Grow", "Tree of life", "Atonement", "Doctrine", "Bapti"
+  ],
+  
+  medium: [
+    // People
+    "Zeniff", "Noah", "Gideon", "Shiblon", "Coriantumr", "Teancum", 
+    "Zenos", "Zenock", "Sherem", "Corianton", "Antipus", "Gid", 
+    "Morianton", "Pahoran", "Pacumeni", "Paanchi", "Giddianhi", 
+    "Giddonah", "Zeezrom", "Amalickiah", "Cohor", "Ether", "Omer", 
+    "Shiz", "Nehor", "Hagoth", "Nephihah", "Shiblon", "Corihor", 
+    "Akish", "Gadianton", "Kishkumen", "Limhi", "Ammoron",
+    
+    // Groups
+    "Nephites", "Lamanites", "Zoramites", "Ammonites", "Gadianton robbers", 
+    "Robbers", "Jaredites", "Mulekites", "Stripling Warriors", 
+    "Sons of Mosiah", "People of Ammon", "People of Zarahemla",
+    
+    // Places
+    "Desolation", "Sidon", "Gideon", "Manti", "Jershon", 
+    "Antionum", "Ammonihah", "Hill Cumorah", "Shilom", 
+    "Land of Ishmael", "Waters of Sebus", "Land of Helam",
+    
+    // Concepts and Others
+    "Law of Moses", "Spirit of the Lord", "Murder", "Watery Grave", 
+    "Pride", "The devil", "Justice", "Works", "Adam", 
+    "Holy Spirit", "Year", "Put to death", "Commandment", 
+    "Bondage", "Harden", "Satan", "Take up your cross", 
+    "Apostle", "Disciple", "Stain our swords", "Blotted out", 
+    "Church of God", "Show unto you another sign"
+  ],
+  
+  hard: [
+    // People
+    "Shemlon", "Shez", "Shelem", "Aminadi", "Amnor", "Cumen", 
+    "Ezrom", "Himni", "Mathoni", "Josh", "Nahum", "Shem", 
+    "Timothy", "Jonas", "Aha", "Luram", "Shared", "Gilgah", 
+    "Mahah", "Antionah", "Lachoneus", "Lehor", "Amgid", 
+    "Abinadom", "Amaron", "Gidgiddoni", "Morianton (Jaredite)", 
+    "Tubaloth", "Coriantum", "Amgid", "Gimgimno",
+    
+    // Groups
+    "Zoramites", "Gadianton robbers", "Mulekites", "Amalekites", 
+    "Amalickiahites", "King-men", "Secret Combinations", 
+    "Lamanites", "Nephites", "Gadianton Band", "People of Morianton",
+    
+    // Places
+    "Antionum", "Ammonihah", "Moriancumer", "Lehi-Nephi", "Shilom", 
+    "Ishmael", "Waters of Mormon", "Hill Rameumptom", "Wilderness", 
+    "Red Sea", "Valley of Lemuel", "Land of Promise", "Land of Cumorah", 
+    "City of Zarahemla", "Land of Gideon", "Land of Nephi", "Land of Desolation",
+    
+    // Concepts and Others
+    "Amulon", "Serv", "Abominable church", "Doctrine", "Song"
+  ]
 };
 
-function filterVerses(verses, keywords) {
-  const filteredVerses = {};
+// Manually construct verse sets based on keywords
+const easyVerses = {};
+const mediumVerses = {};
+const hardVerses = {};
+const extremeVerses = {};
 
-  const allKeywords = [
-    ...keywords.people,
-    ...keywords.places,
-    ...(keywords.groups || []),  // Groups only included in medium and hard
-    ...(keywords.doctrinalConcepts || []),
-    ...(keywords.eventsAndNarratives || []),
-  ];
+// Assuming you have the full `verses` object that contains all verses
+for (const [reference, verse] of Object.entries(verses)) {
+  const verseLower = verse.toLowerCase();
 
-  for (const [reference, verse] of Object.entries(verses)) {
-    for (const keyword of allKeywords) {
-      if (verse.toLowerCase().includes(keyword.toLowerCase())) {
-        filteredVerses[reference] = verse;
-        break; // Stop searching after the first match
+  let addedToMedium = false;
+  let addedToHard = false;
+
+  for (const keyword of keywords.easy) {
+    if (verseLower.includes(keyword.toLowerCase())) {
+      easyVerses[reference] = verse;
+      mediumVerses[reference] = verse;
+      hardVerses[reference] = verse;
+      addedToMedium = true;
+      addedToHard = true;
+      break;
+    }
+  }
+
+  if (!addedToMedium) {
+    for (const keyword of keywords.medium) {
+      if (verseLower.includes(keyword.toLowerCase())) {
+        mediumVerses[reference] = verse;
+        hardVerses[reference] = verse;
+        addedToHard = true;
+        break;
       }
     }
   }
-  
-  return filteredVerses;
-}
 
-// Merging keywords for medium (easy + medium) and hard (easy + medium + hard)
-const mediumKeywords = {
-  people: [...keywords.easy.people, ...keywords.medium.people],
-  groups: [...(keywords.easy.groups || []), ...keywords.medium.groups],
-  places: [...keywords.easy.places, ...keywords.medium.places],
-};
+  if (!addedToHard) {
+    for (const keyword of keywords.hard) {
+      if (verseLower.includes(keyword.toLowerCase())) {
+        hardVerses[reference] = verse;
+        break;
+      }
+    }
+  }
 
-const hardKeywords = {
-  people: [...mediumKeywords.people, ...keywords.hard.people],
-  groups: [...mediumKeywords.groups, ...keywords.hard.groups],
-  places: [...mediumKeywords.places, ...keywords.hard.places],
-};
-
-// Filtering verses based on merged keywords
-const easyVerses = filterVerses(verses, keywords.easy);
-const mediumVerses = { ...easyVerses, ...filterVerses(verses, mediumKeywords) };
-const hardVerses = { ...mediumVerses, ...filterVerses(verses, hardKeywords) };
-
-// Create the extreme difficulty, which is every verse not in hardVerses
-const extremeVerses = {};
-for (const [reference, verse] of Object.entries(verses)) {
-  if (!hardVerses.hasOwnProperty(reference)) {
+  // Add verses not in hardVerses to extremeVerses
+  if (!hardVerses[reference]) {
     extremeVerses[reference] = verse;
   }
 }
 
-// console.log(`Total verses: ${Object.keys(verses).length}`);
-// console.log(`Easy verses: ${Object.keys(easyVerses).length}`);
-// console.log(`Medium verses (including Easy): ${Object.keys(mediumVerses).length}`);
-// console.log(`Hard verses (including Easy and Medium): ${Object.keys(hardVerses).length}`);
-// console.log(`Extreme verses: ${Object.keys(extremeVerses).length}`);
+console.log(`Total verses: ${Object.keys(verses).length}`);
+console.log(`Easy verses: ${Object.keys(easyVerses).length}`);
+console.log(`Medium verses (including Easy): ${Object.keys(mediumVerses).length}`);
+console.log(`Hard verses (including Easy and Medium): ${Object.keys(hardVerses).length}`);
+console.log(`Extreme verses: ${Object.keys(extremeVerses).length}`);
 
 export { easyVerses, mediumVerses, hardVerses, extremeVerses };

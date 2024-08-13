@@ -6626,7 +6626,7 @@ const keywords = {
     "Amulek",
     "Enos",
     "Jacob",
-    "Joseph",
+    // "Joseph",
     "Laman ",
     "Lemuel",
     "Zoram",
@@ -6905,7 +6905,9 @@ for (const [reference, verse] of Object.entries(verses)) {
   }
 }
 
-// Merge scriptureMasteryVerses into easyVerses
+// Merge scriptureMasteryVerses into easy, medium, and hard categories
 Object.assign(easyVerses, scriptureMasteryVerses);
+Object.assign(mediumVerses, scriptureMasteryVerses);
+Object.assign(hardVerses, scriptureMasteryVerses);
 
 export { easyVerses, mediumVerses, hardVerses, extremeVerses };

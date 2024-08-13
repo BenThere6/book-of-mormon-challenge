@@ -6611,17 +6611,19 @@ const keywords = {
     "Nephi", "Lehi", "Alma", "Mosiah", "Ammon", "Benjamin", "King Benjamin", "Samuel", 
     "Moroni", "Helaman", "Mormon", "Abinadi", "Amulek", "Enos", 
     "Jacob", "Joseph", "Laman", "Lemuel", "Zoram", 
-    "Sariah", "Ishmael", "Jared", "Lamoni",
+    "Sariah", "Ishmael", "Jared", "Lamoni", "Laban", "Two thousand",
     
     // Places
     "Zarahemla", "Bountiful", "Nephi", "Cumorah", "Jerusalem", 
     "Land of Nephi", "Land of Zarahemla", "Land of Bountiful", 
-    "Land of Desolation", "Land of Jershon", "Land of Ishmael",
-    
+    "Land of Desolation", "Land of Jershon", "Land of Ishmael", 
+    "Hill Cumorah", "Fruit of my vineyard",
+
     // Concepts and Others
     "Jesus", "Christ", "God of miracles", "Repentance", "Righteous", 
     "Kingdom of heaven", "Pride", "Eternal life", "Pray", "Seed", 
-    "Grow", "Tree of life", "Atonement", "Doctrine", "Bapti"
+    "Grow", "Tree of life", "Atonement", "Doctrine", "Bapti",
+    "Epistle", "Sheep", "Charity", "Consecrate", "Virgin"
   ],
   
   medium: [
@@ -6640,16 +6642,18 @@ const keywords = {
     
     // Places
     "Desolation", "Sidon", "Gideon", "Manti", "Jershon", 
-    "Antionum", "Ammonihah", "Hill Cumorah", "Shilom", 
+    "Antionum", "Ammonihah", "Shilom", 
     "Land of Ishmael", "Waters of Sebus", "Land of Helam",
-    
+
     // Concepts and Others
     "Law of Moses", "Spirit of the Lord", "Murder", "Watery Grave", 
     "Pride", "The devil", "Justice", "Works", "Adam", 
     "Holy Spirit", "Year", "Put to death", "Commandment", 
     "Bondage", "Harden", "Satan", "Take up your cross", 
     "Apostle", "Disciple", "Stain our swords", "Blotted out", 
-    "Church of God", "Show unto you another sign"
+    "Church of God", "Show unto you another sign",
+    "Angels ceased", "I know your thoughts", "Three days and three nights", 
+    "Stand upon the top thereof", "Decree", "Preparatory state"
   ],
   
   hard: [
@@ -6658,7 +6662,7 @@ const keywords = {
     "Ezrom", "Himni", "Mathoni", "Josh", "Nahum", "Shem", 
     "Timothy", "Jonas", "Aha", "Luram", "Shared", "Gilgah", 
     "Mahah", "Antionah", "Lachoneus", "Lehor", "Amgid", 
-    "Abinadom", "Amaron", "Gidgiddoni", "Morianton (Jaredite)", 
+    "Abinadom", "Amaron", "Gidgiddoni", "Morianton", 
     "Tubaloth", "Coriantum", "Amgid", "Gimgimno",
     
     // Groups
@@ -6673,7 +6677,9 @@ const keywords = {
     "City of Zarahemla", "Land of Gideon", "Land of Nephi", "Land of Desolation",
     
     // Concepts and Others
-    "Amulon", "Serv", "Abominable church", "Doctrine", "Song"
+    "Amulon", "Serv", "Abominable church", "Doctrine", "Song", 
+    "Senine", "Repent", "Or do ye suppose that the lord will still deliver us", 
+    "Offer up unto me no more the shedding of blood", "Who is it with whom these men do converse"
   ]
 };
 
@@ -6726,11 +6732,5 @@ for (const [reference, verse] of Object.entries(verses)) {
     extremeVerses[reference] = verse;
   }
 }
-
-console.log(`Total verses: ${Object.keys(verses).length}`);
-console.log(`Easy verses: ${Object.keys(easyVerses).length}`);
-console.log(`Medium verses (including Easy): ${Object.keys(mediumVerses).length}`);
-console.log(`Hard verses (including Easy and Medium): ${Object.keys(hardVerses).length}`);
-console.log(`Extreme verses: ${Object.keys(extremeVerses).length}`);
 
 export { easyVerses, mediumVerses, hardVerses, extremeVerses };

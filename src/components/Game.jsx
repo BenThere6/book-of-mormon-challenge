@@ -185,20 +185,19 @@ function Game({ difficulty, category, endGame, usedVerses, username }) {
   }
 
   function saveVerseToHistory(verse, isCorrect) {
-    const date = new Date().toISOString().split('T')[0];
+    const localDate = new Date().toLocaleDateString('en-US', { timeZone: 'America/Denver' }); // Adjust to the desired timezone
     const gameID = JSON.parse(localStorage.getItem('currentGameID'));
     const verseHistory = JSON.parse(localStorage.getItem('verseHistory')) || {};
 
-    if (!verseHistory[date]) {
-      verseHistory[date] = {};
+    if (!verseHistory[localDate]) {
+      verseHistory[localDate] = {};
     }
 
-    if (!verseHistory[date][gameID]) {
-      verseHistory[date][gameID] = [];
+    if (!verseHistory[localDate][gameID]) {
+      verseHistory[localDate][gameID] = [];
     }
 
-    // Save the verse with its status (correct, incorrect, or skipped)
-    verseHistory[date][gameID].push({ verse, isCorrect });
+    verseHistory[localDate][gameID].push({ verse, isCorrect });
 
     localStorage.setItem('verseHistory', JSON.stringify(verseHistory));
   }
@@ -740,17 +739,17 @@ function Game({ difficulty, category, endGame, usedVerses, username }) {
       'Ether': 'ether',
       'Moroni': 'moro'
     };
-  
+
     const book = extractBookFromVerse(verse);
     const chapterVerse = extractChapterVerseFromVerse(verse);
     const [chapter, verseNumber] = chapterVerse.split(':');
-  
+
     const urlPart = bookToUrlPart[book] || book.toLowerCase().replace(/ /g, '-');
-  
+
     const url = `https://www.churchofjesuschrist.org/study/scriptures/bofm/${urlPart}/${chapter}?lang=eng#p${verseNumber}`;
-  
+
     window.open(url, '_blank');
-  }  
+  }
 
   const isSubmitEnabled = currentStep === 'verse' && selectedVerse !== '';
 

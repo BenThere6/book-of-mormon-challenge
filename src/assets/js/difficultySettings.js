@@ -6,7 +6,7 @@ const getDifficultySettings = (difficulty) => {
         chapterRange: 15, 
         verseRange: 20, 
         bombCount: 3, 
-        skipCount: 99,
+        skipCount: 3,
         removePercentage: 70,
         timer: 60
       };

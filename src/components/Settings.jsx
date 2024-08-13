@@ -77,26 +77,38 @@ const Settings = () => {
   };
 
   const startGameProcess = () => {
+    if (!username) {
+        alert('Please set your username first.');
+        return;
+    }
+
     setTimeout(() => {
-      const difficultySettings = getDifficultySettings(difficulty.toLowerCase());
-      localStorage.setItem('gameScore', 0);
-      localStorage.setItem('gameLives', 3);
-      localStorage.setItem('gameDifficulty', difficulty.toLowerCase());
-      localStorage.setItem('gameBombs', difficultySettings?.bombCount || 3);
-      localStorage.setItem('gameSkips', difficultySettings?.skipCount || 3);
-      localStorage.setItem('gameCurrentVerse', '');
+        const difficultySettings = getDifficultySettings(difficulty.toLowerCase());
 
-      let gameIDs = JSON.parse(localStorage.getItem('gameIDs')) || {};
-      const newGameID = Object.keys(gameIDs).length > 0 ? Math.max(...Object.keys(gameIDs)) + 1 : 1;
-      gameIDs[newGameID] = false;
+        // Initialize game settings
+        localStorage.setItem('gameScore', 0);
+        localStorage.setItem('gameLives', 3);
+        localStorage.setItem('gameDifficulty', difficulty.toLowerCase());
+        localStorage.setItem('gameBombs', difficultySettings?.bombCount || 3);
+        localStorage.setItem('gameSkips', difficultySettings?.skipCount || 3);
+        
+        // Initialize the current verse
+        localStorage.setItem('gameCurrentVerse', ''); // Initialize with empty string or set with logic if needed
 
-      localStorage.setItem('gameIDs', JSON.stringify(gameIDs));
-      localStorage.setItem('currentGameID', newGameID);
+        // Assign a new Game ID
+        let gameIDs = JSON.parse(localStorage.getItem('gameIDs')) || {};
+        const newGameID = Object.keys(gameIDs).length > 0 ? Math.max(...Object.keys(gameIDs)) + 1 : 1;
+        gameIDs[newGameID] = false;
 
-      const category = 'all-verses';
-      navigate('/game', { state: { gameID: newGameID, difficulty: difficulty.toLowerCase(), category } });
+        localStorage.setItem('gameIDs', JSON.stringify(gameIDs));
+        localStorage.setItem('currentGameID', newGameID);
+
+        const category = 'all-verses';
+
+        // Navigate to game page with proper state
+        navigate('/game', { state: { gameID: newGameID, difficulty: difficulty.toLowerCase(), category } });
     }, 0); // No delay
-  };
+};
 
   const submitFeedback = async () => {
     if (!username) {

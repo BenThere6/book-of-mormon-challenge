@@ -100,6 +100,13 @@ const UPDATES = [
             'Fix skip bug not resetting timer.'
         ]
     },
+    {
+        version: '2.1.0',
+        date: 'August 13, 2024',
+        messages: [
+            'Added button to open served verse.'
+        ]
+    },
 ];
 
 export default UPDATES;

@@ -3,6 +3,8 @@ import { easyVerses, mediumVerses, hardVerses, extremeVerses } from '../assets/j
 import verseCounts from '../assets/js/verseCounts';
 import getDifficultySettings from '../assets/js/difficultySettings';
 import Button from '@mui/material/Button';
+import Box from '@mui/material/Box';
+import Typography from '@mui/material/Typography';
 import Dialog from '@mui/material/Dialog';
 import DialogActions from '@mui/material/DialogActions';
 import DialogContent from '@mui/material/DialogContent';
@@ -270,6 +272,7 @@ function Game({ difficulty, category, endGame, usedVerses, username }) {
     let newScore = score;
     let isCorrect = false;
     let lifeLost = false;
+    let reasonForLifeLost = '';
 
     if (guess.book === correctBook && chapterDifference <= chapterRange) {
       // Award points for correct book and chapter within range
@@ -281,6 +284,12 @@ function Game({ difficulty, category, endGame, usedVerses, username }) {
       }
     } else {
       lifeLost = true; // Only lose life if book and chapter are incorrect
+
+      if (guess.book !== correctBook) {
+        reasonForLifeLost = `You were in the wrong book. You guessed ${guess.book}, but the correct book was ${correctBook}.`;
+      } else if (chapterDifference > chapterRange) {
+        reasonForLifeLost = `You were outside the chapter range. The correct chapter was ${correctChapter}, you were off by ${chapterDifference} chapters. The allowed range was ${chapterRange} chapters.`;
+      }
     }
 
     setModalContent({
@@ -288,6 +297,7 @@ function Game({ difficulty, category, endGame, usedVerses, username }) {
       correctVerse: currentVerse,
       pointsEarned: lifeLost ? 0 : guessAccuracy,
       lifeLost,
+      reasonForLifeLost,  // Add this to the modal content
     });
 
     setShowModal(true);
@@ -837,57 +847,102 @@ function Game({ difficulty, category, endGame, usedVerses, username }) {
           </div>
         </div>
 
-        <Dialog open={showModal} onClose={modalContent.skippedVerse ? handleSkipModalClose : handleCloseModal}>
-          <DialogTitle>{modalContent.skippedVerse ? "Verse Skipped" : "Guess Results"}</DialogTitle>
-          <DialogContent>
+        <Dialog
+          open={showModal}
+          onClose={modalContent.skippedVerse ? handleSkipModalClose : handleCloseModal}
+          sx={{
+            '& .MuiPaper-root': {
+              backgroundColor: modalContent.skippedVerse
+                ? '#FFFFFF' // White if verse was skipped
+                : (modalContent.lifeLost ? '#FFCDD2' : '#C8E6C9'), // Light red if life lost, light green if not
+            },
+          }}
+        >
+          <DialogTitle sx={{ textAlign: 'center', fontStyle: 'italic' }}>
+            {modalContent.skippedVerse ? "Verse Skipped" : "Guess Results"}
+          </DialogTitle>
+          <DialogContent sx={{ textAlign: 'center', p: 4 }}>
             {modalContent.skippedVerse ? (
-              <>
-                <DialogContentText>
-                  {modalContent.skippedVerse}
-                </DialogContentText>
-              </>
+              <DialogContentText sx={{ fontSize: '1.5rem' }}>
+                {modalContent.skippedVerse}
+              </DialogContentText>
             ) : (
               <>
-                <DialogContentText>
-                  Your Guess: {modalContent.guess && `${modalContent.guess.book} ${modalContent.guess.chapter}`}
-                  {modalContent.guess?.verse && `:${modalContent.guess.verse}`}
-                </DialogContentText>
-                <DialogContentText>
-                  Correct Verse: {modalContent.correctVerse}
-                </DialogContentText>
-                <DialogContentText>
-                  Points Earned: {modalContent.pointsEarned}
-                </DialogContentText>
+                <Typography
+                  variant="h2"
+                  sx={{
+                    fontWeight: 'bold',
+                    fontSize: '2.2rem', // Even bigger font size for the correct verse
+                    textAlign: 'center',
+                    marginBottom: '30px',
+                  }}
+                >
+                  {modalContent.correctVerse}
+                </Typography>
+
+                <Box sx={{ display: 'flex', justifyContent: 'center', gap: 2, flexWrap: 'wrap', mt: 2 }}>
+                  <Box
+                    sx={{
+                      padding: '20px',
+                      textAlign: 'center',
+                      borderRadius: '10px',
+                      backgroundColor: 'white',
+                      minWidth: '120px',
+                      boxShadow: '0 3px 6px rgba(0,0,0,0.1)',
+                    }}
+                  >
+                    <Typography variant="h5" sx={{ fontWeight: 'bold' }}>
+                      {modalContent.guess && `${modalContent.guess.book} ${modalContent.guess.chapter}${modalContent.guess?.verse ? `:${modalContent.guess.verse}` : ''}`}
+                    </Typography>
+                    <Typography variant="body1" sx={{ mt: 1 }}>
+                      Your Guess
+                    </Typography>
+                  </Box>
+
+                  <Box
+                    sx={{
+                      padding: '20px',
+                      textAlign: 'center',
+                      borderRadius: '10px',
+                      backgroundColor: 'white',
+                      minWidth: '120px',
+                      boxShadow: '0 3px 6px rgba(0,0,0,0.1)',
+                    }}
+                  >
+                    <Typography variant="h4" sx={{ fontWeight: 'bold' }}>
+                      {modalContent.pointsEarned}
+                    </Typography>
+                    <Typography variant="body1" sx={{ mt: 1 }}>
+                      Points
+                    </Typography>
+                  </Box>
+                </Box>
+
                 {modalContent.lifeLost && (
-                  <DialogContentText>
-                    You lost a life!
-                  </DialogContentText>
+                  <>
+                    <DialogContentText sx={{ textAlign: 'center', color: '#FF0000', marginTop: '20px' }}>
+                      You lost a life!
+                    </DialogContentText>
+                    <DialogContentText sx={{ textAlign: 'center', marginTop: '10px' }}>
+                      {modalContent.reasonForLifeLost}
+                    </DialogContentText>
+                  </>
                 )}
               </>
             )}
           </DialogContent>
           <DialogActions style={{ justifyContent: 'center' }}>
             {modalContent.skippedVerse && (
-              <Button
-                onClick={() => openVerseLink(modalContent.skippedVerse)}
-                color='primary'
-              >
+              <Button onClick={() => openVerseLink(modalContent.skippedVerse)} color='primary'>
                 Open Verse
               </Button>
             )}
             {!modalContent.skippedVerse && (
-              <Button
-                onClick={() => openVerseLink(modalContent.correctVerse)}
-                color='primary'
-              >
+              <Button onClick={() => openVerseLink(modalContent.correctVerse)} color='primary'>
                 Open Verse
               </Button>
             )}
-            <Button
-              variant='contained'
-              onClick={modalContent.skippedVerse ? handleSkipModalClose : handleCloseModal}
-              color='primary'
-            >
+            <Button variant='contained' onClick={modalContent.skippedVerse ? handleSkipModalClose : handleCloseModal} color='primary'>
               Okay
             </Button>
           </DialogActions>

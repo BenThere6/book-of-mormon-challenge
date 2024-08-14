@@ -60,7 +60,6 @@ const Leaderboard = () => {
         return response.json();
       })
       .then(data => {
-        console.log('Leaderboard data fetched:', data);
         setLeaderboard(data);
         findUserRank(data);
       })
@@ -297,8 +296,10 @@ const Leaderboard = () => {
             leaderboard
               .filter(entry => entry.score > 0) // Exclude scores that are 0
               .map((entry, index) => {
+                const isCurrentUser = entry.username === localStorage.getItem('username');
                 let backgroundColor;
                 let textColor = 'black'; // Default for top 3
+                let customTextColor = isCurrentUser ? 'blue' : textColor;
 
                 switch (index) {
                   case 0:
@@ -312,7 +313,7 @@ const Leaderboard = () => {
                     break;
                   default:
                     backgroundColor = 'rgba(0, 0, 0, 0.6)';
-                    textColor = 'white'; // For all other entries
+                    customTextColor = isCurrentUser ? 'rgb(65,147,200)' : 'white'; // For all other entries
                 }
 
                 return (
@@ -323,7 +324,7 @@ const Leaderboard = () => {
                     sx={{
                       listStyle: 'none',
                       padding: 2,
-                      color: textColor,
+                      color: customTextColor,
                       marginBottom: .5,
                       backgroundColor: backgroundColor,
                       borderRadius: 2,
@@ -332,13 +333,13 @@ const Leaderboard = () => {
                   >
                     <Grid container alignItems="center">
                       <Grid item xs={2}>
-                        <span className="rank">{index + 1}.</span>
+                        <span className="rank" style={{ color: customTextColor }}>{index + 1}.</span>
                       </Grid>
                       <Grid item xs={6} sx={{ textAlign: 'left' }}>
-                        <span className="username">{entry.username}</span>
+                        <span className="username" style={{ color: customTextColor }}>{entry.username}</span>
                       </Grid>
                       <Grid item xs={4} sx={{ textAlign: 'right' }}>
-                        <span className="score">{entry.score.toLocaleString()}</span>
+                        <span className="score" style={{ color: customTextColor }}>{entry.score.toLocaleString()}</span>
                       </Grid>
                     </Grid>
                   </Box>
@@ -374,7 +375,6 @@ const Leaderboard = () => {
             ))
           )}
         </Box>
-
 
         <div className="play-again">
           <Button variant="outlined" sx={{ color: 'white', borderColor: 'white' }} onClick={handlePlayAgain}>Home</Button>

@@ -34,12 +34,12 @@ const Leaderboard = () => {
     const gameCompleted = localStorage.getItem('gameCompleted') === 'true';
 
     if (storedUsername && !isScoreSubmitted && !isSubmittingRef.current && gameCompleted) {
-        setUsername(storedUsername);
-        isSubmittingRef.current = true;
-        submitScore(storedUsername, score);
+      setUsername(storedUsername);
+      isSubmittingRef.current = true;
+      submitScore(storedUsername, score);
     }
     fetchLeaderboard();
-}, [isScoreSubmitted, score, difficulty, category]);
+  }, [isScoreSubmitted, score, difficulty, category]);
 
   useEffect(() => {
     if (userRank && leaderboardRef.current) {
@@ -70,24 +70,24 @@ const Leaderboard = () => {
   const submitScore = (username, score) => {
     const storedGameIDs = localStorage.getItem('gameIDs');
     let gameIDs = storedGameIDs ? JSON.parse(storedGameIDs) : {};
-  
+
     const latestGameID = Object.keys(gameIDs).length > 0 ? Math.max(...Object.keys(gameIDs)) : null;
     const gameCompleted = localStorage.getItem('gameCompleted') === 'true';
-  
+
     if (latestGameID !== null && gameIDs[latestGameID] === true) {
       console.log(`Score for game ID ${latestGameID} already submitted.`);
       isSubmittingRef.current = false;
       return;
     }
-  
+
     if (!gameCompleted) {
       console.log('Game not completed. Score will not be submitted.');
       isSubmittingRef.current = false;
       return;
     }
-  
+
     console.log('Submitting score:', { username, score, difficulty, category });
-  
+
     fetch(`${apiurl}${difficulty}/${category}`, {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
@@ -101,18 +101,18 @@ const Leaderboard = () => {
       })
       .then((data) => {
         console.log('Score saved, response:', data);
-  
+
         setIsScoreSubmitted(true);
         isSubmittingRef.current = false;
-  
+
         if (latestGameID !== null) {
           gameIDs[latestGameID] = true;
           localStorage.setItem('gameIDs', JSON.stringify(gameIDs));
         }
-  
+
         // Clear the game completion flag after successful submission
         localStorage.removeItem('gameCompleted');
-  
+
         fetchLeaderboard();
       })
       .catch((error) => {
@@ -294,34 +294,36 @@ const Leaderboard = () => {
           }}
         >
           {leaderboard ? (
-            leaderboard.map((entry, index) => (
-              <Box
-                component="li"
-                key={index}
-                ref={(el) => (entryRefs.current[index] = el)}
-                sx={{
-                  listStyle: 'none',
-                  padding: 2,
-                  color: 'white',
-                  marginBottom: .5,
-                  backgroundColor: 'rgba(0, 0, 0, 0.5)',
-                  borderRadius: 2,
-                  border: isUserInTopTen(entry) ? '2px solid white' : 'none'
-                }}
-              >
-                <Grid container alignItems="center">
-                  <Grid item xs={2}>
-                    <span className="rank">{index + 1}.</span>
+            leaderboard
+              .filter(entry => entry.score > 0) // Exclude scores that are 0
+              .map((entry, index) => (
+                <Box
+                  component="li"
+                  key={index}
+                  ref={(el) => (entryRefs.current[index] = el)}
+                  sx={{
+                    listStyle: 'none',
+                    padding: 2,
+                    color: 'white',
+                    marginBottom: .5,
+                    backgroundColor: 'rgba(0, 0, 0, 0.5)',
+                    borderRadius: 2,
+                    border: isUserInTopTen(entry) ? '2px solid white' : 'none'
+                  }}
+                >
+                  <Grid container alignItems="center">
+                    <Grid item xs={2}>
+                      <span className="rank">{index + 1}.</span>
+                    </Grid>
+                    <Grid item xs={6} sx={{ textAlign: 'left' }}>
+                      <span className="username">{entry.username}</span>
+                    </Grid>
+                    <Grid item xs={4} sx={{ textAlign: 'right' }}>
+                      <span className="score">{entry.score.toLocaleString()}</span>
+                    </Grid>
                   </Grid>
-                  <Grid item xs={6} sx={{ textAlign: 'left' }}>
-                    <span className="username">{entry.username}</span>
-                  </Grid>
-                  <Grid item xs={4} sx={{ textAlign: 'right' }}>
-                    <span className="score">{entry.score.toLocaleString()}</span>
-                  </Grid>
-                </Grid>
-              </Box>
-            ))
+                </Box>
+              ))
           ) : (
             placeholderEntries.map((_, index) => (
               <Box
@@ -352,6 +354,7 @@ const Leaderboard = () => {
             ))
           )}
         </Box>
+
         <div className="play-again">
           <Button variant="outlined" sx={{ color: 'white', borderColor: 'white' }} onClick={handlePlayAgain}>Home</Button>
         </div>

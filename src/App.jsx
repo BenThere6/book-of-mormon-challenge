@@ -38,10 +38,11 @@ function App() {
   }, []);
 
   const startGame = (gameID, selectedDifficulty, selectedCategory) => {
+    localStorage.removeItem('gameCompleted'); // Clear gameCompleted flag
     setDifficulty(selectedDifficulty);
     setCategory(selectedCategory);
     navigate('/game', { state: { difficulty: selectedDifficulty, category: selectedCategory, gameID } });
-  };
+};
 
   const endGame = (finalScore) => {
     setScore(finalScore);

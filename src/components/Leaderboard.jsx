@@ -31,13 +31,15 @@ const Leaderboard = () => {
 
   useEffect(() => {
     const storedUsername = localStorage.getItem('username');
-    if (storedUsername && !isScoreSubmitted && !isSubmittingRef.current) {
-      setUsername(storedUsername);
-      isSubmittingRef.current = true;
-      submitScore(storedUsername, score);
+    const gameCompleted = localStorage.getItem('gameCompleted') === 'true';
+
+    if (storedUsername && !isScoreSubmitted && !isSubmittingRef.current && gameCompleted) {
+        setUsername(storedUsername);
+        isSubmittingRef.current = true;
+        submitScore(storedUsername, score);
     }
     fetchLeaderboard();
-  }, [isScoreSubmitted, score, difficulty, category]);
+}, [isScoreSubmitted, score, difficulty, category]);
 
   useEffect(() => {
     if (userRank && leaderboardRef.current) {
@@ -68,18 +70,24 @@ const Leaderboard = () => {
   const submitScore = (username, score) => {
     const storedGameIDs = localStorage.getItem('gameIDs');
     let gameIDs = storedGameIDs ? JSON.parse(storedGameIDs) : {};
-
+  
     const latestGameID = Object.keys(gameIDs).length > 0 ? Math.max(...Object.keys(gameIDs)) : null;
-    console.log('latest game id: ' + latestGameID);
-
+    const gameCompleted = localStorage.getItem('gameCompleted') === 'true';
+  
     if (latestGameID !== null && gameIDs[latestGameID] === true) {
       console.log(`Score for game ID ${latestGameID} already submitted.`);
       isSubmittingRef.current = false;
       return;
     }
-
+  
+    if (!gameCompleted) {
+      console.log('Game not completed. Score will not be submitted.');
+      isSubmittingRef.current = false;
+      return;
+    }
+  
     console.log('Submitting score:', { username, score, difficulty, category });
-
+  
     fetch(`${apiurl}${difficulty}/${category}`, {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
@@ -93,15 +101,18 @@ const Leaderboard = () => {
       })
       .then((data) => {
         console.log('Score saved, response:', data);
-
+  
         setIsScoreSubmitted(true);
         isSubmittingRef.current = false;
-
+  
         if (latestGameID !== null) {
           gameIDs[latestGameID] = true;
           localStorage.setItem('gameIDs', JSON.stringify(gameIDs));
         }
-
+  
+        // Clear the game completion flag after successful submission
+        localStorage.removeItem('gameCompleted');
+  
         fetchLeaderboard();
       })
       .catch((error) => {

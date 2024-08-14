@@ -48,6 +48,7 @@ function Game({ difficulty, category, endGame, usedVerses, username }) {
   const [lives, setLives] = useState(savedLives);
   const [bombs, setBombs] = useState(savedBombs);
   const [skips, setSkips] = useState(savedSkips);
+  const [gameCompleted, setGameCompleted] = useState(false);
   const [isSkipModalOpen, setIsSkipModalOpen] = useState(false);
   const [timer, setTimer] = useState(difficultySettings.timer);
   const [isSubmitting, setIsSubmitting] = useState(false);
@@ -233,21 +234,20 @@ function Game({ difficulty, category, endGame, usedVerses, username }) {
   }
 
   const handleBack = () => {
-    // Hide the notification when the back button is clicked
     setNotification((prev) => ({ ...prev, visible: false }));
 
     if (currentStep === 'book') {
-      setShowConfirmation(true);
+        setShowConfirmation(true);
     } else if (currentStep === 'chapter') {
-      setSelectedChapter('');
-      setSelectedVerse('');
-      setCurrentStep('book');
+        setSelectedChapter('');
+        setSelectedVerse('');
+        setCurrentStep('book');
     } else if (currentStep === 'verse') {
-      setSelectedChapter('');
-      setSelectedVerse('');
-      setCurrentStep('chapter');
+        setSelectedChapter('');
+        setSelectedVerse('');
+        setCurrentStep('chapter');
     }
-  };
+};
 
   const handleConfirmBack = () => {
     navigate('/');
@@ -278,45 +278,47 @@ function Game({ difficulty, category, endGame, usedVerses, username }) {
     let exactGuess = false;
 
     if (guess.book === correctBook && chapterDifference <= chapterRange) {
-      if (guessAccuracy > 0) {
-        newScore += guessAccuracy;
-        newScore = Math.round(newScore);
-        setScore(newScore);
-        isCorrect = true;
-      }
-      // Check for exact guess
-      if (guess.book === correctBook && guess.chapter == correctChapter && guess.verse == correctChapterVerse.split(':')[1]) {
-        exactGuess = true;
-      }
+        if (guessAccuracy > 0) {
+            newScore += guessAccuracy;
+            newScore = Math.round(newScore);
+            setScore(newScore);
+            isCorrect = true;
+        }
+        if (guess.book === correctBook && guess.chapter == correctChapter && guess.verse == correctChapterVerse.split(':')[1]) {
+            exactGuess = true;
+        }
     } else {
-      lifeLost = true;
-
-      if (guess.book !== correctBook) {
-        reasonForLifeLost = `You were in the wrong book. You guessed ${guess.book}, but the correct book was ${correctBook}.`;
-      } else if (chapterDifference > chapterRange) {
-        reasonForLifeLost = `You were outside the chapter range. The correct chapter was ${correctChapter}, you were off by ${chapterDifference} chapters. The allowed range was ${chapterRange} chapters.`;
-      }
+        lifeLost = true;
+        if (guess.book !== correctBook) {
+            reasonForLifeLost = `You were in the wrong book. You guessed ${guess.book}, but the correct book was ${correctBook}.`;
+        } else if (chapterDifference > chapterRange) {
+            reasonForLifeLost = `You were outside the chapter range. The correct chapter was ${correctChapter}, you were off by ${chapterDifference} chapters. The allowed range was ${chapterRange} chapters.`;
+        }
     }
 
     setModalContent({
-      guess,
-      correctVerse: currentVerse,
-      pointsEarned: lifeLost ? 0 : guessAccuracy,
-      lifeLost,
-      reasonForLifeLost,
-      exactGuess, // Add the exactGuess flag here
+        guess,
+        correctVerse: currentVerse,
+        pointsEarned: lifeLost ? 0 : guessAccuracy,
+        lifeLost,
+        reasonForLifeLost,
+        exactGuess,
     });
 
     setShowModal(true);
     saveVerseToHistory(currentVerse, isCorrect);
 
     if (lifeLost) {
-      setLives((prevLives) => prevLives - 1);
+        setLives((prevLives) => prevLives - 1);
+        if (lives - 1 <= 0) {
+            setGameCompleted(true);
+            localStorage.setItem('gameCompleted', 'true'); // Set gameCompleted in local storage
+        }
     }
-  };
+};
 
   const handleCloseModal = () => {
-    if (lives < 1) {
+    if (lives < 1 || gameCompleted) {
       endGame(score);
     } else {
       setShowModal(false);
@@ -737,7 +739,7 @@ function Game({ difficulty, category, endGame, usedVerses, username }) {
 
   function isPWA() {
     return window.matchMedia('(display-mode: standalone)').matches || window.navigator.standalone === true;
-  }  
+  }
 
   function openVerseLink(verse) {
     const bookToUrlPart = {
@@ -757,23 +759,23 @@ function Game({ difficulty, category, endGame, usedVerses, username }) {
       'Ether': 'ether',
       'Moroni': 'moro'
     };
-  
+
     const book = extractBookFromVerse(verse);
     const chapterVerse = extractChapterVerseFromVerse(verse);
     const [chapter, verseNumber] = chapterVerse.split(':');
-  
+
     const urlPart = bookToUrlPart[book] || book.toLowerCase().replace(/ /g, '-');
-  
+
     let url = `https://www.churchofjesuschrist.org/study/scriptures/bofm/${urlPart}/${chapter}?lang=eng#p${verseNumber}`;
-  
+
     if (!isPWA()) {
       // Add a fake query parameter to prevent Gospel Library from recognizing the link
       url += "&browser=true";
     }
-  
+
     window.open(url, '_blank');
   }
-  
+
   const isSubmitEnabled = currentStep === 'verse' && selectedVerse !== '';
 
   return (

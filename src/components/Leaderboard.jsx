@@ -296,34 +296,54 @@ const Leaderboard = () => {
           {leaderboard ? (
             leaderboard
               .filter(entry => entry.score > 0) // Exclude scores that are 0
-              .map((entry, index) => (
-                <Box
-                  component="li"
-                  key={index}
-                  ref={(el) => (entryRefs.current[index] = el)}
-                  sx={{
-                    listStyle: 'none',
-                    padding: 2,
-                    color: 'white',
-                    marginBottom: .5,
-                    backgroundColor: 'rgba(0, 0, 0, 0.5)',
-                    borderRadius: 2,
-                    border: isUserInTopTen(entry) ? '2px solid white' : 'none'
-                  }}
-                >
-                  <Grid container alignItems="center">
-                    <Grid item xs={2}>
-                      <span className="rank">{index + 1}.</span>
+              .map((entry, index) => {
+                let backgroundColor;
+                let textColor = 'black'; // Default for top 3
+
+                switch (index) {
+                  case 0:
+                    backgroundColor = 'rgba(249,216,73,.8)';
+                    break;
+                  case 1:
+                    backgroundColor = 'rgba(192,192,192,.8)';
+                    break;
+                  case 2:
+                    backgroundColor = 'rgba(194,131,66,.8)';
+                    break;
+                  default:
+                    backgroundColor = 'rgba(0, 0, 0, 0.6)';
+                    textColor = 'white'; // For all other entries
+                }
+
+                return (
+                  <Box
+                    component="li"
+                    key={index}
+                    ref={(el) => (entryRefs.current[index] = el)}
+                    sx={{
+                      listStyle: 'none',
+                      padding: 2,
+                      color: textColor,
+                      marginBottom: .5,
+                      backgroundColor: backgroundColor,
+                      borderRadius: 2,
+                      border: isUserInTopTen(entry) ? `2px solid white` : 'none',
+                    }}
+                  >
+                    <Grid container alignItems="center">
+                      <Grid item xs={2}>
+                        <span className="rank">{index + 1}.</span>
+                      </Grid>
+                      <Grid item xs={6} sx={{ textAlign: 'left' }}>
+                        <span className="username">{entry.username}</span>
+                      </Grid>
+                      <Grid item xs={4} sx={{ textAlign: 'right' }}>
+                        <span className="score">{entry.score.toLocaleString()}</span>
+                      </Grid>
                     </Grid>
-                    <Grid item xs={6} sx={{ textAlign: 'left' }}>
-                      <span className="username">{entry.username}</span>
-                    </Grid>
-                    <Grid item xs={4} sx={{ textAlign: 'right' }}>
-                      <span className="score">{entry.score.toLocaleString()}</span>
-                    </Grid>
-                  </Grid>
-                </Box>
-              ))
+                  </Box>
+                );
+              })
           ) : (
             placeholderEntries.map((_, index) => (
               <Box
@@ -336,7 +356,7 @@ const Leaderboard = () => {
                   marginBottom: .5,
                   backgroundColor: 'rgba(0, 0, 0, 0.5)',
                   borderRadius: 2,
-                  border: 'none'
+                  border: 'none',
                 }}
               >
                 <Grid container alignItems="center">
@@ -354,6 +374,7 @@ const Leaderboard = () => {
             ))
           )}
         </Box>
+
 
         <div className="play-again">
           <Button variant="outlined" sx={{ color: 'white', borderColor: 'white' }} onClick={handlePlayAgain}>Home</Button>

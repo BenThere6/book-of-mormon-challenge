@@ -125,23 +125,34 @@ const Admin = () => {
         </Typography>
         <AppBar position="static">
           <Box sx={{ display: 'flex', alignItems: 'center' }}>
-            <Tabs 
-              value={selectedTab} 
-              onChange={handleTabChange} 
+            <Tabs
+              value={selectedTab}
+              onChange={handleTabChange}
               aria-label="admin tabs"
               variant="scrollable"
               scrollButtons="auto"
-              sx={{ '& .MuiTab-root': { minWidth: 'auto', padding: '0 8px', fontSize: '0.875rem' }, '& .MuiTabs-flexContainer': { gap: '3px' }, flexGrow: 1 }}
+              indicatorColor="primary"
+              selectionFollowsFocus={true}
+              textColor="inherit"
+              sx={{
+                '& .MuiTab-root': { minWidth: 'auto', padding: '0 8px', fontSize: '0.875rem' },
+                '& .MuiTabs-flexContainer': { gap: '3px' },
+                flexGrow: 1
+              }}
             >
               <Tab label="Analytics" sx={{ '&.Mui-selected': { color: 'white' } }} />
               <Tab label="Feedback" sx={{ '&.Mui-selected': { color: 'white' } }} />
               <Tab label="Scores" sx={{ '&.Mui-selected': { color: 'white' } }} />
               <Tab label="Home" component={Link} sx={{ '&.Mui-selected': { color: 'white' } }} to="/" />
-              <Button color="inherit" onClick={handleLogout} sx={{ whiteSpace: 'nowrap' }}>Logout</Button>
+              <Tab
+                label="Logout"
+                sx={{ '&.Mui-selected': { color: 'white' }, whiteSpace: 'nowrap' }}
+                onClick={handleLogout}
+              />
             </Tabs>
-            
           </Box>
         </AppBar>
+
         {selectedTab === 2 && (
           <Box display="flex" justifyContent="space-between" marginTop={2}>
             <FormControl style={{ minWidth: 120 }}>

@@ -299,7 +299,7 @@ const Leaderboard = () => {
                 const isCurrentUser = entry.username === localStorage.getItem('username');
                 let backgroundColor;
                 let textColor = 'black'; // Default for top 3
-                let customTextColor = isCurrentUser ? 'blue' : textColor;
+                let customTextColor = isCurrentUser ? textColor : textColor;
 
                 switch (index) {
                   case 0:

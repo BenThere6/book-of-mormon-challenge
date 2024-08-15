@@ -236,7 +236,7 @@
 }
 
 .options-container {
-    max-height: calc(100vh - 383px);
+    /* max-height: calc(100vh - 383px); */
     width: 100%;
     overflow-y: auto;
     display: flex;

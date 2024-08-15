@@ -677,7 +677,7 @@ function Game({ difficulty, category, endGame, usedVerses, username }) {
     const verses = Array.from({ length: verseCount }, (_, index) => index + 1);
 
     return (
-      <div className='options-container' style={{ overflowY: 'auto' }}>
+      <div className='options-container' id='verses-container' style={{ overflowY: 'auto' }}>
         {verses.map((verse) => (
           <Button
             variant='outlined'

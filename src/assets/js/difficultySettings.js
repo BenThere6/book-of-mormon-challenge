@@ -8,7 +8,7 @@ const getDifficultySettings = (difficulty) => {
         bombCount: 3, 
         skipCount: 3,
         removePercentage: 70,
-        timer: 60
+        timer: 60000
       };
     case 'medium':
       return { 

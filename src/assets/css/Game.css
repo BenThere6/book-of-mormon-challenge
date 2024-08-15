@@ -20,7 +20,9 @@
     display: flex;
     flex-direction: column;
     flex-grow: 1;
-    justify-content: start;
+    /* justify-content: space-between; */
+    height: 100%;
+    position: relative;
 }
 
 .header {
@@ -87,7 +89,7 @@
     margin-top: 5px;
     border-radius: 10px;
     background-color: rgba(0, 0, 0, .5);
-    height: 100px;
+    /* max-height: 100px; */
     overflow-y: auto;
 }
 
@@ -246,6 +248,14 @@
     border-bottom: 1px white solid;
 }
 
+.option-button {
+    z-index: 2;
+}
+
+#verses-container {
+    margin-bottom: 65px;
+}
+
 .verse-text {
     margin: 5px;
     color: white;
@@ -258,6 +268,11 @@
     padding-bottom: 15px;
     margin-left: auto;
     margin-right: auto;
+    position: absolute;
+    bottom: 0;
+    right: 50%;
+    transform: translateX(50%);
+    z-index: 1;
 }
 
 .notification {

@@ -163,7 +163,7 @@ function StartScreen({ startGame }) {
         <Button variant="outlined" onClick={handleAdmin}>Admin</Button>
       </Box>
       <Container 
-      className='start-content-container'
+      id='start-content-container'
       sx={{
         textAlign: 'center',
         padding: 4,

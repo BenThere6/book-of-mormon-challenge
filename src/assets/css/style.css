@@ -12,7 +12,7 @@ body {
     position: relative;
 }
 
-.start-content-container {
+#start-content-container {
     max-width: 600px;
 }
 

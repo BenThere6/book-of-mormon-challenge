@@ -9,25 +9,24 @@ const PwaPrompt = ({ isVisible, onClose }) => {
   const [showIosInstructions, setShowIosInstructions] = useState(false);
   const [shareIcon, setShareIcon] = useState('/default-share-icon.png'); // Default share icon
   const [showInstallText, setShowInstallText] = useState(true); // New state to control visibility of the text
+  const [isDesktop, setIsDesktop] = useState(false);
 
   useEffect(() => {
     const handleBeforeInstallPrompt = (e) => {
       e.preventDefault();
       setDeferredPrompt(e);
+      console.log("beforeinstallprompt event fired");
     };
 
     const userAgent = window.navigator.userAgent.toLowerCase();
     setIsIos(/iphone|ipad|ipod/.test(userAgent));
     setIsInStandaloneMode((window.navigator.standalone) || window.matchMedia('(display-mode: standalone)').matches);
 
-    // Set the share icon based on the browser
-    if (/iphone|ipad|ipod/.test(userAgent)) {
-      setShareIcon('/ios-share-icon.png');
-    } else if (userAgent.includes('android')) {
-      setShareIcon('/android-share-icon.png');
-    } else {
-      setShareIcon('/default-share-icon.png');
-    }
+    // Determine if the screen width is typically desktop size
+    const isDesktopDevice = window.innerWidth >= 1024;
+    setIsDesktop(isDesktopDevice);
+
+    console.log(isDesktopDevice ? "User is on a desktop" : "User is on a mobile device");
 
     window.addEventListener('beforeinstallprompt', handleBeforeInstallPrompt);
 
@@ -61,8 +60,8 @@ const PwaPrompt = ({ isVisible, onClose }) => {
     </div>
   );
   
-  if (isInStandaloneMode) {
-    return null; // Do not render the modal if in standalone mode
+  if (isInStandaloneMode || isDesktop) {
+    return null; // Do not render the modal if in standalone mode or on a desktop
   }
 
   return isVisible ? (

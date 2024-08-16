@@ -37,6 +37,8 @@ let countNewVerses = 0;
 function Game({ difficulty, category, endGame, usedVerses, username }) {
   const verseTextContainerRef = useRef(null);
   const timerRef = useRef(null);
+  const optionsContainerRef = useRef(null);
+  const [lockedHeight, setLockedHeight] = useState('auto');
   const savedDifficulty = localStorage.getItem('gameDifficulty') || difficulty;
   const difficultySettings = getDifficultySettings(savedDifficulty);
   const savedScore = localStorage.getItem('gameScore') ? parseInt(localStorage.getItem('gameScore')) : 0;
@@ -95,6 +97,19 @@ function Game({ difficulty, category, endGame, usedVerses, username }) {
       window.removeEventListener('popstate', handlePopState);
     };
   }, [navigate, score, lives, bombs, skips, currentVerse, savedDifficulty]);
+
+  useEffect(() => {
+    if (verseTextContainerRef.current) {
+      if (currentStep === 'book' || currentStep === 'chapter' || currentStep === 'verse') {
+        // Lock the height when selecting book, chapter, or verse
+        const verseHeight = verseTextContainerRef.current.clientHeight;
+        setLockedHeight(`${verseHeight}px`);
+      } else {
+        // Unlock the height when the verse changes
+        setLockedHeight('auto');
+      }
+    }
+  }, [currentStep, currentVerse]);  
 
   useEffect(() => {
     if (timer > 0 && !isSubmitting && !isSkipModalOpen) {
@@ -615,7 +630,7 @@ function Game({ difficulty, category, endGame, usedVerses, username }) {
 
   const renderBooks = () => {
     return (
-      <div className='options-container' style={{ overflowY: 'auto' }}>
+      <div className='options-container' style={{ overflowY: 'auto'}}>
         {Object.keys(verseCounts).map((book) => (
           <Button
             variant='outlined'
@@ -723,7 +738,7 @@ function Game({ difficulty, category, endGame, usedVerses, username }) {
     const versesArray = verseText.split('\n\n');
 
     return (
-      <div className='verse-text-container' ref={verseTextContainerRef}>
+      <div className='verse-text-container' ref={verseTextContainerRef} style={{ height: lockedHeight }} >
         {versesArray.map((verse, index) => (
           <p className='verse-text' key={index}>
             {verse}

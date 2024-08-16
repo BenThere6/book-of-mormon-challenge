@@ -12,6 +12,10 @@ body {
     position: relative;
 }
 
+.start-content-container {
+    max-width: 600px;
+}
+
 .centered-element {
     position: fixed;
     top: 50%;

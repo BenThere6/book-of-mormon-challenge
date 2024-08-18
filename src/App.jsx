@@ -10,6 +10,9 @@ import PrivateRoute from './components/PrivateRoute';
 import VerseHistory from './components/VerseHistory';
 import Settings from './components/Settings';
 import PwaPrompt from './components/PwaPrompt';
+import MultiplayerLobby from './components/multiplayer/MultiplayerLobby';
+import JoinGame from './components/multiplayer/JoinGame';
+import InGame from './components/multiplayer/InGame';
 import './assets/css/style.css';
 
 function App() {
@@ -18,6 +21,8 @@ function App() {
   const [score, setScore] = useState(0);
   const [username, setUsername] = useState('');
   const [isPwaPromptVisible, setPwaPromptVisible] = useState(true);
+  const [sessionId, setSessionId] = useState('');
+  const [rounds, setRounds] = useState(5);
   const navigate = useNavigate();
   const location = useLocation();
   let usedVerses = [];
@@ -42,7 +47,14 @@ function App() {
     setDifficulty(selectedDifficulty);
     setCategory(selectedCategory);
     navigate('/game', { state: { difficulty: selectedDifficulty, category: selectedCategory, gameID } });
-};
+  };
+
+  const startMultiplayerGame = (difficulty, rounds, sessionId) => {
+    setDifficulty(difficulty);
+    setRounds(rounds);
+    setSessionId(sessionId);
+    navigate('/multiplayer/game', { state: { sessionId, difficulty, rounds } });
+  };
 
   const endGame = (finalScore) => {
     setScore(finalScore);
@@ -69,6 +81,12 @@ function App() {
         <Route path="/admin" element={<PrivateRoute element={Admin} />} />
         <Route path="/history" element={<VerseHistory />} />
         <Route path="/settings" element={<Settings startGame={startGame} />} />
+
+        {/* Multiplayer Routes */}
+        <Route path="/multiplayer/lobby" element={<MultiplayerLobby startMultiplayerGame={startMultiplayerGame} />} />
+        <Route path="/multiplayer/join" element={<JoinGame />} />
+        <Route path="/multiplayer/game" element={<InGame sessionId={sessionId} />} />
+        <Route path="/multiplayer/results" element={<MultiplayerResults />} />
       </Routes>
       {location.pathname === '/' && <PwaPrompt isVisible={isPwaPromptVisible} onClose={handlePwaPromptClose} />}
     </div>

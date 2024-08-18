@@ -10,8 +10,13 @@ import FormControl from '@mui/material/FormControl';
 import Grid from '@mui/material/Grid';
 import '../assets/css/Leaderboard.css';
 
-const apiurl = 'https://bens-api-dd63362f50db.herokuapp.com/leaderboard/';
+// const apiurl = 'https://bens-api-dd63362f50db.herokuapp.com/leaderboard/';
 // const apiurl = 'http://localhost:3000/leaderboard/';
+
+const apiurl =
+  import.meta.env.VITE_NODE_ENV === 'dev'
+    ? 'http://localhost:3000/leaderboard'
+    : 'https://bens-api-dd63362f50db.herokuapp.com/leaderboard';
 
 const Leaderboard = () => {
   const location = useLocation();

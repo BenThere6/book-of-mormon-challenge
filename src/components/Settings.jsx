@@ -342,7 +342,7 @@ const Settings = ({ startGame }) => {
             How to Play
           </Typography>
           <Typography variant="body2" paragraph>
-            The goal is to identify the book of the provided scripture, and be within the chapter range (see below). Points are awarded based on the proximity to the correct chapter and verse.
+            The goal is to identify the book of the provided scripture, and be within the chapter range (see tile above). Points are awarded based on the proximity to the correct chapter and verse.
           </Typography>
           <Typography id='how-to-p-2' variant="body2" paragraph>
             Players have access to Liahonas and Skips as power-ups during the game. Each difficulty level grants 3 Liahonas and a varying number of Skips. Skips allow players to bypass a scripture without losing a life or earning points. Liahonas remove a percentage of incorrect options.

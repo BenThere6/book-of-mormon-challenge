@@ -11,20 +11,27 @@ const InGame = ({ sessionId }) => {
   const navigate = useNavigate();
 
   useEffect(() => {
-    socket.on('gameStarted', ({ roundTime, players }) => {
-      setTimer(roundTime);
-      // Set up other initial states if necessary
+    socket.on('gameStarted', ({ rounds, players = [] }) => {
+      setTimer(30);
+      setScores(players.map(player => ({ playerName: player.id, points: 0 })));
     });
 
-    socket.on('guessSubmitted', (playerId, playerGuess) => {
-      // Handle submitted guess
+    socket.on('guessSubmitted', ({ playerId, guess, points }) => {
+      setScores(prevScores => {
+        return prevScores.map(score => {
+          if (score.playerName === playerId) {
+            return { ...score, points: score.points + points };
+          }
+          return score;
+        });
+      });
     });
 
-    socket.on('roundEnded', (roundResults) => {
-      setScores(roundResults.scores);
-      setCurrentRound(roundResults.currentRound);
-      if (roundResults.currentRound > roundResults.totalRounds) {
-        navigate('/multiplayer/results', { state: { scores: roundResults.scores } });
+    socket.on('roundEnded', (currentRound, players = []) => {
+      setScores(players.map(player => ({ playerName: player.id, points: player.score })));
+      setCurrentRound(currentRound);
+      if (currentRound > rounds) {
+        navigate('/multiplayer/results', { state: { scores: players } });
       }
     });
 

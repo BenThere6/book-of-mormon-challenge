@@ -39,6 +39,18 @@
     margin-right: 10px;
 }
 
+#how-to-play-title {
+    margin-top: 15px;
+}
+
+#how-to-diff {
+    text-align: center;
+}
+
+#how-to-p-2 {
+    margin-bottom: 0;
+}
+
 @media (max-width: 600px) {
     .grid-container {
         display: flex !important;

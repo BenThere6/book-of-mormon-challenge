@@ -166,6 +166,51 @@ const Settings = ({ startGame }) => {
     return <Slide {...props} direction="down" />;
   };
 
+  // Function to dynamically render the difficulty tiles
+  const renderDifficultyTiles = () => {
+    const settings = getDifficultySettings(difficulty.toLowerCase());
+
+    return (
+      <Grid container spacing={2} className="grid-container">
+        <Grid item xs={12}>
+          <Typography id='how-to-diff' variant="h6">{difficulty}</Typography>
+        </Grid>
+        <Grid item xs={12} sm={6} className="grid-item">
+          <Card elevation={3} sx={{ backgroundColor: '#e0f7fa' }}>
+            <CardContent>
+              <Typography variant="subtitle2" align="center">Chapter Range</Typography>
+              <Typography variant="h4" align="center">{settings.chapterRange}</Typography>
+            </CardContent>
+          </Card>
+        </Grid>
+        <Grid item xs={12} sm={6} className="grid-item">
+          <Card elevation={3} sx={{ backgroundColor: '#ffecb3' }}>
+            <CardContent>
+              <Typography variant="subtitle2" align="center">Timer (seconds)</Typography>
+              <Typography variant="h4" align="center">{settings.timer}</Typography>
+            </CardContent>
+          </Card>
+        </Grid>
+        <Grid item xs={12} sm={6} className="grid-item">
+          <Card elevation={3} sx={{ backgroundColor: '#c8e6c9' }}>
+            <CardContent>
+              <Typography variant="subtitle2" align="center">Liahona Power</Typography>
+              <Typography variant="h4" align="center">{settings.removePercentage}%</Typography>
+            </CardContent>
+          </Card>
+        </Grid>
+        <Grid item xs={12} sm={6} className="grid-item">
+          <Card elevation={3} sx={{ backgroundColor: '#ffccbc' }}>
+            <CardContent>
+              <Typography variant="subtitle2" align="center">Skips</Typography>
+              <Typography variant="h4" align="center">{settings.skipCount}</Typography>
+            </CardContent>
+          </Card>
+        </Grid>
+      </Grid>
+    );
+  };
+
   return (
     <Box
       sx={{
@@ -290,128 +335,18 @@ const Settings = ({ startGame }) => {
         </Box>
 
         <Paper elevation={3} sx={{ p: 2, mt: 2, backgroundColor: 'rgba(0, 0, 0, 0.5)', color: 'white' }}>
-          <Typography variant="h6" gutterBottom>
+          {/* Render the dynamic tiles based on selected difficulty */}
+          {renderDifficultyTiles()}
+
+          <Typography id='how-to-play-title' variant="h6" gutterBottom>
             How to Play
           </Typography>
           <Typography variant="body2" paragraph>
             The goal is to identify the book of the provided scripture, and be within the chapter range (see below). Points are awarded based on the proximity to the correct chapter and verse.
           </Typography>
-          <Typography variant="body2" paragraph>
+          <Typography id='how-to-p-2' variant="body2" paragraph>
             Players have access to Liahonas and Skips as power-ups during the game. Each difficulty level grants 3 Liahonas and a varying number of Skips. Skips allow players to bypass a scripture without losing a life or earning points. Liahonas remove a percentage of incorrect options.
           </Typography>
-
-          <Grid container spacing={2} className="grid-container">
-            {/* Easy Difficulty */}
-            <Grid item xs={12}>
-              <Typography variant="h6">Easy</Typography>
-            </Grid>
-            <Grid item xs={12} sm={6} className="grid-item">
-              <Card elevation={3} sx={{ backgroundColor: '#e0f7fa' }}>
-                <CardContent>
-                  <Typography variant="subtitle2" align="center">Chapter Range</Typography>
-                  <Typography variant="h4" align="center">{getDifficultySettings('easy').chapterRange}</Typography>
-                </CardContent>
-              </Card>
-            </Grid>
-            <Grid item xs={12} sm={6} className="grid-item">
-              <Card elevation={3} sx={{ backgroundColor: '#ffecb3' }}>
-                <CardContent>
-                  <Typography variant="subtitle2" align="center">Timer (seconds)</Typography>
-                  <Typography variant="h4" align="center">{getDifficultySettings('easy').timer}</Typography>
-                </CardContent>
-              </Card>
-            </Grid>
-            <Grid item xs={12} sm={6} className="grid-item">
-              <Card elevation={3} sx={{ backgroundColor: '#c8e6c9' }}>
-                <CardContent>
-                  <Typography variant="subtitle2" align="center">Liahona Power</Typography>
-                  <Typography variant="h4" align="center">{getDifficultySettings('easy').removePercentage}%</Typography>
-                </CardContent>
-              </Card>
-            </Grid>
-            <Grid item xs={12} sm={6} className="grid-item">
-              <Card elevation={3} sx={{ backgroundColor: '#ffccbc' }}>
-                <CardContent>
-                  <Typography variant="subtitle2" align="center">Skips</Typography>
-                  <Typography variant="h4" align="center">{getDifficultySettings('easy').skipCount}</Typography>
-                </CardContent>
-              </Card>
-            </Grid>
-
-            {/* Medium Difficulty */}
-            <Grid item xs={12}>
-              <Typography variant="h6">Medium</Typography>
-            </Grid>
-            <Grid item xs={12} sm={6} className="grid-item">
-              <Card elevation={3} sx={{ backgroundColor: '#e0f7fa' }}>
-                <CardContent>
-                  <Typography variant="subtitle2" align="center">Chapter Range</Typography>
-                  <Typography variant="h4" align="center">{getDifficultySettings('medium').chapterRange}</Typography>
-                </CardContent>
-              </Card>
-            </Grid>
-            <Grid item xs={12} sm={6} className="grid-item">
-              <Card elevation={3} sx={{ backgroundColor: '#ffecb3' }}>
-                <CardContent>
-                  <Typography variant="subtitle2" align="center">Timer (seconds)</Typography>
-                  <Typography variant="h4" align="center">{getDifficultySettings('medium').timer}</Typography>
-                </CardContent>
-              </Card>
-            </Grid>
-            <Grid item xs={12} sm={6} className="grid-item">
-              <Card elevation={3} sx={{ backgroundColor: '#c8e6c9' }}>
-                <CardContent>
-                  <Typography variant="subtitle2" align="center">Liahona Power</Typography>
-                  <Typography variant="h4" align="center">{getDifficultySettings('medium').removePercentage}%</Typography>
-                </CardContent>
-              </Card>
-            </Grid>
-            <Grid item xs={12} sm={6} className="grid-item">
-              <Card elevation={3} sx={{ backgroundColor: '#ffccbc' }}>
-                <CardContent>
-                  <Typography variant="subtitle2" align="center">Skips</Typography>
-                  <Typography variant="h4" align="center">{getDifficultySettings('medium').skipCount}</Typography>
-                </CardContent>
-              </Card>
-            </Grid>
-
-            {/* Hard Difficulty */}
-            <Grid item xs={12}>
-              <Typography variant="h6">Hard</Typography>
-            </Grid>
-            <Grid item xs={12} sm={6} className="grid-item">
-              <Card elevation={3} sx={{ backgroundColor: '#e0f7fa' }}>
-                <CardContent>
-                  <Typography variant="subtitle2" align="center">Chapter Range</Typography>
-                  <Typography variant="h4" align="center">{getDifficultySettings('hard').chapterRange}</Typography>
-                </CardContent>
-              </Card>
-            </Grid>
-            <Grid item xs={12} sm={6} className="grid-item">
-              <Card elevation={3} sx={{ backgroundColor: '#ffecb3' }}>
-                <CardContent>
-                  <Typography variant="subtitle2" align="center">Timer (seconds)</Typography>
-                  <Typography variant="h4" align="center">{getDifficultySettings('hard').timer}</Typography>
-                </CardContent>
-              </Card>
-            </Grid>
-            <Grid item xs={12} sm={6} className="grid-item">
-              <Card elevation={3} sx={{ backgroundColor: '#c8e6c9' }}>
-                <CardContent>
-                  <Typography variant="subtitle2" align="center">Liahona Power</Typography>
-                  <Typography variant="h4" align="center">{getDifficultySettings('hard').removePercentage}%</Typography>
-                </CardContent>
-              </Card>
-            </Grid>
-            <Grid item xs={12} sm={6} className="grid-item">
-              <Card elevation={3} sx={{ backgroundColor: '#ffccbc' }}>
-                <CardContent>
-                  <Typography variant="subtitle2" align="center">Skips</Typography>
-                  <Typography variant="h4" align="center">{getDifficultySettings('hard').skipCount}</Typography>
-                </CardContent>
-              </Card>
-            </Grid>
-          </Grid>
         </Paper>
 
         <Box sx={{ my: 4 }}>

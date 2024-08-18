@@ -108,6 +108,13 @@ const UPDATES = [
             'Styled results modal.'
         ]
     },
+    {
+        version: '2.2.0',
+        date: 'August 18, 2024',
+        messages: [
+            'Settings now save automatically.'
+        ]
+    },
 ];
 
 export default UPDATES;

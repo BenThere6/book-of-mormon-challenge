@@ -60,10 +60,9 @@ const Settings = ({ startGame }) => {
 
   const handleCancel = () => {
     if (unsavedChanges) {
-      setOpen(true);
-    } else {
-      navigate('/');
+      saveSettings(); // Save any unsaved changes
     }
+    navigate('/'); // Navigate back to the home page
   };
 
   const handleClose = (confirm, callback = null) => {
@@ -79,10 +78,9 @@ const Settings = ({ startGame }) => {
 
   const handleSettingsStartGame = () => {
     if (unsavedChanges) {
-      setOpen(true);
-    } else {
-      startGameProcess();
+      saveSettings(); // Save any unsaved changes
     }
+    startGameProcess(); // Proceed to start the game
   };
 
   const startGameProcess = () => {
@@ -270,8 +268,8 @@ const Settings = ({ startGame }) => {
             variant="outlined"
             onClick={saveSettings}
             sx={{
-              color: 'aqua',
-              borderColor: 'aqua',
+              color: 'black',
+              borderColor: 'black',
               '&.Mui-disabled': {
                 color: 'black',
                 borderColor: 'black',

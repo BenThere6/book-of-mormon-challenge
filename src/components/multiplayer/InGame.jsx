@@ -1,19 +1,14 @@
 import React, { useState, useEffect } from 'react';
 import { Button, Typography, Box, TextField } from '@mui/material';
-import { io } from 'socket.io-client';
-
-const serverUrl =
-  import.meta.env.VITE_NODE_ENV === 'dev'
-    ? 'http://localhost:3000'
-    : 'https://bens-api-dd63362f50db.herokuapp.com';
-
-const socket = io(serverUrl);
+import { useNavigate } from 'react-router-dom';
+import socket from '../../assets/js/socket';
 
 const InGame = ({ sessionId }) => {
   const [timer, setTimer] = useState(30);
   const [guess, setGuess] = useState('');
   const [scores, setScores] = useState([]);
   const [currentRound, setCurrentRound] = useState(1);
+  const navigate = useNavigate();
 
   useEffect(() => {
     socket.on('gameStarted', ({ roundTime, players }) => {
@@ -28,6 +23,9 @@ const InGame = ({ sessionId }) => {
     socket.on('roundEnded', (roundResults) => {
       setScores(roundResults.scores);
       setCurrentRound(roundResults.currentRound);
+      if (roundResults.currentRound > roundResults.totalRounds) {
+        navigate('/multiplayer/results', { state: { scores: roundResults.scores } });
+      }
     });
 
     return () => {
@@ -35,7 +33,7 @@ const InGame = ({ sessionId }) => {
       socket.off('guessSubmitted');
       socket.off('roundEnded');
     };
-  }, []);
+  }, [navigate]);
 
   const submitGuess = () => {
     socket.emit('submitGuess', sessionId, guess);

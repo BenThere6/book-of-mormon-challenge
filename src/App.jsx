@@ -13,6 +13,7 @@ import PwaPrompt from './components/PwaPrompt';
 import MultiplayerLobby from './components/multiplayer/MultiplayerLobby';
 import JoinGame from './components/multiplayer/JoinGame';
 import InGame from './components/multiplayer/InGame';
+import Results from './components/multiplayer/Results'; // Import the Results component
 import './assets/css/style.css';
 
 function App() {
@@ -86,7 +87,7 @@ function App() {
         <Route path="/multiplayer/lobby" element={<MultiplayerLobby startMultiplayerGame={startMultiplayerGame} />} />
         <Route path="/multiplayer/join" element={<JoinGame />} />
         <Route path="/multiplayer/game" element={<InGame sessionId={sessionId} />} />
-        <Route path="/multiplayer/results" element={<MultiplayerResults />} />
+        <Route path="/multiplayer/results" element={<Results />} /> {/* Add this route */}
       </Routes>
       {location.pathname === '/' && <PwaPrompt isVisible={isPwaPromptVisible} onClose={handlePwaPromptClose} />}
     </div>

@@ -1,14 +1,7 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { Button, TextField, Typography, Box } from '@mui/material';
 import { useNavigate } from 'react-router-dom';
-import { io } from 'socket.io-client';
-
-const serverUrl =
-  import.meta.env.VITE_NODE_ENV === 'dev'
-    ? 'http://localhost:3000'
-    : 'https://bens-api-dd63362f50db.herokuapp.com';
-
-const socket = io(serverUrl);
+import socket from '../../assets/js/socket';
 
 const JoinGame = () => {
   const [sessionId, setSessionId] = useState('');
@@ -17,6 +10,7 @@ const JoinGame = () => {
 
   const joinGame = () => {
     socket.emit('joinGame', sessionId);
+
     socket.on('playerJoined', (players) => {
       console.log('Players:', players);
       navigate('/multiplayer/game', { state: { sessionId } });
@@ -26,6 +20,14 @@ const JoinGame = () => {
       setError(message);
     });
   };
+
+  useEffect(() => {
+    // Cleanup socket listeners when the component is unmounted
+    return () => {
+      socket.off('playerJoined');
+      socket.off('error');
+    };
+  }, []);
 
   return (
     <Box sx={{ padding: 4 }}>

@@ -1,23 +1,25 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { Button, Typography, Box } from '@mui/material';
-import { io } from 'socket.io-client';
-
-const serverUrl =
-  import.meta.env.VITE_NODE_ENV === 'dev'
-    ? 'http://localhost:3000'
-    : 'https://bens-api-dd63362f50db.herokuapp.com';
-
-const socket = io(serverUrl);
+import socket from '../../assets/js/socket';
 
 const MultiplayerLobby = ({ startMultiplayerGame }) => {
   const [sessionId, setSessionId] = useState('');
   const [error, setError] = useState('');
 
-  const createGame = () => {
-    socket.emit('createGame');
+  useEffect(() => {
+    // Set up the socket event listener for when a game is created
     socket.on('gameCreated', (id) => {
       setSessionId(id);
     });
+
+    // Clean up the event listener when the component is unmounted
+    return () => {
+      socket.off('gameCreated');
+    };
+  }, []);
+
+  const createGame = () => {
+    socket.emit('createGame');
   };
 
   const startGame = (difficulty, rounds) => {

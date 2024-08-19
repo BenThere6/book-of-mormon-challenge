@@ -17,12 +17,24 @@ import { useTheme } from '@mui/material';
 
 const DEVELOPMENT_MESSAGE = 'This application is currently under development. You might encounter bugs, design flaws, or areas that could be improved. If you notice any issues or have suggestions for enhancements, please submit it in feedback.';
 
+const specialUsername = "Caleb"; // Replace with your desired username
+const specialMessageId = "Note-1"; // Unique ID for the message
+const specialMessage = `Thank you for your feedback! I like the ideas of adding a practice mode and a timer powerup, I'll work on adding those to the game soon.
+
+Regarding your concern about the game automatically moving to the next question when time runs out, the game does show a modal with the correct answer, and it submits whatever you’ve selected up to that point. The modal can be closed either by clicking "Next" or by clicking outside of it. Because of your feedback, I’ve now implemented a 3-second timer that prevents the modal from being closed until the timer has finished. If you continue to experience any issues with this, please let me know, and I’ll look into it further.
+
+Once again, thank you for your valuable feedback. It’s incredibly helpful as I continue to improve the game!
+
+Best Regards, 
+Ben`;
+
 function StartScreen({ startGame }) {
   const theme = useTheme();
   const [showDevelopmentModal, setShowDevelopmentModal] = useState(false);
   const [isUpdateModalOpen, setIsUpdateModalOpen] = useState(false);
   const [updatesToShow, setUpdatesToShow] = useState([]);
   const [isNoUsernameModalOpen, setIsNoUsernameModalOpen] = useState(false);
+  const [isSpecialUserModalOpen, setIsSpecialUserModalOpen] = useState(false);
   const navigate = useNavigate();
 
   const storedUsername = localStorage.getItem('username');
@@ -69,11 +81,16 @@ function StartScreen({ startGame }) {
       if (!storedDevelopmentNotice) {
         setShowDevelopmentModal(true);
       }
+
+      const hasSeenSpecialUserModal = JSON.parse(localStorage.getItem('seenSpecialUserMessages')) || [];
+
+      if (storedUsername === specialUsername && !hasSeenSpecialUserModal.includes(specialMessageId)) {
+        setIsSpecialUserModalOpen(true);
+      }
     };
 
     checkForUpdates();
 
-    // Dependency array is empty to ensure the effect only runs once when the component mounts
   }, []);
 
   const handleDevelopmentModalClose = () => {
@@ -133,6 +150,28 @@ function StartScreen({ startGame }) {
     localStorage.setItem('seenUpdates', JSON.stringify(updatedSeenUpdates));
   };
 
+  const handleSpecialUserModalClose = async () => {
+    setIsSpecialUserModalOpen(false);
+  
+    const seenSpecialUserMessages = JSON.parse(localStorage.getItem('seenSpecialUserMessages')) || [];
+    seenSpecialUserMessages.push(specialMessageId);
+    localStorage.setItem('seenSpecialUserMessages', JSON.stringify(seenSpecialUserMessages));
+  
+    // Send a notification to the backend
+    try {
+      await fetch('https://bens-api-dd63362f50db.herokuapp.com/leaderboard/special-message-seen', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({ username: specialUsername }),
+      });
+      console.log('Notification sent to backend');
+    } catch (error) {
+      console.error('Failed to send notification to backend:', error);
+    }
+  };
+  
   return (
     <Box
       sx={{
@@ -162,21 +201,21 @@ function StartScreen({ startGame }) {
       }}>
         <Button variant="outlined" onClick={handleAdmin}>Admin</Button>
       </Box>
-      <Container 
-      id='start-content-container'
-      sx={{
-        textAlign: 'center',
-        padding: 4,
-        borderRadius: 2,
-        mt: 'auto',
-        mb: 0,
-        maxWidth: '600px',
-        display: 'flex',
-        flexDirection: 'column',
-        justifyContent: 'flex-end',
-        alignItems: 'center',
-        flexGrow: 1,
-      }}>
+      <Container
+        id='start-content-container'
+        sx={{
+          textAlign: 'center',
+          padding: 4,
+          borderRadius: 2,
+          mt: 'auto',
+          mb: 0,
+          maxWidth: '600px',
+          display: 'flex',
+          flexDirection: 'column',
+          justifyContent: 'flex-end',
+          alignItems: 'center',
+          flexGrow: 1,
+        }}>
         <Button variant="contained" onClick={handleStart} sx={{
           width: '100%',
           mb: 1,
@@ -284,6 +323,26 @@ function StartScreen({ startGame }) {
         </DialogContent>
         <DialogActions>
           <Button onClick={handleNoUsernameModalClose} color="primary" autoFocus>
+            Okay
+          </Button>
+        </DialogActions>
+      </Dialog>
+      <Dialog
+        open={isSpecialUserModalOpen}
+        onClose={handleSpecialUserModalClose}
+        aria-labelledby="special-user-dialog-title"
+        aria-describedby="special-user-dialog-description"
+      >
+        <DialogTitle id="special-user-dialog-title">{`Note to ${specialUsername}`}</DialogTitle>
+        <DialogContent>
+          {specialMessage.split('\n').map((line, index) => (
+            <DialogContentText key={index} sx={{ mb: 1 }}>
+              {line}
+            </DialogContentText>
+          ))}
+        </DialogContent>
+        <DialogActions>
+          <Button onClick={handleSpecialUserModalClose} color="primary" autoFocus>
             Okay
           </Button>
         </DialogActions>

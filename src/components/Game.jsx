@@ -69,6 +69,30 @@ function Game({ difficulty, category, endGame, usedVerses, username }) {
   const [backgroundImage, setBackgroundImage] = useState(getRandomImage());
   const navigate = useNavigate();
 
+  const [countdown, setCountdown] = useState(5); // Set the initial countdown time
+  const [isButtonDisabled, setIsButtonDisabled] = useState(true); // Initially disable the button
+
+  useEffect(() => {
+    if (showModal) {
+      setIsButtonDisabled(true);
+      setCountdown(3); // Reset the countdown timer to 5 seconds
+
+      const intervalId = setInterval(() => {
+        setCountdown(prevCountdown => {
+          if (prevCountdown > 1) {
+            return prevCountdown - 1;
+          } else {
+            clearInterval(intervalId);
+            setIsButtonDisabled(false); // Enable the button when countdown reaches 0
+            return 0;
+          }
+        });
+      }, 1000);
+
+      return () => clearInterval(intervalId);
+    }
+  }, [showModal]);
+
   useEffect(() => {
     localStorage.setItem('gameScore', score);
     localStorage.setItem('gameLives', lives);
@@ -109,7 +133,7 @@ function Game({ difficulty, category, endGame, usedVerses, username }) {
         setLockedHeight('auto');
       }
     }
-  }, [currentStep, currentVerse]);  
+  }, [currentStep, currentVerse]);
 
   useEffect(() => {
     if (timer > 0 && !isSubmitting && !isSkipModalOpen) {
@@ -252,17 +276,17 @@ function Game({ difficulty, category, endGame, usedVerses, username }) {
     setNotification((prev) => ({ ...prev, visible: false }));
 
     if (currentStep === 'book') {
-        setShowConfirmation(true);
+      setShowConfirmation(true);
     } else if (currentStep === 'chapter') {
-        setSelectedChapter('');
-        setSelectedVerse('');
-        setCurrentStep('book');
+      setSelectedChapter('');
+      setSelectedVerse('');
+      setCurrentStep('book');
     } else if (currentStep === 'verse') {
-        setSelectedChapter('');
-        setSelectedVerse('');
-        setCurrentStep('chapter');
+      setSelectedChapter('');
+      setSelectedVerse('');
+      setCurrentStep('chapter');
     }
-};
+  };
 
   const handleConfirmBack = () => {
     navigate('/');
@@ -293,44 +317,44 @@ function Game({ difficulty, category, endGame, usedVerses, username }) {
     let exactGuess = false;
 
     if (guess.book === correctBook && chapterDifference <= chapterRange) {
-        if (guessAccuracy > 0) {
-            newScore += guessAccuracy;
-            newScore = Math.round(newScore);
-            setScore(newScore);
-            isCorrect = true;
-        }
-        if (guess.book === correctBook && guess.chapter == correctChapter && guess.verse == correctChapterVerse.split(':')[1]) {
-            exactGuess = true;
-        }
+      if (guessAccuracy > 0) {
+        newScore += guessAccuracy;
+        newScore = Math.round(newScore);
+        setScore(newScore);
+        isCorrect = true;
+      }
+      if (guess.book === correctBook && guess.chapter == correctChapter && guess.verse == correctChapterVerse.split(':')[1]) {
+        exactGuess = true;
+      }
     } else {
-        lifeLost = true;
-        if (guess.book !== correctBook) {
-            reasonForLifeLost = `You were in the wrong book. You guessed ${guess.book}, but the correct book was ${correctBook}.`;
-        } else if (chapterDifference > chapterRange) {
-            reasonForLifeLost = `You were outside the chapter range. The correct chapter was ${correctChapter}, you were off by ${chapterDifference} chapters. The allowed range was ${chapterRange} chapters.`;
-        }
+      lifeLost = true;
+      if (guess.book !== correctBook) {
+        reasonForLifeLost = `You were in the wrong book. You guessed ${guess.book}, but the correct book was ${correctBook}.`;
+      } else if (chapterDifference > chapterRange) {
+        reasonForLifeLost = `You were outside the chapter range. The correct chapter was ${correctChapter}, you were off by ${chapterDifference} chapters. The allowed range was ${chapterRange} chapters.`;
+      }
     }
 
     setModalContent({
-        guess,
-        correctVerse: currentVerse,
-        pointsEarned: lifeLost ? 0 : guessAccuracy,
-        lifeLost,
-        reasonForLifeLost,
-        exactGuess,
+      guess,
+      correctVerse: currentVerse,
+      pointsEarned: lifeLost ? 0 : guessAccuracy,
+      lifeLost,
+      reasonForLifeLost,
+      exactGuess,
     });
 
     setShowModal(true);
     saveVerseToHistory(currentVerse, isCorrect);
 
     if (lifeLost) {
-        setLives((prevLives) => prevLives - 1);
-        if (lives - 1 <= 0) {
-            setGameCompleted(true);
-            localStorage.setItem('gameCompleted', 'true'); // Set gameCompleted in local storage
-        }
+      setLives((prevLives) => prevLives - 1);
+      if (lives - 1 <= 0) {
+        setGameCompleted(true);
+        localStorage.setItem('gameCompleted', 'true'); // Set gameCompleted in local storage
+      }
     }
-};
+  };
 
   const handleCloseModal = () => {
     if (lives < 1 || gameCompleted) {
@@ -630,7 +654,7 @@ function Game({ difficulty, category, endGame, usedVerses, username }) {
 
   const renderBooks = () => {
     return (
-      <div className='options-container' style={{ overflowY: 'auto'}}>
+      <div className='options-container' style={{ overflowY: 'auto' }}>
         {Object.keys(verseCounts).map((book) => (
           <Button
             variant='outlined'
@@ -879,7 +903,13 @@ function Game({ difficulty, category, endGame, usedVerses, username }) {
 
         <Dialog
           open={showModal}
-          onClose={modalContent.skippedVerse ? handleSkipModalClose : handleCloseModal}
+          onClose={(event, reason) => {
+            if (isButtonDisabled && (reason === 'backdropClick' || reason === 'escapeKeyDown')) {
+              // Do nothing if the button is disabled and the reason for closing is clicking outside or pressing escape
+              return;
+            }
+            modalContent.skippedVerse ? handleSkipModalClose() : handleCloseModal();
+          }}
           sx={{
             '& .MuiPaper-root': {
               backgroundColor: modalContent.exactGuess ? '#FFD700' : // Bright gold for exact guess
@@ -977,8 +1007,13 @@ function Game({ difficulty, category, endGame, usedVerses, username }) {
                 Open Verse
               </Button>
             )}
-            <Button variant='contained' onClick={modalContent.skippedVerse ? handleSkipModalClose : handleCloseModal} color='primary'>
-              Next
+            <Button
+              variant='contained'
+              onClick={modalContent.skippedVerse ? handleSkipModalClose : handleCloseModal}
+              color='primary'
+              disabled={isButtonDisabled} // Disable the button based on the countdown
+            >
+              {isButtonDisabled ? `Next (${countdown})` : 'Next'}
             </Button>
           </DialogActions>
         </Dialog>

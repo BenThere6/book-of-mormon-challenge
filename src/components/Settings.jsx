@@ -423,7 +423,7 @@ const Settings = ({ startGame }) => {
       </Box>
 
       {/* Conditionally render the Start Game button */}
-      {isUsernameSaved && (
+      {/* {isUsernameSaved && ( */}
         <Box
           id='settings-start-game-container'
           sx={{
@@ -447,7 +447,7 @@ const Settings = ({ startGame }) => {
             START GAME
           </Button>
         </Box>
-      )}
+      {/* )} */}
     </Box>
   );
 };

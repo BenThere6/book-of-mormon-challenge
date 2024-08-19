@@ -187,6 +187,7 @@ const Leaderboard = () => {
         }}
       />
       <Container
+      id='leaderboard-container'
         sx={{
           textAlign: 'center',
           padding: 4,

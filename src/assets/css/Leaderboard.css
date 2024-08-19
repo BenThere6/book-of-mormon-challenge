@@ -1,3 +1,8 @@
 .scroll-shadow {
   color: rgb(1, 95, 157)
 }
+
+#leaderboard-container {
+  padding: 4px;
+  margin-top: 0;
+}

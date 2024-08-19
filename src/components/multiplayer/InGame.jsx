@@ -4,16 +4,37 @@ import { useNavigate } from 'react-router-dom';
 import socket from '../../assets/js/socket';
 
 const InGame = ({ sessionId }) => {
-  const [timer, setTimer] = useState(30);
+  const [timer, setTimer] = useState(0);
   const [guess, setGuess] = useState('');
   const [scores, setScores] = useState([]);
-  const [currentRound, setCurrentRound] = useState(1);
+  const [currentRound, setCurrentRound] = useState(1);  // Default to 1
+  const [verse, setVerse] = useState('');  // State for the verse
   const navigate = useNavigate();
 
   useEffect(() => {
     socket.on('gameStarted', ({ rounds, players = [] }) => {
-      setTimer(30);
       setScores(players.map(player => ({ playerName: player.id, points: 0 })));
+    });
+
+    socket.on('roundStarted', ({ currentRound, verse, duration, players = [] }) => {
+      console.log('Round started:', currentRound, 'Verse:', verse, 'Duration:', duration); // Debugging log
+      setVerse(verse || '');  // Set the verse or an empty string if undefined
+      setTimer(duration || 60);  // Use the duration sent by the backend, default to 60 if undefined
+      setCurrentRound(currentRound || 1);  // Set the current round, default to 1
+      setScores(players.map(player => ({ playerName: player.id, points: 0 })));
+
+      // Start the countdown timer
+      const interval = setInterval(() => {
+        setTimer(prev => {
+          if (prev <= 1) {
+            clearInterval(interval);
+            return 0;
+          }
+          return prev - 1;
+        });
+      }, 1000);
+
+      return () => clearInterval(interval); // Cleanup on component unmount
     });
 
     socket.on('guessSubmitted', ({ playerId, guess, points }) => {
@@ -37,21 +58,27 @@ const InGame = ({ sessionId }) => {
 
     return () => {
       socket.off('gameStarted');
+      socket.off('roundStarted');
       socket.off('guessSubmitted');
       socket.off('roundEnded');
     };
   }, [navigate]);
 
   const submitGuess = () => {
-    socket.emit('submitGuess', sessionId, guess);
+    if (guess !== '') {
+      socket.emit('submitGuess', sessionId, guess);
+    }
   };
 
   return (
     <Box sx={{ padding: 4 }}>
       <Typography variant="h4" gutterBottom>
-        Round {currentRound}
+        Round {currentRound}  {/* Render the round number */}
       </Typography>
       <Typography variant="h6">Time Remaining: {timer} seconds</Typography>
+      <Typography variant="h5" gutterBottom>
+        {verse ? verse : 'Loading verse...'}  {/* Display the verse */}
+      </Typography>
       <TextField
         label="Your Guess"
         variant="outlined"
